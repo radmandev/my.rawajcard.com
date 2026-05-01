@@ -60,6 +60,7 @@ const Checkout        = lazy(() => import('./pages/Checkout'));
 const CheckoutSuccess = lazy(() => import('./pages/CheckoutSuccess'));
 const ClientDetails   = lazy(() => import('./pages/ClientDetails'));
 const Dashboard       = lazy(() => import('./pages/Dashboard'));
+const Home            = lazy(() => import('./pages/Home'));
 const Login           = lazy(() => import('./pages/Login'));
 const MyCards         = lazy(() => import('./pages/MyCards'));
 const MyContacts      = lazy(() => import('./pages/MyContacts'));
@@ -76,7 +77,6 @@ const TeamManagement  = lazy(() => import('./pages/TeamManagement'));
 const TemplateAnalytics = lazy(() => import('./pages/TemplateAnalytics'));
 const TemplateEditor  = lazy(() => import('./pages/TemplateEditor'));
 const Upgrade         = lazy(() => import('./pages/Upgrade'));
-const TestLanding     = lazy(() => import('./pages/TestLanding'));
 const Demo3D          = lazy(() => import('./pages/Demo3D'));
 const MyOrders        = lazy(() => import('./pages/MyOrders'));
 const PhysicalCards   = lazy(() => import('./pages/PhysicalCards'));
@@ -93,6 +93,7 @@ export const PAGES = {
     "CheckoutSuccess": CheckoutSuccess,
     "ClientDetails": ClientDetails,
     "Dashboard": Dashboard,
+    "Home": Home,
     "Login": Login,
     "MyCards": MyCards,
     "MyContacts": MyContacts,
@@ -109,7 +110,6 @@ export const PAGES = {
     "TemplateAnalytics": TemplateAnalytics,
     "TemplateEditor": TemplateEditor,
     "Upgrade": Upgrade,
-    "TestLanding": TestLanding,
     "Demo3D": Demo3D,
     "MyOrders": MyOrders,
     "PhysicalCards": PhysicalCards,
@@ -117,7 +117,7 @@ export const PAGES = {
 }
 
 export const pagesConfig = {
-    mainPage: "TestLanding",
+    mainPage: "Home",
     Pages: PAGES,
     Layout: __Layout,
 };

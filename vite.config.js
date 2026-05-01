@@ -8,7 +8,7 @@ import compression from 'vite-plugin-compression'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
-export default defineConfig(({ mode }) => {
+export default defineConfig(({ mode, command }) => {
   const env = loadEnv(mode, process.cwd(), '')
   const offlineMock = env.VITE_OFFLINE_MOCK === 'true'
   const publicBasePath = env.VITE_PUBLIC_BASE_PATH || '/'
@@ -31,8 +31,12 @@ export default defineConfig(({ mode }) => {
     },
     plugins: [
       react(),
-      compression({ algorithm: 'gzip', threshold: 1024 }),
-      compression({ algorithm: 'brotliCompress', ext: '.br', threshold: 1024 }),
+      ...(command === 'build'
+        ? [
+            compression({ algorithm: 'gzip', threshold: 1024 }),
+            compression({ algorithm: 'brotliCompress', ext: '.br', threshold: 1024 }),
+          ]
+        : []),
     ],
     build: {
       chunkSizeWarningLimit: 300,

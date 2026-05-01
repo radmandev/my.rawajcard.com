@@ -16,7 +16,8 @@ import { CartProvider } from '@/contexts/CartContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 const Login = React.lazy(() => import('@/pages/Login'));
 const PublicCard = React.lazy(() => import('@/pages/PublicCard'));
-const TestLandingPage = React.lazy(() => import('@/pages/TestLanding'));
+const HomePage = React.lazy(() => import('@/pages/Home'));
+const DemoHomePage = React.lazy(() => import('@/pages/DemoHomeMerged'));
 const AlternateLandingPage = React.lazy(() => import('@/pages/AlternateLanding'));
 const NFCCustomizerPage = React.lazy(() => import('@/pages/NFCCustomizer'));
 import { supabase } from '@/lib/supabaseClient';
@@ -145,7 +146,7 @@ const AuthenticatedApp = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const isPublicRoute = [
-    '/', '/login', '/Pricing', '/Products', '/ProductDetail', '/Store', '/TestLanding', '/NFC', '/customize', '/Checkout', '/CheckoutSuccess', '/Demo3D', '/MyOrders', '/PhysicalCards', '/CardSamples', '/HeaderVariants',
+    '/', '/demohome', '/login', '/Pricing', '/Products', '/ProductDetail', '/Store', '/NFC', '/customize', '/Checkout', '/CheckoutSuccess', '/Demo3D', '/MyOrders', '/PhysicalCards', '/CardSamples', '/HeaderVariants',
     '/Return', '/PrivacyPolicy', '/Payments', '/returns', '/privacy-policy', '/payments', '/trackQRScan'
   ].includes(location.pathname) || location.pathname.startsWith('/c/') || location.pathname.startsWith('/q/') || location.pathname.startsWith('/products/');
 
@@ -207,10 +208,16 @@ const AuthenticatedApp = () => {
           />
         )}
         <Route path="/" element={
-          <LayoutWrapper currentPageName="TestLanding">
-            <TestLandingPage />
+          <LayoutWrapper currentPageName="Home">
+            <HomePage />
           </LayoutWrapper>
         } />
+        <Route path="/demohome" element={
+          <LayoutWrapper currentPageName="Home">
+            <DemoHomePage />
+          </LayoutWrapper>
+        } />
+        <Route path="/TestLanding" element={<Navigate to="/" replace />} />
         <Route path="/customize" element={
           <LayoutWrapper currentPageName="NFCCustomizer">
             <NFCCustomizerPage />
