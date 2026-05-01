@@ -6,31 +6,41 @@ import Navbar from '@/components/landing/Navbar';
 import LoginModal from '@/components/auth/LoginModal';
 import { useLanguage } from '@/components/shared/LanguageContext';
 import { useAuth } from '@/lib/AuthContext';
-import { Wifi, ShoppingCart, ChevronLeft, ChevronRight, LogIn } from 'lucide-react';
+import { ShoppingCart, ChevronLeft, ChevronRight, LogIn } from 'lucide-react';
 
 const CYCLING_WORDS_AR = ['بنفسك', 'بشركتك', 'بفكرتك'];
 const CYCLING_WORDS_EN = ['yourself', 'your business', 'your idea'];
 
 const HERO_PRODUCT_TYPES = [
   {
-    labelAr: 'بطاقة NFC معدنية',
-    labelEn: 'Metal NFC Card',
+    labelAr: 'معدني ذهبي',
+    labelEn: 'Gold Metal',
     icon: '💳',
   },
   {
-    labelAr: 'بطاقة NFC خشبية',
-    labelEn: 'Wooden NFC Card',
+    labelAr: 'معدني فضي',
+    labelEn: 'Silver Metal',
+    icon: '🩶',
+  },
+  {
+    labelAr: 'بطاقة خشبية',
+    labelEn: 'Wooden Card',
     icon: '🪵',
   },
   {
-    labelAr: 'تعليقة مفاتيح NFC',
-    labelEn: 'NFC Keychain',
+    labelAr: 'ستاند',
+    labelEn: 'Table Stand',
+    icon: '🪧',
+  },
+  {
+    labelAr: 'تعليقة',
+    labelEn: 'Keychain',
     icon: '🔑',
   },
   {
-    labelAr: 'ستاند طاولة NFC',
-    labelEn: 'NFC Table Stand',
-    icon: '🪧',
+    labelAr: 'ملصق جوال',
+    labelEn: 'Phone Sticker',
+    icon: '📱',
   },
 ];
 
@@ -78,7 +88,7 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
   };
 
   const renderPhoneExperience = () => {
-    if (selectedProductTypeIdx === 1) {
+    if (selectedProductTypeIdx === 2) {
       return (
         <>
           <div className="demo-digital-card demo-profile-card">
@@ -103,7 +113,7 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
       );
     }
 
-    if (selectedProductTypeIdx === 2) {
+    if (selectedProductTypeIdx === 4) {
       return (
         <>
           <div className="demo-digital-card demo-wa-card">
@@ -240,7 +250,7 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
 
         .demo-type-scroll {
           display: grid;
-          grid-template-columns: repeat(4, minmax(0, 1fr));
+          grid-template-columns: repeat(6, minmax(0, 1fr));
           gap: 1rem;
           min-width: 0;
         }
@@ -261,18 +271,6 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
 
         .demo-slider-item.is-active {
           opacity: 1;
-        }
-
-        .demo-slider-index {
-          font-size: 0.62rem;
-          font-weight: 700;
-          letter-spacing: 0.14em;
-          color: rgba(148, 163, 184, 0.7);
-          margin-bottom: 0.22rem;
-        }
-
-        .demo-slider-item.is-active .demo-slider-index {
-          color: rgba(94, 234, 212, 0.88);
         }
 
         .demo-slider-label {
@@ -729,7 +727,7 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
           transform: translateX(-50%);
           z-index: 3;
           width: min(92vw, 24rem);
-          height: 14rem;
+          height: 15rem;
           display: flex;
           align-items: flex-end;
           justify-content: center;
@@ -738,20 +736,25 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
         /* ===== METAL GOLD CARD ===== */
         .demo-metal-card {
           position: relative;
+          --demo-card-base-transform: rotateZ(-6deg) rotateX(10deg);
           width: min(18.5rem, 78vw);
           aspect-ratio: 1.586;
           border-radius: 1rem;
           background: linear-gradient(135deg,
-            #c4933f 0%, #f7e07a 18%, #e8c050 35%,
-            #b8820c 52%, #f0d070 68%, #c08830 84%, #b07010 100%
+            #8f6422 0%,
+            #b88a35 8%,
+            #d7af58 26%,
+            #e8c872 48%,
+            #c99d47 69%,
+            #b07f2c 86%,
+            #8c6122 100%
           );
           box-shadow:
-            0 20px 48px rgba(0,0,0,0.48),
-            0 0 0 1px rgba(255,210,60,0.45),
-            inset 0 1px 0 rgba(255,255,255,0.35),
-            inset 0 -1px 0 rgba(0,0,0,0.22);
+            0 22px 50px rgba(0,0,0,0.5),
+            0 0 0 1px rgba(124, 84, 24, 0.55),
+            inset 0 1px 0 rgba(255,230,170,0.4),
+            inset 0 -1px 0 rgba(80,55,18,0.45);
           overflow: hidden;
-          transform: rotateZ(-6deg) rotateX(10deg);
           animation: demoCardFloat 4s ease-in-out infinite;
           animation-delay: -2s;
           will-change: transform;
@@ -761,11 +764,11 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
           position: absolute;
           inset: 0;
           background: repeating-linear-gradient(
-            88deg,
+            92deg,
             transparent 0px,
-            rgba(255,255,255,0.058) 1px,
+            rgba(255,244,212,0.08) 1px,
             transparent 2px,
-            transparent 5px
+            transparent 6px
           );
           z-index: 1;
         }
@@ -773,7 +776,7 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
           content: '';
           position: absolute;
           inset: 0;
-          background: linear-gradient(115deg, transparent 18%, rgba(255,255,255,0.32) 48%, transparent 78%);
+          background: linear-gradient(115deg, transparent 15%, rgba(255,245,214,0.36) 48%, transparent 82%);
           background-size: 250% 100%;
           animation: demoShimmer 4s linear infinite;
           z-index: 2;
@@ -786,79 +789,257 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
           display: flex;
           flex-direction: column;
           justify-content: space-between;
+          align-items: center;
+          text-align: center;
         }
-        .demo-chip-block {
-          width: 2.4rem;
-          height: 1.75rem;
-          border-radius: 0.28rem;
-          background: linear-gradient(135deg, #e2c040, #f5e080, #c89018);
-          border: 1px solid rgba(160,110,8,0.55);
-          box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 2px 6px rgba(0,0,0,0.35);
+        .demo-nfc-icon {
           position: relative;
-          overflow: hidden;
-        }
-        .demo-chip-block::before {
-          content: '';
-          position: absolute;
-          inset: 0.22rem;
-          border-radius: 0.12rem;
-          border: 1px solid rgba(160,110,8,0.45);
-          background: linear-gradient(90deg, #cca020, #eed858, #c09010);
-        }
-        .demo-nfc-symbol { display: flex; flex-direction: column; align-items: flex-end; gap: 3px; }
-        .demo-nfc-arc {
-          border: 2px solid rgba(255,255,255,0.68);
+          width: 2.7rem;
+          height: 2.7rem;
           border-radius: 9999px;
+          display: grid;
+          place-items: center;
+          color: inherit;
+        }
+        .demo-nfc-dot {
+          width: 0.38rem;
+          height: 0.38rem;
+          border-radius: 9999px;
+          background: currentColor;
+          opacity: 0.95;
+          position: relative;
+          z-index: 2;
+        }
+        .demo-nfc-wave {
+          position: absolute;
+          border-radius: 9999px;
+          border: 2px solid currentColor;
           border-left: none;
           border-top: none;
           border-bottom: none;
+          opacity: 0.92;
         }
-        .demo-nfc-arc:nth-child(1) { width: 0.55rem; height: 0.9rem; }
-        .demo-nfc-arc:nth-child(2) { width: 0.9rem;  height: 1.4rem; }
-        .demo-nfc-arc:nth-child(3) { width: 1.25rem; height: 1.9rem; }
+        .demo-nfc-wave.w1 { width: 0.8rem; height: 1.2rem; }
+        .demo-nfc-wave.w2 { width: 1.35rem; height: 1.85rem; }
+        .demo-nfc-wave.w3 { width: 1.9rem; height: 2.45rem; }
+
+        .demo-metal-nfc-badge {
+          width: 3.2rem;
+          height: 3.2rem;
+          border-radius: 0.65rem;
+          border: 1px solid rgba(96, 66, 22, 0.4);
+          background: linear-gradient(180deg, rgba(247, 223, 155, 0.65), rgba(220, 183, 98, 0.62));
+          color: rgba(77, 46, 15, 0.9);
+          box-shadow: inset 0 1px 0 rgba(255,255,255,0.38), 0 8px 16px rgba(76,53,16,0.2);
+          display: grid;
+          place-items: center;
+        }
         .demo-metal-name {
-          font-size: 0.78rem; font-weight: 700;
-          color: rgba(255,255,255,0.92);
-          letter-spacing: 0.12em;
-          text-shadow: 0 1px 4px rgba(0,0,0,0.38);
+          font-size: 0.75rem; font-weight: 800;
+          color: rgba(77, 46, 15, 0.92);
+          letter-spacing: 0.13em;
+          text-shadow: 0 1px 0 rgba(255,230,170,0.35);
           text-transform: uppercase;
         }
         .demo-metal-brand {
-          font-size: 0.65rem; font-weight: 800;
-          color: rgba(255,255,255,0.65);
-          letter-spacing: 0.2em;
+          font-size: 0.6rem; font-weight: 800;
+          color: rgba(90, 60, 22, 0.72);
+          letter-spacing: 0.17em;
           text-transform: uppercase;
+        }
+
+        /* ===== SILVER METAL CARD ===== */
+        .demo-silver-card {
+          position: relative;
+          --demo-card-base-transform: rotateZ(-5deg) rotateX(10deg);
+          width: min(18.5rem, 78vw);
+          aspect-ratio: 1.586;
+          border-radius: 1rem;
+          background: linear-gradient(135deg,
+            #7c838a 0%,
+            #a8b0b8 14%,
+            #d7dde2 34%,
+            #b9c1c9 52%,
+            #f0f3f6 68%,
+            #9fa8b1 86%,
+            #767f88 100%
+          );
+          border: 1px solid rgba(113, 122, 131, 0.55);
+          box-shadow:
+            0 22px 50px rgba(0,0,0,0.45),
+            inset 0 1px 0 rgba(255,255,255,0.55),
+            inset 0 -1px 0 rgba(77,86,96,0.45);
+          overflow: hidden;
+          animation: demoCardFloat 4s ease-in-out infinite;
+          animation-delay: -2s;
+          will-change: transform;
+        }
+        .demo-silver-card::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: repeating-linear-gradient(92deg, transparent 0px, rgba(255,255,255,0.1) 1px, transparent 2px, transparent 6px);
+          z-index: 1;
+        }
+        .demo-silver-card::after {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(115deg, transparent 15%, rgba(255,255,255,0.46) 48%, transparent 82%);
+          background-size: 250% 100%;
+          animation: demoShimmer 4s linear infinite;
+          z-index: 2;
+        }
+        .demo-silver-card-inner {
+          position: absolute;
+          inset: 0;
+          z-index: 3;
+          padding: 1.1rem 1.2rem;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          align-items: center;
+          text-align: center;
+        }
+        .demo-silver-nfc-badge {
+          width: 3.2rem;
+          height: 3.2rem;
+          border-radius: 0.65rem;
+          border: 1px solid rgba(118,128,138,0.45);
+          background: linear-gradient(180deg, rgba(236,241,245,0.78), rgba(191,201,210,0.66));
+          color: rgba(70,80,90,0.9);
+          box-shadow: inset 0 1px 0 rgba(255,255,255,0.65), 0 8px 16px rgba(70,80,90,0.2);
+          display: grid;
+          place-items: center;
+        }
+        .demo-silver-name {
+          font-size: 0.75rem;
+          font-weight: 800;
+          color: rgba(56,67,78,0.9);
+          letter-spacing: 0.13em;
+          text-transform: uppercase;
+        }
+        .demo-silver-brand {
+          font-size: 0.6rem;
+          font-weight: 800;
+          color: rgba(86,98,110,0.78);
+          letter-spacing: 0.17em;
+          text-transform: uppercase;
+        }
+
+        /* ===== RECTANGULAR PHONE STICKER ===== */
+        .demo-sticker-card {
+          position: relative;
+          --demo-card-base-transform: rotateZ(-8deg) rotateX(8deg);
+          width: min(16rem, 70vw);
+          height: 4.9rem;
+          border-radius: 0.9rem;
+          background: linear-gradient(135deg, #0f2d2b, #173f3c 45%, #0f2b29 100%);
+          border: 1px solid rgba(102, 155, 150, 0.42);
+          box-shadow:
+            0 18px 38px rgba(0,0,0,0.42),
+            inset 0 1px 0 rgba(188,255,247,0.14),
+            inset 0 -1px 0 rgba(0,0,0,0.34);
+          overflow: hidden;
+          animation: demoCardFloat 4s ease-in-out infinite;
+          animation-delay: -2s;
+          will-change: transform;
+        }
+        .demo-sticker-card::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(115deg, transparent 20%, rgba(198,255,245,0.16) 52%, transparent 82%);
+          background-size: 220% 100%;
+          animation: demoShimmer 5s linear infinite;
+        }
+        .demo-sticker-card-inner {
+          position: absolute;
+          inset: 0;
+          z-index: 1;
+          padding: 0.7rem 0.85rem;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 0.6rem;
+        }
+        .demo-sticker-title {
+          color: rgba(208, 247, 241, 0.95);
+          font-size: 0.72rem;
+          font-weight: 800;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+          line-height: 1.2;
+        }
+        .demo-sticker-sub {
+          color: rgba(162, 218, 210, 0.85);
+          font-size: 0.56rem;
+          margin-top: 0.18rem;
+          letter-spacing: 0.05em;
+          text-transform: uppercase;
+        }
+        .demo-sticker-nfc-wrap {
+          width: 2.4rem;
+          height: 2.4rem;
+          border-radius: 0.65rem;
+          border: 1px solid rgba(126, 191, 184, 0.45);
+          background: radial-gradient(circle at 35% 30%, rgba(136,223,211,0.26), rgba(11,46,43,0.52));
+          color: rgba(193, 249, 241, 0.94);
+          display: grid;
+          place-items: center;
+          flex-shrink: 0;
+        }
+        .demo-sticker-tab {
+          position: absolute;
+          right: 0.7rem;
+          bottom: -0.12rem;
+          width: 2rem;
+          height: 0.3rem;
+          border-radius: 9999px;
+          background: linear-gradient(90deg, rgba(220,255,250,0.65), rgba(94,194,183,0.45));
+          filter: blur(0.2px);
         }
 
         /* ===== WOODEN CARD ===== */
         .demo-wood-card {
           position: relative;
+          --demo-card-base-transform: rotateZ(-6deg) rotateX(10deg);
           width: min(18.5rem, 78vw);
           aspect-ratio: 1.586;
-          border-radius: 0.85rem;
+          border-radius: 0.92rem;
           background:
-            repeating-linear-gradient(87deg, transparent 0px, rgba(40,10,0,0.07) 1px, transparent 2px, transparent 8px),
-            repeating-linear-gradient(91deg, transparent 0px, rgba(20,5,0,0.04) 1px, transparent 2px, transparent 18px),
-            linear-gradient(140deg,
-              #a06038 0%, #c8793e 14%, #8b4a1c 30%,
-              #b5712e 44%, #7a3c18 60%, #c07e3e 74%,
-              #8b5230 88%, #a0622a 100%
+            radial-gradient(120% 110% at 15% 85%, rgba(75, 35, 14, 0.28), transparent 58%),
+            radial-gradient(90% 80% at 80% 18%, rgba(255, 210, 140, 0.2), transparent 60%),
+            repeating-linear-gradient(7deg, rgba(69,32,12,0.12) 0px, rgba(69,32,12,0.12) 1px, transparent 2px, transparent 9px),
+            repeating-linear-gradient(11deg, rgba(255,225,182,0.08) 0px, rgba(255,225,182,0.08) 1px, transparent 3px, transparent 16px),
+            linear-gradient(135deg,
+              #5f341d 0%, #8b4f2a 12%, #aa6332 28%, #7f4524 48%,
+              #b06a38 64%, #744021 82%, #5a311b 100%
             );
           box-shadow:
-            0 20px 48px rgba(0,0,0,0.42),
-            0 0 0 1px rgba(160,110,50,0.4),
-            inset 0 1px 0 rgba(255,215,155,0.28);
+            0 22px 50px rgba(0,0,0,0.45),
+            0 0 0 1px rgba(96, 54, 23, 0.5),
+            inset 0 1px 0 rgba(255,220,170,0.26),
+            inset 0 -1px 0 rgba(65,33,17,0.4);
           overflow: hidden;
-          transform: rotateZ(-6deg) rotateX(10deg);
           animation: demoCardFloat 4s ease-in-out infinite;
           animation-delay: -2s;
           will-change: transform;
+        }
+        .demo-wood-card::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background:
+            radial-gradient(42% 34% at 24% 30%, rgba(82,46,22,0.26) 0%, rgba(82,46,22,0.06) 55%, transparent 65%),
+            radial-gradient(35% 30% at 74% 68%, rgba(77,42,20,0.2) 0%, rgba(77,42,20,0.04) 55%, transparent 65%);
+          z-index: 0;
         }
         .demo-wood-card::after {
           content: '';
           position: absolute;
           inset: 0;
-          background: linear-gradient(115deg, transparent 25%, rgba(255,240,200,0.16) 50%, transparent 75%);
+          background: linear-gradient(115deg, transparent 20%, rgba(255,238,198,0.18) 50%, transparent 80%);
           background-size: 250% 100%;
           animation: demoShimmer 5s linear infinite;
         }
@@ -870,18 +1051,45 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
           display: flex;
           flex-direction: column;
           justify-content: space-between;
+          align-items: center;
+          text-align: center;
+        }
+        .demo-wood-nfc-badge {
+          width: 3rem;
+          height: 3rem;
+          border-radius: 9999px;
+          border: 1px solid rgba(255,215,160,0.34);
+          background: radial-gradient(circle at 30% 30%, rgba(255,225,185,0.22), rgba(84,46,23,0.34));
+          color: rgba(255,230,185,0.9);
+          display: grid;
+          place-items: center;
+          box-shadow: inset 0 1px 0 rgba(255,235,200,0.2), 0 8px 18px rgba(43,21,10,0.24);
+        }
+        .demo-wood-seal {
+          width: 2.6rem;
+          height: 2.6rem;
+          border-radius: 9999px;
+          display: grid;
+          place-items: center;
+          font-size: 0.56rem;
+          font-weight: 800;
+          letter-spacing: 0.09em;
+          color: rgba(255,230,192,0.9);
+          border: 1px solid rgba(255,210,160,0.32);
+          background: radial-gradient(circle at 30% 30%, rgba(255,225,175,0.24), rgba(78,43,21,0.4));
+          box-shadow: inset 0 1px 0 rgba(255,230,180,0.2), 0 8px 16px rgba(48,24,11,0.26);
         }
         .demo-wood-name {
-          font-size: 0.78rem; font-weight: 700;
-          color: rgba(255,238,195,0.92);
+          font-size: 0.76rem; font-weight: 700;
+          color: rgba(255,235,200,0.96);
           letter-spacing: 0.12em;
-          text-shadow: 0 1px 5px rgba(0,0,0,0.55);
+          text-shadow: 0 1px 4px rgba(0,0,0,0.45);
           text-transform: uppercase;
         }
         .demo-wood-brand {
-          font-size: 0.65rem; font-weight: 800;
-          color: rgba(255,225,155,0.65);
-          letter-spacing: 0.2em;
+          font-size: 0.6rem; font-weight: 800;
+          color: rgba(255,214,145,0.72);
+          letter-spacing: 0.16em;
           text-transform: uppercase;
         }
         .demo-wood-nfc  { display: flex; flex-direction: column; align-items: flex-end; gap: 3px; }
@@ -896,103 +1104,137 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
 
         /* ===== NFC KEYCHAIN ===== */
         .demo-keychain-outer {
+          --demo-card-base-transform: rotateZ(-2deg);
           display: flex;
           flex-direction: column;
           align-items: center;
-          gap: 0;
-          transform: rotateZ(-3deg);
+          gap: 0.22rem;
           animation: demoCardFloat 4s ease-in-out infinite;
           animation-delay: -2s;
         }
         .demo-keychain-ring {
-          width: 2rem;
-          height: 1.2rem;
-          border: 3px solid #7ab4b0;
-          border-radius: 9999px 9999px 0 0;
-          border-bottom: none;
-          background: linear-gradient(90deg, #5a9090, #a0d0c8, #5a9090);
-          box-shadow: 0 2px 8px rgba(0,0,0,0.35);
+          width: 2.45rem;
+          height: 2.45rem;
+          border: 3px solid #b5bec3;
+          border-radius: 9999px;
+          background: radial-gradient(circle at 30% 30%, #f9fbfc, #b2bbc0 72%);
+          box-shadow: 0 4px 10px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.55);
           position: relative;
           z-index: 2;
-          margin-bottom: -1px;
+        }
+        .demo-keychain-ring::after {
+          content: '';
+          position: absolute;
+          width: 0.62rem;
+          height: 0.62rem;
+          border-radius: 9999px;
+          background: #748188;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          box-shadow: inset 0 1px 0 rgba(255,255,255,0.25);
+        }
+        .demo-keychain-link {
+          width: 0.9rem;
+          height: 1.28rem;
+          border-radius: 9999px;
+          border: 2px solid #a6afb4;
+          background: linear-gradient(180deg, #f2f5f6, #9fa8ad);
+          box-shadow: 0 2px 6px rgba(0,0,0,0.22);
         }
         .demo-keychain-tag {
           position: relative;
-          width: 9.5rem;
-          height: 5.5rem;
-          border-radius: 1.3rem;
-          background: linear-gradient(148deg, #183838, #0c2828, #1e4040, #102e2e);
-          border: 1px solid rgba(78,205,196,0.38);
+          width: 7.6rem;
+          height: 7.6rem;
+          border-radius: 9999px;
+          background: linear-gradient(148deg, #0f2020, #183838 42%, #112828 78%, #0a1717);
+          border: 1px solid rgba(121, 132, 136, 0.38);
           box-shadow:
-            0 18px 44px rgba(0,0,0,0.55),
-            0 0 0 1px rgba(78,205,196,0.18),
-            inset 0 1px 0 rgba(78,205,196,0.14);
+            0 20px 44px rgba(0,0,0,0.52),
+            0 0 0 1px rgba(255,255,255,0.05),
+            inset 0 1px 0 rgba(255,255,255,0.08);
           display: flex;
           flex-direction: column;
           align-items: center;
           justify-content: center;
-          gap: 0.48rem;
+          gap: 0.28rem;
           overflow: hidden;
+        }
+        .demo-keychain-cap {
+          width: 2.2rem;
+          height: 0.72rem;
+          border-radius: 9999px;
+          background: linear-gradient(180deg, #d4dce0, #9ca8b0);
+          border: 1px solid rgba(136, 147, 154, 0.58);
+          box-shadow: 0 3px 7px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.55);
+          margin-top: -0.1rem;
+          position: relative;
+          z-index: 1;
+        }
+        .demo-keychain-tag::after {
+          content: '';
+          position: absolute;
+          inset: 0.36rem;
+          border-radius: 9999px;
+          border: 1px solid rgba(176, 198, 200, 0.26);
+          pointer-events: none;
         }
         .demo-keychain-tag::before {
           content: '';
           position: absolute;
           inset: 0;
-          background: radial-gradient(ellipse at 50% 30%, rgba(78,205,196,0.14), transparent 68%);
+          background: radial-gradient(ellipse at 36% 26%, rgba(255,255,255,0.13), transparent 58%);
         }
-        .demo-keychain-tag::after {
-          content: '';
+        .demo-keychain-shine {
           position: absolute;
           inset: 0;
-          background: linear-gradient(115deg, transparent 30%, rgba(78,205,196,0.1) 50%, transparent 70%);
+          pointer-events: none;
+          content: '';
+          background: linear-gradient(115deg, transparent 30%, rgba(255,255,255,0.12) 50%, transparent 70%);
           background-size: 250% 100%;
           animation: demoShimmer 5s linear infinite;
         }
-        .demo-keychain-hole {
-          width: 1.1rem;
-          height: 1.1rem;
+        .demo-keychain-core {
+          width: 1.7rem;
+          height: 1.7rem;
           border-radius: 9999px;
-          background: #081a1a;
-          border: 2px solid rgba(78,205,196,0.32);
-          box-shadow: inset 0 2px 5px rgba(0,0,0,0.65);
-          position: absolute;
-          top: 0.55rem;
-          left: 50%;
-          transform: translateX(-50%);
-        }
-        .demo-keychain-nfc-wrap {
+          background: radial-gradient(circle at 35% 35%, #d8e2e5, #7f8d95 72%);
+          border: 1px solid rgba(160,170,178,0.75);
+          box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), 0 3px 8px rgba(0,0,0,0.28);
           position: relative;
           z-index: 1;
-          margin-top: 0.85rem;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 2px;
         }
-        .demo-keychain-arc {
-          border: 2px solid rgba(78,205,196,0.72);
+        .demo-keychain-nfc {
+          width: 2.7rem;
+          height: 2.7rem;
           border-radius: 9999px;
-          border-left: none; border-right: none; border-bottom: none;
+          display: grid;
+          place-items: center;
+          color: rgba(209, 241, 239, 0.95);
+          background: radial-gradient(circle at 30% 30%, rgba(94, 212, 200, 0.25), rgba(17, 43, 43, 0.34));
+          border: 1px solid rgba(94, 212, 200, 0.35);
+          z-index: 1;
         }
-        .demo-keychain-arc:nth-child(1) { width: 0.9rem;  height: 0.5rem; }
-        .demo-keychain-arc:nth-child(2) { width: 1.45rem; height: 0.8rem; }
-        .demo-keychain-arc:nth-child(3) { width: 2rem;    height: 1.1rem; }
-        .demo-keychain-dot {
-          width: 0.38rem; height: 0.38rem;
-          border-radius: 9999px;
-          background: rgba(78,205,196,0.95);
-          box-shadow: 0 0 7px rgba(78,205,196,0.85);
+        .demo-keychain-logo {
+          position: relative;
+          z-index: 1;
+          font-size: 1.2rem;
+          font-weight: 900;
+          letter-spacing: 0.03em;
+          color: rgba(198, 233, 229, 0.96);
+          line-height: 1;
         }
         .demo-keychain-label {
-          font-size: 0.55rem; font-weight: 800;
-          letter-spacing: 0.16em;
-          color: rgba(78,205,196,0.72);
+          font-size: 0.53rem; font-weight: 800;
+          letter-spacing: 0.14em;
+          color: rgba(178, 194, 198, 0.8);
           text-transform: uppercase;
           position: relative; z-index: 1;
         }
 
         /* ===== NFC TABLE STAND ===== */
         .demo-stand-outer {
+          --demo-card-base-transform: rotateZ(0deg);
           display: flex;
           flex-direction: column;
           align-items: center;
@@ -1002,91 +1244,145 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
         }
         .demo-stand-card {
           position: relative;
-          width: 7.5rem;
-          height: 10.2rem;
-          border-radius: 0.9rem;
-          background: linear-gradient(168deg, #1a2e2e, #0c2020, #1a3636);
-          border: 1px solid rgba(78,205,196,0.38);
+          width: 9.5rem;
+          height: 12.8rem;
+          border-radius: 1rem;
+          background: linear-gradient(168deg, #ffffff, #fff8ef 45%, #fbead9 100%);
+          border: 1px solid rgba(181, 118, 69, 0.22);
           box-shadow:
-            0 18px 44px rgba(0,0,0,0.55),
-            0 0 0 1px rgba(78,205,196,0.14),
-            inset 0 1px 0 rgba(78,205,196,0.12);
+            0 22px 52px rgba(0,0,0,0.45),
+            0 0 0 1px rgba(255,255,255,0.75),
+            inset 0 1px 0 rgba(255,255,255,0.9);
           overflow: hidden;
           display: flex;
           flex-direction: column;
-          align-items: center;
           justify-content: space-between;
-          padding: 0.85rem 0.65rem;
+          padding: 0.75rem 0.72rem 0.7rem;
         }
         .demo-stand-card::before {
           content: '';
           position: absolute;
           inset: 0;
-          background: radial-gradient(ellipse at 50% 22%, rgba(78,205,196,0.15), transparent 62%);
+          background: radial-gradient(ellipse at 50% 18%, rgba(249, 205, 155, 0.25), transparent 62%);
         }
         .demo-stand-card::after {
           content: '';
           position: absolute;
           inset: 0;
-          background: linear-gradient(115deg, transparent 30%, rgba(78,205,196,0.09) 50%, transparent 70%);
+          background: linear-gradient(115deg, transparent 30%, rgba(255,255,255,0.3) 50%, transparent 70%);
           background-size: 250% 100%;
           animation: demoShimmer 5s linear infinite;
         }
+        .demo-stand-header {
+          position: relative;
+          z-index: 1;
+          text-align: center;
+          margin-bottom: 0.28rem;
+        }
         .demo-stand-brand {
-          font-size: 0.62rem; font-weight: 800;
-          color: rgba(78,205,196,0.82);
-          letter-spacing: 0.16em;
+          font-size: 0.62rem;
+          font-weight: 800;
+          color: #7f4625;
+          letter-spacing: 0.08em;
           text-transform: uppercase;
-          position: relative; z-index: 1;
         }
-        .demo-stand-nfc-wrap {
-          position: relative; z-index: 1;
-          display: flex; flex-direction: column; align-items: center; gap: 3px;
+        .demo-stand-subtitle {
+          font-size: 0.5rem;
+          color: #b56e3f;
+          margin-top: 0.05rem;
         }
-        .demo-stand-arc {
-          border: 2px solid rgba(78,205,196,0.68);
+        .demo-stand-logo {
+          position: relative;
+          z-index: 1;
+          width: 2.7rem;
+          height: 2.7rem;
           border-radius: 9999px;
-          border-left: none; border-right: none; border-bottom: none;
+          margin: 0 auto 0.45rem;
+          display: grid;
+          place-items: center;
+          background: radial-gradient(circle at 30% 30%, #fff9ef, #f1c892 75%);
+          border: 1px solid rgba(187, 120, 70, 0.35);
+          box-shadow: inset 0 1px 0 rgba(255,255,255,0.8), 0 8px 18px rgba(155, 94, 51, 0.2);
         }
-        .demo-stand-arc:nth-child(1) { width: 1rem;   height: 0.55rem; }
-        .demo-stand-arc:nth-child(2) { width: 1.6rem;  height: 0.88rem; }
-        .demo-stand-arc:nth-child(3) { width: 2.2rem;  height: 1.2rem;  }
-        .demo-stand-dot {
-          width: 0.42rem; height: 0.42rem;
+        .demo-stand-logo-mark {
+          font-size: 0.95rem;
+          font-weight: 900;
+          color: #8e4c25;
+          letter-spacing: 0.04em;
+        }
+        .demo-stand-menu {
+          position: relative;
+          z-index: 1;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 0.34rem;
+          flex: 1;
+          text-align: center;
+        }
+        .demo-stand-menu-title {
+          font-size: 0.72rem;
+          font-weight: 800;
+          color: #8c4f29;
+          letter-spacing: 0.06em;
+          text-transform: uppercase;
+        }
+        .demo-stand-menu-sub {
+          font-size: 0.53rem;
+          color: #b26c3f;
+          letter-spacing: 0.04em;
+        }
+        .demo-stand-menu-action {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.35rem;
           border-radius: 9999px;
-          background: rgba(78,205,196,0.95);
-          box-shadow: 0 0 9px rgba(78,205,196,0.82);
+          background: rgba(255,255,255,0.9);
+          border: 1px solid rgba(188, 117, 62, 0.2);
+          padding: 0.33rem 0.65rem;
+          color: #995b34;
+          font-size: 0.52rem;
+          font-weight: 700;
         }
-        .demo-stand-name {
-          font-size: 0.6rem;
-          color: rgba(255,255,255,0.55);
-          letter-spacing: 0.09em;
-          position: relative; z-index: 1;
+        .demo-stand-cta {
+          position: relative;
+          z-index: 1;
+          text-align: center;
+          font-size: 0.53rem;
+          font-weight: 700;
+          color: #9a5f37;
+          letter-spacing: 0.07em;
+          text-transform: uppercase;
+          margin-top: 0.35rem;
         }
         .demo-stand-base {
           position: relative;
-          width: 9.8rem;
-          height: 1.6rem;
+          width: 12rem;
+          height: 1.95rem;
         }
         .demo-stand-slot {
           position: absolute;
           left: 50%; top: 0;
           transform: translateX(-50%);
-          width: 8rem; height: 0.85rem;
-          background: linear-gradient(180deg, #182828, #0c1c1c);
-          border: 1px solid rgba(78,205,196,0.28);
+          width: 9.8rem;
+          height: 1.02rem;
+          background: linear-gradient(180deg, #7a4322, #5c3119);
+          border: 1px solid rgba(137, 83, 45, 0.5);
           border-top: none;
-          border-radius: 0 0 0.5rem 0.5rem;
+          border-radius: 0 0 0.6rem 0.6rem;
         }
         .demo-stand-foot {
           position: absolute;
           bottom: 0; left: 50%;
           transform: translateX(-50%);
-          width: 9.8rem; height: 0.78rem;
-          background: linear-gradient(180deg, #1a2828, #0a1818);
-          border-radius: 0.32rem;
-          border: 1px solid rgba(78,205,196,0.22);
-          box-shadow: 0 8px 22px rgba(0,0,0,0.45);
+          width: 12rem;
+          height: 0.95rem;
+          background: linear-gradient(180deg, #834724, #5f3319);
+          border-radius: 0.38rem;
+          border: 1px solid rgba(126, 76, 42, 0.46);
+          box-shadow: 0 10px 24px rgba(0,0,0,0.42);
         }
 
         @media (max-width: 1024px) {
@@ -1159,10 +1455,6 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
             padding-bottom: 0.55rem;
           }
 
-          .demo-slider-index {
-            font-size: 0.58rem;
-          }
-
           .demo-slider-label {
             font-size: 0.72rem;
           }
@@ -1211,7 +1503,7 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
 
           .demo-product-mockup {
             bottom: -0.65rem;
-            height: 11.5rem;
+            height: 12.6rem;
           }
 
           .demo-metal-card,
@@ -1220,21 +1512,39 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
           }
 
           .demo-keychain-tag {
-            width: 8.5rem;
-            height: 5rem;
+            width: 6.8rem;
+            height: 6.8rem;
+          }
+
+          .demo-keychain-cap {
+            width: 2rem;
+          }
+
+          .demo-keychain-nfc {
+            width: 2.35rem;
+            height: 2.35rem;
           }
 
           .demo-stand-card {
-            width: 6.8rem;
-            height: 9.2rem;
+            width: 8.1rem;
+            height: 10.9rem;
           }
 
           .demo-stand-base {
-            width: 8.8rem;
+            width: 10.2rem;
           }
 
           .demo-stand-foot {
-            width: 8.8rem;
+            width: 10.2rem;
+          }
+
+          .demo-silver-card {
+            width: min(17rem, 82vw);
+          }
+
+          .demo-sticker-card {
+            width: min(14.5rem, 78vw);
+            height: 4.5rem;
           }
         }
 
@@ -1244,8 +1554,8 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
         }
 
         @keyframes demoCardFloat {
-          0%, 100% { transform: translateX(-56%) rotateZ(-8deg) rotateX(12deg) translateY(-5px); }
-          50% { transform: translateX(-56%) rotateZ(-8deg) rotateX(12deg) translateY(5px); }
+          0%, 100% { transform: var(--demo-card-base-transform, none) translateY(-5px); }
+          50% { transform: var(--demo-card-base-transform, none) translateY(5px); }
         }
 
 
@@ -1290,16 +1600,6 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
         <div className="container mx-auto px-4 md:px-10 relative z-10 pt-24 md:pt-28 pb-16 md:pb-20">
           <div className="demo-hero-content grid lg:grid-cols-2 gap-14 items-center">
             <div className="demo-hero-copy">
-              <motion.div
-                initial={{ opacity: 0, x: 30 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.7, delay: 0.1 }}
-              >
-                <span className="inline-flex items-center gap-2 bg-teal-500/15 text-teal-300 text-sm font-semibold px-4 py-1.5 rounded-full border border-teal-500/30 mb-6">
-                  <Wifi className="h-4 w-4" />
-                  {isRTL ? 'تقنية NFC الذكية' : 'Smart NFC Technology'}
-                </span>
-              </motion.div>
 
               <motion.h1
                 initial={{ opacity: 0, x: 30 }}
@@ -1373,7 +1673,6 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
                           className={`demo-slider-item ${selectedProductTypeIdx === i ? 'is-active' : ''}`}
                           aria-pressed={selectedProductTypeIdx === i}
                         >
-                          <div className="demo-slider-index">{String(i + 1).padStart(2, '0')}</div>
                           <div className="demo-slider-label">{isRTL ? item.labelAr : item.labelEn}</div>
                           <span className="demo-slider-indicator-track" />
                           <motion.span
@@ -1478,12 +1777,12 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
                       >
                         <div className="demo-metal-card">
                           <div className="demo-metal-card-inner">
-                            <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
-                              <div className="demo-chip-block" />
-                              <div className="demo-nfc-symbol">
-                                <span className="demo-nfc-arc" />
-                                <span className="demo-nfc-arc" />
-                                <span className="demo-nfc-arc" />
+                            <div className="demo-metal-nfc-badge" aria-hidden="true">
+                              <div className="demo-nfc-icon">
+                                <span className="demo-nfc-dot" />
+                                <span className="demo-nfc-wave w1" />
+                                <span className="demo-nfc-wave w2" />
+                                <span className="demo-nfc-wave w3" />
                               </div>
                             </div>
                             <div>
@@ -1497,29 +1796,25 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
 
                     {selectedProductTypeIdx === 1 && (
                       <motion.div
-                        key="wood"
+                        key="silver"
                         initial={{ opacity: 0, scale: 0.84, y: 20 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.88, y: -14 }}
                         transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
                       >
-                        <div className="demo-wood-card">
-                          <div className="demo-wood-card-inner">
-                            <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
-                              <div style={{
-                                width: '2.4rem', height: '1.75rem', borderRadius: '0.28rem',
-                                background: 'linear-gradient(135deg, rgba(255,238,195,0.28), rgba(255,215,130,0.18))',
-                                border: '1px solid rgba(255,215,130,0.32)'
-                              }} />
-                              <div className="demo-wood-nfc">
-                                <span className="demo-wood-arc" />
-                                <span className="demo-wood-arc" />
-                                <span className="demo-wood-arc" />
+                        <div className="demo-silver-card">
+                          <div className="demo-silver-card-inner">
+                            <div className="demo-silver-nfc-badge" aria-hidden="true">
+                              <div className="demo-nfc-icon">
+                                <span className="demo-nfc-dot" />
+                                <span className="demo-nfc-wave w1" />
+                                <span className="demo-nfc-wave w2" />
+                                <span className="demo-nfc-wave w3" />
                               </div>
                             </div>
                             <div>
-                              <div className="demo-wood-name">Ahmed Al-Rashidi</div>
-                              <div className="demo-wood-brand">RAWAJCARD · NFC</div>
+                              <div className="demo-silver-name">Ahmed Al-Rashidi</div>
+                              <div className="demo-silver-brand">RAWAJCARD · NFC</div>
                             </div>
                           </div>
                         </div>
@@ -1528,23 +1823,26 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
 
                     {selectedProductTypeIdx === 2 && (
                       <motion.div
-                        key="keychain"
+                        key="wood"
                         initial={{ opacity: 0, scale: 0.84, y: 20 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.88, y: -14 }}
                         transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
                       >
-                        <div className="demo-keychain-outer">
-                          <div className="demo-keychain-ring" />
-                          <div className="demo-keychain-tag">
-                            <div className="demo-keychain-hole" />
-                            <div className="demo-keychain-nfc-wrap">
-                              <span className="demo-keychain-arc" />
-                              <span className="demo-keychain-arc" />
-                              <span className="demo-keychain-arc" />
-                              <div className="demo-keychain-dot" />
+                        <div className="demo-wood-card">
+                          <div className="demo-wood-card-inner">
+                            <div className="demo-wood-nfc-badge" aria-hidden="true">
+                              <div className="demo-nfc-icon">
+                                <span className="demo-nfc-dot" />
+                                <span className="demo-nfc-wave w1" />
+                                <span className="demo-nfc-wave w2" />
+                                <span className="demo-nfc-wave w3" />
+                              </div>
                             </div>
-                            <div className="demo-keychain-label">RAWAJCARD</div>
+                            <div>
+                              <div className="demo-wood-name">Ahmed Al-Rashidi</div>
+                              <div className="demo-wood-brand">RAWAJCARD · NFC</div>
+                            </div>
                           </div>
                         </div>
                       </motion.div>
@@ -1560,19 +1858,92 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
                       >
                         <div className="demo-stand-outer">
                           <div className="demo-stand-card">
-                            <div className="demo-stand-brand">RAWAJCARD</div>
-                            <div className="demo-stand-nfc-wrap">
-                              <span className="demo-stand-arc" />
-                              <span className="demo-stand-arc" />
-                              <span className="demo-stand-arc" />
-                              <div className="demo-stand-dot" />
+                            <div className="demo-stand-header">
+                              <div className="demo-stand-brand">Urban Plate</div>
+                              <div className="demo-stand-subtitle">Restaurant</div>
                             </div>
-                            <div className="demo-stand-name">Ahmed Al-Rashidi</div>
+
+                            <div className="demo-stand-logo" aria-hidden="true">
+                              <div className="demo-stand-logo-mark">UP</div>
+                            </div>
+
+                            <div className="demo-stand-menu">
+                              <div className="demo-stand-menu-title">Digital Menu</div>
+                              <div className="demo-stand-menu-sub">Fresh dishes · quick ordering</div>
+                              <div className="demo-stand-menu-action">
+                                <div className="demo-nfc-icon" style={{ width: '1.15rem', height: '1.15rem', color: '#b56a3a' }}>
+                                  <span className="demo-nfc-dot" />
+                                  <span className="demo-nfc-wave w1" />
+                                  <span className="demo-nfc-wave w2" />
+                                </div>
+                                <span>Scan / Tap to order</span>
+                              </div>
+                            </div>
+
+                            <div className="demo-stand-cta">Menu Access Point</div>
                           </div>
                           <div className="demo-stand-base">
                             <div className="demo-stand-slot" />
                             <div className="demo-stand-foot" />
                           </div>
+                        </div>
+                      </motion.div>
+                    )}
+
+                    {selectedProductTypeIdx === 4 && (
+                      <motion.div
+                        key="keychain"
+                        initial={{ opacity: 0, scale: 0.84, y: 20 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.88, y: -14 }}
+                        transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                      >
+                        <div className="demo-keychain-outer">
+                          <div className="demo-keychain-ring" />
+                          <div className="demo-keychain-link" />
+                          <div className="demo-keychain-tag">
+                            <div className="demo-keychain-cap" />
+                            <div className="demo-keychain-core" />
+                            <div className="demo-keychain-nfc" aria-hidden="true">
+                              <div className="demo-nfc-icon">
+                                <span className="demo-nfc-dot" />
+                                <span className="demo-nfc-wave w1" />
+                                <span className="demo-nfc-wave w2" />
+                                <span className="demo-nfc-wave w3" />
+                              </div>
+                            </div>
+                            <div className="demo-keychain-logo">RC</div>
+                            <div className="demo-keychain-label">RAWAJCARD NFC</div>
+                            <div className="demo-keychain-shine" aria-hidden="true" />
+                          </div>
+                        </div>
+                      </motion.div>
+                    )}
+
+                    {selectedProductTypeIdx === 5 && (
+                      <motion.div
+                        key="sticker"
+                        initial={{ opacity: 0, scale: 0.84, y: 20 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.88, y: -14 }}
+                        transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                      >
+                        <div className="demo-sticker-card">
+                          <div className="demo-sticker-card-inner">
+                            <div>
+                              <div className="demo-sticker-title">RAWAJ STICKER</div>
+                              <div className="demo-sticker-sub">Tap phone to connect</div>
+                            </div>
+                            <div className="demo-sticker-nfc-wrap" aria-hidden="true">
+                              <div className="demo-nfc-icon">
+                                <span className="demo-nfc-dot" />
+                                <span className="demo-nfc-wave w1" />
+                                <span className="demo-nfc-wave w2" />
+                                <span className="demo-nfc-wave w3" />
+                              </div>
+                            </div>
+                          </div>
+                          <div className="demo-sticker-tab" aria-hidden="true" />
                         </div>
                       </motion.div>
                     )}
