@@ -30,7 +30,7 @@ const PLANS = [
     ],
     features_ar: [
       'حتى بطاقتين رقميتين',
-      'قوالب أساسية',
+      'جميع القوالب المجانية',
       'رمز QR',
       'تحليلات محدودة',
       'دعم البريد الإلكتروني',
@@ -48,6 +48,7 @@ const PLANS = [
     features_en: [
       'Up to 5 Digital Cards',
       'All Templates',
+      'Extra Premium Templates',
       'Advanced Analytics',
       'Lead Capture',
       'Custom Branding',
@@ -57,6 +58,7 @@ const PLANS = [
     features_ar: [
       'حتى 5 بطاقات رقمية',
       'جميع القوالب',
+      'قوالب راقية إضافية',
       'تحليلات متقدمة',
       'التقاط المتابعة',
       'علامة تجارية مخصصة',
@@ -175,8 +177,9 @@ export default function SubscriptionDialog({ open, onOpenChange, onSelectPlan, f
     if (adminMode) {
       onSelectPlan(planKey);
     } else {
+      // Direct to Stripe checkout
       onOpenChange(false);
-      navigate(createPageUrl('Upgrade'));
+      navigate(createPageUrl('Checkout'), { state: { plan: planKey } });
     }
   };
 
@@ -204,8 +207,9 @@ export default function SubscriptionDialog({ open, onOpenChange, onSelectPlan, f
             </DialogHeader>
           </div>
 
-          {/* Scrollable Plans Grid */}
-          <div className="px-4 sm:px-6 py-5 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 overflow-y-auto flex-1 min-h-0">
+          {/* Scrollable Plans Grid - Single Row Slider */}
+        <div className="px-4 sm:px-6 py-5 overflow-x-auto flex-1 min-h-0">
+          <div className="flex gap-4 pb-4" style={{ minWidth: 'max-content', paddingRight: '1rem' }}>
           {PLANS.map((plan) => {
             const Icon = plan.icon;
             const isCurrent = currentPlan === plan.key;
@@ -215,10 +219,15 @@ export default function SubscriptionDialog({ open, onOpenChange, onSelectPlan, f
               <div
                 key={plan.key}
                 className={cn(
-                  'relative rounded-2xl border p-5 flex flex-col gap-4 transition-all',
+                  'relative rounded-2xl border p-4 flex flex-col gap-3 transition-all flex-shrink-0',
+                  'w-72',
                   isPopular
                     ? 'border-teal-500 ring-2 ring-teal-500/30 bg-gradient-to-b from-teal-50/60 to-white dark:from-teal-950/20 dark:to-slate-900'
                     : 'border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900',
+                  plan.key === 'teams' && !isPopular && 'border-cyan-200 dark:border-cyan-800/50',
+                  plan.key === 'enterprise' && !isPopular && 'border-purple-200 dark:border-purple-800/50'
+                )}
+              >
                   plan.key === 'enterprise' && 'border-purple-200 dark:border-purple-800/50'
                 )}
               >
@@ -241,29 +250,29 @@ export default function SubscriptionDialog({ open, onOpenChange, onSelectPlan, f
                 {/* Plan Header */}
                 <div>
                   <div className={cn(
-                    'inline-flex p-2 rounded-lg mb-3',
+                    'inline-flex p-2 rounded-lg mb-2',
                     plan.key === 'free' && 'bg-slate-100 dark:bg-slate-800',
                     plan.key === 'premium' && 'bg-teal-100 dark:bg-teal-900/30',
                     plan.key === 'teams' && 'bg-cyan-100 dark:bg-cyan-900/30',
                     plan.key === 'enterprise' && 'bg-purple-100 dark:bg-purple-900/30',
                   )}>
                     <Icon className={cn(
-                      'h-5 w-5',
+                      'h-4 w-4',
                       plan.key === 'free' && 'text-slate-500',
                       plan.key === 'premium' && 'text-teal-600',
                       plan.key === 'teams' && 'text-cyan-700 dark:text-cyan-400',
                       plan.key === 'enterprise' && 'text-purple-600',
                     )} />
                   </div>
-                  <h3 className="text-lg font-bold text-slate-900 dark:text-white">
+                  <h3 className="text-base font-bold text-slate-900 dark:text-white">
                     {isRTL ? plan.name_ar : plan.name_en}
                   </h3>
                   <div className="flex items-baseline gap-1 mt-1">
-                    <span className="text-2xl font-bold text-slate-900 dark:text-white">
+                    <span className="text-xl font-bold text-slate-900 dark:text-white">
                       {isRTL ? plan.price_ar : plan.price_en}
                     </span>
                     {plan.period_en && (
-                      <span className="text-sm text-slate-500">
+                      <span className="text-xs text-slate-500">
                         {isRTL ? plan.period_ar : plan.period_en}
                       </span>
                     )}
@@ -271,38 +280,38 @@ export default function SubscriptionDialog({ open, onOpenChange, onSelectPlan, f
                 </div>
 
                 {/* Features */}
-                <ul className="flex-1 space-y-2">
-                  {(isRTL ? plan.features_ar : plan.features_en).map((feature, i) => (
-                    <li key={i} className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300">
+                <ul className="flex-1 space-y-1">
+                  {(isRTL ? plan.features_ar : plan.features_en).slice(0, 5).map((feature, i) => (
+                    <li key={i} className="flex items-start gap-2 text-xs text-slate-600 dark:text-slate-300">
                       <Check className={cn(
-                        'h-4 w-4 flex-shrink-0',
+                        'h-3 w-3 flex-shrink-0 mt-0.5',
                         plan.key === 'premium' ? 'text-teal-600' :
                         plan.key === 'enterprise' ? 'text-purple-600' :
                         'text-slate-400'
                       )} />
-                      {feature}
+                      <span>{feature}</span>
                     </li>
                   ))}
                 </ul>
 
                 {/* CTA Button */}
                 {isCurrent && !adminMode ? (
-                  <Button disabled variant="outline" className="w-full">
-                    {isRTL ? 'خطتك الحالية' : 'Current Plan'}
+                  <Button disabled variant="outline" className="w-full h-9 text-xs">
+                    {isRTL ? '✓ خطتك الحالية' : '✓ Current Plan'}
                   </Button>
                 ) : plan.key === 'free' && !adminMode ? (
-                  <Button disabled variant="outline" className="w-full opacity-50">
+                  <Button disabled variant="outline" className="w-full h-9 text-xs opacity-50">
                     {isRTL ? 'مجاني دائماً' : 'Always Free'}
                   </Button>
                 ) : plan.key === 'free' && adminMode ? (
                   <Button
                     variant={isCurrent ? 'outline' : 'ghost'}
-                    className="w-full border-slate-300"
+                    className="w-full h-9 text-xs border-slate-300"
                     disabled={savingPlan === 'free'}
                     onClick={() => handleUpgrade('free')}
                   >
                     {savingPlan === 'free'
-                      ? <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                      ? <Loader2 className="h-3 w-3 mr-1 animate-spin" />
                       : null
                     }
                     {isCurrent ? (isRTL ? '✓ الحالية' : '✓ Current') : (isRTL ? 'تعيين مجاني' : 'Set Free')}
@@ -310,7 +319,7 @@ export default function SubscriptionDialog({ open, onOpenChange, onSelectPlan, f
                 ) : (
                   <Button
                     className={cn(
-                      'w-full text-white',
+                      'w-full h-9 text-xs text-white',
                       isCurrent && adminMode && 'opacity-70 ring-2 ring-offset-1 ring-teal-400',
                       plan.key === 'enterprise'
                         ? 'bg-purple-600 hover:bg-purple-700 dark:bg-purple-500 dark:hover:bg-purple-600'
@@ -322,13 +331,13 @@ export default function SubscriptionDialog({ open, onOpenChange, onSelectPlan, f
                     onClick={() => handleUpgrade(plan.key)}
                   >
                     {savingPlan === plan.key ? (
-                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                      <Loader2 className="h-3 w-3 mr-1 animate-spin" />
                     ) : plan.key === 'enterprise' ? (
-                      <Building2 className="h-4 w-4 mr-2" />
+                      <Building2 className="h-3 w-3 mr-1" />
                     ) : plan.key === 'teams' ? (
-                      <Users className="h-4 w-4 mr-2" />
+                      <Users className="h-3 w-3 mr-1" />
                     ) : (
-                      <Sparkles className="h-4 w-4 mr-2" />
+                      <Sparkles className="h-3 w-3 mr-1" />
                     )}
                     {adminMode
                       ? (isCurrent ? (isRTL ? '✓ الحالية' : '✓ Current') : (isRTL ? `تعيين ${plan.name_ar}` : `Set ${plan.name_en}`))
