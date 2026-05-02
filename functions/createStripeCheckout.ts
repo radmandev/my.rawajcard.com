@@ -165,13 +165,11 @@ Deno.serve(async (req: Request) => {
     params.set('mode', 'subscription');
     params.set('line_items[0][price]', priceId);
     params.set('line_items[0][quantity]', '1');
+    // Only set trial parameters when offering early bird trial
     if (applyEarlyBirdTrial) {
       params.set('subscription_data[trial_period_days]', String(earlyBirdTrialDays));
-    } else {
-      // Force no trial when user is not eligible.
-      // This also overrides any trial configured directly on the Stripe Price.
-      params.set('subscription_data[trial_end]', 'now');
     }
+    // Note: Don't set trial_end to disable trial - let Stripe use the price's default configuration
     params.set('success_url', `${origin}/CheckoutSuccess?stripe_subscription=true&plan=${plan}&session_id={CHECKOUT_SESSION_ID}`);
     params.set('cancel_url', `${origin}/Upgrade`);
     if (userEmail) params.set('customer_email', userEmail);
