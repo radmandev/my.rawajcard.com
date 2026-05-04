@@ -78,10 +78,8 @@ const TeamManagement  = lazy(() => import('./pages/TeamManagement'));
 const TemplateAnalytics = lazy(() => import('./pages/TemplateAnalytics'));
 const TemplateEditor  = lazy(() => import('./pages/TemplateEditor'));
 const Upgrade         = lazy(() => import('./pages/Upgrade'));
-const Demo3D          = lazy(() => import('./pages/Demo3D'));
 const MyOrders        = lazy(() => import('./pages/MyOrders'));
 const PhysicalCards   = lazy(() => import('./pages/PhysicalCards'));
-const HeaderVariants  = lazy(() => import('./pages/HeaderVariants'));
 
 
 export const PAGES = {
@@ -112,10 +110,8 @@ export const PAGES = {
     "TemplateAnalytics": TemplateAnalytics,
     "TemplateEditor": TemplateEditor,
     "Upgrade": Upgrade,
-    "Demo3D": Demo3D,
     "MyOrders": MyOrders,
     "PhysicalCards": PhysicalCards,
-    "HeaderVariants": HeaderVariants,
 }
 
 export const pagesConfig = {

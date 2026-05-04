@@ -19,7 +19,6 @@ const Login = React.lazy(() => import('@/pages/Login'));
 const PublicCard = React.lazy(() => import('@/pages/PublicCard'));
 const HomePage = React.lazy(() => import('@/pages/Home'));
 const DemoHomePage = React.lazy(() => import('@/pages/DemoHomeMerged'));
-const MuchHeroPage = React.lazy(() => import('@/pages/MuchHero'));
 const AlternateLandingPage = React.lazy(() => import('@/pages/AlternateLanding'));
 const NFCCustomizerPage = React.lazy(() => import('@/pages/NFCCustomizer'));
 import { supabase } from '@/lib/supabaseClient';
@@ -220,7 +219,7 @@ const AuthenticatedApp = () => {
             <DemoHomePage />
           </LayoutWrapper>
         } />
-        <Route path="/much-hero" element={<MuchHeroPage />} />
+        <Route path="/much-hero" element={<Navigate to="/demohome" replace />} />
         <Route path="/TestLanding" element={<Navigate to="/" replace />} />
         <Route path="/customize" element={
           <LayoutWrapper currentPageName="NFCCustomizer">
