@@ -63,8 +63,8 @@ const templates = [
  },
  {
  id:'aurora_glass',
- name:'Aurora Glass',
- nameAr:'أورورا زجاجي',
+ name:'Rawajcard Glass',
+ nameAr:'رواج كارد زجاجي',
  description:'Animated aurora with glassmorphism cards',
  descriptionAr:'خلفية أورورا متحركة مع تصميم زجاجي عصري',
  colors: ['#7c3aed','#38bdf8','#f472b6'],

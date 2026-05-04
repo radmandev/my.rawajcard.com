@@ -70,7 +70,7 @@ END:VCARD`;
         <div className="py-3 text-center" style={{ backgroundColor: primaryColor }}>
           <div className="flex items-center justify-center gap-2">
             {card.company_logo ? (
-              <div className="h-6 w-6 rounded-full overflow-hidden bg-indigo-950/60 p-0.5">
+              <div className="h-6 w-6 rounded-full overflow-hidden bg-white p-0.5">
                 <img src={card.company_logo} alt={card.company} className="h-full w-full object-contain" />
               </div>
             ) : (
@@ -91,7 +91,7 @@ END:VCARD`;
           </div>
         )}
         <div className="flex items-center p-4 rounded-b-3xl" style={{ backgroundColor: primaryColor }}>
-          <div className="h-20 w-20 rounded-xl overflow-hidden bg-indigo-950/60 mr-4 shadow-lg">
+          <div className="h-20 w-20 rounded-xl overflow-hidden bg-white mr-4 shadow-lg">
             {card.profile_image ? (
               <img src={card.profile_image} alt={card.name} className="h-full w-full object-cover" />
             ) : (
@@ -114,17 +114,17 @@ END:VCARD`;
         <div className="flex justify-center -mt-5 relative z-10">
           <div className="flex gap-2 px-6 py-2 rounded-full shadow-lg" style={{ backgroundColor: accentColor }}>
             {card.phone && (
-              <a href={`tel:${card.phone}`} onClick={() => onLinkClick?.('phone')} className="h-8 w-8 rounded-full bg-indigo-950/60/20 flex items-center justify-center text-white hover:bg-indigo-950/60/30 transition-colors">
+              <a href={`tel:${card.phone}`} onClick={() => onLinkClick?.('phone')} className="h-8 w-8 rounded-full bg-white/20 flex items-center justify-center text-white hover:bg-white/30 transition-colors">
                 <Phone className="h-4 w-4" />
               </a>
             )}
             {card.email && (
-              <a href={`mailto:${card.email}`} onClick={() => onLinkClick?.('email')} className="h-8 w-8 rounded-full bg-indigo-950/60/20 flex items-center justify-center text-white hover:bg-indigo-950/60/30 transition-colors">
+              <a href={`mailto:${card.email}`} onClick={() => onLinkClick?.('email')} className="h-8 w-8 rounded-full bg-white/20 flex items-center justify-center text-white hover:bg-white/30 transition-colors">
                 <Mail className="h-4 w-4" />
               </a>
             )}
             {card.website && (
-              <a href={card.website} target="_blank" rel="noopener noreferrer" onClick={() => onLinkClick?.('website')} className="h-8 w-8 rounded-full bg-indigo-950/60/20 flex items-center justify-center text-white hover:bg-indigo-950/60/30 transition-colors">
+              <a href={card.website} target="_blank" rel="noopener noreferrer" onClick={() => onLinkClick?.('website')} className="h-8 w-8 rounded-full bg-white/20 flex items-center justify-center text-white hover:bg-white/30 transition-colors">
                 <Globe className="h-4 w-4" />
               </a>
             )}
@@ -136,7 +136,7 @@ END:VCARD`;
       <div className="px-4 py-6 space-y-4">
         {/* About */}
         {card.bio && (
-          <div className="bg-indigo-950/60 rounded-2xl p-5 shadow-sm">
+          <div className="bg-white rounded-2xl p-5 shadow-sm">
             <h2 className="text-center font-semibold mb-2" style={{ color: accentColor }}>
               {isRTL ? 'نبذة عني' : 'About Me'}
             </h2>
@@ -147,7 +147,7 @@ END:VCARD`;
         )}
 
         {/* Contact */}
-        <div className="bg-indigo-950/60 rounded-2xl p-5 shadow-sm">
+        <div className="bg-white rounded-2xl p-5 shadow-sm">
           <div className="flex items-center gap-2 mb-4">
             <div className="h-8 w-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: `${accentColor}15` }}>
               <Phone className="h-4 w-4" style={{ color: accentColor }} />
@@ -194,7 +194,7 @@ END:VCARD`;
 
         {/* Social Links */}
         {socialLinks.length > 0 && (
-          <div className="bg-indigo-950/60 rounded-2xl p-5 shadow-sm">
+          <div className="bg-white rounded-2xl p-5 shadow-sm">
             <h2 className="text-center font-semibold mb-4" style={{ color: accentColor }}>
               {isRTL ? 'روابط التواصل' : 'Social Links'}
             </h2>

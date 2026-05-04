@@ -17,13 +17,14 @@ export default function Header({ onMenuToggle, isMenuOpen, cartCount = 0 }) {
 
  // Determine if we're on a child route
  const childRoutes = ['/card-builder','/client-details','/analytics','/checkout'];
- const isChildRoute = childRoutes.some(route => location.pathname.includes(route)) || location.search.includes('id=');
+ const isChildRoute = childRoutes.some(route => location.pathname.toLowerCase().includes(route));
 
  return (
  <header className={cn(
 "fixed top-0 left-0 right-0 z-50 h-16",
-"bg-indigo-950/60/80 backdrop-blur-xl",
-"border-b border-slate-200/50"
+ "bg-[linear-gradient(135deg,#0C1429_0%,#1E1B4B_52%,#0C1429_100%)] backdrop-blur-xl",
+ "border-b border-white/15 shadow-[0_16px_50px_rgba(12,20,41,0.35)]",
+ "text-slate-100"
  )}>
  <div className="h-full px-4 md:px-6 flex items-center justify-between max-w-7xl mx-auto">
  {/* Logo or Back Button */}
@@ -32,7 +33,7 @@ export default function Header({ onMenuToggle, isMenuOpen, cartCount = 0 }) {
  variant="ghost" 
  size="icon" 
  onClick={() => navigate(-1)}
- className="mr-2"
+ className="mr-2 text-slate-100 hover:text-white hover:bg-white/10"
  >
  {isRTL ? <ChevronRight className="h-5 w-5" /> : <ChevronLeft className="h-5 w-5" />}
  </Button>
@@ -56,7 +57,7 @@ export default function Header({ onMenuToggle, isMenuOpen, cartCount = 0 }) {
  <div className="flex items-center gap-2">
  {/* Cart */}
  <Link to={createPageUrl('Store')}>
- <Button variant="ghost" size="icon" className="relative">
+ <Button variant="ghost" size="icon" className="relative text-slate-100 hover:text-white hover:bg-white/10">
  <ShoppingCart className="h-5 w-5" />
  {cartCount > 0 && (
  <span className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-primary text-white text-xs flex items-center justify-center">
@@ -69,7 +70,7 @@ export default function Header({ onMenuToggle, isMenuOpen, cartCount = 0 }) {
  {/* Language Toggle with Flags */}
  <button
  onClick={() => setLang(lang ==='en' ?'ar' :'en')}
- className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-white/10 transition-colors"
+ className="flex items-center gap-2 px-3 py-2 rounded-lg text-slate-100 hover:text-white hover:bg-white/10 transition-colors"
  >
  {lang ==='en' ? (
  <>
@@ -88,7 +89,7 @@ export default function Header({ onMenuToggle, isMenuOpen, cartCount = 0 }) {
  <Button 
  variant="ghost" 
  size="icon" 
- className="md:hidden"
+ className="md:hidden text-slate-100 hover:text-white hover:bg-white/10"
  onClick={onMenuToggle}
  >
  {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}

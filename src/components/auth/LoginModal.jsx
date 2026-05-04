@@ -105,16 +105,16 @@ export default function LoginModal({ open, onClose }) {
  };
 
  const inputClass =
-'w-full pl-10 pr-4 py-3 rounded-xl border text-sm outline-none transition-all' +
-'bg-indigo-950/60' +
-'border-slate-200' +
-'text-slate-900' +
-'placeholder-slate-400' +
+'w-full pl-10 pr-4 py-3 rounded-xl border text-sm outline-none transition-all ' +
+'bg-indigo-950/60 ' +
+'border-slate-200/40 ' +
+'text-white ' +
+'placeholder-slate-400 ' +
 'focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20';
 
  return (
  <Dialog open={open} onOpenChange={(v) => !v && onClose()}>
- <DialogContent className="max-w-sm p-0 overflow-hidden bg-indigo-950/60 rounded-3xl border border-slate-200 shadow-2xl [&>button]:hidden">
+ <DialogContent className="max-w-sm max-h-[90vh] p-0 overflow-y-auto bg-indigo-950/60 rounded-3xl border border-slate-200 shadow-2xl [&>button]:hidden">
  <div className="p-8 space-y-6">
  {/* Close button */}
  <div className="flex justify-end -mt-2 -mr-2">
@@ -128,18 +128,18 @@ export default function LoginModal({ open, onClose }) {
 
  {/* Logo + Title */}
  <div className="text-center space-y-3 -mt-4">
- <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-cyan-500 to-blue-600 shadow-lg mx-auto">
- <span className="text-white text-2xl font-bold">R</span>
+ <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-cyan-500 to-blue-600 shadow-lg mx-auto p-1">
+ <img src="/rawajcard-logo1.png" alt="Rawajcard" className="w-full h-full object-contain rounded-xl" />
  </div>
  <div>
- <h1 className="text-2xl font-bold text-slate-900">
+ <h1 className="text-2xl font-bold text-white">
  {forgotMode
  ?'Reset Password'
  : mode ==='signup'
  ?'Create Account'
  :'Welcome to Rawajcard'}
  </h1>
- <p className="text-sm text-slate-500 mt-1">
+ <p className="text-sm text-slate-300 mt-1">
  {forgotMode
  ?"Enter your email and we'll send a reset link"
  : mode ==='signup'
@@ -154,7 +154,7 @@ export default function LoginModal({ open, onClose }) {
  <button
  type="button"
  onClick={handleGoogleSignIn}
- className="w-full flex items-center justify-center gap-3 px-4 py-3 rounded-xl border border-slate-200 bg-indigo-950/60 text-slate-700 text-sm font-medium hover:bg-slate-50 transition-all shadow-sm"
+ className="w-full flex items-center justify-center gap-3 px-4 py-3 rounded-xl border border-slate-200/40 bg-indigo-950/60 text-white text-sm font-medium hover:bg-indigo-900/60 transition-all shadow-sm"
  >
  <svg className="h-4 w-4" viewBox="0 0 24 24">
  <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -168,16 +168,16 @@ export default function LoginModal({ open, onClose }) {
 
  {!forgotMode && (
  <div className="flex items-center gap-3">
- <div className="flex-1 h-px bg-slate-200" />
+ <div className="flex-1 h-px bg-slate-700" />
  <span className="text-xs text-slate-400 font-medium">OR</span>
- <div className="flex-1 h-px bg-slate-200" />
+ <div className="flex-1 h-px bg-slate-700" />
  </div>
  )}
 
  {/* Form */}
  <form onSubmit={handleSubmit} className="space-y-4">
  <div>
- <label className="block text-sm font-medium text-slate-700 mb-1.5">Email</label>
+ <label className="block text-sm font-medium text-slate-200 mb-1.5">Email</label>
  <div className="relative">
  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
  <input
@@ -194,7 +194,7 @@ export default function LoginModal({ open, onClose }) {
 
  {!forgotMode && (
  <div>
- <label className="block text-sm font-medium text-slate-700 mb-1.5">Password</label>
+ <label className="block text-sm font-medium text-slate-200 mb-1.5">Password</label>
  <div className="relative">
  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
  <input
@@ -263,7 +263,7 @@ export default function LoginModal({ open, onClose }) {
  setError(null);
  setSuccessMsg(null);
  }}
- className="font-semibold text-slate-900 hover:text-cyan-600 transition-colors"
+ className="font-semibold text-white hover:text-cyan-300 transition-colors"
  >
  {mode ==='signin' ?'Sign up' :'Sign in'}
  </button>

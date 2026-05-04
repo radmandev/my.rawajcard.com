@@ -317,13 +317,18 @@ export default function Analytics() {
  {/* Header */}
  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
  <div>
- <h1 className="text-2xl md:text-3xl font-bold text-slate-900 flex items-center gap-2">
+ <h1 className="text-2xl md:text-3xl font-bold text-slate-100 flex items-center gap-2">
  {t('analytics')}
- <Button variant="ghost" size="sm" onClick={() => setShowRequestDialog(true)}>
+ <Button
+ variant="ghost"
+ size="sm"
+ onClick={() => setShowRequestDialog(true)}
+ className="text-slate-200 hover:text-white hover:bg-white/10"
+ >
  <Sparkles className="h-4 w-4 text-cyan-600" />
  </Button>
  </h1>
- <p className="text-slate-500 mt-1">
+ <p className="text-slate-300 mt-1">
  {isRTL 
  ?'تتبع أداء بطاقاتك الرقمية'
  :'Track your digital cards performance'
@@ -334,7 +339,7 @@ export default function Analytics() {
  {/* Filters */}
  <div className="flex gap-3">
  <Select value={selectedCard} onValueChange={setSelectedCard}>
- <SelectTrigger className="w-[180px]">
+ <SelectTrigger className="w-[180px] bg-slate-900/40 border-white/15 text-slate-100">
  <SelectValue placeholder={isRTL ?'اختر بطاقة' :'Select card'} />
  </SelectTrigger>
  <SelectContent>
@@ -348,7 +353,7 @@ export default function Analytics() {
  </Select>
 
  <Select value={timeRange} onValueChange={setTimeRange}>
- <SelectTrigger className="w-[140px]">
+ <SelectTrigger className="w-[140px] bg-slate-900/40 border-white/15 text-slate-100">
  <SelectValue />
  </SelectTrigger>
  <SelectContent>
@@ -361,13 +366,13 @@ export default function Analytics() {
  </div>
 
  {/* Advanced QR Settings */}
- <Card className="bg-indigo-950/60 border-slate-200/50">
+ <Card className="bg-[linear-gradient(135deg,#0C1429_0%,#1E1B4B_52%,#0C1429_100%)] border-white/15 backdrop-blur-xl shadow-[0_24px_80px_rgba(12,20,41,0.45)]">
  <CardHeader>
- <CardTitle className="text-base">{isRTL ?'إعدادات تحليل QR المتقدمة' :'Advanced QR Analytics Settings'}</CardTitle>
+ <CardTitle className="text-base text-slate-100">{isRTL ?'إعدادات تحليل QR المتقدمة' :'Advanced QR Analytics Settings'}</CardTitle>
  </CardHeader>
  <CardContent className="grid grid-cols-1 md:grid-cols-3 gap-4">
  <div>
- <p className="text-sm mb-2 text-slate-500">{isRTL ?'نوع القياس' :'Metric Type'}</p>
+ <p className="text-sm mb-2 text-slate-300">{isRTL ?'نوع القياس' :'Metric Type'}</p>
  <Select value={qrMetricMode} onValueChange={setQrMetricMode}>
  <SelectTrigger>
  <SelectValue />
@@ -380,7 +385,7 @@ export default function Analytics() {
  </div>
 
  <div>
- <p className="text-sm mb-2 text-slate-500">{isRTL ?'تجميع الخط الزمني' :'Timeline Grouping'}</p>
+ <p className="text-sm mb-2 text-slate-300">{isRTL ?'تجميع الخط الزمني' :'Timeline Grouping'}</p>
  <Select value={qrGroupBy} onValueChange={setQrGroupBy}>
  <SelectTrigger>
  <SelectValue />
@@ -393,10 +398,10 @@ export default function Analytics() {
  </div>
 
  <div className="flex items-end">
- <div className="flex items-center justify-between w-full rounded-xl border border-slate-200 px-3 py-2.5">
+ <div className="flex items-center justify-between w-full rounded-xl border border-white/15 bg-slate-900/40 px-3 py-2.5">
  <div>
- <p className="text-sm font-medium">{isRTL ?'استبعاد البوتات' :'Exclude Bots'}</p>
- <p className="text-xs text-slate-500">{isRTL ?'تنقية الزيارات غير البشرية' :'Filter non-human scans'}</p>
+ <p className="text-sm font-medium text-slate-100">{isRTL ?'استبعاد البوتات' :'Exclude Bots'}</p>
+ <p className="text-xs text-slate-300">{isRTL ?'تنقية الزيارات غير البشرية' :'Filter non-human scans'}</p>
  </div>
  <Switch checked={excludeBots} onCheckedChange={setExcludeBots} />
  </div>
@@ -438,54 +443,54 @@ export default function Analytics() {
 
  {/* QR Insights */}
  <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
- <Card className="bg-indigo-950/60 border-slate-200/50">
+ <Card className="bg-[linear-gradient(135deg,#0C1429_0%,#1E1B4B_52%,#0C1429_100%)] border-white/15 backdrop-blur-xl shadow-[0_24px_80px_rgba(12,20,41,0.45)]">
  <CardHeader>
- <CardTitle>{isRTL ?'أعلى مصادر المسح' :'Top Scan Referrers'}</CardTitle>
+ <CardTitle className="text-slate-100">{isRTL ?'أعلى مصادر المسح' :'Top Scan Referrers'}</CardTitle>
  </CardHeader>
  <CardContent className="space-y-3">
  {topReferrers.length === 0 ? (
- <p className="text-slate-500 text-sm">{isRTL ?'لا توجد بيانات بعد' :'No data yet'}</p>
+ <p className="text-slate-300 text-sm">{isRTL ?'لا توجد بيانات بعد' :'No data yet'}</p>
  ) : topReferrers.map(([source, count]) => (
  <div key={source} className="flex items-center justify-between text-sm">
- <span className="text-slate-700 truncate max-w-[70%]">{source}</span>
- <span className="font-semibold text-slate-900">{count}</span>
+ <span className="text-slate-200 truncate max-w-[70%]">{source}</span>
+ <span className="font-semibold text-slate-100">{count}</span>
  </div>
  ))}
  </CardContent>
  </Card>
 
- <Card className="bg-indigo-950/60 border-slate-200/50">
+ <Card className="bg-[linear-gradient(135deg,#0C1429_0%,#1E1B4B_52%,#0C1429_100%)] border-white/15 backdrop-blur-xl shadow-[0_24px_80px_rgba(12,20,41,0.45)]">
  <CardHeader>
- <CardTitle>{isRTL ?'الأجهزة' :'Scan Devices'}</CardTitle>
+ <CardTitle className="text-slate-100">{isRTL ?'الأجهزة' :'Scan Devices'}</CardTitle>
  </CardHeader>
  <CardContent className="space-y-3">
  {topDevices.length === 0 ? (
- <p className="text-slate-500 text-sm">{isRTL ?'لا توجد بيانات بعد' :'No data yet'}</p>
+ <p className="text-slate-300 text-sm">{isRTL ?'لا توجد بيانات بعد' :'No data yet'}</p>
  ) : topDevices.map(([device, count]) => (
  <div key={device} className="flex items-center justify-between text-sm">
- <span className="text-slate-700">{device}</span>
- <span className="font-semibold text-slate-900">{count}</span>
+ <span className="text-slate-200">{device}</span>
+ <span className="font-semibold text-slate-100">{count}</span>
  </div>
  ))}
  </CardContent>
  </Card>
 
- <Card className="bg-indigo-950/60 border-slate-200/50">
+ <Card className="bg-[linear-gradient(135deg,#0C1429_0%,#1E1B4B_52%,#0C1429_100%)] border-white/15 backdrop-blur-xl shadow-[0_24px_80px_rgba(12,20,41,0.45)]">
  <CardHeader>
- <CardTitle>{isRTL ?'مؤشرات QR' :'QR KPIs'}</CardTitle>
+ <CardTitle className="text-slate-100">{isRTL ?'مؤشرات QR' :'QR KPIs'}</CardTitle>
  </CardHeader>
  <CardContent className="space-y-3 text-sm">
  <div className="flex justify-between">
- <span className="text-slate-600">{isRTL ?'إجمالي المسح' :'Total Scans'}</span>
- <span className="font-semibold text-slate-900">{qrScans.length}</span>
+ <span className="text-slate-300">{isRTL ?'إجمالي المسح' :'Total Scans'}</span>
+ <span className="font-semibold text-slate-100">{qrScans.length}</span>
  </div>
  <div className="flex justify-between">
- <span className="text-slate-600">{isRTL ?'المسح الفريد' :'Unique Scans'}</span>
- <span className="font-semibold text-slate-900">{uniqueQrScans}</span>
+ <span className="text-slate-300">{isRTL ?'المسح الفريد' :'Unique Scans'}</span>
+ <span className="font-semibold text-slate-100">{uniqueQrScans}</span>
  </div>
  <div className="flex justify-between">
- <span className="text-slate-600">{isRTL ?'معدل المسح/المشاهدة' :'Scan/View Rate'}</span>
- <span className="font-semibold text-slate-900">{scanRate}%</span>
+ <span className="text-slate-300">{isRTL ?'معدل المسح/المشاهدة' :'Scan/View Rate'}</span>
+ <span className="font-semibold text-slate-100">{scanRate}%</span>
  </div>
  </CardContent>
  </Card>
@@ -494,9 +499,9 @@ export default function Analytics() {
  {/* Charts */}
  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
  {/* Views Chart */}
- <Card className="bg-indigo-950/60 border-slate-200/50 relative">
+ <Card className="bg-[linear-gradient(135deg,#0C1429_0%,#1E1B4B_52%,#0C1429_100%)] border-white/15 relative backdrop-blur-xl shadow-[0_24px_80px_rgba(12,20,41,0.45)]">
  <CardHeader>
- <CardTitle className="flex items-center gap-2">
+ <CardTitle className="flex items-center gap-2 text-slate-100">
  <Eye className="h-5 w-5" />
  {isRTL ?'المشاهدات' :'Page Views'}
  </CardTitle>
@@ -504,11 +509,11 @@ export default function Analytics() {
  <CardContent className="relative">
  <div className="relative">
  {!isPremium && (
- <div className="absolute inset-0 backdrop-blur-sm bg-indigo-950/60/30 z-10 rounded-lg flex items-center justify-center">
+ <div className="absolute inset-0 backdrop-blur-sm bg-[#0C1429]/70 z-10 rounded-lg flex items-center justify-center">
  <Button
  onClick={openUpgradeDialog}
  size="sm"
- className="bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700"
+ className="bg-gradient-to-r from-cyan-500 to-fuchsia-500 hover:from-cyan-400 hover:to-fuchsia-400 text-white"
  >
  <Lock className="h-4 w-4 mr-2" />
  {isRTL ?'الترقية لفتح' :'Upgrade to unlock'}
@@ -521,7 +526,7 @@ export default function Analytics() {
  date: format(subDays(new Date(), 6 - i),'MMM dd'),
  value: Math.floor(Math.random() * 25) + 8
  })) : getChartData('page_view')} 
- color="#3B82F6" 
+ color="#38BDF8" 
  type="area"
  />
  </div>
@@ -530,9 +535,9 @@ export default function Analytics() {
  </Card>
 
  {/* QR Scans Chart */}
- <Card className="bg-indigo-950/60 border-slate-200/50 relative">
+ <Card className="bg-[linear-gradient(135deg,#0C1429_0%,#1E1B4B_52%,#0C1429_100%)] border-white/15 relative backdrop-blur-xl shadow-[0_24px_80px_rgba(12,20,41,0.45)]">
  <CardHeader>
- <CardTitle className="flex items-center gap-2">
+ <CardTitle className="flex items-center gap-2 text-slate-100">
  <QrCode className="h-5 w-5" />
  {isRTL ?'مسح QR' :'QR Scans'}
  </CardTitle>
@@ -540,11 +545,11 @@ export default function Analytics() {
  <CardContent className="relative">
  <div className="relative">
  {!isPremium && (
- <div className="absolute inset-0 backdrop-blur-sm bg-indigo-950/60/30 z-10 rounded-lg flex items-center justify-center">
+ <div className="absolute inset-0 backdrop-blur-sm bg-[#0C1429]/70 z-10 rounded-lg flex items-center justify-center">
  <Button
  onClick={openUpgradeDialog}
  size="sm"
- className="bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700"
+ className="bg-gradient-to-r from-cyan-500 to-fuchsia-500 hover:from-cyan-400 hover:to-fuchsia-400 text-white"
  >
  <Lock className="h-4 w-4 mr-2" />
  {isRTL ?'الترقية لفتح' :'Upgrade to unlock'}
@@ -557,7 +562,7 @@ export default function Analytics() {
  date: format(subDays(new Date(), 6 - i),'MMM dd'),
  value: Math.floor(Math.random() * 15) + 3
  })) : getQrTimelineData()} 
- color="#8B5CF6" 
+ color="#E879F9" 
  type="bar"
  />
  </div>
@@ -567,9 +572,9 @@ export default function Analytics() {
  </div>
 
  {/* Click Breakdown */}
- <Card className="bg-indigo-950/60 border-slate-200/50 relative">
+ <Card className="bg-[linear-gradient(135deg,#0C1429_0%,#1E1B4B_52%,#0C1429_100%)] border-white/15 relative backdrop-blur-xl shadow-[0_24px_80px_rgba(12,20,41,0.45)]">
  <CardHeader>
- <CardTitle className="flex items-center gap-2">
+ <CardTitle className="flex items-center gap-2 text-slate-100">
  <MousePointerClick className="h-5 w-5" />
  {isRTL ?'تفاصيل النقرات' :'Click Breakdown'}
  </CardTitle>
@@ -577,11 +582,11 @@ export default function Analytics() {
  <CardContent className="relative">
  <div className="relative">
  {!isPremium && (
- <div className="absolute inset-0 backdrop-blur-sm bg-indigo-950/60/30 z-10 rounded-lg flex items-center justify-center">
+ <div className="absolute inset-0 backdrop-blur-sm bg-[#0C1429]/70 z-10 rounded-lg flex items-center justify-center">
  <Button
  onClick={openUpgradeDialog}
  size="sm"
- className="bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700"
+ className="bg-gradient-to-r from-cyan-500 to-fuchsia-500 hover:from-cyan-400 hover:to-fuchsia-400 text-white"
  >
  <Lock className="h-4 w-4 mr-2" />
  {isRTL ?'الترقية لفتح' :'Upgrade to unlock'}
@@ -600,22 +605,22 @@ export default function Analytics() {
  )}>
  {index + 1}
  </div>
- <span className="font-medium">{link}</span>
+ <span className="font-medium text-slate-100">{link}</span>
  </div>
  <div className="flex items-center gap-3">
- <div className="w-32 h-2 bg-slate-100 rounded-full overflow-hidden">
+ <div className="w-32 h-2 bg-slate-700/60 rounded-full overflow-hidden">
  <div 
- className="h-full bg-cyan-500 rounded-full"
+ className="h-full bg-gradient-to-r from-cyan-400 to-fuchsia-400 rounded-full"
  style={{ width:`${Math.random() * 60 + 40}%` }}
  />
  </div>
- <span className="font-bold w-12 text-right">{Math.floor(Math.random() * 20) + 5}</span>
+ <span className="font-bold w-12 text-right text-slate-100">{Math.floor(Math.random() * 20) + 5}</span>
  </div>
  </div>
  ))}
  </div>
  ) : linkClicks.length === 0 ? (
- <div className="text-center py-8 text-slate-500">
+ <div className="text-center py-8 text-slate-300">
  {isRTL ?'لا توجد نقرات بعد' :'No clicks yet'}
  </div>
  ) : (
@@ -641,18 +646,18 @@ export default function Analytics() {
  )}>
  {index + 1}
  </div>
- <span className="font-medium capitalize">
+ <span className="font-medium capitalize text-slate-100">
  {link.replace(/_/g,'')}
  </span>
  </div>
  <div className="flex items-center gap-3">
- <div className="w-32 h-2 bg-slate-100 rounded-full overflow-hidden">
+ <div className="w-32 h-2 bg-slate-700/60 rounded-full overflow-hidden">
  <div 
- className="h-full bg-cyan-500 rounded-full"
+ className="h-full bg-gradient-to-r from-cyan-400 to-fuchsia-400 rounded-full"
  style={{ width:`${(count / linkClicks.length) * 100}%` }}
  />
  </div>
- <span className="font-bold w-12 text-right">{count}</span>
+ <span className="font-bold w-12 text-right text-slate-100">{count}</span>
  </div>
  </motion.div>
  ))}
@@ -665,9 +670,9 @@ export default function Analytics() {
 
  {/* Cards Performance */}
  {selectedCard ==='all' && cards.length > 0 && (
- <Card className="bg-indigo-950/60 border-slate-200/50 relative">
+ <Card className="bg-[linear-gradient(135deg,#0C1429_0%,#1E1B4B_52%,#0C1429_100%)] border-white/15 relative backdrop-blur-xl shadow-[0_24px_80px_rgba(12,20,41,0.45)]">
  <CardHeader>
- <CardTitle className="flex items-center gap-2">
+ <CardTitle className="flex items-center gap-2 text-slate-100">
  <CreditCard className="h-5 w-5" />
  {isRTL ?'أداء البطاقات' :'Cards Performance'}
  </CardTitle>
@@ -675,11 +680,11 @@ export default function Analytics() {
  <CardContent className="relative">
  <div className="relative">
  {!isPremium && (
- <div className="absolute inset-0 backdrop-blur-sm bg-indigo-950/60/30 z-10 rounded-lg flex items-center justify-center">
+ <div className="absolute inset-0 backdrop-blur-sm bg-[#0C1429]/70 z-10 rounded-lg flex items-center justify-center">
  <Button
  onClick={openUpgradeDialog}
  size="sm"
- className="bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700"
+ className="bg-gradient-to-r from-cyan-500 to-fuchsia-500 hover:from-cyan-400 hover:to-fuchsia-400 text-white"
  >
  <Lock className="h-4 w-4 mr-2" />
  {isRTL ?'الترقية لفتح' :'Upgrade to unlock'}
@@ -702,9 +707,9 @@ export default function Analytics() {
  return (
  <div
  key={index}
- className="flex items-center gap-4 p-4 bg-slate-50 rounded-xl"
+ className="flex items-center gap-4 p-4 bg-slate-900/40 border border-white/15 rounded-xl"
  >
- <div className="h-12 w-12 rounded-full overflow-hidden bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center text-white font-bold flex-shrink-0">
+ <div className="h-12 w-12 rounded-full overflow-hidden bg-gradient-to-br from-cyan-500 via-blue-500 to-fuchsia-500 flex items-center justify-center text-white font-bold flex-shrink-0">
  {mockCard.profile_image ? (
  <img src={mockCard.profile_image} alt={mockCard.name} className="h-full w-full object-cover" />
  ) : (
@@ -712,29 +717,29 @@ export default function Analytics() {
  )}
  </div>
  <div className="flex-1 min-w-0">
- <p className="font-medium text-slate-900 truncate">
+ <p className="font-medium text-slate-100 truncate">
  {isRTL && mockCard.name_ar ? mockCard.name_ar : mockCard.name}
  </p>
- <p className="text-sm text-slate-500">
+ <p className="text-sm text-slate-300">
  {mockCard.status ==='published' ? t('published') : t('draft')}
  </p>
  </div>
  <div className="flex items-center gap-6 text-sm">
  <div className="text-center">
- <p className="font-bold text-slate-900">{mockCard.pageViews || 0}</p>
- <p className="text-slate-500">{isRTL ?'مشاهدات' :'Views'}</p>
+ <p className="font-bold text-slate-100">{mockCard.pageViews || 0}</p>
+ <p className="text-slate-300">{isRTL ?'مشاهدات' :'Views'}</p>
  </div>
  <div className="text-center">
- <p className="font-bold text-slate-900">{mockCard.qrScans || 0}</p>
- <p className="text-slate-500">{isRTL ?'مسح QR' :'QR'}</p>
+ <p className="font-bold text-slate-100">{mockCard.qrScans || 0}</p>
+ <p className="text-slate-300">{isRTL ?'مسح QR' :'QR'}</p>
  </div>
  <div className="text-center">
- <p className="font-bold text-slate-900">{mockCard.clicks || 0}</p>
- <p className="text-slate-500">{isRTL ?'نقرات' :'Clicks'}</p>
+ <p className="font-bold text-slate-100">{mockCard.clicks || 0}</p>
+ <p className="text-slate-300">{isRTL ?'نقرات' :'Clicks'}</p>
  </div>
  <div className="text-center">
- <p className="font-bold text-slate-900">{mockCard.uniqueVisitors || 0}</p>
- <p className="text-slate-500">{isRTL ?'فريدون' :'Unique'}</p>
+ <p className="font-bold text-slate-100">{mockCard.uniqueVisitors || 0}</p>
+ <p className="text-slate-300">{isRTL ?'فريدون' :'Unique'}</p>
  </div>
  </div>
  </div>

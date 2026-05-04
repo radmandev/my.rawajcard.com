@@ -10,9 +10,9 @@ export default function StatsCard({ title, value, icon: Icon, trend, trendUp, gr
  transition={{ duration: 0.5, delay }}
  className={cn(
 "relative overflow-hidden rounded-2xl p-6",
-"bg-indigo-950/60",
-"border border-slate-200/50",
-"shadow-lg shadow-slate-200/20",
+ "bg-[linear-gradient(135deg,#0C1429_0%,#1E1B4B_52%,#0C1429_100%)]",
+ "border border-white/15",
+ "shadow-[0_24px_80px_rgba(12,20,41,0.35)]",
 "backdrop-blur-xl"
  )}
  >
@@ -24,10 +24,10 @@ export default function StatsCard({ title, value, icon: Icon, trend, trendUp, gr
 
  <div className="relative flex items-start justify-between">
  <div>
- <p className="text-sm font-medium text-slate-500 mb-1">
+ <p className="text-sm font-medium text-slate-300 mb-1">
  {title}
  </p>
- <p className="text-3xl font-bold text-slate-900">
+ <p className="text-3xl font-bold text-white">
  {value}
  </p>
  {trend && (

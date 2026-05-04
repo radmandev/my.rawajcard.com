@@ -4,7 +4,15 @@ import { useLanguage } from'@/components/shared/LanguageContext';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from'recharts';
 import { format, subDays } from'date-fns';
 
-export default function AnalyticsChart({ data, type ='area', dataKey ='value', color ='#0D7377' }) {
+export default function AnalyticsChart({
+ data,
+ type ='area',
+ dataKey ='value',
+ color ='#38BDF8',
+ gridColor ='#33415566',
+ tickColor ='#94A3B8',
+ axisColor ='#475569'
+}) {
  const { isRTL } = useLanguage();
 
  // Generate sample data for last 7 days if no data provided
@@ -16,8 +24,8 @@ export default function AnalyticsChart({ data, type ='area', dataKey ='value', c
  const CustomTooltip = ({ active, payload, label }) => {
  if (active && payload && payload.length) {
  return (
- <div className="bg-indigo-950/60 p-3 rounded-lg shadow-lg border border-slate-200">
- <p className="text-sm text-slate-500">{label}</p>
+ <div className="bg-[#0C1429]/90 p-3 rounded-lg shadow-lg border border-white/15 backdrop-blur-sm">
+ <p className="text-sm text-slate-300">{label}</p>
  <p className="text-lg font-bold" style={{ color }}>
  {payload[0].value}
  </p>
@@ -38,16 +46,16 @@ export default function AnalyticsChart({ data, type ='area', dataKey ='value', c
  <stop offset="95%" stopColor={color} stopOpacity={0} />
  </linearGradient>
  </defs>
- <CartesianGrid strokeDasharray="3 3" stroke="#E2E8F0" />
+ <CartesianGrid strokeDasharray="3 3" stroke={gridColor} />
  <XAxis 
  dataKey="date" 
- tick={{ fontSize: 12, fill:'#94A3B8' }}
- axisLine={{ stroke:'#E2E8F0' }}
+ tick={{ fontSize: 12, fill: tickColor }}
+ axisLine={{ stroke: axisColor }}
  tickLine={false}
  reversed={isRTL}
  />
  <YAxis 
- tick={{ fontSize: 12, fill:'#94A3B8' }}
+ tick={{ fontSize: 12, fill: tickColor }}
  axisLine={false}
  tickLine={false}
  orientation={isRTL ?'right' :'left'}
@@ -63,16 +71,16 @@ export default function AnalyticsChart({ data, type ='area', dataKey ='value', c
  </AreaChart>
  ) : (
  <BarChart data={chartData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
- <CartesianGrid strokeDasharray="3 3" stroke="#E2E8F0" vertical={false} />
+ <CartesianGrid strokeDasharray="3 3" stroke={gridColor} vertical={false} />
  <XAxis 
  dataKey="date" 
- tick={{ fontSize: 12, fill:'#94A3B8' }}
- axisLine={{ stroke:'#E2E8F0' }}
+ tick={{ fontSize: 12, fill: tickColor }}
+ axisLine={{ stroke: axisColor }}
  tickLine={false}
  reversed={isRTL}
  />
  <YAxis 
- tick={{ fontSize: 12, fill:'#94A3B8' }}
+ tick={{ fontSize: 12, fill: tickColor }}
  axisLine={false}
  tickLine={false}
  orientation={isRTL ?'right' :'left'}

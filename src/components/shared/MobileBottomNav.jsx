@@ -35,10 +35,10 @@ export default function MobileBottomNav() {
  path: createPageUrl('MyCards')
  },
  { 
- key:'store', 
+ key:'nfcProducts', 
  icon: Store, 
- label: t('store'),
- path: createPageUrl('Store')
+ label: isRTL ?'منتجات NFC' :'NFC Products',
+ path: createPageUrl('NFCProducts')
  },
  { 
  key:'contacts', 

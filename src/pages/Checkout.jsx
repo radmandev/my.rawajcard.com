@@ -336,12 +336,12 @@ export default function Checkout() {
 
  if (cartItems.length === 0) {
  return (
- <div className="min-h-screen bg-slate-50">
+ <div className="min-h-screen" style={{backgroundColor:'#0C1429'}}>
  <Navbar />
  <div className="public-subpage-offset max-w-md mx-auto text-center pb-20 px-4">
- <ShoppingBag className="h-16 w-16 mx-auto text-slate-300 mb-4" />
- <h2 className="text-xl font-semibold text-slate-900 mb-2">{t('emptyCart')}</h2>
- <p className="text-slate-500 mb-6">
+ <ShoppingBag className="h-16 w-16 mx-auto text-slate-500 mb-4" />
+ <h2 className="text-xl font-semibold text-white mb-2">{t('emptyCart')}</h2>
+ <p className="text-slate-400 mb-6">
  {isRTL ?'أضف بعض المنتجات للمتابعة' :'Add some products to continue'}
  </p>
  <Link to={createPageUrl('Store')}><Button>{t('continueShopping')}</Button></Link>
@@ -351,10 +351,10 @@ export default function Checkout() {
  }
 
  return (
- <div className="min-h-screen bg-slate-50">
+ <div className="min-h-screen" style={{backgroundColor:'#0C1429'}}>
  <Navbar />
  <div className="public-subpage-offset max-w-5xl mx-auto pb-16 px-4">
- <h1 className="text-2xl md:text-3xl font-bold text-slate-900 mb-8">
+ <h1 className="text-2xl md:text-3xl font-bold text-white mb-8">
  {t('checkout')}
  </h1>
 
@@ -421,7 +421,7 @@ export default function Checkout() {
  </div>
  <div className="space-y-2">
  <Label>{isRTL ?'البلد' :'Country'}</Label>
- <Input value={isRTL ?'المملكة العربية السعودية' :'Saudi Arabia'} readOnly className="bg-slate-50" />
+ <Input value={isRTL ?'المملكة العربية السعودية' :'Saudi Arabia'} readOnly className="bg-slate-800/50 text-slate-300" />
  </div>
  </div>
  </CardContent>
@@ -453,9 +453,9 @@ export default function Checkout() {
 'w-4 h-4 rounded-full border flex items-center justify-center flex-shrink-0 transition-colors',
  paymentMethod === method.id ?'border-cyan-600 bg-cyan-600' :'border-slate-300'
  )}>
- {paymentMethod === method.id && <div className="w-1.5 h-1.5 rounded-full bg-indigo-950/60" />}
+ {paymentMethod === method.id && <div className="w-1.5 h-1.5 rounded-full bg-white" />}
  </div>
- <span className="font-semibold text-slate-900 text-xs sm:text-sm whitespace-nowrap">
+ <span className="font-semibold text-white text-xs sm:text-sm whitespace-nowrap">
  {isRTL ? method.labelAr : method.label}
  </span>
  {/* Logo */}
@@ -494,9 +494,9 @@ export default function Checkout() {
  exit={{ opacity: 0, height: 0 }}
  className="overflow-hidden"
  >
- <div className="flex items-start gap-2 mt-1 p-3 bg-slate-50 rounded-lg border border-slate-200">
- <Shield className="h-4 w-4 text-cyan-600 flex-shrink-0 mt-0.5" />
- <p className="text-xs text-slate-600 leading-relaxed">
+ <div className="flex items-start gap-2 mt-1 p-3 rounded-lg border" style={{backgroundColor:'rgba(56,189,248,0.07)', borderColor:'rgba(56,189,248,0.2)'}}>
+ <Shield className="h-4 w-4 flex-shrink-0 mt-0.5" style={{color:'#38BDF8'}} />
+ <p className="text-xs text-slate-300 leading-relaxed">
  {isRTL
  ?'يتم معالجة مدفوعاتك بأمان عبر Stripe. لا نخزن أي بيانات بطاقتك مطلقاً.'
  :'Payments are processed securely via Stripe. We never store your card details.'}
@@ -530,7 +530,7 @@ export default function Checkout() {
  <div key={i} className="flex items-center justify-between gap-3 bg-indigo-950/60 rounded-lg px-3 py-2">
  <div>
  <p className="text-xs text-slate-400">{isRTL ? row.labelAr : row.labelEn}</p>
- <p className="text-sm font-semibold text-slate-800 font-mono tracking-wide">{row.value}</p>
+ <p className="text-sm font-semibold text-white font-mono tracking-wide">{row.value}</p>
  </div>
  <button
  type="button"
@@ -670,11 +670,11 @@ export default function Checkout() {
  {/* Totals */}
  <div className="space-y-2 text-sm">
  <div className="flex justify-between">
- <span className="text-slate-500">{isRTL ?'المجموع الفرعي' :'Subtotal'}</span>
- <span>{formatPrice(subtotal)}</span>
+ <span className="text-slate-400">{isRTL ?'المجموع الفرعي' :'Subtotal'}</span>
+ <span className="text-white">{formatPrice(subtotal)}</span>
  </div>
  <div className="flex justify-between">
- <span className="text-slate-500">{isRTL ?'الشحن' :'Shipping'}</span>
+ <span className="text-slate-400">{isRTL ?'الشحن' :'Shipping'}</span>
  {freeShipping
  ? <span className="text-green-600 font-medium">{isRTL ?'مجاني' :'Free'}</span>
  : <span className="text-slate-500">{formatPrice(shippingCost)}</span>}
@@ -700,7 +700,7 @@ export default function Checkout() {
  type="submit"
  className={cn(
 'w-full font-bold text-white',
- paymentMethod ==='stripe' ?'bg-gradient-to-r from-fuchsia-600 to-purple-700 hover:from-fuchsia-500 hover:to-purple-600'
+ paymentMethod ==='stripe' ?'bg-gradient-to-r from-sky-500 to-fuchsia-500 hover:from-sky-400 hover:to-fuchsia-400'
  :'bg-green-700 hover:bg-green-800'
  )}
  size="lg"

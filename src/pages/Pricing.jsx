@@ -190,83 +190,88 @@ export default function Pricing() {
  }, []);
 
  return (
- <div className="min-h-screen bg-indigo-950/60">
+ <div className="min-h-screen" style={{ backgroundColor: '#0C1429' }}>
  <Navbar />
- 
+
  {/* Hero Section */}
- <section className="public-subpage-offset pb-20 px-4">
+ <section className="public-subpage-offset pb-20 px-4 relative overflow-hidden" style={{ backgroundColor: '#0C1429' }}>
+ <div className="absolute inset-0 -z-10" style={{ background: 'radial-gradient(ellipse 80% 60% at 50% 0%, rgba(232,121,249,0.12) 0%, rgba(56,189,248,0.08) 40%, transparent 70%)' }} />
  <div className="container mx-auto max-w-4xl text-center">
- <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">
- {language ==='ar' ?'خطط التسعير البسيطة والشفافة' :'Simple, Transparent Pricing'}
+ <span className="inline-block text-sm font-semibold tracking-widest uppercase mb-4" style={{ color: '#E879F9' }}>
+ {language === 'ar' ? 'الأسعار' : 'Pricing'}
+ </span>
+ <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
+ {language === 'ar' ? 'خطط التسعير البسيطة والشفافة' : 'Simple, Transparent Pricing'}
  </h1>
- <p className="text-xl text-slate-600 mb-8">
- {language ==='ar' 
- ?'اختر الخطة المثالية لاحتياجاتك' 
- :'Choose the perfect plan for your needs'}
+ <p className="text-xl mb-8" style={{ color: 'rgba(255,255,255,0.65)' }}>
+ {language === 'ar'
+ ? 'اختر الخطة المثالية لاحتياجاتك'
+ : 'Choose the perfect plan for your needs'}
  </p>
  </div>
  </section>
 
  {/* Pricing Cards */}
- <section className="py-20 px-4">
+ <section className="py-20 px-4" style={{ backgroundColor: '#0C1429' }}>
  <div className="container mx-auto max-w-6xl">
  <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
  {pricingPlans.map((plan, index) => (
  <div
  key={index}
- className={`relative rounded-2xl transition-all ${
- plan.popular
- ?'ring-2 ring-cyan-500 shadow-2xl shadow-cyan-500/20 scale-105'
- :'border border-slate-200'
- } bg-indigo-950/60 p-8`}
+ className="relative rounded-2xl transition-all p-8"
+ style={plan.popular
+ ? { backgroundColor: '#1E1B4B', border: '2px solid #38BDF8', boxShadow: '0 0 40px rgba(56,189,248,0.2)', transform: 'scale(1.05)' }
+ : { backgroundColor: '#1E1B4B', border: '1px solid rgba(255,255,255,0.1)' }
+ }
  >
  {plan.popular && (
- <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-cyan-500 text-white px-4 py-1 rounded-full text-sm font-semibold">
- {language ==='ar' ?'الأكثر شعبية' :'Most Popular'}
+ <div
+ className="absolute -top-4 left-1/2 transform -translate-x-1/2 text-white px-4 py-1 rounded-full text-sm font-semibold"
+ style={{ background: 'linear-gradient(135deg, #38BDF8, #E879F9)' }}
+ >
+ {language === 'ar' ? 'الأكثر شعبية' : 'Most Popular'}
  </div>
  )}
 
- <h3 className="text-2xl font-bold text-slate-900 mb-2">
- {language ==='ar' ? plan.nameAr : plan.name}
+ <h3 className="text-2xl font-bold text-white mb-2">
+ {language === 'ar' ? plan.nameAr : plan.name}
  </h3>
- <p className="text-slate-600 mb-6">
- {language ==='ar' ? plan.descriptionAr : plan.description}
+ <p className="mb-6" style={{ color: 'rgba(255,255,255,0.55)' }}>
+ {language === 'ar' ? plan.descriptionAr : plan.description}
  </p>
 
  <div className="mb-8">
- <span className="text-4xl font-bold text-slate-900">
- {language ==='ar' ? plan.priceAr : plan.price}
+ <span className="text-4xl font-bold" style={{ color: plan.popular ? '#38BDF8' : '#fff' }}>
+ {language === 'ar' ? plan.priceAr : plan.price}
  </span>
  {plan.pricePeriod && (
- <span className="text-slate-600 ml-2">
- {language ==='ar' ? plan.pricePeriodAr : plan.pricePeriod}
+ <span className="ml-2" style={{ color: 'rgba(255,255,255,0.45)' }}>
+ {language === 'ar' ? plan.pricePeriodAr : plan.pricePeriod}
  </span>
  )}
  </div>
 
  <Button
  onClick={handleUpgradeClick}
- className={`w-full mb-8 rounded-lg py-2 font-semibold ${
- plan.popular
- ?'bg-cyan-600 hover:bg-cyan-700 text-white'
- : plan.planKey ==='enterprise'
- ?'bg-purple-600 hover:bg-purple-700 text-white'
- : plan.planKey ==='premium'
- ?'bg-cyan-500 hover:bg-cyan-600 text-white'
- :'bg-slate-100 hover:bg-slate-200 text-slate-900'
- }`}
+ className="w-full mb-8 rounded-lg py-2 font-semibold text-white border-0"
+ style={plan.popular || plan.planKey === 'enterprise'
+ ? { background: 'linear-gradient(135deg, #38BDF8, #E879F9)', boxShadow: '0 0 20px rgba(56,189,248,0.3)' }
+ : plan.planKey === 'premium'
+ ? { background: 'rgba(56,189,248,0.2)', border: '1px solid rgba(56,189,248,0.4)' }
+ : { background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.15)' }
+ }
  >
- {plan.planKey ==='premium'
- ? (language ==='ar' ?'تجربة مجانية 3 أشهر (بدون بطاقة دفع)' :'Free 3 month trial (no credit card)')
- : (language ==='ar' ? plan.ctaAr : plan.cta)
+ {plan.planKey === 'premium'
+ ? (language === 'ar' ? 'تجربة مجانية 3 أشهر (بدون بطاقة دفع)' : 'Free 3 month trial (no credit card)')
+ : (language === 'ar' ? plan.ctaAr : plan.cta)
  }
  </Button>
 
  <ul className="space-y-4">
- {(language ==='ar' ? plan.featuresAr : plan.features).map((feature, idx) => (
+ {(language === 'ar' ? plan.featuresAr : plan.features).map((feature, idx) => (
  <li key={idx} className="flex items-start gap-3">
- <Check className="w-5 h-5 text-cyan-600 flex-shrink-0 mt-0.5" />
- <span className="text-slate-600">{feature}</span>
+ <Check className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: plan.popular ? '#38BDF8' : '#E879F9' }} />
+ <span style={{ color: 'rgba(255,255,255,0.7)' }}>{feature}</span>
  </li>
  ))}
  </ul>
@@ -277,37 +282,46 @@ export default function Pricing() {
  </section>
 
  {/* Trial Note */}
- <div className="text-center text-base text-cyan-700 font-semibold mb-4">
- {language ==='ar'
- ?'جرب جميع ميزات بريميوم مجاناً لمدة 3 أشهر — لا حاجة لبطاقة دفع'
- :'Try all Premium features free for 3 months — no credit card required'}
+ <div
+ className="text-center text-base font-semibold mb-4 py-4"
+ style={{ color: '#38BDF8' }}
+ >
+ {language === 'ar'
+ ? 'جرب جميع ميزات بريميوم مجاناً لمدة 3 أشهر — لا حاجة لبطاقة دفع'
+ : 'Try all Premium features free for 3 months — no credit card required'}
  </div>
+
  {/* FAQ Section */}
- <section className="py-20 px-4 bg-slate-50">
+ <section className="py-20 px-4" style={{ background: 'linear-gradient(180deg, #0C1429 0%, #1E1B4B 100%)' }}>
  <div className="container mx-auto max-w-4xl">
- <h2 className="text-3xl font-bold text-slate-900 mb-12 text-center">
- {language ==='ar' ?'الأسئلة الشائعة' :'Frequently Asked Questions'}
+ <h2 className="text-3xl font-bold text-white mb-12 text-center">
+ {language === 'ar' ? 'الأسئلة الشائعة' : 'Frequently Asked Questions'}
  </h2>
 
  <div className="space-y-4">
  {faqs.map((faq, index) => (
  <div
  key={index}
- className="border border-slate-200 rounded-lg overflow-hidden bg-indigo-950/60"
+ className="rounded-lg overflow-hidden"
+ style={{ border: '1px solid rgba(56,189,248,0.2)', backgroundColor: 'rgba(255,255,255,0.03)' }}
  >
  <button
  onClick={() => setExpandedFaq(expandedFaq === index ? null : index)}
- className="w-full px-6 py-4 text-left font-semibold text-slate-900 hover:bg-slate-50 transition-colors flex justify-between items-center"
+ className="w-full px-6 py-4 text-left font-semibold text-white transition-colors flex justify-between items-center"
+ style={{ backgroundColor: expandedFaq === index ? 'rgba(56,189,248,0.08)' : 'transparent' }}
  >
- {language ==='ar' ? faq.questionAr : faq.question}
- <span className={`text-cyan-600 transition-transform ${expandedFaq === index ?'rotate-180' :''}`}>
+ {language === 'ar' ? faq.questionAr : faq.question}
+ <span
+ className={`transition-transform ${expandedFaq === index ? 'rotate-180' : ''}`}
+ style={{ color: '#38BDF8' }}
+ >
  ▼
  </span>
  </button>
  {expandedFaq === index && (
- <div className="px-6 py-4 bg-slate-50 border-t border-slate-200">
- <p className="text-slate-600">
- {language ==='ar' ? faq.answerAr : faq.answer}
+ <div className="px-6 py-4" style={{ borderTop: '1px solid rgba(56,189,248,0.15)', backgroundColor: 'rgba(56,189,248,0.04)' }}>
+ <p style={{ color: 'rgba(255,255,255,0.65)' }}>
+ {language === 'ar' ? faq.answerAr : faq.answer}
  </p>
  </div>
  )}

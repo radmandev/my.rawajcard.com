@@ -35,24 +35,24 @@ const Section = ({ id, icon: Icon, title, children, isExpanded, onToggle }) => {
   const { sectionsToShow } = React.useContext(FormContext) || {};
   if (sectionsToShow && !sectionsToShow.includes(id)) return null;
   return (
-    <div className="border border-slate-200 rounded-lg overflow-hidden">
+    <div className="border border-white/15 rounded-lg overflow-hidden">
       <button
         onClick={onToggle}
-        className="w-full flex items-center justify-between p-4 bg-indigo-950/60 hover:bg-slate-50 transition-colors"
+        className="w-full flex items-center justify-between p-4 bg-slate-900/60 hover:bg-slate-800/60 transition-colors"
       >
         <div className="flex items-center gap-3">
           <Icon className="h-5 w-5 text-cyan-600" />
-          <h3 className="font-semibold text-slate-900">{title}</h3>
+          <h3 className="font-semibold text-slate-100">{title}</h3>
         </div>
         {isExpanded ? (
-          <ChevronUp className="h-5 w-5 text-slate-400" />
+          <ChevronUp className="h-5 w-5 text-slate-300" />
         ) : (
-          <ChevronDown className="h-5 w-5 text-slate-400" />
+          <ChevronDown className="h-5 w-5 text-slate-300" />
         )}
       </button>
       
       {isExpanded && (
-        <div className="p-4 bg-slate-50 border-t border-slate-200">
+        <div className="p-4 bg-slate-900/40 border-t border-white/10">
           {children}
         </div>
       )}
@@ -62,7 +62,7 @@ const Section = ({ id, icon: Icon, title, children, isExpanded, onToggle }) => {
 
 export default function SimpleForm({ card, onChange, onSaveDraft, sectionsToShow }) {
   const { t, isRTL } = useLanguage();
-  const [expandedSections, setExpandedSections] = useState(['personal']);
+  const [expandedSections, setExpandedSections] = useState(['personal', 'company', 'social', 'design']);
   const [subscription, setSubscription] = React.useState(null);
   const [uploadingProfileImage, setUploadingProfileImage] = React.useState(false);
   const profileImageRef = useRef(null);
@@ -180,8 +180,8 @@ export default function SimpleForm({ card, onChange, onSaveDraft, sectionsToShow
                     </button>
                   </div>
                 ) : (
-                  <div className="h-24 w-24 rounded-full bg-slate-100 flex items-center justify-center">
-                    <User className="h-10 w-10 text-slate-400" />
+                  <div className="h-24 w-24 rounded-full bg-slate-800/60 flex items-center justify-center">
+                    <User className="h-10 w-10 text-slate-300" />
                   </div>
                 )}
                 <div className="flex gap-2">
@@ -247,8 +247,8 @@ export default function SimpleForm({ card, onChange, onSaveDraft, sectionsToShow
                     </button>
                   </div>
                 ) : (
-                  <div className="h-24 w-24 rounded-lg bg-slate-100 flex items-center justify-center">
-                    <Building2 className="h-10 w-10 text-slate-400" />
+                  <div className="h-24 w-24 rounded-lg bg-slate-800/60 flex items-center justify-center">
+                    <Building2 className="h-10 w-10 text-slate-300" />
                   </div>
                 )}
                 <label className="cursor-pointer">
@@ -295,7 +295,7 @@ export default function SimpleForm({ card, onChange, onSaveDraft, sectionsToShow
               placeholder={isRTL ? 'نبذة عنك' : 'A short bio about yourself'}
               rows={3}
             />
-            <p className="text-xs text-slate-500">
+            <p className="text-xs text-slate-300">
               {isRTL ? 'اضغط Enter لإضافة سطر جديد' : 'Press Enter to add line breaks'}
             </p>
           </div>
@@ -330,7 +330,7 @@ export default function SimpleForm({ card, onChange, onSaveDraft, sectionsToShow
                   <div className="h-24 border-2 border-dashed border-slate-300 rounded-lg flex items-center justify-center hover:border-cyan-500 transition-colors">
                     <div className="text-center">
                       <Upload className="h-6 w-6 mx-auto text-slate-400 mb-1" />
-                      <p className="text-sm text-slate-500">{isRTL ? 'رفع صورة غلاف' : 'Upload cover image'}</p>
+                      <p className="text-sm text-slate-300">{isRTL ? 'رفع صورة غلاف' : 'Upload cover image'}</p>
                     </div>
                   </div>
                 </label>
@@ -423,7 +423,7 @@ export default function SimpleForm({ card, onChange, onSaveDraft, sectionsToShow
             <div key={platform.key} className="space-y-2">
               <Label>{platform.label}</Label>
               <div className="flex items-center gap-2">
-                <span className="text-xs text-slate-500 whitespace-nowrap">{platform.prefix}</span>
+                <span className="text-xs text-slate-300 whitespace-nowrap">{platform.prefix}</span>
                 <Input
                   value={(card.social_links?.[platform.key] || '').replace(platform.prefix, '')}
                   onChange={(e) => {
@@ -484,7 +484,7 @@ export default function SimpleForm({ card, onChange, onSaveDraft, sectionsToShow
                   <div className="h-24 border-2 border-dashed border-slate-300 rounded-lg flex items-center justify-center hover:border-cyan-500 transition-colors">
                     <div className="text-center">
                       <Upload className="h-6 w-6 mx-auto text-slate-400 mb-1" />
-                      <p className="text-sm text-slate-500">{isRTL ? 'رفع صورة خلفية' : 'Upload background'}</p>
+                      <p className="text-sm text-slate-300">{isRTL ? 'رفع صورة خلفية' : 'Upload background'}</p>
                     </div>
                   </div>
                 </label>
@@ -674,7 +674,7 @@ export default function SimpleForm({ card, onChange, onSaveDraft, sectionsToShow
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <Label>{isRTL ? 'استدارة الحواف' : 'Border Radius'}</Label>
-                <span className="text-sm font-mono bg-slate-100 px-2 py-1 rounded">
+                <span className="text-sm font-mono bg-slate-800/60 px-2 py-1 rounded">
                   {(card.design?.border_radius || '12').toString().replace('px', '')}px
                 </span>
               </div>
@@ -691,7 +691,7 @@ export default function SimpleForm({ card, onChange, onSaveDraft, sectionsToShow
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <Label>{isRTL ? 'المسافات الداخلية' : 'Card Padding'}</Label>
-                <span className="text-sm font-mono bg-slate-100 px-2 py-1 rounded">
+                <span className="text-sm font-mono bg-slate-800/60 px-2 py-1 rounded">
                   {(card.design?.card_padding || '24').toString().replace('px', '')}px
                 </span>
               </div>
@@ -732,7 +732,7 @@ export default function SimpleForm({ card, onChange, onSaveDraft, sectionsToShow
               <h3 className="text-lg font-bold text-slate-900 mb-2">
                 {isRTL ? 'ميزة مميزة' : 'Premium Feature'}
               </h3>
-              <p className="text-sm text-slate-600 mb-4">
+              <p className="text-sm text-slate-300 mb-4">
                 {isRTL 
                   ? 'قم بالترقية إلى الخطة المميزة لتفعيل حجز المواعيد'
                   : 'Upgrade to Premium to enable appointment booking'
@@ -926,7 +926,7 @@ export default function SimpleForm({ card, onChange, onSaveDraft, sectionsToShow
               <h3 className="text-lg font-bold text-slate-900 mb-2">
                 {isRTL ? 'ميزة مميزة' : 'Premium Feature'}
               </h3>
-              <p className="text-sm text-slate-600 mb-4">
+              <p className="text-sm text-slate-300 mb-4">
                 {isRTL 
                   ? 'قم بالترقية إلى الخطة المميزة لتفعيل النماذج المخصصة'
                   : 'Upgrade to Premium to enable custom forms'
@@ -1003,7 +1003,7 @@ export default function SimpleForm({ card, onChange, onSaveDraft, sectionsToShow
                 rows={8}
                 className="font-mono text-xs"
               />
-              <p className="text-xs text-slate-500">
+              <p className="text-xs text-slate-300">
                 {isRTL 
                   ? 'الصق كود HTML أو JavaScript للنموذج (من Google Forms، Typeform، إلخ)'
                   : 'Paste HTML or JavaScript code for your form (from Google Forms, Typeform, etc.)'
@@ -1040,7 +1040,7 @@ export default function SimpleForm({ card, onChange, onSaveDraft, sectionsToShow
               <h3 className="text-lg font-bold text-slate-900 mb-2">
                 {isRTL ? 'ميزة مميزة' : 'Premium Feature'}
               </h3>
-              <p className="text-sm text-slate-600 mb-4">
+              <p className="text-sm text-slate-300 mb-4">
                 {isRTL 
                   ? 'قم بالترقية إلى الخطة المميزة لجمع جهات الاتصال'
                   : 'Upgrade to Premium to collect visitor contacts'
@@ -1058,7 +1058,7 @@ export default function SimpleForm({ card, onChange, onSaveDraft, sectionsToShow
               <div className="flex items-center justify-between">
                 <div>
                   <Label>{isRTL ? 'تفعيل جمع جهات الاتصال' : 'Enable Contact Collection'}</Label>
-                  <p className="text-xs text-slate-500 mt-1">
+                  <p className="text-xs text-slate-300 mt-1">
                     {isRTL ? 'جمع معلومات الزوار تلقائياً' : 'Collect visitor information automatically'}
                   </p>
                 </div>
@@ -1486,7 +1486,7 @@ export default function SimpleForm({ card, onChange, onSaveDraft, sectionsToShow
           <h3 className="text-lg font-bold text-slate-900 mb-2">
             {isRTL ? 'قريباً' : 'Coming Soon'}
           </h3>
-          <p className="text-sm text-slate-600">
+          <p className="text-sm text-slate-300">
             {isRTL 
               ? 'ربط تلقائي مع Bitrix24، HubSpot، Salesforce وغيرها'
               : 'Automatic integration with Bitrix24, HubSpot, Salesforce and more'

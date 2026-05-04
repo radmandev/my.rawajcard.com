@@ -234,7 +234,7 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
   };
 
   return (
-    <div className="min-h-screen bg-indigo-950/60 pb-16 md:pb-0" dir={isRTL ? 'rtl' : 'ltr'} style={{ fontFamily: isRTL ? "'Tajawal', 'Cairo', sans-serif" : "'Inter', 'Segoe UI', sans-serif" }}>
+    <div className="min-h-screen bg-slate-50 md:bg-indigo-950/60 pb-16 md:pb-0" dir={isRTL ? 'rtl' : 'ltr'} style={{ fontFamily: "'Tajawal', sans-serif" }}>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=Cairo:wght@400;600;700;800&display=swap');
 
@@ -371,6 +371,7 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
         .demo-hero-section {
           overflow-x: hidden;
           overflow-y: visible;
+          scroll-behavior: auto;
         }
 
         .demo-phone-wrap {
@@ -505,6 +506,7 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
           padding: 1rem;
           display: flex;
           flex-direction: column;
+          overflow: hidden;
         }
 
         .demo-digital-card {
@@ -1677,17 +1679,18 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
           }
 
           .demo-mockup-col {
-            margin-top: 0.35rem;
+            margin-top: 1.1rem;
+            margin-bottom: 0.45rem;
           }
 
           .demo-mockup-wrap {
-            height: 24.5rem;
+            height: 25.2rem;
             width: min(100%, 22rem);
           }
 
           .demo-phone-wrap {
             transform: translateX(-50%) scale(0.65);
-            top: -4.6rem;
+            top: -3.25rem;
           }
 
           .demo-phone-rings {
@@ -1742,6 +1745,10 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
             width: min(14.5rem, 78vw);
             height: 4.5rem;
           }
+
+          .demo-cta-row-mobile {
+            margin-top: 0.35rem;
+          }
         }
 
         @keyframes demoPhoneFloat {
@@ -1780,7 +1787,7 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
       {!heroOnly && <Navbar />}
 
       <section
-        className="demo-hero-section relative min-h-[92vh] flex items-center overflow-hidden"
+        className="demo-hero-section relative min-h-[92vh] flex items-center"
         style={{ background: 'linear-gradient(135deg, #0C1429 0%, #1E1B4B 50%, #0C1429 100%)' }}
       >
         <svg width="0" height="0" aria-hidden="true" focusable="false" style={{ position: 'absolute' }}>
@@ -1810,12 +1817,37 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
           <div className="demo-hero-content grid lg:grid-cols-2 gap-14 items-center">
             <div className="demo-hero-copy">
 
+              {/* Gradient-border badge above headline */}
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+                className="inline-block mb-5 mt-8"
+                style={{
+                  padding: '2px',
+                  borderRadius: '9999px',
+                  background: 'linear-gradient(135deg, #38BDF8, #E879F9)',
+                }}
+              >
+                <span
+                  className="block px-5 py-2 text-sm font-semibold rounded-full"
+                  style={{
+                    background: '#0C1429',
+                    color: 'rgba(255,255,255,0.9)',
+                    fontFamily: "'Tajawal', sans-serif",
+                    letterSpacing: '0.02em',
+                  }}
+                >
+                  {isRTL ? 'الجيل الجديد من كروت التعارف في عالم الأعمال' : 'The next generation of business networking cards'}
+                </span>
+              </motion.div>
+
               <motion.h1
                 initial={{ opacity: 0, x: 30 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
                 className="demo-hero-title text-4xl md:text-5xl lg:text-6xl font-black mb-6"
-                style={{ fontFamily: isRTL ? "'Cairo', sans-serif" : "'Inter', sans-serif", color: '#fff', lineHeight: '1.55' }}
+                style={{ fontFamily: "'Tajawal', sans-serif", color: '#fff', lineHeight: '1.55' }}
               >
                 <span className="text-white">{isRTL ? 'استعد للتعريف ' : 'Ready to introduce '}</span>
                 <AnimatePresence mode="wait">
@@ -1848,15 +1880,6 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
                   {isRTL ? 'بطريقة عصرية' : 'the modern way'}
                 </span>
               </motion.h1>
-
-              <motion.p
-                initial={{ opacity: 0, x: 30 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: 0.35 }}
-                className="demo-hero-subtitle text-slate-300 text-lg md:text-xl mb-8 leading-relaxed"
-              >
-                {isRTL ? 'الجيل الجديد من كروت التعارف في عالم الأعمال' : 'The next generation of business networking cards'}
-              </motion.p>
 
               <motion.div
                 initial={{ opacity: 0, y: 16 }}
@@ -1916,7 +1939,7 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, delay: 0.65 }}
-                className="demo-cta-row flex flex-wrap items-center gap-3"
+                className="demo-cta-row hidden md:flex flex-wrap items-center gap-3"
               >
                 <motion.button
                   whileHover={{ scale: 1.03, y: -2 }}
@@ -2204,6 +2227,33 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
                   </AnimatePresence>
                 </div>
               </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.65 }}
+              className="demo-cta-row demo-cta-row-mobile flex md:hidden flex-wrap items-center gap-3"
+            >
+              <motion.button
+                whileHover={{ scale: 1.03, y: -2 }}
+                whileTap={{ scale: 0.97 }}
+                onClick={() => navigate('/customize')}
+                className="inline-flex items-center gap-2 bg-gradient-to-r from-fuchsia-500 via-purple-500 to-purple-600 hover:from-fuchsia-400 hover:via-purple-400 hover:to-purple-500 text-white font-bold px-8 py-4 rounded-2xl shadow-lg shadow-fuchsia-500/30 transition-all text-base cursor-pointer border border-white/20"
+              >
+                <ShoppingCart className="h-5 w-5" />
+                {isRTL ? 'اشتر بطاقة NFC' : 'Buy NFC Card'}
+              </motion.button>
+              <span className="text-sm font-medium text-slate-400">{isRTL ? 'أو' : 'or'}</span>
+              <motion.button
+                whileHover={{ scale: 1.03, y: -2 }}
+                whileTap={{ scale: 0.97 }}
+                onClick={handleCreateDigital}
+                className="inline-flex items-center gap-2 bg-indigo-950/60/10 hover:bg-indigo-950/60/20 text-white font-bold px-8 py-4 rounded-2xl border border-white/20 shadow-lg shadow-slate-900/20 transition-all text-base cursor-pointer backdrop-blur-sm"
+              >
+                <LogIn className="h-5 w-5" />
+                {isRTL ? 'أنشئ بطاقة رقمية' : 'Create Digital Card'}
+              </motion.button>
             </motion.div>
           </div>
         </div>

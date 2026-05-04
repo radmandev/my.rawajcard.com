@@ -4,6 +4,7 @@ import { createPageUrl } from '@/utils';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import Navbar from '@/components/landing/Navbar';
+import Footer from '@/components/landing/Footer';
 import GetStartedSteps from '@/components/landing/GetStartedSteps';
 import ProductPreviewModal from '@/components/store/ProductPreviewModal';
 import LoginModal from '@/components/auth/LoginModal';
@@ -12,7 +13,7 @@ import { useLanguage } from '@/components/shared/LanguageContext';
 import { useAuth } from '@/lib/AuthContext';
 import {
   Wifi, Star, ShoppingCart, ChevronLeft, ChevronRight,
-  Phone, Mail, MessageCircle, MapPin, ArrowLeft, Check,
+  MapPin, ArrowLeft, Check,
   Zap, Smartphone, RefreshCw, Shield, Award, Users
 } from 'lucide-react';
 
@@ -324,12 +325,8 @@ export default function AlternateLanding() {
   const midPageCtaLabel = isAuthenticated
     ? (isRTL ? 'تسجيل الدخول' : 'Login')
     : (isRTL ? 'انشئ كرتك مجاناً الآن' : 'Create Your Free Card Now');
-  const footerCtaLabel = isAuthenticated
-    ? (isRTL ? 'تسجيل الدخول' : 'Login')
-    : (isRTL ? 'ابدأ مجاناً' : 'Start for Free');
-
   return (
-    <div className="min-h-screen bg-indigo-950/60 pb-16 md:pb-0" dir={isRTL ? 'rtl' : 'ltr'} style={{ fontFamily: isRTL ? "'Tajawal', 'Cairo', sans-serif" : "'Inter', 'Segoe UI', sans-serif" }}>
+    <div className="min-h-screen bg-slate-50 md:bg-indigo-950/60 pb-16 md:pb-0" dir={isRTL ? 'rtl' : 'ltr'} style={{ fontFamily: "'Tajawal', sans-serif" }}>
       {/* Google Fonts */}
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=Cairo:wght@400;600;700;800&display=swap');
@@ -380,12 +377,37 @@ export default function AlternateLanding() {
                 </span>
               </motion.div>
 
+              {/* Gradient-border badge above headline */}
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+                className="inline-block mb-5 mt-8"
+                style={{
+                  padding: '2px',
+                  borderRadius: '9999px',
+                  background: 'linear-gradient(135deg, #38BDF8, #E879F9)',
+                }}
+              >
+                <span
+                  className="block px-5 py-2 text-sm font-semibold rounded-full"
+                  style={{
+                    background: '#0C1429',
+                    color: 'rgba(255,255,255,0.9)',
+                    fontFamily: "'Tajawal', sans-serif",
+                    letterSpacing: '0.02em',
+                  }}
+                >
+                  {isRTL ? 'الجيل الجديد من كروت التعارف في عالم الأعمال' : 'The next generation of business networking cards'}
+                </span>
+              </motion.div>
+
               <motion.h1
                 initial={{ opacity: 0, x: 30 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
                 className="text-4xl md:text-5xl lg:text-6xl font-black mb-6"
-                style={{ fontFamily: isRTL ? "'Cairo', sans-serif" : "'Inter', sans-serif", color: '#fff', lineHeight: '1.55' }}
+                style={{ fontFamily: "'Tajawal', sans-serif", color: '#fff', lineHeight: '1.55' }}
               >
                 <span className="text-white">{isRTL ? 'استعد للتعريف ' : 'Ready to introduce '}</span>
                 <AnimatePresence mode="wait">
@@ -418,15 +440,6 @@ export default function AlternateLanding() {
                   {isRTL ? 'بطريقة عصرية' : 'the modern way'}
                 </span>
               </motion.h1>
-
-              <motion.p
-                initial={{ opacity: 0, x: 30 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: 0.35 }}
-                className="text-slate-300 text-lg md:text-xl mb-8 leading-relaxed"
-              >
-                {isRTL ? 'الجيل الجديد من كروت التعارف في عالم الأعمال' : 'The next generation of business networking cards'}
-              </motion.p>
 
               {/* Product Type Tabs */}
               <motion.div
@@ -791,120 +804,7 @@ export default function AlternateLanding() {
       </section>
 
       {/* ── Footer ───────────────────────────────────────────────────── */}
-      <footer style={{ background: '#0a0a0a' }} className="text-white">
-        {/* Top CTA strip */}
-        <div className="border-b border-white/10 py-10">
-          <div className="container mx-auto px-4 md:px-10 flex flex-col md:flex-row items-center justify-between gap-6">
-            <div>
-              <h3 className="text-xl font-black mb-1">{isRTL ? 'جاهز تبدأ؟' : 'Ready to start?'}</h3>
-              <p className="text-slate-400 text-sm">{isRTL ? 'انشئ كرتك الرقمي مجاناً الآن' : 'Create your digital card for free today'}</p>
-            </div>
-            <Link
-              to={createPageUrl('Products')}
-              className="inline-flex items-center gap-2 bg-cyan-600 hover:bg-cyan-500 text-white font-bold px-8 py-3.5 rounded-2xl transition-colors"
-            >
-              {isRTL ? 'اختر بطاقتك الآن' : 'Choose Your Card Now'}
-              <ArrowLeft className="h-4 w-4" />
-            </Link>
-          </div>
-        </div>
-
-        {/* Main footer */}
-        <div className="container mx-auto px-4 md:px-10 py-16">
-          <div className="grid md:grid-cols-4 gap-10">
-            {/* Brand */}
-            <div className="md:col-span-1">
-              <div className="flex items-center gap-3 mb-4">
-                <img
-                  src="/rawajcard-logo1.png"
-                  alt="Rawajcard"
-                  className="h-12 w-12 object-contain"
-                />
-                <div className="text-2xl font-black text-white">Rawajcard</div>
-              </div>
-              <p className="text-slate-400 text-sm leading-relaxed mb-5">
-                {isRTL ? 'الجيل الجديد من بطاقات التعارف الذكية في عالم الأعمال' : 'The next generation of smart business cards'}
-              </p>
-              <div className="flex gap-3">
-                {[
-                  { href: 'https://www.facebook.com/rawajcard', icon: '𝒻' },
-                  { href: 'https://twitter.com/rawajcard', icon: '𝓍' },
-                  { href: 'https://www.instagram.com/rawajcard', icon: '𝒾𝑔' },
-                ].map((s, i) => (
-                  <a key={i} href={s.href} target="_blank" rel="noopener noreferrer"
-                    className="w-9 h-9 bg-indigo-950/60/10 hover:bg-cyan-600 rounded-full flex items-center justify-center text-sm transition-colors">
-                    {s.icon}
-                  </a>
-                ))}
-              </div>
-            </div>
-
-            {/* Links */}
-            {[
-              {
-                titleAr: 'روابط مهمة', titleEn: 'Quick Links',
-                links: [
-                  { labelAr: 'المتجر', labelEn: 'Shop', href: 'https://rawajcard.com/shop/' },
-                  { labelAr: 'حسابي', labelEn: 'My Account', href: 'https://rawajcard.com/my-account/' },
-                  { labelAr: 'طلبياتي', labelEn: 'My Orders', href: 'https://rawajcard.com/my-orders/' },
-                  { labelAr: 'جميع المنتجات', labelEn: 'All Products', href: 'https://rawajcard.com/shop/' },
-                ],
-              },
-              {
-                titleAr: 'معلومات مهمة', titleEn: 'Info',
-                links: [
-                  { labelAr: 'الشحن والتوصيل', labelEn: 'Shipping & Delivery', href: 'https://rawajcard.com/shipping' },
-                  { labelAr: 'سياسة التبديل والاسترجاع', labelEn: 'Returns Policy', href: 'https://rawajcard.com/returns' },
-                  { labelAr: 'سياسة الخصوصية', labelEn: 'Privacy Policy', href: 'https://rawajcard.com/privacy-policy' },
-                  { labelAr: 'وسائل الدفع', labelEn: 'Payment Methods', href: 'https://rawajcard.com/payments' },
-                ],
-              },
-              {
-                titleAr: 'تواصل معنا', titleEn: 'Contact Us',
-                links: [],
-                contact: true,
-              },
-            ].map((col, i) => (
-              <div key={i}>
-                <h4 className="font-black text-white mb-5 text-base">{isRTL ? col.titleAr : col.titleEn}</h4>
-                {col.contact ? (
-                  <div className="space-y-4 text-sm text-slate-400">
-                    <a href="mailto:info@rawajcard.com" className="flex items-center gap-2 hover:text-cyan-400 transition-colors">
-                      <Mail className="h-4 w-4 flex-shrink-0" />
-                      info@rawajcard.com
-                    </a>
-                    <a href="https://wa.me/966531607223" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-cyan-400 transition-colors">
-                      <MessageCircle className="h-4 w-4 flex-shrink-0" />
-                      {isRTL ? 'واتساب: 966531607223+' : 'WhatsApp: +966531607223'}
-                    </a>
-                    <a href="tel:966531607223" className="flex items-center gap-2 hover:text-cyan-400 transition-colors">
-                      <Phone className="h-4 w-4 flex-shrink-0" />
-                      {isRTL ? 'اتصل بنا: 966531607223+' : 'Call: +966531607223'}
-                    </a>
-                  </div>
-                ) : (
-                  <ul className="space-y-3 text-sm text-slate-400">
-                    {col.links.map((link, j) => (
-                      <li key={j}>
-                        <a href={link.href} target="_blank" rel="noopener noreferrer"
-                          className="hover:text-cyan-400 transition-colors">
-                          {isRTL ? link.labelAr : link.labelEn}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="border-t border-white/10 py-6 text-center text-sm text-slate-500">
-          {isRTL
-            ? `جميع الحقوق محفوظة © ${new Date().getFullYear()} رواج كارد — تقنية NFC الذكية`
-            : `All rights reserved © ${new Date().getFullYear()} Rawajcard — Smart NFC Technology`}
-        </div>
-      </footer>
+      <Footer />
 
       {/* Product Preview Modal */}
       <ProductPreviewModal

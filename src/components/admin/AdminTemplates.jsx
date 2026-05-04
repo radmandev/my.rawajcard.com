@@ -162,8 +162,8 @@ const templates = [
  },
  {
  id:'aurora_glass',
- name:'Aurora Glass',
- nameAr:'أورورا زجاجي',
+ name:'Rawajcard Glass',
+ nameAr:'رواج كارد زجاجي',
  description:'Animated aurora with glassmorphism cards',
  descriptionAr:'خلفية أورورا متحركة مع تصميم زجاجي عصري',
  category:'creative',
@@ -329,7 +329,7 @@ export default function AdminTemplates() {
  </div>
  <div className="p-4 space-y-3">
  <div>
- <h3 className="font-semibold text-slate-900">
+ <h3 className="font-semibold text-white">
  {isRTL ? template.nameAr : template.name}
  </h3>
  <p className="text-xs text-slate-500 mt-1">

@@ -20,7 +20,7 @@ function LayoutContent({ children, currentPageName }) {
  const { isAuthenticated, isLoadingAuth } = useAuth();
 
  // Public pages that don't need sidebar
- const publicPages = ['PublicCard','CheckoutSuccess','Home','Products','ProductDetail','Pricing','Store','Checkout','Demo3D','PhysicalCards','CardSamples','NFCCustomizer'];
+ const publicPages = ['PublicCard','CheckoutSuccess','Home','Products','ProductDetail','Pricing','Store','Checkout','Demo3D','PhysicalCards','CardSamples','NFCCustomizer','PrivacyPolicy','Return','PaymentsPolicy'];
  const isPublicPage = publicPages.includes(currentPageName);
  const isHomePage = currentPageName ==='Home';
 
@@ -69,7 +69,7 @@ function LayoutContent({ children, currentPageName }) {
  }
 
  return (
- <div className={cn("min-h-screen bg-slate-50", isRTL &&"rtl")} style={{ overscrollBehavior:'none' }}>
+ <div className={cn("min-h-screen bg-[#0C1429]", isRTL &&"rtl")} style={{ overscrollBehavior:'none' }}>
  <style>{`
  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Tajawal:wght@300;400;500;700&display=swap');
  
@@ -80,7 +80,7 @@ function LayoutContent({ children, currentPageName }) {
  }
  
  body {
- font-family: ${isRTL ?"'Tajawal', sans-serif" :"'Inter', sans-serif"};
+ font-family: 'Tajawal', sans-serif;
  overscroll-behavior: none;
  padding-top: env(safe-area-inset-top);
  padding-bottom: env(safe-area-inset-bottom);

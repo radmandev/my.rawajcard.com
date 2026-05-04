@@ -179,7 +179,7 @@ export default function CheckoutSuccess() {
  <div className="min-h-[60vh] flex items-center justify-center">
  <div className="text-center space-y-4">
  <Loader2 className="h-12 w-12 animate-spin text-cyan-600 mx-auto" />
- <p className="text-lg text-slate-600">
+ <p className="text-lg text-slate-300">
  {isRTL ?'جاري معالجة طلبك...' :'Processing your order...'}
  </p>
  </div>
@@ -208,23 +208,23 @@ export default function CheckoutSuccess() {
  transition={{ delay: 0.2, type:'spring', stiffness: 200 }}
  className="inline-flex"
  >
- <div className="h-20 w-20 rounded-full bg-cyan-100 flex items-center justify-center">
- <Sparkles className="h-10 w-10 text-cyan-600" />
+ <div className="h-20 w-20 rounded-full flex items-center justify-center" style={{background:'rgba(56,189,248,0.15)'}}>
+ <Sparkles className="h-10 w-10" style={{color:'#38BDF8'}} />
  </div>
  </motion.div>
 
  <div className="space-y-2">
- <h1 className="text-2xl md:text-3xl font-bold text-slate-900">
+ <h1 className="text-2xl md:text-3xl font-bold text-white">
  {isRTL ?'🎉 مرحباً بك في' + planLabel +'!' :`🎉 Welcome to ${planLabel}!`}
  </h1>
- <p className="text-slate-600">
+ <p className="text-slate-300">
  {isRTL
  ?'تم تفعيل اشتراكك بنجاح. استمتع بجميع المميزات الاحترافية!'
  :'Your subscription is now active. Enjoy all the premium features!'}
  </p>
  </div>
 
- <div className="bg-cyan-50 border border-cyan-200 rounded-lg p-4 text-sm text-cyan-800">
+ <div className="rounded-lg p-4 text-sm text-sky-200" style={{backgroundColor:'rgba(56,189,248,0.08)', border:'1px solid rgba(56,189,248,0.2)'}}>
  {isRTL
  ?'يمكنك الآن إنشاء بطاقات غير محدودة والوصول إلى جميع الميزات المتقدمة.'
  :'You can now create unlimited cards and access all advanced features.'}
@@ -232,12 +232,12 @@ export default function CheckoutSuccess() {
 
  <div className="flex flex-col sm:flex-row gap-3 pt-4">
  <Link to={createPageUrl('MyCards')} className="flex-1">
- <Button variant="outline" className="w-full" size="lg">
+ <Button variant="outline" className="w-full border-slate-600 text-white hover:bg-slate-800" size="lg">
  {isRTL ?'بطاقاتي' :'My Cards'}
  </Button>
  </Link>
  <Link to={createPageUrl('CardBuilder')} className="flex-1">
- <Button className="w-full bg-cyan-600 hover:bg-cyan-700" size="lg">
+ <Button className="w-full bg-gradient-to-r from-sky-500 to-fuchsia-500 hover:from-sky-400 hover:to-fuchsia-400" size="lg">
  {isRTL ?'إنشاء بطاقة جديدة' :'Create New Card'}
  {!isRTL && <ArrowRight className="h-4 w-4 ml-2" />}
  </Button>
@@ -266,17 +266,17 @@ export default function CheckoutSuccess() {
  transition={{ delay: 0.2, type:"spring", stiffness: 200 }}
  className="inline-flex"
  >
- <div className="h-20 w-20 rounded-full bg-green-100 flex items-center justify-center">
- <CheckCircle className="h-10 w-10 text-green-600" />
+ <div className="h-20 w-20 rounded-full flex items-center justify-center" style={{background:'rgba(34,197,94,0.15)'}}>
+ <CheckCircle className="h-10 w-10 text-green-400" />
  </div>
  </motion.div>
 
  {/* Title */}
  <div className="space-y-2">
- <h1 className="text-2xl md:text-3xl font-bold text-slate-900">
+ <h1 className="text-2xl md:text-3xl font-bold text-white">
  {isRTL ?'تم الطلب بنجاح!' :'Order Successful!'}
  </h1>
- <p className="text-slate-600">
+ <p className="text-slate-300">
  {isRTL
  ?'شكراً لك! تم استلام طلبك وسيتم معالجته قريباً'
  :'Thank you! Your order has been received and will be processed soon'
@@ -286,12 +286,12 @@ export default function CheckoutSuccess() {
 
  {/* Order Number */}
  {orderNumber && (
- <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-slate-100">
- <Package className="h-5 w-5 text-slate-600" />
- <span className="text-sm text-slate-600">
+ <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg" style={{backgroundColor:'rgba(30,27,75,0.8)', border:'1px solid rgba(56,189,248,0.2)'}}>
+ <Package className="h-5 w-5 text-sky-400" />
+ <span className="text-sm text-slate-400">
  {isRTL ?'رقم الطلب:' :'Order #'}
  </span>
- <span className="font-mono font-semibold text-slate-900">
+ <span className="font-mono font-semibold text-white">
  {orderNumber}
  </span>
  </div>
@@ -299,7 +299,7 @@ export default function CheckoutSuccess() {
 
  {/* Info Box */}
  {paymentMethod ==='bank_transfer' ? (
- <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 text-sm text-amber-900 text-start">
+ <div className="rounded-lg p-4 text-sm text-amber-300 text-start" style={{backgroundColor:'rgba(245,158,11,0.1)', border:'1px solid rgba(245,158,11,0.25)'}}>
  <p className="font-semibold mb-1">
  {isRTL ?'⏳ طلبك قيد المراجعة' :'⏳ Your order is under review'}
  </p>
@@ -310,7 +310,7 @@ export default function CheckoutSuccess() {
  </p>
  </div>
  ) : (
- <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 text-sm text-blue-900">
+ <div className="rounded-lg p-4 text-sm text-blue-300" style={{backgroundColor:'rgba(59,130,246,0.1)', border:'1px solid rgba(59,130,246,0.25)'}}>
  {isRTL
  ?'سنرسل لك تفاصيل الطلب عبر البريد الإلكتروني. تحقق من صندوق الوارد الخاص بك.'
  :"We'll send you order details via email. Check your inbox."
@@ -319,12 +319,12 @@ export default function CheckoutSuccess() {
  )}
 
  {successType ==='order' && (
- <div className="rounded-xl border border-cyan-200 bg-cyan-50 p-5 text-start space-y-4">
+ <div className="rounded-xl p-5 text-start space-y-4" style={{backgroundColor:'rgba(56,189,248,0.07)', border:'1px solid rgba(56,189,248,0.2)'}}>
  <div>
- <p className="font-semibold text-slate-900">
+ <p className="font-semibold text-white">
  {isRTL ?'خصّص منتجاتك من داخل حسابك' :'Customize your ordered items from your account'}
  </p>
- <p className="text-sm text-slate-600 mt-1">
+ <p className="text-sm text-slate-300 mt-1">
  {isRTL
  ?'اعرض طلبات المتجر، اختر المنتج الذي طلبته، ثم خصّصه واربطه ببطاقتك الرقمية من صفحة طلباتي.'
  :'Open My Orders, select the purchased item, then customize it and link it to your digital card.'}
@@ -333,7 +333,7 @@ export default function CheckoutSuccess() {
 
  {isAuthenticated ? (
  <Link to={createPageUrl('MyOrders')} className="block">
- <Button className="w-full bg-cyan-600 hover:bg-cyan-700">
+ <Button className="w-full bg-gradient-to-r from-sky-500 to-fuchsia-500 hover:from-sky-400 hover:to-fuchsia-400">
  {isRTL ?'اذهب إلى طلباتي' :'Go to My Orders'}
  </Button>
  </Link>
@@ -370,12 +370,12 @@ export default function CheckoutSuccess() {
  {/* Actions */}
  <div className="flex flex-col sm:flex-row gap-3 pt-4">
  <Link to={createPageUrl('Store')} className="flex-1">
- <Button variant="outline" className="w-full" size="lg">
+ <Button variant="outline" className="w-full border-slate-600 text-white hover:bg-slate-800" size="lg">
  {isRTL ?'متابعة التسوق' :'Continue Shopping'}
  </Button>
  </Link>
  <Link to={createPageUrl('MyCards')} className="flex-1">
- <Button className="w-full bg-cyan-600 hover:bg-cyan-700" size="lg">
+ <Button className="w-full bg-gradient-to-r from-sky-500 to-fuchsia-500 hover:from-sky-400 hover:to-fuchsia-400" size="lg">
  {isRTL ?'إلى بطاقاتي' :'Go to My Cards'}
  {isRTL ? null : <ArrowRight className="h-4 w-4 ml-2" />}
  </Button>

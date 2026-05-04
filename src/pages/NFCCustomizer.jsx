@@ -439,7 +439,7 @@ export default function NFCCustomizer() {
  };
 
  return (
- <div className="min-h-screen bg-slate-50" dir={isRTL ?'rtl' :'ltr'}>
+ <div className="min-h-screen" style={{ backgroundColor: '#0C1429' }} dir={isRTL ? 'rtl' : 'ltr'}>
  <Navbar onLoginClick={() => setLoginOpen(true)} />
 
  <div className="public-subpage-offset pb-20 container mx-auto px-4 md:px-6 max-w-5xl">
@@ -449,10 +449,10 @@ export default function NFCCustomizer() {
  animate={{ opacity: 1, y: 0 }}
  className="text-center mb-10"
  >
- <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-2">
+ <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
  {t('Customize Your NFC Product','صمّم منتج NFC الخاص بك')}
  </h1>
- <p className="text-slate-500">
+ <p style={{ color: 'rgba(255,255,255,0.55)' }}>
  {t('Choose your product, pick your style, and preview it live','اختر منتجك، حدد أسلوبك، وشاهد المعاينة مباشرة')}
  </p>
  </motion.div>
@@ -461,18 +461,18 @@ export default function NFCCustomizer() {
  <div className="flex items-center justify-center gap-2 mb-10">
  {stepsLabels.map((label, i) => (
  <React.Fragment key={i}>
- {i > 0 && <div className={`h-px w-8 md:w-16 transition-colors ${i <= step ?'bg-cyan-500' :'bg-slate-200'}`} />}
+ {i > 0 && <div className="h-px w-8 md:w-16 transition-colors" style={{ backgroundColor: i <= step ? '#38BDF8' : 'rgba(255,255,255,0.12)' }} />}
  <button
  onClick={() => i <= step && setStep(i)}
- className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all ${
- i === step
- ?'bg-cyan-600 text-white shadow-lg shadow-cyan-600/30'
+ className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all"
+ style={i === step
+ ? { background: 'linear-gradient(135deg, #38BDF8, #E879F9)', color: '#fff', boxShadow: '0 0 16px rgba(56,189,248,0.35)' }
  : i < step
- ?'bg-cyan-100 text-cyan-700 cursor-pointer'
- :'bg-slate-100 text-slate-400'
- }`}
+ ? { backgroundColor: 'rgba(56,189,248,0.15)', color: '#38BDF8', cursor: 'pointer', border: '1px solid rgba(56,189,248,0.3)' }
+ : { backgroundColor: 'rgba(255,255,255,0.06)', color: 'rgba(255,255,255,0.35)', border: '1px solid rgba(255,255,255,0.1)' }
+ }
  >
- <span className="w-5 h-5 rounded-full bg-indigo-950/60/20 flex items-center justify-center text-[10px]">
+ <span className="w-5 h-5 rounded-full flex items-center justify-center text-[10px]" style={{ backgroundColor: 'rgba(255,255,255,0.1)' }}>
  {i < step ? <Check className="w-3 h-3" /> : i + 1}
  </span>
  <span className="hidden sm:inline">{label}</span>
@@ -488,15 +488,16 @@ export default function NFCCustomizer() {
  initial={{ opacity: 0, x: isRTL ? 20 : -20 }}
  animate={{ opacity: 1, x: 0 }}
  transition={{ duration: 0.3 }}
- className="bg-indigo-950/60 rounded-2xl shadow-xl border border-slate-200 p-6 md:p-8"
+ className="rounded-2xl shadow-xl p-6 md:p-8"
+ style={{ backgroundColor: '#1E1B4B', border: '1px solid rgba(56,189,248,0.18)' }}
  >
  {/* STEP 0: Product Type */}
  {step === 0 && (
  <div>
- <h2 className="text-lg font-bold text-slate-900 mb-1">
+ <h2 className="text-lg font-bold text-white mb-1">
  {t('Select Product Type','اختر نوع المنتج')}
  </h2>
- <p className="text-sm text-slate-500 mb-6">
+ <p className="text-sm mb-6" style={{ color: 'rgba(255,255,255,0.5)' }}>
  {t('What would you like to customize?','ماذا تود أن تخصص؟')}
  </p>
 
@@ -507,19 +508,19 @@ export default function NFCCustomizer() {
  <button
  key={pt.key}
  onClick={() => setProductType(pt.key)}
- className={`relative min-w-[150px] px-4 py-3 rounded-xl border-2 transition-all duration-200 text-center group hover:shadow-md ${
- productType === pt.key
- ?'border-cyan-500 bg-cyan-50 shadow-md'
- :'border-slate-200 hover:border-cyan-300'
- }`}
+ className="relative min-w-[150px] px-4 py-3 rounded-xl transition-all duration-200 text-center group hover:shadow-md"
+ style={productType === pt.key
+ ? { border: '2px solid #38BDF8', backgroundColor: 'rgba(56,189,248,0.12)', boxShadow: '0 0 16px rgba(56,189,248,0.2)' }
+ : { border: '2px solid rgba(255,255,255,0.1)', backgroundColor: 'rgba(255,255,255,0.04)' }
+ }
  >
  {productType === pt.key && (
- <div className="absolute top-2 right-2 w-5 h-5 rounded-full bg-cyan-500 text-white flex items-center justify-center">
- <Check className="w-3 h-3" />
+ <div className="absolute top-2 right-2 w-5 h-5 rounded-full flex items-center justify-center" style={{ background: 'linear-gradient(135deg,#38BDF8,#E879F9)' }}>
+ <Check className="w-3 h-3 text-white" />
  </div>
  )}
  <span className="text-2xl block mb-1">{pt.icon}</span>
- <span className="text-xs sm:text-sm font-semibold text-slate-800">
+ <span className="text-xs sm:text-sm font-semibold text-white">
  {isRTL ? pt.labelAr : pt.labelEn}
  </span>
  </button>
@@ -528,8 +529,8 @@ export default function NFCCustomizer() {
  </div>
 
  {/* Merged live preview */}
- <div className="bg-slate-50 rounded-2xl border border-slate-200 p-4 md:p-6">
- <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-4 text-center">
+ <div className="rounded-2xl p-4 md:p-6" style={{ backgroundColor: 'rgba(12,20,41,0.6)', border: '1px solid rgba(56,189,248,0.15)' }}>
+ <h3 className="text-xs font-semibold uppercase tracking-wider mb-4 text-center" style={{ color: '#38BDF8' }}>
  {t('Live Preview','معاينة مباشرة')}
  </h3>
  <div className="flex justify-center py-4">
@@ -545,19 +546,19 @@ export default function NFCCustomizer() {
  {/* STEP 1: Options */}
  {step === 1 && (
  <div>
- <h2 className="text-lg font-bold text-slate-900 mb-1">
- {productType ==='card' ? t('Card Material & Color','خامة البطاقة واللون') : t('Product Options','خيارات المنتج')}
+ <h2 className="text-lg font-bold text-white mb-1">
+ {productType === 'card' ? t('Card Material & Color','خامة البطاقة واللون') : t('Product Options','خيارات المنتج')}
  </h2>
- <p className="text-sm text-slate-500 mb-6">
- {productType ==='card'
+ <p className="text-sm mb-6" style={{ color: 'rgba(255,255,255,0.5)' }}>
+ {productType === 'card'
  ? t('Choose the material and finish for your card','اختر خامة البطاقة واللمسة النهائية')
  : t('Your selection details','تفاصيل اختيارك')}
  </p>
 
- {productType ==='card' && (
+ {productType === 'card' && (
  <>
  {/* Material */}
- <label className="text-sm font-semibold text-slate-700 mb-3 block">
+ <label className="text-sm font-semibold mb-3 block" style={{ color: '#38BDF8' }}>
  {t('Material','الخامة')}
  </label>
  <div className="flex gap-2 mb-6">
@@ -565,51 +566,51 @@ export default function NFCCustomizer() {
  <button
  key={m.key}
  onClick={() => setMaterial(m.key)}
- className={`flex-1 py-3 rounded-xl text-sm font-semibold transition-all border-2 ${
- material === m.key
- ?'border-cyan-500 bg-cyan-50 text-cyan-700'
- :'border-slate-200 text-slate-600 hover:border-cyan-300'
- }`}
+ className="flex-1 py-3 rounded-xl text-sm font-semibold transition-all"
+ style={material === m.key
+ ? { border: '2px solid #38BDF8', backgroundColor: 'rgba(56,189,248,0.12)', color: '#38BDF8' }
+ : { border: '2px solid rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.7)', backgroundColor: 'rgba(255,255,255,0.04)' }
+ }
  >
  {isRTL ? m.labelAr : m.labelEn}
- <span className="block text-xs text-slate-400 mt-0.5">{m.price} SAR</span>
+ <span className="block text-xs mt-0.5" style={{ color: 'rgba(255,255,255,0.4)' }}>{m.price} SAR</span>
  </button>
  ))}
  </div>
 
  {/* Color */}
- <label className="text-sm font-semibold text-slate-700 mb-3 block">
+ <label className="text-sm font-semibold mb-3 block" style={{ color: '#38BDF8' }}>
  {t('Color','اللون')}
  </label>
  <div className="flex gap-3 mb-4">
- {(material ==='metal' ? METAL_COLORS : material ==='wood' ? WOOD_COLORS : []).map(c => (
+ {(material === 'metal' ? METAL_COLORS : material === 'wood' ? WOOD_COLORS : []).map(c => (
  <button
  key={c.key}
  onClick={() => setColor(c.key)}
- className={`flex flex-col items-center gap-1.5 p-3 rounded-xl border-2 transition-all ${
- color === c.key
- ?'border-cyan-500 shadow-md'
- :'border-slate-200 hover:border-cyan-300'
- }`}
+ className="flex flex-col items-center gap-1.5 p-3 rounded-xl transition-all"
+ style={color === c.key
+ ? { border: '2px solid #38BDF8', boxShadow: '0 0 12px rgba(56,189,248,0.25)', backgroundColor: 'rgba(56,189,248,0.08)' }
+ : { border: '2px solid rgba(255,255,255,0.1)', backgroundColor: 'rgba(255,255,255,0.03)' }
+ }
  >
  <div
  className="w-10 h-10 rounded-full border-2 shadow-inner"
  style={{ backgroundColor: c.hex, borderColor: c.ring }}
  />
- <span className="text-xs font-medium text-slate-600">
+ <span className="text-xs font-medium" style={{ color: 'rgba(255,255,255,0.7)' }}>
  {isRTL ? c.labelAr : c.labelEn}
  </span>
  </button>
  ))}
- {material ==='pvc' && (
- <div className="flex items-center gap-3 p-4 rounded-xl border-2 border-cyan-500 bg-cyan-50 flex-1">
- <Palette className="w-5 h-5 text-cyan-600" />
+ {material === 'pvc' && (
+ <div className="flex items-center gap-3 p-4 rounded-xl flex-1" style={{ border: '2px solid #38BDF8', backgroundColor: 'rgba(56,189,248,0.08)' }}>
+ <Palette className="w-5 h-5" style={{ color: '#38BDF8' }} />
  <div>
- <p className="text-sm font-semibold text-slate-800">
+ <p className="text-sm font-semibold text-white">
  {t('UV Print — Any Design','طباعة UV — أي تصميم')}
  </p>
- <p className="text-xs text-slate-500">
- {t('Upload your design or we\'ll create one for you','ارفع تصميمك أو سننشئ لك واحداً')}
+ <p className="text-xs" style={{ color: 'rgba(255,255,255,0.5)' }}>
+ {t("Upload your design or we'll create one for you",'ارفع تصميمك أو سننشئ لك واحداً')}
  </p>
  </div>
  </div>
@@ -619,24 +620,24 @@ export default function NFCCustomizer() {
  )}
 
  {/* Non-card products info */}
- {productType !=='card' && (
+ {productType !== 'card' && (
  <div className="space-y-4">
- <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
+ <div className="p-4 rounded-xl" style={{ backgroundColor: 'rgba(255,255,255,0.04)', border: '1px solid rgba(56,189,248,0.15)' }}>
  <div className="flex items-center gap-3 mb-2">
  <span className="text-2xl">{PRODUCT_TYPES.find(p => p.key === productType)?.icon}</span>
  <div>
- <p className="font-semibold text-slate-800">
+ <p className="font-semibold text-white">
  {isRTL
  ? PRODUCT_TYPES.find(p => p.key === productType)?.labelAr
  : PRODUCT_TYPES.find(p => p.key === productType)?.labelEn}
  </p>
- <p className="text-sm text-cyan-600 font-bold">{price} SAR</p>
+ <p className="text-sm font-bold" style={{ color: '#38BDF8' }}>{price} SAR</p>
  </div>
  </div>
- <p className="text-sm text-slate-500">
- {productType ==='sticker'
+ <p className="text-sm" style={{ color: 'rgba(255,255,255,0.5)' }}>
+ {productType === 'sticker'
  ? t('Small circle shape — perfect for branding with your logo + NFC chip','شكل دائري صغير — مثالي للعلامة التجارية مع شعارك + شريحة NFC')
- : productType ==='keychain'
+ : productType === 'keychain'
  ? t('Compact circle design — fits your logo with NFC technology built-in','تصميم دائري مدمج — يناسب شعارك مع تقنية NFC مدمجة')
  : t('Professional table stand with NFC — share your store info, menu, social links','ستاند طاولة احترافي مع NFC — شارك معلومات متجرك، المنيو، روابط التواصل')}
  </p>
@@ -645,12 +646,12 @@ export default function NFCCustomizer() {
  )}
 
  {/* Price summary */}
- <div className="mt-6 p-4 rounded-xl bg-cyan-50 border border-cyan-200">
+ <div className="mt-6 p-4 rounded-xl" style={{ backgroundColor: 'rgba(56,189,248,0.08)', border: '1px solid rgba(56,189,248,0.25)' }}>
  <div className="flex items-center justify-between">
- <span className="text-sm font-medium text-slate-600">
+ <span className="text-sm font-medium" style={{ color: 'rgba(255,255,255,0.6)' }}>
  {t('Price','السعر')}
  </span>
- <span className="text-lg font-bold text-cyan-700">
+ <span className="text-lg font-bold" style={{ color: '#38BDF8' }}>
  {price} SAR
  </span>
  </div>
@@ -661,23 +662,23 @@ export default function NFCCustomizer() {
  {/* STEP 2: Design Info */}
  {step === 2 && (
  <div>
- <h2 className="text-lg font-bold text-slate-900 mb-1">
+ <h2 className="text-lg font-bold text-white mb-1">
  {t('Your Information','معلوماتك')}
  </h2>
- <p className="text-sm text-slate-500 mb-6">
+ <p className="text-sm mb-6" style={{ color: 'rgba(255,255,255,0.5)' }}>
  {t('This will appear on your product','ستظهر هذه على منتجك')}
  </p>
 
  <div className="space-y-4">
  {/* Logo Upload */}
  <div>
- <label className="text-sm font-semibold text-slate-700 mb-2 block">
+ <label className="text-sm font-semibold mb-2 block" style={{ color: 'rgba(255,255,255,0.8)' }}>
  {t('Logo','الشعار')}
  </label>
  <div className="flex items-center gap-3">
  {logoPreview ? (
  <div className="relative">
- <img src={logoPreview} alt="Logo" className="w-16 h-16 object-contain rounded-xl border border-slate-200" />
+ <img src={logoPreview} alt="Logo" className="w-16 h-16 object-contain rounded-xl" style={{ border: '1px solid rgba(56,189,248,0.3)' }} />
  <button
  onClick={() => { setLogoFile(null); setLogoPreview(null); }}
  className="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-red-500 text-white flex items-center justify-center"
@@ -688,20 +689,21 @@ export default function NFCCustomizer() {
  ) : (
  <button
  onClick={() => fileInputRef.current?.click()}
- className="w-16 h-16 rounded-xl border-2 border-dashed border-slate-300 flex flex-col items-center justify-center text-slate-400 hover:border-cyan-400 hover:text-cyan-500 transition-colors"
+ className="w-16 h-16 rounded-xl flex flex-col items-center justify-center transition-colors"
+ style={{ border: '2px dashed rgba(56,189,248,0.35)', color: 'rgba(56,189,248,0.6)', backgroundColor: 'rgba(56,189,248,0.05)' }}
  >
  <Upload className="w-5 h-5" />
  <span className="text-[10px] mt-0.5">{t('Upload','ارفع')}</span>
  </button>
  )}
  <input ref={fileInputRef} type="file" accept="image/*" className="hidden" onChange={handleLogoUpload} />
- <p className="text-xs text-slate-400">{t('PNG, JPG or SVG — max 2MB','PNG, JPG أو SVG — أقصى 2 ميجابايت')}</p>
+ <p className="text-xs" style={{ color: 'rgba(255,255,255,0.35)' }}>{t('PNG, JPG or SVG — max 2MB','PNG, JPG أو SVG — أقصى 2 ميجابايت')}</p>
  </div>
  </div>
 
  {/* Name */}
  <div>
- <label className="text-sm font-semibold text-slate-700 mb-1 block">
+ <label className="text-sm font-semibold mb-1 block" style={{ color: 'rgba(255,255,255,0.8)' }}>
  {t('Name / Business Name','الاسم / اسم النشاط')} *
  </label>
  <input
@@ -709,14 +711,15 @@ export default function NFCCustomizer() {
  value={name}
  onChange={(e) => setName(e.target.value)}
  placeholder={t('e.g. Ahmed Al-Shamri','مثال: أحمد الشمري')}
- className="w-full h-11 px-4 rounded-xl border border-slate-200 bg-slate-50 text-slate-900 text-sm focus:ring-2 focus:ring-cyan-500 focus:border-transparent outline-none transition-all"
+ className="w-full h-11 px-4 rounded-xl text-white text-sm outline-none transition-all"
+ style={{ backgroundColor: 'rgba(255,255,255,0.06)', border: '1px solid rgba(56,189,248,0.25)', color: '#fff' }}
  />
  </div>
 
- {/* Title (not for sticker/keychain) */}
- {productType !=='sticker' && productType !=='keychain' && (
+ {/* Title */}
+ {productType !== 'sticker' && productType !== 'keychain' && (
  <div>
- <label className="text-sm font-semibold text-slate-700 mb-1 block">
+ <label className="text-sm font-semibold mb-1 block" style={{ color: 'rgba(255,255,255,0.8)' }}>
  {t('Job Title / Tagline','المسمى الوظيفي / الوصف')}
  </label>
  <input
@@ -724,17 +727,18 @@ export default function NFCCustomizer() {
  value={title}
  onChange={(e) => setTitle(e.target.value)}
  placeholder={t('e.g. CEO @ Company','مثال: المدير التنفيذي @ الشركة')}
- className="w-full h-11 px-4 rounded-xl border border-slate-200 bg-slate-50 text-slate-900 text-sm focus:ring-2 focus:ring-cyan-500 focus:border-transparent outline-none transition-all"
+ className="w-full h-11 px-4 rounded-xl text-sm outline-none transition-all"
+ style={{ backgroundColor: 'rgba(255,255,255,0.06)', border: '1px solid rgba(56,189,248,0.25)', color: '#fff' }}
  />
  </div>
  )}
 
- {/* Contact fields for card & stand */}
- {(productType ==='card' || productType ==='stand') && (
+ {/* Contact fields */}
+ {(productType === 'card' || productType === 'stand') && (
  <>
  <div className="grid grid-cols-2 gap-3">
  <div>
- <label className="text-sm font-semibold text-slate-700 mb-1 block">
+ <label className="text-sm font-semibold mb-1 block" style={{ color: 'rgba(255,255,255,0.8)' }}>
  {t('Phone','الهاتف')}
  </label>
  <input
@@ -742,11 +746,12 @@ export default function NFCCustomizer() {
  value={phone}
  onChange={(e) => setPhone(e.target.value)}
  placeholder="+966..."
- className="w-full h-11 px-4 rounded-xl border border-slate-200 bg-slate-50 text-slate-900 text-sm focus:ring-2 focus:ring-cyan-500 focus:border-transparent outline-none transition-all"
+ className="w-full h-11 px-4 rounded-xl text-sm outline-none transition-all"
+ style={{ backgroundColor: 'rgba(255,255,255,0.06)', border: '1px solid rgba(56,189,248,0.25)', color: '#fff' }}
  />
  </div>
  <div>
- <label className="text-sm font-semibold text-slate-700 mb-1 block">
+ <label className="text-sm font-semibold mb-1 block" style={{ color: 'rgba(255,255,255,0.8)' }}>
  {t('Email','البريد')}
  </label>
  <input
@@ -754,12 +759,13 @@ export default function NFCCustomizer() {
  value={email}
  onChange={(e) => setEmail(e.target.value)}
  placeholder="name@example.com"
- className="w-full h-11 px-4 rounded-xl border border-slate-200 bg-slate-50 text-slate-900 text-sm focus:ring-2 focus:ring-cyan-500 focus:border-transparent outline-none transition-all"
+ className="w-full h-11 px-4 rounded-xl text-sm outline-none transition-all"
+ style={{ backgroundColor: 'rgba(255,255,255,0.06)', border: '1px solid rgba(56,189,248,0.25)', color: '#fff' }}
  />
  </div>
  </div>
  <div>
- <label className="text-sm font-semibold text-slate-700 mb-1 block">
+ <label className="text-sm font-semibold mb-1 block" style={{ color: 'rgba(255,255,255,0.8)' }}>
  {t('Website','الموقع الإلكتروني')}
  </label>
  <input
@@ -767,7 +773,8 @@ export default function NFCCustomizer() {
  value={website}
  onChange={(e) => setWebsite(e.target.value)}
  placeholder="https://..."
- className="w-full h-11 px-4 rounded-xl border border-slate-200 bg-slate-50 text-slate-900 text-sm focus:ring-2 focus:ring-cyan-500 focus:border-transparent outline-none transition-all"
+ className="w-full h-11 px-4 rounded-xl text-sm outline-none transition-all"
+ style={{ backgroundColor: 'rgba(255,255,255,0.06)', border: '1px solid rgba(56,189,248,0.25)', color: '#fff' }}
  />
  </div>
  </>
@@ -775,7 +782,7 @@ export default function NFCCustomizer() {
 
  {/* Notes */}
  <div>
- <label className="text-sm font-semibold text-slate-700 mb-1 block">
+ <label className="text-sm font-semibold mb-1 block" style={{ color: 'rgba(255,255,255,0.8)' }}>
  {t('Additional Notes','ملاحظات إضافية')}
  </label>
  <textarea
@@ -783,7 +790,8 @@ export default function NFCCustomizer() {
  onChange={(e) => setNotes(e.target.value)}
  rows={3}
  placeholder={t('Any special instructions for the design team...','أي تعليمات خاصة لفريق التصميم...')}
- className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-slate-900 text-sm focus:ring-2 focus:ring-cyan-500 focus:border-transparent outline-none transition-all resize-none"
+ className="w-full px-4 py-3 rounded-xl text-sm outline-none transition-all resize-none"
+ style={{ backgroundColor: 'rgba(255,255,255,0.06)', border: '1px solid rgba(56,189,248,0.25)', color: '#fff' }}
  />
  </div>
  </div>
@@ -793,66 +801,67 @@ export default function NFCCustomizer() {
  {/* STEP 3: Preview & Confirm */}
  {step === 3 && (
  <div>
- <h2 className="text-lg font-bold text-slate-900 mb-1">
+ <h2 className="text-lg font-bold text-white mb-1">
  {t('Review & Order','مراجعة وطلب')}
  </h2>
- <p className="text-sm text-slate-500 mb-6">
+ <p className="text-sm mb-6" style={{ color: 'rgba(255,255,255,0.5)' }}>
  {t('Confirm your customization and add to cart','أكد التخصيص وأضفه إلى السلة')}
  </p>
 
  {/* Summary */}
  <div className="space-y-3 mb-6">
  <div className="flex justify-between text-sm">
- <span className="text-slate-500">{t('Product','المنتج')}</span>
- <span className="font-medium text-slate-800">
+ <span style={{ color: 'rgba(255,255,255,0.5)' }}>{t('Product','المنتج')}</span>
+ <span className="font-medium text-white">
  {isRTL ? PRODUCT_TYPES.find(p => p.key === productType)?.labelAr : PRODUCT_TYPES.find(p => p.key === productType)?.labelEn}
  </span>
  </div>
- {productType ==='card' && (
+ {productType === 'card' && (
  <>
  <div className="flex justify-between text-sm">
- <span className="text-slate-500">{t('Material','الخامة')}</span>
- <span className="font-medium text-slate-800">
+ <span style={{ color: 'rgba(255,255,255,0.5)' }}>{t('Material','الخامة')}</span>
+ <span className="font-medium text-white">
  {isRTL ? CARD_MATERIALS.find(m => m.key === material)?.labelAr : CARD_MATERIALS.find(m => m.key === material)?.labelEn}
  </span>
  </div>
  <div className="flex justify-between text-sm">
- <span className="text-slate-500">{t('Color','اللون')}</span>
- <span className="font-medium text-slate-800">
- {material ==='metal' ? (isRTL ? METAL_COLORS.find(c => c.key === color)?.labelAr : METAL_COLORS.find(c => c.key === color)?.labelEn)
- : material ==='wood' ? (isRTL ? WOOD_COLORS.find(c => c.key === color)?.labelAr : WOOD_COLORS.find(c => c.key === color)?.labelEn)
+ <span style={{ color: 'rgba(255,255,255,0.5)' }}>{t('Color','اللون')}</span>
+ <span className="font-medium text-white">
+ {material === 'metal' ? (isRTL ? METAL_COLORS.find(c => c.key === color)?.labelAr : METAL_COLORS.find(c => c.key === color)?.labelEn)
+ : material === 'wood' ? (isRTL ? WOOD_COLORS.find(c => c.key === color)?.labelAr : WOOD_COLORS.find(c => c.key === color)?.labelEn)
  : t('UV Print','طباعة UV')}
  </span>
  </div>
  </>
  )}
  <div className="flex justify-between text-sm">
- <span className="text-slate-500">{t('Name','الاسم')}</span>
- <span className="font-medium text-slate-800">{name ||'—'}</span>
+ <span style={{ color: 'rgba(255,255,255,0.5)' }}>{t('Name','الاسم')}</span>
+ <span className="font-medium text-white">{name || '—'}</span>
  </div>
  {title && (
  <div className="flex justify-between text-sm">
- <span className="text-slate-500">{t('Title','المسمى')}</span>
- <span className="font-medium text-slate-800">{title}</span>
+ <span style={{ color: 'rgba(255,255,255,0.5)' }}>{t('Title','المسمى')}</span>
+ <span className="font-medium text-white">{title}</span>
  </div>
  )}
- <div className="border-t border-slate-200 pt-3 flex justify-between">
- <span className="font-semibold text-slate-800">{t('Total','الإجمالي')}</span>
- <span className="text-lg font-bold text-cyan-600">{price} SAR</span>
+ <div className="pt-3 flex justify-between" style={{ borderTop: '1px solid rgba(56,189,248,0.2)' }}>
+ <span className="font-semibold text-white">{t('Total','الإجمالي')}</span>
+ <span className="text-lg font-bold" style={{ color: '#38BDF8' }}>{price} SAR</span>
  </div>
  </div>
 
  {/* Save button */}
  <button
  onClick={handleSave}
- className="w-full h-12 rounded-xl font-bold text-white bg-gradient-to-r from-fuchsia-600 to-purple-700 hover:from-fuchsia-500 hover:to-purple-600 shadow-lg shadow-cyan-600/30 transition-all duration-300 hover:-translate-y-0.5 flex items-center justify-center gap-2"
+ className="w-full h-12 rounded-xl font-bold text-white flex items-center justify-center gap-2 transition-all duration-300 hover:-translate-y-0.5"
+ style={{ background: 'linear-gradient(135deg, #38BDF8, #E879F9)', boxShadow: '0 0 24px rgba(56,189,248,0.35)' }}
  >
  <ShoppingCart className="w-5 h-5" />
  {t('Add to Cart & Checkout','أضف إلى السلة وأكمل الشراء')}
  </button>
 
  {!isAuthenticated && (
- <p className="text-xs text-slate-400 text-center mt-3">
+ <p className="text-xs text-center mt-3" style={{ color: 'rgba(255,255,255,0.35)' }}>
  {t('You will be asked to log in to save your design','سيُطلب منك تسجيل الدخول لحفظ تصميمك')}
  </p>
  )}
@@ -860,15 +869,15 @@ export default function NFCCustomizer() {
  )}
 
  {/* Navigation Buttons */}
- <div className="flex items-center justify-between mt-8 pt-6 border-t border-slate-100">
+ <div className="flex items-center justify-between mt-8 pt-6" style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }}>
  <button
  onClick={() => step > 0 && setStep(step - 1)}
  disabled={step === 0}
- className={`flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-medium transition-all ${
- step === 0
- ?'text-slate-300 cursor-not-allowed'
- :'text-slate-600 hover:bg-slate-100'
- }`}
+ className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-medium transition-all"
+ style={step === 0
+ ? { color: 'rgba(255,255,255,0.2)', cursor: 'not-allowed' }
+ : { color: 'rgba(255,255,255,0.7)', backgroundColor: 'rgba(255,255,255,0.07)' }
+ }
  >
  {isRTL ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
  {t('Back','رجوع')}
@@ -878,11 +887,11 @@ export default function NFCCustomizer() {
  <button
  onClick={() => canGoNext() && setStep(step + 1)}
  disabled={!canGoNext()}
- className={`flex items-center gap-1.5 px-6 py-2.5 rounded-xl text-sm font-semibold transition-all ${
- canGoNext()
- ?'bg-cyan-600 hover:bg-cyan-700 text-white shadow-md'
- :'bg-slate-200 text-slate-400 cursor-not-allowed'
- }`}
+ className="flex items-center gap-1.5 px-6 py-2.5 rounded-xl text-sm font-semibold transition-all text-white"
+ style={canGoNext()
+ ? { background: 'linear-gradient(135deg, #38BDF8, #E879F9)', boxShadow: '0 0 16px rgba(56,189,248,0.3)' }
+ : { backgroundColor: 'rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.3)', cursor: 'not-allowed' }
+ }
  >
  {t('Next','التالي')}
  {isRTL ? <ChevronLeft className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
@@ -890,7 +899,8 @@ export default function NFCCustomizer() {
  ) : (
  <button
  onClick={() => setStep(0)}
- className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-medium text-slate-500 hover:bg-slate-100 transition-all"
+ className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-medium transition-all"
+ style={{ color: 'rgba(255,255,255,0.55)', backgroundColor: 'rgba(255,255,255,0.07)' }}
  >
  <RotateCcw className="w-4 h-4" />
  {t('Start Over','ابدأ من جديد')}
@@ -901,8 +911,8 @@ export default function NFCCustomizer() {
 
  {/* Right: Live Preview */}
  {step !== 0 && <div className="lg:sticky lg:top-32">
- <div className="bg-indigo-950/60 rounded-2xl shadow-xl border border-slate-200 p-6 md:p-8">
- <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-6 text-center">
+ <div className="rounded-2xl shadow-xl p-6 md:p-8" style={{ backgroundColor: '#1E1B4B', border: '1px solid rgba(56,189,248,0.18)' }}>
+ <h3 className="text-sm font-semibold uppercase tracking-wider mb-6 text-center" style={{ color: '#38BDF8' }}>
  {t('Live Preview','معاينة مباشرة')}
  </h3>
  <div className="flex justify-center py-8">
@@ -913,7 +923,10 @@ export default function NFCCustomizer() {
  </div>
  {/* Price tag */}
  <div className="mt-6 text-center">
- <span className="inline-flex items-center gap-2 bg-cyan-50 text-cyan-700 font-bold text-lg px-5 py-2 rounded-full border border-cyan-200">
+ <span
+ className="inline-flex items-center gap-2 font-bold text-lg px-5 py-2 rounded-full"
+ style={{ background: 'rgba(56,189,248,0.12)', color: '#38BDF8', border: '1px solid rgba(56,189,248,0.3)' }}
+ >
  {price} SAR
  </span>
  </div>

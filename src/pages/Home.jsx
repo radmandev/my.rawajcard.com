@@ -4,6 +4,7 @@ import { createPageUrl } from '@/utils';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import Navbar from '@/components/landing/Navbar';
+import Footer from '@/components/landing/Footer';
 import GetStartedSteps from '@/components/landing/GetStartedSteps';
 import ProductPreviewModal from '@/components/store/ProductPreviewModal';
 import LoginModal from '@/components/auth/LoginModal';
@@ -14,7 +15,7 @@ import { useAuth } from '@/lib/AuthContext';
 import {
   Wifi, Star, ShoppingCart, ChevronLeft, ChevronRight,
   Phone, Mail, MessageCircle, MapPin, ArrowLeft, Check,
-  Zap, Smartphone, RefreshCw, Shield, Award, Users, LogIn
+  Zap, Award, Users, LogIn
 } from 'lucide-react';
 
 /* ─── helpers ─────────────────────────────────────────────────────── */
@@ -158,37 +159,6 @@ const PRODUCT_CATEGORY_MAP = {
   all: [1, 2, 3, 4, 5, 6, 7, 8],
 };
 
-const FEATURES = [
-  {
-    icon: Zap,
-    titleAr: 'وصول فوري', titleEn: 'Instant Access',
-    descAr: 'مشاركة ملفك الشخصي بنقرة واحدة بدون تطبيق',
-    descEn: 'Share your profile with one tap — no app needed',
-    color: 'text-cyan-500', bg: 'bg-slate-50',
-  },
-  {
-    icon: Smartphone,
-    titleAr: 'متوافق مع كل الأجهزة', titleEn: 'Works on All Devices',
-    descAr: 'يعمل مع iPhone وAndroid بدون أي إعداد',
-    descEn: 'Compatible with iPhone and Android without any setup',
-    color: 'text-blue-500', bg: 'bg-blue-50',
-  },
-  {
-    icon: RefreshCw,
-    titleAr: 'تحديث فوري', titleEn: 'Instant Updates',
-    descAr: 'عدّل معلوماتك في أي وقت دون إعادة الطباعة',
-    descEn: 'Update your info anytime without reprinting',
-    color: 'text-purple-500', bg: 'bg-purple-50',
-  },
-  {
-    icon: Shield,
-    titleAr: 'بيانات آمنة', titleEn: 'Secure Data',
-    descAr: 'تحكم كامل في ما تشاركه ومع من',
-    descEn: 'Full control over what you share and with whom',
-    color: 'text-amber-500', bg: 'bg-amber-50',
-  },
-];
-
 /* ─── ProductCard ───────────────────────────────────────────────────── */
 function ProductCard({ product, index, onAddToCart, onView, onBuyNow, isRTL }) {
   const [hovered, setHovered] = useState(false);
@@ -289,7 +259,7 @@ export default function Home() {
   const heroGlassCardClass = 'bg-white/10 backdrop-blur-xl border border-white/15 shadow-[0_24px_80px_rgba(12,20,41,0.35)]';
 
   return (
-    <div className="min-h-screen bg-indigo-950/60 pb-16 md:pb-0" dir={isRTL ? 'rtl' : 'ltr'} style={{ fontFamily: isRTL ? "'Tajawal', 'Cairo', sans-serif" : "'Inter', 'Segoe UI', sans-serif" }}>
+    <div className="min-h-screen bg-slate-50 md:bg-indigo-950/60 pb-16 md:pb-0" dir={isRTL ? 'rtl' : 'ltr'} style={{ fontFamily: "'Tajawal', sans-serif" }}>
       {/* Google Fonts */}
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=Cairo:wght@400;600;700;800&display=swap');
@@ -460,37 +430,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Features Row ─────────────────────────────────────────────── */}
-      <section className="py-20 relative overflow-hidden" style={heroSectionBackground}>
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <div className="absolute top-[-140px] left-[8%] w-[380px] h-[380px] rounded-full opacity-20 blur-3xl" style={{ background: 'radial-gradient(circle, rgba(56, 189, 248, 0.52), transparent 70%)' }} />
-          <div className="absolute bottom-[-120px] right-[6%] w-[340px] h-[340px] rounded-full opacity-20 blur-3xl" style={{ background: 'radial-gradient(circle, rgba(232, 121, 249, 0.42), transparent 70%)' }} />
-        </div>
-        <div className="container mx-auto px-4 md:px-10 relative z-10">
-          <Reveal>
-            <h2 className="text-3xl md:text-4xl font-black text-white text-center mb-14">
-              {isRTL ? 'لماذا يختار الجميع رواج كارد؟' : 'Why Everyone Chooses Rawajcard'}
-            </h2>
-          </Reveal>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {FEATURES.map((f, i) => (
-              <Reveal key={i} delay={i * 0.08}>
-                <motion.div
-                  whileHover={{ y: -5 }}
-                  className={`rounded-2xl p-6 transition-all hover:-translate-y-1 ${heroGlassCardClass}`}
-                >
-                  <div className={`w-12 h-12 ${f.bg} rounded-2xl flex items-center justify-center mb-4`}>
-                    <f.icon className={`h-6 w-6 ${f.color}`} />
-                  </div>
-                  <h3 className="font-bold text-white text-lg mb-2">{isRTL ? f.titleAr : f.titleEn}</h3>
-                  <p className="text-slate-200 text-sm leading-relaxed">{isRTL ? f.descAr : f.descEn}</p>
-                </motion.div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* ── How It Works Steps ───────────────────────────────────────── */}
       <GetStartedSteps />
 
@@ -580,12 +519,8 @@ export default function Home() {
       </section>
 
       {/* ── Table Stand Promo ────────────────────────────────────────── */}
-      <section className="py-24 relative overflow-hidden" style={heroSectionBackground}>
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <div className="absolute top-[-100px] right-[-60px] w-[420px] h-[420px] rounded-full opacity-20 blur-3xl" style={{ background: 'radial-gradient(circle, rgba(56, 189, 248, 0.5), transparent 70%)' }} />
-          <div className="absolute bottom-[-120px] left-[-70px] w-[360px] h-[360px] rounded-full opacity-20 blur-3xl" style={{ background: 'radial-gradient(circle, rgba(232, 121, 249, 0.45), transparent 70%)' }} />
-        </div>
-        <div className="container mx-auto px-4 md:px-10 relative z-10">
+      <section className="py-24 bg-slate-50">
+        <div className="container mx-auto px-4 md:px-10">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
 
             {/* Text */}
@@ -593,14 +528,14 @@ export default function Home() {
               <span className="inline-block text-cyan-600 text-sm font-bold tracking-widest uppercase mb-4">
                 {isRTL ? 'للمطاعم والمحلات' : 'For Restaurants & Shops'}
               </span>
-              <h2 className="text-4xl md:text-5xl font-black text-slate-100 mb-6 leading-snug">
+              <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-6 leading-snug">
                 {isRTL ? (
                   <>خلّ عملاءك يتفاعلون{' '}<span className="text-cyan-600">أسرع</span></>
                 ) : (
                   <>Let customers engage{' '}<span className="text-cyan-600">faster</span></>
                 )}
               </h2>
-              <p className="text-slate-200 text-lg leading-relaxed mb-8">
+              <p className="text-slate-600 text-lg leading-relaxed mb-8">
                 {isRTL
                   ? 'مع ستاند تفاعلي يصل إليك العميل بواسطته بلمح البصر — يصلح لطلبات الطعام، المراجعات على جوجل، مشاركة وسائل التواصل، وأكثر'
                   : 'With an interactive stand, customers reach you instantly — perfect for food orders, Google reviews, social sharing, and more'}
@@ -619,10 +554,10 @@ export default function Home() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: i * 0.1 }}
-                    className={`flex items-center gap-3 rounded-xl p-3 ${heroGlassCardClass}`}
+                    className="flex items-center gap-3 rounded-xl p-3 bg-white border border-slate-200 shadow-sm"
                   >
                     <span className="text-2xl">{use.icon}</span>
-                    <span className="font-semibold text-white text-sm">{isRTL ? use.labelAr : use.labelEn}</span>
+                    <span className="font-semibold text-slate-900 text-sm">{isRTL ? use.labelAr : use.labelEn}</span>
                   </motion.div>
                 ))}
               </div>
@@ -637,7 +572,7 @@ export default function Home() {
                 </Link>
                 <Link
                   to={createPageUrl('Store')}
-                  className={`inline-flex items-center gap-2 text-white font-semibold px-8 py-4 rounded-2xl transition-all ${heroGlassCardClass}`}
+                  className="inline-flex items-center gap-2 text-slate-900 font-semibold px-8 py-4 rounded-2xl transition-all bg-white border border-slate-200 shadow-sm hover:bg-slate-100"
                 >
                   {isRTL ? 'عرض الكل' : 'View All'}
                 </Link>
@@ -658,7 +593,7 @@ export default function Home() {
                 />
                 {/* Price badge */}
                 <motion.div
-                  className={`absolute bottom-4 left-4 rounded-2xl px-5 py-3 ${heroGlassCardClass}`}
+                  className="absolute bottom-4 left-4 rounded-2xl px-5 py-3 bg-white border border-slate-200 shadow-md"
                   animate={{ y: [0, -5, 0] }}
                   transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
                 >
@@ -736,120 +671,8 @@ export default function Home() {
       </section>
 
       {/* ── Footer ───────────────────────────────────────────────────── */}
-      <footer style={{ background: '#0a0a0a' }} className="text-white">
-        {/* Top CTA strip */}
-        <div className="border-b border-white/10 py-10">
-          <div className="container mx-auto px-4 md:px-10 flex flex-col md:flex-row items-center justify-between gap-6">
-            <div>
-              <h3 className="text-xl font-black mb-1">{isRTL ? 'جاهز تبدأ؟' : 'Ready to start?'}</h3>
-              <p className="text-slate-400 text-sm">{isRTL ? 'انشئ كرتك الرقمي مجاناً الآن' : 'Create your digital card for free today'}</p>
-            </div>
-            <button
-              onClick={() => setLoginOpen(true)}
-              className="inline-flex items-center gap-2 bg-gradient-to-r from-fuchsia-600 to-purple-700 hover:from-fuchsia-500 hover:to-purple-600 text-white font-bold px-8 py-3.5 rounded-2xl transition-all"
-            >
-              {footerCtaLabel}
-              <ArrowLeft className="h-4 w-4" />
-            </button>
-          </div>
-        </div>
+      <Footer />
 
-        {/* Main footer */}
-        <div className="container mx-auto px-4 md:px-10 py-16">
-          <div className="grid md:grid-cols-4 gap-10">
-            {/* Brand */}
-            <div className="md:col-span-1">
-              <div className="flex items-center gap-3 mb-4">
-                <img
-                  src="/rawajcard-logo1.png"
-                  alt="Rawajcard"
-                  className="h-12 w-12 object-contain"
-                />
-                <div className="text-2xl font-black text-white">Rawajcard</div>
-              </div>
-              <p className="text-slate-400 text-sm leading-relaxed mb-5">
-                {isRTL ? 'الجيل الجديد من بطاقات التعارف الذكية في عالم الأعمال' : 'The next generation of smart business cards'}
-              </p>
-              <div className="flex gap-3">
-                {[
-                  { href: 'https://www.facebook.com/rawajcard', icon: '𝒻' },
-                  { href: 'https://twitter.com/rawajcard', icon: '𝓍' },
-                  { href: 'https://www.instagram.com/rawajcard', icon: '𝒾𝑔' },
-                ].map((s, i) => (
-                  <a key={i} href={s.href} target="_blank" rel="noopener noreferrer"
-                    className="w-9 h-9 bg-indigo-950/60/10 hover:bg-cyan-600 rounded-full flex items-center justify-center text-sm transition-colors">
-                    {s.icon}
-                  </a>
-                ))}
-              </div>
-            </div>
-
-            {/* Links */}
-            {[
-              {
-                titleAr: 'روابط مهمة', titleEn: 'Quick Links',
-                links: [
-                  { labelAr: 'المتجر', labelEn: 'Shop', href: 'https://rawajcard.com/shop/' },
-                  { labelAr: 'حسابي', labelEn: 'My Account', href: 'https://rawajcard.com/my-account/' },
-                  { labelAr: 'طلبياتي', labelEn: 'My Orders', href: 'https://rawajcard.com/my-orders/' },
-                  { labelAr: 'جميع المنتجات', labelEn: 'All Products', href: 'https://rawajcard.com/shop/' },
-                ],
-              },
-              {
-                titleAr: 'معلومات مهمة', titleEn: 'Info',
-                links: [
-                  { labelAr: 'الشحن والتوصيل', labelEn: 'Shipping & Delivery', href: 'https://rawajcard.com/shipping' },
-                  { labelAr: 'سياسة التبديل والاسترجاع', labelEn: 'Returns Policy', href: 'https://rawajcard.com/returns' },
-                  { labelAr: 'سياسة الخصوصية', labelEn: 'Privacy Policy', href: 'https://rawajcard.com/privacy-policy' },
-                  { labelAr: 'وسائل الدفع', labelEn: 'Payment Methods', href: 'https://rawajcard.com/payments' },
-                ],
-              },
-              {
-                titleAr: 'تواصل معنا', titleEn: 'Contact Us',
-                links: [],
-                contact: true,
-              },
-            ].map((col, i) => (
-              <div key={i}>
-                <h4 className="font-black text-white mb-5 text-base">{isRTL ? col.titleAr : col.titleEn}</h4>
-                {col.contact ? (
-                  <div className="space-y-4 text-sm text-slate-400">
-                    <a href="mailto:info@rawajcard.com" className="flex items-center gap-2 hover:text-cyan-400 transition-colors">
-                      <Mail className="h-4 w-4 flex-shrink-0" />
-                      info@rawajcard.com
-                    </a>
-                    <a href="https://wa.me/966531607223" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-cyan-400 transition-colors">
-                      <MessageCircle className="h-4 w-4 flex-shrink-0" />
-                      {isRTL ? 'واتساب: 966531607223+' : 'WhatsApp: +966531607223'}
-                    </a>
-                    <a href="tel:966531607223" className="flex items-center gap-2 hover:text-cyan-400 transition-colors">
-                      <Phone className="h-4 w-4 flex-shrink-0" />
-                      {isRTL ? 'اتصل بنا: 966531607223+' : 'Call: +966531607223'}
-                    </a>
-                  </div>
-                ) : (
-                  <ul className="space-y-3 text-sm text-slate-400">
-                    {col.links.map((link, j) => (
-                      <li key={j}>
-                        <a href={link.href} target="_blank" rel="noopener noreferrer"
-                          className="hover:text-cyan-400 transition-colors">
-                          {isRTL ? link.labelAr : link.labelEn}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="border-t border-white/10 py-6 text-center text-sm text-slate-500">
-          {isRTL
-            ? `جميع الحقوق محفوظة © ${new Date().getFullYear()} رواج كارد — تقنية NFC الذكية`
-            : `All rights reserved © ${new Date().getFullYear()} Rawajcard — Smart NFC Technology`}
-        </div>
-      </footer>
       {/* Product Preview Modal */}
       <ProductPreviewModal
         product={previewProduct}

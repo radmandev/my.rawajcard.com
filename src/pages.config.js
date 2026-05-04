@@ -64,13 +64,14 @@ const Home            = lazy(() => import('./pages/Home'));
 const Login           = lazy(() => import('./pages/Login'));
 const MyCards         = lazy(() => import('./pages/MyCards'));
 const MyContacts      = lazy(() => import('./pages/MyContacts'));
+const NFCProducts     = lazy(() => import('./pages/NFCProducts'));
 const Pricing         = lazy(() => import('./pages/Pricing'));
 const ProductDetail   = lazy(() => import('./pages/ProductDetail'));
 const Products        = lazy(() => import('./pages/Products'));
 const PublicCard      = lazy(() => import('./pages/PublicCard'));
 const Return          = lazy(() => import('./pages/Return'));
 const PrivacyPolicy   = lazy(() => import('./pages/PrivacyPolicy'));
-const Payments        = lazy(() => import('./pages/Payments'));
+const PaymentsPolicy  = lazy(() => import('./pages/PaymentsPolicy'));
 const Settings        = lazy(() => import('./pages/Settings'));
 const Store           = lazy(() => import('./pages/Store'));
 const TeamManagement  = lazy(() => import('./pages/TeamManagement'));
@@ -97,13 +98,14 @@ export const PAGES = {
     "Login": Login,
     "MyCards": MyCards,
     "MyContacts": MyContacts,
+    "NFCProducts": NFCProducts,
     "Pricing": Pricing,
     "ProductDetail": ProductDetail,
     "Products": Products,
     "PublicCard": PublicCard,
     "Return": Return,
     "PrivacyPolicy": PrivacyPolicy,
-    "Payments": Payments,
+    "PaymentsPolicy": PaymentsPolicy,
     "Settings": Settings,
     "Store": Store,
     "TeamManagement": TeamManagement,

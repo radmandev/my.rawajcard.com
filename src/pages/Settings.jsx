@@ -157,16 +157,16 @@ export default function Settings() {
  return (
  <div className="max-w-4xl mx-auto space-y-6">
  <div>
- <h1 className="text-2xl md:text-3xl font-bold text-slate-900">
+ <h1 className="text-2xl md:text-3xl font-bold text-slate-100">
  {t('settings')}
  </h1>
- <p className="text-slate-500 mt-1">
+ <p className="text-slate-300 mt-1">
  {isRTL ?'إدارة حسابك وإعداداتك' :'Manage your account and preferences'}
  </p>
  </div>
 
  {/* Personal Profile */}
- <Card className="bg-indigo-950/60 border-slate-200/50">
+ <Card className="bg-[linear-gradient(135deg,#0C1429_0%,#1E1B4B_52%,#0C1429_100%)] border-white/15 backdrop-blur-xl shadow-[0_24px_80px_rgba(12,20,41,0.45)]">
  <CardHeader>
  <div className="flex items-center justify-between">
  <CardTitle className="flex items-center gap-2">
@@ -180,22 +180,22 @@ export default function Settings() {
  </CardHeader>
  <CardContent className="space-y-4">
  <div>
- <label className="text-sm font-medium text-slate-500">{isRTL ?'الاسم' :'Name'}</label>
+ <label className="text-sm font-medium text-slate-400">{isRTL ?'الاسم' :'Name'}</label>
  <p className="text-lg font-medium mt-1">{user?.full_name}</p>
  </div>
  <div>
- <label className="text-sm font-medium text-slate-500">{isRTL ?'البريد الإلكتروني' :'Email'}</label>
+ <label className="text-sm font-medium text-slate-400">{isRTL ?'البريد الإلكتروني' :'Email'}</label>
  <p className="text-lg font-medium mt-1">{user?.email}</p>
  </div>
  <div>
- <label className="text-sm font-medium text-slate-500">{isRTL ?'الدور' :'Role'}</label>
+ <label className="text-sm font-medium text-slate-400">{isRTL ?'الدور' :'Role'}</label>
  <Badge variant="secondary" className="mt-1 capitalize">{user?.role}</Badge>
  </div>
  </CardContent>
  </Card>
 
  {/* Subscription Management */}
- <Card className="bg-indigo-950/60 border-slate-200/50">
+ <Card className="bg-[linear-gradient(135deg,#0C1429_0%,#1E1B4B_52%,#0C1429_100%)] border-white/15 backdrop-blur-xl shadow-[0_24px_80px_rgba(12,20,41,0.45)]">
  <CardHeader>
  <CardTitle className="flex items-center gap-2">
  <CreditCard className="h-5 w-5" />
@@ -206,7 +206,7 @@ export default function Settings() {
  </CardDescription>
  </CardHeader>
  <CardContent className="space-y-4">
- <div className="flex items-center justify-between p-4 bg-gradient-to-r from-slate-50 to-blue-50 rounded-xl">
+ <div className="flex items-center justify-between p-4 bg-slate-900/40 border border-white/15 rounded-xl">
  <div className="flex items-center gap-3">
  {isPremium ? (
  <Crown className="h-8 w-8 text-amber-500" />
@@ -217,7 +217,7 @@ export default function Settings() {
  <p className="font-semibold text-lg capitalize">
  {subscription?.plan ==='premium' ? (isRTL ?'بريميوم' :'Premium') : (isRTL ?'مجاني' :'Free')}
  </p>
- <p className="text-sm text-slate-600">
+ <p className="text-sm text-slate-300">
  {isPremium 
  ? (isRTL ?'بطاقات غير محدودة' :'Unlimited cards')
  : (isRTL ?`${subscription?.card_limit || 2} بطاقة` :`${subscription?.card_limit || 2} card`)
@@ -231,7 +231,7 @@ export default function Settings() {
  </div>
 
  {subscription?.expires_at && (
- <div className="text-sm text-slate-600">
+ <div className="text-sm text-slate-300">
  {isRTL ?'تنتهي في:' :'Expires on:'} {format(new Date(subscription.expires_at),'MMM dd, yyyy')}
  </div>
  )}
@@ -248,7 +248,7 @@ export default function Settings() {
  </Card>
 
  {/* Billing History */}
- <Card className="bg-indigo-950/60 border-slate-200/50">
+ <Card className="bg-[linear-gradient(135deg,#0C1429_0%,#1E1B4B_52%,#0C1429_100%)] border-white/15 backdrop-blur-xl shadow-[0_24px_80px_rgba(12,20,41,0.45)]">
  <CardHeader>
  <CardTitle className="flex items-center gap-2">
  <Receipt className="h-5 w-5" />
@@ -260,7 +260,7 @@ export default function Settings() {
  </CardHeader>
  <CardContent>
  {orders.length === 0 ? (
- <div className="text-center py-8 text-slate-500">
+ <div className="text-center py-8 text-slate-400">
  {isRTL ?'لا توجد طلبات' :'No orders yet'}
  </div>
  ) : (
@@ -268,13 +268,13 @@ export default function Settings() {
  {orders.map((order) => (
  <div 
  key={order.id}
- className="flex items-center justify-between p-4 bg-slate-50 rounded-lg"
+ className="flex items-center justify-between p-4 bg-slate-900/40 border border-white/15 rounded-lg"
  >
  <div>
  <p className="font-medium">
  {isRTL ?'طلب رقم' :'Order'} #{order.order_number}
  </p>
- <p className="text-sm text-slate-500">
+ <p className="text-sm text-slate-400">
  {format(new Date(order.created_date),'MMM dd, yyyy')}
  </p>
  </div>
@@ -292,7 +292,7 @@ export default function Settings() {
  </Card>
 
  {/* Notifications */}
- <Card className="bg-indigo-950/60 border-slate-200/50">
+ <Card className="bg-[linear-gradient(135deg,#0C1429_0%,#1E1B4B_52%,#0C1429_100%)] border-white/15 backdrop-blur-xl shadow-[0_24px_80px_rgba(12,20,41,0.45)]">
  <CardHeader>
  <CardTitle className="flex items-center gap-2">
  <Bell className="h-5 w-5" />
@@ -306,7 +306,7 @@ export default function Settings() {
  <div className="flex items-center justify-between">
  <div>
  <p className="font-medium">{isRTL ?'إشعارات البريد الإلكتروني' :'Email Notifications'}</p>
- <p className="text-sm text-slate-500">{isRTL ?'تلقي التحديثات عبر البريد الإلكتروني' :'Receive updates via email'}</p>
+ <p className="text-sm text-slate-400">{isRTL ?'تلقي التحديثات عبر البريد الإلكتروني' :'Receive updates via email'}</p>
  </div>
  <Switch
  checked={notifications.email_notifications}
@@ -317,7 +317,7 @@ export default function Settings() {
  <div className="flex items-center justify-between">
  <div>
  <p className="font-medium">{isRTL ?'تنبيهات جهات الاتصال' :'Contact Alerts'}</p>
- <p className="text-sm text-slate-500">{isRTL ?'إشعار عند تلقي جهة اتصال جديدة' :'Get notified on new contact submissions'}</p>
+ <p className="text-sm text-slate-400">{isRTL ?'إشعار عند تلقي جهة اتصال جديدة' :'Get notified on new contact submissions'}</p>
  </div>
  <Switch
  checked={notifications.contact_alerts}
@@ -328,7 +328,7 @@ export default function Settings() {
  <div className="flex items-center justify-between">
  <div>
  <p className="font-medium">{isRTL ?'التسويق' :'Marketing'}</p>
- <p className="text-sm text-slate-500">{isRTL ?'تلقي أخبار ونصائح' :'Receive news and tips'}</p>
+ <p className="text-sm text-slate-400">{isRTL ?'تلقي أخبار ونصائح' :'Receive news and tips'}</p>
  </div>
  <Switch
  checked={notifications.marketing}
@@ -339,7 +339,7 @@ export default function Settings() {
  </Card>
 
  {/* Preferences */}
- <Card className="bg-indigo-950/60 border-slate-200/50">
+ <Card className="bg-[linear-gradient(135deg,#0C1429_0%,#1E1B4B_52%,#0C1429_100%)] border-white/15 backdrop-blur-xl shadow-[0_24px_80px_rgba(12,20,41,0.45)]">
  <CardHeader>
  <CardTitle className="flex items-center gap-2">
  <Globe className="h-5 w-5" />
@@ -350,7 +350,7 @@ export default function Settings() {
  <div className="flex items-center justify-between">
  <div>
  <p className="font-medium">{isRTL ?'اللغة' :'Language'}</p>
- <p className="text-sm text-slate-500">{isRTL ?'اختر لغتك المفضلة' :'Choose your preferred language'}</p>
+ <p className="text-sm text-slate-400">{isRTL ?'اختر لغتك المفضلة' :'Choose your preferred language'}</p>
  </div>
  <Button
  variant="outline"
@@ -365,7 +365,7 @@ export default function Settings() {
  </Card>
 
  {/* Privacy & Security */}
- <Card className="bg-indigo-950/60 border-slate-200/50">
+ <Card className="bg-[linear-gradient(135deg,#0C1429_0%,#1E1B4B_52%,#0C1429_100%)] border-white/15 backdrop-blur-xl shadow-[0_24px_80px_rgba(12,20,41,0.45)]">
  <CardHeader>
  <CardTitle className="flex items-center gap-2">
  <Shield className="h-5 w-5" />
@@ -373,13 +373,13 @@ export default function Settings() {
  </CardTitle>
  </CardHeader>
  <CardContent className="space-y-3">
- <Button variant="outline" className="w-full justify-start">
+ <Button variant="outline" className="w-full justify-start bg-slate-900/40 border-white/15 text-slate-100 hover:bg-slate-800/60 hover:border-cyan-300/40">
  {isRTL ?'تغيير كلمة المرور' :'Change Password'}
  </Button>
- <Button variant="outline" className="w-full justify-start">
+ <Button variant="outline" className="w-full justify-start bg-slate-900/40 border-white/15 text-slate-100 hover:bg-slate-800/60 hover:border-cyan-300/40">
  {isRTL ?'تفعيل المصادقة الثنائية' :'Enable Two-Factor Authentication'}
  </Button>
- <Button variant="outline" className="w-full justify-start">
+ <Button variant="outline" className="w-full justify-start bg-slate-900/40 border-white/15 text-slate-100 hover:bg-slate-800/60 hover:border-cyan-300/40">
  {isRTL ?'تنزيل بياناتي' :'Download My Data'}
  </Button>
  </CardContent>

@@ -165,13 +165,13 @@ export const ALL_TEMPLATES = [
   },
   {
     id: 'aurora_glass',
-    name: 'Aurora Glass',
-    nameAr: 'أورورا زجاجي',
+    name: 'Rawajcard Glass',
+    nameAr: 'رواج كارد زجاجي',
     description: 'Animated aurora with glassmorphism cards',
     descriptionAr: 'خلفية أورورا متحركة مع تصميم زجاجي عصري',
     colors: ['#7c3aed', '#38bdf8', '#f472b6'],
     preview: 'bg-gradient-to-br from-[#0f0c29] via-[#1a0533] to-[#0d1b6e]',
-    defaultTier: 'premium',
+    defaultTier: 'free',
   },
 ];
 
@@ -185,6 +185,7 @@ export const PREMIUM_PLANS = ['premium', 'teams', 'enterprise'];
 
 /** Check if a template is accessible for a given plan + tier overrides */
 export function canUseTemplate(templateId, userPlan, tiersOverride = {}) {
+  if (templateId === 'aurora_glass') return true;
   const tiers = { ...DEFAULT_TIERS, ...tiersOverride };
   const tier = tiers[templateId] ?? 'free';
   if (tier === 'free') return true;

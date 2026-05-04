@@ -153,13 +153,13 @@ export default function Dashboard() {
  { key:'cards', icon: CreditCard, label: t('myCards'), path: createPageUrl('MyCards'), color:'from-blue-500 to-blue-600' },
  { key:'contacts', icon: Users, label: t('myContacts'), path: createPageUrl('MyContacts'), color:'from-purple-500 to-purple-600' },
  { key:'analytics', icon: BarChart3, label: t('analytics'), path: createPageUrl('Analytics'), color:'from-indigo-500 to-indigo-600' },
- { key:'store', icon: Store, label: t('store'), path: createPageUrl('Store'), color:'from-pink-500 to-pink-600' },
+ { key:'nfc', icon: Store, label: isRTL ? 'منتجات NFC' : 'NFC Products', path: createPageUrl('NFCProducts'), color:'from-pink-500 to-pink-600' },
  { key:'settings', icon: Settings, label: t('settings'), path: createPageUrl('Settings'), color:'from-slate-500 to-slate-600' },
  ];
 
  return (
  <div 
- className="max-w-7xl mx-auto space-y-8"
+ className="max-w-7xl mx-auto space-y-8 text-slate-100"
  onTouchStart={handleTouchStart}
  onTouchMove={handleTouchMove}
  onTouchEnd={handleTouchEnd}
@@ -188,20 +188,20 @@ export default function Dashboard() {
  <motion.div
  initial={{ opacity: 0, y: -20 }}
  animate={{ opacity: 1, y: 0 }}
- className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-cyan-500 via-cyan-600 to-magenta-700 p-8 text-white"
+ className="relative overflow-hidden rounded-3xl bg-[linear-gradient(135deg,#0C1429_0%,#1E1B4B_52%,#0C1429_100%)] p-8 text-white border border-white/15 shadow-[0_24px_80px_rgba(12,20,41,0.35)]"
  >
- <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-950/60/10 rounded-full -translate-y-1/2 translate-x-1/2" />
- <div className="absolute bottom-0 left-0 w-48 h-48 bg-indigo-950/60/10 rounded-full translate-y-1/2 -translate-x-1/2" />
+ <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-400/15 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl" />
+ <div className="absolute bottom-0 left-0 w-48 h-48 bg-fuchsia-400/15 rounded-full translate-y-1/2 -translate-x-1/2 blur-2xl" />
  
  <div className="relative z-10">
  <div className="flex items-center gap-2 mb-2">
  <Sparkles className="h-5 w-5" />
- <span className="text-cyan-100">{t('dashboard')}</span>
+ <span className="text-cyan-200">{t('dashboard')}</span>
  </div>
  <h1 className="text-3xl md:text-4xl font-bold mb-2">
  {isRTL ?`مرحباً، ${user?.full_name ||'مستخدم'}` :`Welcome, ${user?.full_name ||'User'}`}
  </h1>
- <p className="text-cyan-100 max-w-lg">
+ <p className="text-slate-200 max-w-lg">
  {isRTL 
  ?'أنشئ بطاقاتك الرقمية وشاركها مع العالم. تتبع إحصائياتك وتواصل بشكل احترافي.'
  :'Create your digital cards and share them with the world. Track your stats and connect professionally.'
@@ -209,7 +209,7 @@ export default function Dashboard() {
  </p>
  
  <Link to={createPageUrl('CardBuilder')}>
- <Button className="mt-6 bg-indigo-950/60 text-cyan-700 hover:bg-cyan-50" size="lg">
+ <Button className="mt-6 bg-white/10 hover:bg-white/20 text-white border border-white/20" size="lg">
  <Plus className="h-5 w-5 mr-2" />
  {t('createCard')}
  </Button>
@@ -218,9 +218,9 @@ export default function Dashboard() {
  </motion.div>
 
  {/* Quick Actions Slider */}
- <Card className="bg-indigo-950/60 border-slate-200/50">
+ <Card className="bg-[linear-gradient(135deg,#0C1429_0%,#1E1B4B_52%,#0C1429_100%)] border-white/15 backdrop-blur-xl shadow-[0_24px_80px_rgba(12,20,41,0.45)]">
  <CardHeader className="pb-3">
- <CardTitle>{t('quickActions')}</CardTitle>
+ <CardTitle className="text-white">{t('quickActions')}</CardTitle>
  </CardHeader>
  <CardContent>
  <div className="flex gap-3 overflow-x-auto pb-1 snap-x snap-mandatory">
@@ -230,11 +230,11 @@ export default function Dashboard() {
  to={item.path}
  className="snap-start min-w-[128px]"
  >
- <div className="h-full rounded-2xl border border-slate-200 p-4 hover:bg-slate-50 transition-colors">
+ <div className="h-full rounded-2xl border border-white/15 p-4 bg-slate-900/40 hover:bg-slate-800/60 hover:border-cyan-300/40 transition-all">
  <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${item.color} flex items-center justify-center text-white mb-3`}>
  <item.icon className="h-5 w-5" />
  </div>
- <p className="text-sm font-medium text-slate-800 leading-tight">
+ <p className="text-sm font-medium text-slate-100 leading-tight">
  {item.label}
  </p>
  </div>
@@ -279,12 +279,12 @@ export default function Dashboard() {
  {/* Charts & Recent Cards */}
  <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
  {/* Chart */}
- <Card className="lg:col-span-2 bg-indigo-950/60 border-slate-200/50 relative">
+ <Card className="lg:col-span-2 bg-[linear-gradient(135deg,#0C1429_0%,#1E1B4B_52%,#0C1429_100%)] border-white/15 relative backdrop-blur-xl shadow-[0_24px_80px_rgba(12,20,41,0.45)]">
  <CardHeader>
- <CardTitle className="flex items-center justify-between">
+ <CardTitle className="flex items-center justify-between text-slate-100">
  <span>{t('recentActivity')}</span>
  <Link to={createPageUrl('Analytics')}>
- <Button variant="ghost" size="sm">
+ <Button variant="ghost" size="sm" className="text-slate-200 hover:text-white hover:bg-white/10">
  {isRTL ? <ArrowLeft className="h-4 w-4 mr-1" /> : null}
  {isRTL ?'عرض الكل' :'View all'}
  {!isRTL ? <ArrowRight className="h-4 w-4 ml-1" /> : null}
@@ -295,15 +295,15 @@ export default function Dashboard() {
  <CardContent className="relative">
  <div className="relative">
  {!isPremium && (
- <div className="absolute inset-0 backdrop-blur-sm bg-indigo-950/60/30 z-10 rounded-lg flex items-center justify-center">
+ <div className="absolute inset-0 backdrop-blur-sm bg-[#0C1429]/70 z-10 rounded-lg flex items-center justify-center">
  <div className="text-center p-6">
- <Lock className="h-12 w-12 mx-auto mb-3 text-amber-500" />
- <p className="text-sm font-medium text-slate-900 mb-4">
+ <Lock className="h-12 w-12 mx-auto mb-3 text-fuchsia-300" />
+ <p className="text-sm font-medium text-slate-100 mb-4">
  {isRTL ?'اشترك لعرض التحليلات المتقدمة' :'Subscribe to view advanced analytics'}
  </p>
  <Button
  onClick={openUpgradeDialog}
- className="bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700"
+ className="bg-gradient-to-r from-cyan-500 to-fuchsia-500 hover:from-cyan-400 hover:to-fuchsia-400 text-white"
  size="sm"
  >
  <Sparkles className="h-4 w-4 mr-2" />
@@ -318,7 +318,7 @@ export default function Dashboard() {
  date: format(new Date(Date.now() - (6 - i) * 24 * 60 * 60 * 1000),'MMM dd'),
  value: Math.floor(Math.random() * 30) + 10
  })) : last7Days}
- color="#0D7377"
+ color="#38BDF8"
  />
  </div>
  </div>
@@ -326,12 +326,12 @@ export default function Dashboard() {
  </Card>
 
  {/* Recent Cards */}
- <Card className="bg-indigo-950/60 border-slate-200/50">
+ <Card className="bg-[linear-gradient(135deg,#0C1429_0%,#1E1B4B_52%,#0C1429_100%)] border-white/15 backdrop-blur-xl shadow-[0_24px_80px_rgba(12,20,41,0.45)]">
  <CardHeader>
- <CardTitle className="flex items-center justify-between">
+ <CardTitle className="flex items-center justify-between text-slate-100">
  <span>{t('myCards')}</span>
  <Link to={createPageUrl('MyCards')}>
- <Button variant="ghost" size="sm">
+ <Button variant="ghost" size="sm" className="text-slate-200 hover:text-white hover:bg-white/10">
  {isRTL ? <ArrowLeft className="h-4 w-4 mr-1" /> : null}
  {isRTL ?'عرض الكل' :'View all'}
  {!isRTL ? <ArrowRight className="h-4 w-4 ml-1" /> : null}
@@ -343,15 +343,15 @@ export default function Dashboard() {
  {cardsLoading ? (
  <div className="space-y-3">
  {[1, 2, 3].map(i => (
- <div key={i} className="h-16 bg-slate-100 rounded-xl animate-pulse" />
+ <div key={i} className="h-16 bg-white/10 rounded-xl animate-pulse" />
  ))}
  </div>
  ) : recentCards.length === 0 ? (
  <div className="text-center py-8">
- <CreditCard className="h-12 w-12 mx-auto text-slate-300 mb-3" />
- <p className="text-slate-500 mb-4">{t('noCards')}</p>
+ <CreditCard className="h-12 w-12 mx-auto text-slate-400 mb-3" />
+ <p className="text-slate-300 mb-4">{t('noCards')}</p>
  <Link to={createPageUrl('CardBuilder')}>
- <Button size="sm">
+ <Button size="sm" className="bg-gradient-to-r from-cyan-500 to-fuchsia-500 hover:from-cyan-400 hover:to-fuchsia-400 text-white">
  <Plus className="h-4 w-4 mr-1" />
  {t('createCard')}
  </Button>
@@ -362,9 +362,9 @@ export default function Dashboard() {
  <Link 
  key={card.id} 
  to={createPageUrl(`CardBuilder?id=${card.id}`)}
- className="flex items-center gap-4 p-3 rounded-xl bg-slate-50 hover:bg-slate-100 transition-colors"
+ className="flex items-center gap-4 p-3 rounded-xl bg-slate-900/40 border border-white/15 hover:bg-slate-800/60 hover:border-cyan-300/40 transition-all"
  >
- <div className="h-12 w-12 rounded-full overflow-hidden bg-gradient-to-br from-cyan-500 to-magenta-600 flex items-center justify-center text-white font-bold">
+ <div className="h-12 w-12 rounded-full overflow-hidden bg-gradient-to-br from-cyan-500 via-blue-500 to-fuchsia-500 flex items-center justify-center text-white font-bold">
  {card.profile_image ? (
  <img src={card.profile_image} alt={card.name} className="h-full w-full object-cover" />
  ) : (
@@ -372,21 +372,21 @@ export default function Dashboard() {
  )}
  </div>
  <div className="flex-1 min-w-0">
- <p className="font-medium text-slate-900 truncate">
+ <p className="font-medium text-slate-100 truncate">
  {isRTL && card.name_ar ? card.name_ar : card.name}
  </p>
- <div className="flex items-center gap-2 text-sm text-slate-500">
+ <div className="flex items-center gap-2 text-sm text-slate-300">
  <span className={cn(
 "px-2 py-0.5 rounded-full text-xs",
  card.status ==='published' 
- ?"bg-green-100 text-green-700"
- :"bg-slate-200 text-slate-600"
+ ?"bg-cyan-500/20 text-cyan-200 border border-cyan-400/30"
+ :"bg-slate-700/40 text-slate-200 border border-slate-500/40"
  )}>
  {card.status ==='published' ? t('published') : t('draft')}
  </span>
  </div>
  </div>
- {isRTL ? <ArrowLeft className="h-4 w-4 text-slate-400" /> : <ArrowRight className="h-4 w-4 text-slate-400" />}
+ {isRTL ? <ArrowLeft className="h-4 w-4 text-slate-200" /> : <ArrowRight className="h-4 w-4 text-slate-200" />}
  </Link>
  ))
  )}

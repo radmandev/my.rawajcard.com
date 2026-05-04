@@ -123,7 +123,7 @@ export default function GetStartedSteps() {
 
  return (
  <section id="how-it-works" className="py-20 bg-slate-50">
- <div className="container mx-auto px-4 md:px-6">
+ <div className="container mx-auto px-4 md:px-6 relative z-10">
  <span className="text-cyan-600 text-sm font-semibold tracking-wider uppercase mb-4 block text-center">
  {t.subtitle}
  </span>
@@ -137,34 +137,34 @@ export default function GetStartedSteps() {
  <div key={index} className="relative">
  {/* Connector line */}
  {index < steps.length - 1 && (
- <div className="hidden md:block absolute top-20 left-full w-full h-0.5 bg-gradient-to-r from-cyan-200 to-transparent -translate-x-1/2 z-0" />
+ <div className="hidden md:block absolute top-20 left-full w-full h-0.5 bg-gradient-to-r from-cyan-300/40 to-transparent -translate-x-1/2 z-0" />
  )}
  
- <div className="bg-indigo-950/60 rounded-2xl p-8 shadow-lg shadow-slate-100 border border-slate-100 relative z-10 h-full">
+ <div className="rounded-2xl p-8 relative z-10 h-full border border-white/15 shadow-[0_24px_80px_rgba(12,20,41,0.35)] bg-[linear-gradient(135deg,#0C1429_0%,#1E1B4B_52%,#0C1429_100%)]">
  {/* Step badge */}
  <div className="absolute -top-4 left-8">
- <span className="inline-flex items-center justify-center w-8 h-8 bg-gradient-to-r from-fuchsia-600 to-purple-700 hover:from-fuchsia-500 hover:to-purple-600 text-white text-sm font-bold rounded-full">
+ <span className="inline-flex items-center justify-center w-8 h-8 bg-gradient-to-r from-fuchsia-600 to-purple-700 text-white text-sm font-bold rounded-full">
  {item.step}
  </span>
  </div>
  
  {/* Icon */}
- <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-cyan-50 to-blue-50 flex items-center justify-center mb-6 mt-4">
+ <div className="w-14 h-14 rounded-xl bg-white/90 flex items-center justify-center mb-6 mt-4">
  <item.icon className="w-7 h-7 text-cyan-600" />
  </div>
  
- <h3 className="text-xl font-bold text-slate-900 mb-3">{item.title}</h3>
- <p className="text-slate-600 mb-6 leading-relaxed">{item.description}</p>
+ <h3 className="text-xl font-bold text-white mb-3">{item.title}</h3>
+ <p className="text-slate-200 mb-6 leading-relaxed">{item.description}</p>
  
  {/* Image */}
- <div className="aspect-[4/3] bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl mb-6 overflow-hidden">
+ <div className="aspect-[4/3] bg-white/10 border border-white/10 rounded-xl mb-6 overflow-hidden">
  <img src={normalizeImageUrl(item.image)} alt={item.title} className="w-full h-full object-cover" />
  </div>
  
  <Button 
  variant="outline" 
  onClick={() => handleStepAction(item.step)}
- className="w-full rounded-full border-2 hover:bg-cyan-600 hover:border-cyan-600 hover:text-white"
+ className="w-full rounded-full border border-white/20 !bg-white/10 !text-white hover:!bg-cyan-600 hover:!border-cyan-600"
  >
  {item.cta}
  </Button>

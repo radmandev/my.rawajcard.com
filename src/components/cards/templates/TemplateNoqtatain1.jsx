@@ -62,21 +62,21 @@ export default function TemplateNoqtatain1({ card, isRTL, onLinkClick }) {
       <div className="flex justify-center gap-4 -mt-8 px-6 relative z-10">
         {card.phone && (
           <a href={`tel:${card.phone}`} onClick={() => onLinkClick?.('phone')} 
-            className="w-14 h-14 rounded-full bg-indigo-950/60 shadow-lg flex items-center justify-center hover:scale-110 transition-transform"
+            className="w-14 h-14 rounded-full bg-white shadow-lg flex items-center justify-center hover:scale-110 transition-transform"
             style={{ color: primaryColor }}>
             <Phone className="h-6 w-6" />
           </a>
         )}
         {card.email && (
           <a href={`mailto:${card.email}`} onClick={() => onLinkClick?.('email')}
-            className="w-14 h-14 rounded-full bg-indigo-950/60 shadow-lg flex items-center justify-center hover:scale-110 transition-transform"
+            className="w-14 h-14 rounded-full bg-white shadow-lg flex items-center justify-center hover:scale-110 transition-transform"
             style={{ color: primaryColor }}>
             <Mail className="h-6 w-6" />
           </a>
         )}
         {card.whatsapp && (
           <a href={`https://wa.me/${card.whatsapp}`} onClick={() => onLinkClick?.('whatsapp')}
-            className="w-14 h-14 rounded-full bg-indigo-950/60 shadow-lg flex items-center justify-center hover:scale-110 transition-transform"
+            className="w-14 h-14 rounded-full bg-white shadow-lg flex items-center justify-center hover:scale-110 transition-transform"
             style={{ color: primaryColor }}>
             <MessageSquare className="h-6 w-6" />
           </a>
@@ -86,7 +86,7 @@ export default function TemplateNoqtatain1({ card, isRTL, onLinkClick }) {
       <div className="max-w-2xl mx-auto px-6 py-8 space-y-6">
         {/* About Me */}
         {card.bio && (
-          <div className="bg-indigo-950/60 rounded-2xl shadow-sm p-6 text-center">
+          <div className="bg-white rounded-2xl shadow-sm p-6 text-center">
             <h2 className="text-xl font-bold mb-3" style={{ color: accentColor }}>
               {isRTL ? 'نبذة عني' : 'About Me'}
             </h2>
@@ -97,7 +97,7 @@ export default function TemplateNoqtatain1({ card, isRTL, onLinkClick }) {
         )}
 
         {/* Contact Section */}
-        <div className="bg-indigo-950/60 rounded-2xl shadow-sm p-6">
+        <div className="bg-white rounded-2xl shadow-sm p-6">
           <div className="flex items-center gap-3 mb-4">
             <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ backgroundColor: `${primaryColor}20`, color: primaryColor }}>
               <Phone className="h-5 w-5" />
@@ -152,7 +152,7 @@ export default function TemplateNoqtatain1({ card, isRTL, onLinkClick }) {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => onLinkClick?.(platform)}
-                className="flex items-center justify-between bg-indigo-950/60 rounded-2xl shadow-sm p-4 hover:shadow-md transition-shadow"
+                className="flex items-center justify-between bg-white rounded-2xl shadow-sm p-4 hover:shadow-md transition-shadow"
               >
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ backgroundColor: `${primaryColor}15`, color: primaryColor }}>
@@ -178,7 +178,7 @@ export default function TemplateNoqtatain1({ card, isRTL, onLinkClick }) {
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => onLinkClick?.('website')}
-            className="flex items-center justify-between bg-indigo-950/60 rounded-2xl shadow-sm p-4 hover:shadow-md transition-shadow"
+            className="flex items-center justify-between bg-white rounded-2xl shadow-sm p-4 hover:shadow-md transition-shadow"
           >
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ backgroundColor: `${accentColor}15`, color: accentColor }}>

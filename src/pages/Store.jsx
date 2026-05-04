@@ -79,16 +79,16 @@ export default function Store() {
  new Intl.NumberFormat(isRTL ?'ar-SA' :'en-SA', { style:'currency', currency:'SAR' }).format(price);
 
  return (
- <div className="min-h-screen bg-slate-50">
+ <div className="min-h-screen" style={{backgroundColor:'#0C1429'}}>
  <Navbar />
  <div className="public-subpage-offset max-w-7xl mx-auto pb-16 px-4 space-y-8">
  {/* Header */}
  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
  <div>
- <h1 className="text-2xl md:text-3xl font-bold text-slate-900">
+ <h1 className="text-2xl md:text-3xl font-bold text-white">
  {t('onlineStore')}
  </h1>
- <p className="text-slate-500 mt-1">
+ <p className="text-slate-400 mt-1">
  {isRTL 
  ?'اكتشف بطاقات NFC الفاخرة والاشتراكات المميزة'
  :'Discover premium NFC cards and subscriptions'
@@ -98,7 +98,7 @@ export default function Store() {
 
  <Button 
  onClick={() => setIsCartOpen(true)}
- className="bg-gradient-to-r from-fuchsia-600 to-purple-700 hover:from-fuchsia-500 hover:to-purple-600 relative"
+ className="bg-gradient-to-r from-sky-500 to-fuchsia-500 hover:from-sky-400 hover:to-fuchsia-400 relative"
  >
  <ShoppingCart className="h-4 w-4 mr-2" />
  {t('cart')}
@@ -112,7 +112,7 @@ export default function Store() {
 
  {/* Categories */}
  <Tabs value={category} onValueChange={setCategory}>
- <TabsList className="bg-slate-100 p-1 flex-wrap h-auto">
+ <TabsList className="p-1 flex-wrap h-auto" style={{backgroundColor:'rgba(30,27,75,0.8)', border:'1px solid rgba(56,189,248,0.15)'}}>
  {CATEGORY_TABS.map((cat) => (
  <TabsTrigger key={cat.value} value={cat.value}>
  {isRTL ? cat.ar : cat.en}

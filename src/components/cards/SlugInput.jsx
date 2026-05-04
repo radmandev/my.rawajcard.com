@@ -95,7 +95,7 @@ export default function SlugInput({ value, onChange, currentCardId, onValidation
  value={value ||''}
  onChange={handleChange}
  placeholder={t('slugPlaceholder')}
- className="border-0 focus-visible:ring-0 text-lg"
+ className="border-0 focus-visible:ring-0 text-lg text-slate-900"
  />
  <div className="px-4">
  {checking && <Loader2 className="h-5 w-5 animate-spin text-slate-400" />}

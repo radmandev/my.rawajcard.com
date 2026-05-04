@@ -133,10 +133,10 @@ export default function ProductDetail() {
 
  if (isLoadingProduct && !product) {
  return (
- <div className="min-h-screen bg-indigo-950/60">
+ <div className="min-h-screen" style={{backgroundColor:'#0C1429'}}>
  <Navbar />
  <div className="public-subpage-offset flex flex-col items-center justify-center min-h-[60vh] gap-4 px-4">
- <Loader2 className="h-10 w-10 animate-spin text-cyan-600" />
+ <Loader2 className="h-10 w-10 animate-spin" style={{color:'#38BDF8'}} />
  </div>
  <Footer />
  </div>
@@ -145,10 +145,10 @@ export default function ProductDetail() {
 
  if (!product) {
  return (
- <div className="min-h-screen bg-indigo-950/60">
+ <div className="min-h-screen" style={{backgroundColor:'#0C1429'}}>
  <Navbar />
  <div className="public-subpage-offset flex flex-col items-center justify-center min-h-[60vh] gap-4 px-4">
- <p className="text-xl text-slate-600">
+ <p className="text-xl text-slate-300">
  {language ==='ar' ?'المنتج غير موجود' :'Product not found'}
  </p>
  <Button onClick={() => navigate('/Products')} variant="outline">
@@ -161,18 +161,18 @@ export default function ProductDetail() {
  }
 
  return (
- <div className="min-h-screen bg-indigo-950/60" dir={isRTL ?'rtl' :'ltr'}>
+ <div className="min-h-screen" style={{backgroundColor:'#0C1429'}} dir={isRTL ?'rtl' :'ltr'}>
  <Navbar />
 
  <div className="container public-subpage-offset mx-auto px-4 md:px-6 pb-20">
 
  {/* Breadcrumb */}
  <nav className="flex flex-wrap items-center gap-1.5 text-sm text-slate-500 mb-10">
- <Link to="/" className="hover:text-cyan-600 transition-colors">
+ <Link to="/" className="hover:text-sky-400 transition-colors">
  {language ==='ar' ?'الرئيسية' :'Home'}
  </Link>
  <ChevronRight className="w-3.5 h-3.5 flex-shrink-0" />
- <Link to="/Products" className="hover:text-cyan-600 transition-colors">
+ <Link to="/Products" className="hover:text-sky-400 transition-colors">
  {language ==='ar' ?'المنتجات' :'Products'}
  </Link>
  {category && (
@@ -180,14 +180,14 @@ export default function ProductDetail() {
  <ChevronRight className="w-3.5 h-3.5 flex-shrink-0" />
  <Link
  to={`/Products?category=${category.value}`}
- className="hover:text-cyan-600 transition-colors"
+ className="hover:text-sky-400 transition-colors"
  >
  {language ==='ar' ? category.label_ar : category.label_en}
  </Link>
  </>
  )}
  <ChevronRight className="w-3.5 h-3.5 flex-shrink-0" />
- <span className="text-slate-900 font-medium line-clamp-1">
+ <span className="text-white font-medium line-clamp-1">
  {language ==='ar' ? (product.name_ar || product.name_en || product.name) : (product.name_en || product.name || product.name_ar)}
  </span>
  </nav>
@@ -197,7 +197,7 @@ export default function ProductDetail() {
 
  {/* Product Image */}
  <div className="space-y-4">
- <div className="relative rounded-3xl overflow-hidden bg-slate-50 aspect-square shadow-xl">
+ <div className="relative rounded-3xl overflow-hidden bg-slate-900 aspect-square shadow-xl">
  <img
  src={selectedImage || product.main_image || product.image_url}
  alt={language ==='ar' ? (product.name_ar || product.name_ar || product.name_en) : (product.name_en || product.name || product.name_ar)}
@@ -223,8 +223,8 @@ export default function ProductDetail() {
  onClick={() => setSelectedImage(img)}
  className={`aspect-square rounded-lg overflow-hidden border-2 transition-all ${
  selectedImage === img
- ?'border-cyan-500 ring-2 ring-cyan-200'
- :'border-slate-200 hover:border-cyan-400'
+ ?'border-sky-400 ring-2 ring-sky-400/30'
+ :'border-slate-700 hover:border-sky-400'
  }`}
  >
  <img src={img} alt="" className="w-full h-full object-cover" />
@@ -249,20 +249,20 @@ export default function ProductDetail() {
  )}
 
  {/* Name */}
- <h1 className="text-3xl md:text-4xl font-bold text-slate-900 leading-snug">
+ <h1 className="text-3xl md:text-4xl font-bold text-white leading-snug">
  {language ==='ar' ? (product.name_ar || product.name_en || product.name) : (product.name_en || product.name || product.name_ar)}
  </h1>
 
  {/* Description */}
  {(product.description_ar || product.description_en) && (
- <p className="text-slate-600 text-lg leading-relaxed">
+ <p className="text-slate-300 text-lg leading-relaxed">
  {language ==='ar' ? (product.description_ar || product.description_en || product.description) : (product.description_en || product.description || product.description_ar)}
  </p>
  )}
 
  {/* Price */}
  <div className="flex flex-wrap items-baseline gap-3">
- <span className="text-4xl font-extrabold text-cyan-600">
+ <span className="text-4xl font-extrabold" style={{color:'#38BDF8'}}>
  {product.price}
  <span className="text-xl font-semibold ml-1">
  {language ==='ar' ?'ر.س' :'SAR'}
@@ -274,7 +274,7 @@ export default function ProductDetail() {
  </span>
  )}
  {product.discount_percentage > 0 && (
- <span className="bg-red-100 text-red-600 px-3 py-1 rounded-full text-sm font-bold">
+ <span className="bg-red-900/40 text-red-400 px-3 py-1 rounded-full text-sm font-bold">
  {language ==='ar'
  ?`وفر ${product.discount_percentage}%`
  :`Save ${product.discount_percentage}%`}
@@ -290,7 +290,7 @@ export default function ProductDetail() {
  </p>
  <ul className="grid sm:grid-cols-2 gap-2">
  {(language ==='ar' ? product.features_ar : product.features_en)?.map((f, i) => (
- <li key={i} className="flex items-center gap-2 text-slate-700 text-sm">
+ <li key={i} className="flex items-center gap-2 text-slate-300 text-sm">
  <Check className="w-4 h-4 text-cyan-500 flex-shrink-0" />
  {f}
  </li>
@@ -301,10 +301,10 @@ export default function ProductDetail() {
 
  {/* Quantity selector + Add to cart */}
  <div className="flex items-center gap-4 pt-2">
- <div className="flex items-center border border-slate-200 rounded-full overflow-hidden">
+ <div className="flex items-center border border-slate-700 rounded-full overflow-hidden">
  <button
  onClick={() => setQuantity((q) => Math.max(1, q - 1))}
- className="px-4 py-3 hover:bg-slate-100 transition-colors"
+ className="px-4 py-3 hover:bg-slate-800 transition-colors"
  aria-label="Decrease quantity"
  >
  <Minus className="w-4 h-4" />
@@ -314,7 +314,7 @@ export default function ProductDetail() {
  </span>
  <button
  onClick={() => setQuantity((q) => q + 1)}
- className="px-4 py-3 hover:bg-slate-100 transition-colors"
+ className="px-4 py-3 hover:bg-slate-800 transition-colors"
  aria-label="Increase quantity"
  >
  <Plus className="w-4 h-4" />
@@ -323,7 +323,7 @@ export default function ProductDetail() {
 
  <Button
  onClick={handleAddToCart}
- className="flex-1 bg-gradient-to-r from-fuchsia-600 to-purple-700 hover:from-fuchsia-500 hover:to-purple-600 text-white rounded-full h-12 text-base font-semibold shadow-lg shadow-cyan-500/20 transition-all"
+ className="flex-1 bg-gradient-to-r from-sky-500 to-fuchsia-500 hover:from-sky-400 hover:to-fuchsia-400 text-white rounded-full h-12 text-base font-semibold shadow-lg shadow-sky-500/20 transition-all"
  >
  {added ? (
  <>
@@ -345,7 +345,7 @@ export default function ProductDetail() {
  {relatedProducts.length > 0 && (
  <section>
  <div className="flex items-center justify-between mb-8">
- <h2 className="text-2xl font-bold text-slate-900">
+ <h2 className="text-2xl font-bold text-white">
  {language ==='ar' ?'منتجات مشابهة' :'Related Products'}
  </h2>
  {category && (
@@ -367,9 +367,9 @@ export default function ProductDetail() {
  <Link
  key={p.id}
  to={`/products/${encodeURIComponent(p.slug || p.id)}`}
- className="group bg-indigo-950/60 rounded-2xl overflow-hidden shadow hover:shadow-xl transition-all duration-300 border border-slate-100"
+ className="group rounded-2xl overflow-hidden shadow hover:shadow-xl transition-all duration-300" style={{backgroundColor:'#1E1B4B', border:'1px solid rgba(56,189,248,0.15)'}}
  >
- <div className="relative aspect-square overflow-hidden bg-slate-50">
+ <div className="relative aspect-square overflow-hidden bg-slate-900">
  <img
  src={p.image_url}
  alt={language ==='ar' ? (p.name_ar || p.name_en || p.name) : (p.name_en || p.name || p.name_ar)}
@@ -382,7 +382,7 @@ export default function ProductDetail() {
  )}
  </div>
  <div className="p-4">
- <h3 className="font-semibold text-slate-900 text-sm mb-2 line-clamp-2">
+ <h3 className="font-semibold text-white text-sm mb-2 line-clamp-2">
  {language ==='ar' ? (p.name_ar || p.name_en || p.name) : (p.name_en || p.name || p.name_ar)}
  </h3>
  <div className="flex items-center gap-2">

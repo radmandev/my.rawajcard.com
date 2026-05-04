@@ -51,14 +51,14 @@ export default function CardBuilder() {
  const stepParam = urlParams.get('step');
 
  const [currentStep, setCurrentStep] = useState(0);
- const [focusedTemplate, setFocusedTemplate] = useState('navy_gold');
+ const [focusedTemplate, setFocusedTemplate] = useState('aurora_glass');
  const { openUpgradeDialog } = useUpgrade();
  const [limitChecked, setLimitChecked] = useState(false);
  const [previewEditMode, setPreviewEditMode] = useState(false);
  const [slugValid, setSlugValid] = useState(false);
  const [saveError, setSaveError] = useState(null);
  const [card, setCard] = useState({
- template:'modern',
+ template:'aurora_glass',
  status:'draft',
  design: {
  primary_color:'#0D7377',
@@ -688,7 +688,7 @@ export default function CardBuilder() {
  <div className="lg:sticky lg:top-24 h-fit" data-preview-section>
  <Card className="bg-indigo-950/60 border-slate-200/50">
  <CardHeader>
- <CardTitle className="flex items-center justify-between">
+ <CardTitle className="flex items-center justify-between text-slate-100">
  <div className="flex items-center gap-2">
  <Sparkles className="h-5 w-5" />
  {t('preview')}
@@ -698,7 +698,7 @@ export default function CardBuilder() {
  variant={previewEditMode ?"default" :"outline"}
  size="sm"
  onClick={() => setPreviewEditMode(!previewEditMode)}
- className={previewEditMode ?"bg-cyan-600 hover:bg-cyan-700" :""}
+ className={previewEditMode ? "bg-cyan-600 hover:bg-cyan-700 text-white" : "border-white/20 text-slate-100 hover:bg-white/10"}
  >
  {previewEditMode 
  ? (isRTL ?'تعطيل التعديل' :'Exit Edit') 
@@ -709,10 +709,10 @@ export default function CardBuilder() {
  </CardTitle>
  </CardHeader>
  <CardContent>
- <div className="bg-gradient-to-br from-slate-100 to-slate-200 rounded-2xl p-6 relative overflow-hidden">
+ <div className="bg-[#060d1f] rounded-2xl p-4 relative overflow-hidden flex flex-col items-center">
  {/* Template Switch Arrows for Customize/Design/Premium Steps */}
  {(currentStep === 1 || currentStep === 2 || currentStep === 3) && (
- <>
+ <div className="flex items-center justify-between w-full mb-3 px-1">
  <button
  onClick={() => {
  const templates = ['navy_gold','dark_minimal','purple_coral','earthy_minimal','pink_modern','orange_pro','noqtatain1','noqtatain2','noqtatain3','noqtatain4','noqtatain6','modern_gradient','luxury_gold','tech_blue','sunset_warm','forest_green','aurora_glass'];
@@ -720,10 +720,11 @@ export default function CardBuilder() {
  const prevIndex = currentIndex > 0 ? currentIndex - 1 : templates.length - 1;
  setCard({ ...card, template: templates[prevIndex] });
  }}
- className="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-indigo-950/60 p-2 rounded-full shadow-lg hover:scale-110 transition-transform"
+ className="bg-white/10 hover:bg-white/20 p-2 rounded-full shadow-lg hover:scale-110 transition-transform"
  >
- <ChevronLeft className="h-5 w-5 text-cyan-600" />
+ <ChevronLeft className="h-4 w-4 text-cyan-300" />
  </button>
+ <span className="text-xs text-slate-400 capitalize">{card.template?.replace(/_/g,' ')}</span>
  <button
  onClick={() => {
  const templates = ['navy_gold','dark_minimal','purple_coral','earthy_minimal','pink_modern','orange_pro','noqtatain1','noqtatain2','noqtatain3','noqtatain4','noqtatain6','modern_gradient','luxury_gold','tech_blue','sunset_warm','forest_green','aurora_glass'];
@@ -731,14 +732,31 @@ export default function CardBuilder() {
  const nextIndex = currentIndex < templates.length - 1 ? currentIndex + 1 : 0;
  setCard({ ...card, template: templates[nextIndex] });
  }}
- className="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-indigo-950/60 p-2 rounded-full shadow-lg hover:scale-110 transition-transform"
+ className="bg-white/10 hover:bg-white/20 p-2 rounded-full shadow-lg hover:scale-110 transition-transform"
  >
- <ChevronRight className="h-5 w-5 text-cyan-600" />
+ <ChevronRight className="h-4 w-4 text-cyan-300" />
  </button>
- </>
+ </div>
  )}
- 
- <div className="bg-indigo-950/60 rounded-3xl shadow-2xl overflow-hidden max-w-md mx-auto relative">
+
+ {/* Phone Shell */}
+ <div className="relative w-[280px] mx-auto">
+ {/* Phone frame */}
+ <div className="relative bg-[#0a0a0f] rounded-[2.5rem] p-[3px] shadow-[0_0_0_1px_rgba(255,255,255,0.08),0_24px_60px_rgba(0,0,0,0.8)]">
+ {/* Screen bezel */}
+ <div className="bg-[#111118] rounded-[2.3rem] overflow-hidden">
+ {/* Status bar */}
+ <div className="flex items-center justify-between px-5 pt-3 pb-1 bg-black/40">
+ <span className="text-[10px] text-white/70 font-medium">9:41</span>
+ {/* Notch */}
+ <div className="w-16 h-4 bg-black rounded-full" />
+ <div className="flex items-center gap-1">
+ <span className="text-[10px] text-white/70">●●●</span>
+ </div>
+ </div>
+ {/* Scrollable screen content */}
+ <div className="overflow-y-auto max-h-[480px] scrollbar-hide">
+ <div className="overflow-hidden">
  {currentStep === 0 ? (
  <CardPreview 
  card={{ 
@@ -776,10 +794,18 @@ export default function CardBuilder() {
  </>
  )}
  </div>
+ </div>
+ </div>
+ </div>
+ {/* Home indicator */}
+ <div className="flex justify-center py-2 bg-black/20">
+ <div className="w-20 h-1 bg-white/30 rounded-full" />
+ </div>
+ </div>
 
  {/* Contact Form Preview Note */}
  {currentStep > 0 && card.contact_form?.enabled && (
- <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-blue-500 text-white text-xs px-3 py-1.5 rounded-full shadow-lg">
+ <div className="mt-3 bg-blue-500/20 border border-blue-400/30 text-blue-200 text-xs px-3 py-1.5 rounded-full text-center">
  {isRTL ?'نموذج جمع جهات الاتصال سيظهر تلقائياً' :'Contact form will show automatically'}
  </div>
  )}

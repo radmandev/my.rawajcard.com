@@ -34,7 +34,7 @@ const navItems = [
  { key:'cards', icon: CreditCard, page:'MyCards', label:'myCards' },
  { key:'create', icon: Plus, page:'CardBuilder', label:'createCard' },
  { key:'contacts', icon: Users, page:'MyContacts', label:'myContacts' },
- { key:'store', icon: Store, page:'Store', label:'store' },
+ { key:'nfcProducts', icon: Store, page:'NFCProducts', label:'store' },
  { key:'myOrders', icon: Wifi, page:'MyOrders', label:'myOrders' },
  { key:'analytics', icon: BarChart3, page:'Analytics', label:'analytics' },
 ];
@@ -99,7 +99,7 @@ export default function Sidebar({ isOpen, onClose, collapsed, onToggleCollapse }
  {/* Sidebar */}
  <aside className={cn(
 "fixed top-16 bottom-0 z-40 flex flex-col",
-"bg-indigo-950/60 border-slate-200",
+ "bg-[linear-gradient(180deg,#0C1429_0%,#1E1B4B_100%)] border-white/10",
 "transition-all duration-300 ease-in-out",
  isRTL ?"right-0 border-l" :"left-0 border-r",
  collapsed ?"w-20" :"w-64",
@@ -113,14 +113,14 @@ export default function Sidebar({ isOpen, onClose, collapsed, onToggleCollapse }
  onClick={onClose}
  className={cn(
 "flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200",
-"border border-violet-200 bg-gradient-to-r from-violet-50 to-indigo-50",
+ "border border-violet-300/30 bg-gradient-to-r from-violet-500/20 to-indigo-500/20 text-violet-100",
 "hover:shadow-md hover:scale-[1.01]",
  isActive('Admin') &&"ring-2 ring-violet-300/70",
  collapsed &&"justify-center px-2"
  )}
  >
- <Shield className={cn("h-5 w-5 flex-shrink-0 text-violet-600", isActive('Admin') &&"text-violet-700")} />
- {!collapsed && <span className="font-semibold text-violet-700">{isRTL ?'لوحة المسؤول' :'Admin Panel'}</span>}
+ <Shield className={cn("h-5 w-5 flex-shrink-0 text-violet-200", isActive('Admin') &&"text-violet-100")} />
+ {!collapsed && <span className="font-semibold text-violet-100">{isRTL ?'لوحة المسؤول' :'Admin Panel'}</span>}
  </Link>
  )}
 
@@ -128,14 +128,14 @@ export default function Sidebar({ isOpen, onClose, collapsed, onToggleCollapse }
  const targetPage = isAdmin && item.key ==='dashboard' ?'Admin' : item.page;
  const itemClass = cn(
 "flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200",
-"hover:bg-slate-100",
- isActive(targetPage) &&"bg-gradient-to-r from-cyan-500/10 to-blue-500/10 text-cyan-600 font-medium",
+ "text-slate-200 hover:bg-white/10",
+ isActive(targetPage) &&"bg-gradient-to-r from-cyan-500/30 to-fuchsia-500/25 text-white font-medium border border-cyan-300/30",
  collapsed &&"justify-center px-2"
  );
  const itemContent = (
  <>
- <item.icon className={cn("h-5 w-5 flex-shrink-0", isActive(targetPage) &&"text-cyan-600")} />
- {!collapsed && <span>{t(item.label)}</span>}
+ <item.icon className={cn("h-5 w-5 flex-shrink-0", isActive(targetPage) &&"text-cyan-200")} />
+ {!collapsed && <span>{item.key ==='nfcProducts' ? (isRTL ?'منتجات NFC' :'NFC Products') : t(item.label)}</span>}
  </>
  );
  return (
@@ -156,7 +156,7 @@ export default function Sidebar({ isOpen, onClose, collapsed, onToggleCollapse }
  <CollapsibleTrigger
  className={cn(
 "flex items-center gap-3 px-4 py-3 rounded-xl w-full transition-all duration-200",
-"hover:bg-slate-100"
+ "text-slate-200 hover:bg-white/10"
  )}
  >
  <Sparkles className="h-5 w-5 flex-shrink-0" />
@@ -171,15 +171,15 @@ export default function Sidebar({ isOpen, onClose, collapsed, onToggleCollapse }
  onClick={onClose}
  className={cn(
 "flex items-center gap-3 px-4 py-2 rounded-xl transition-all duration-200",
-"hover:bg-slate-100",
+ "text-slate-200 hover:bg-white/10",
  isRTL ?"mr-6" :"ml-6",
- isActive(item.page) &&"bg-gradient-to-r from-cyan-500/10 to-blue-500/10 text-cyan-600 font-medium"
+ isActive(item.page) &&"bg-gradient-to-r from-cyan-500/30 to-fuchsia-500/25 text-white font-medium border border-cyan-300/30"
  )}
  >
- <item.icon className={cn("h-4 w-4 flex-shrink-0", isActive(item.page) &&"text-cyan-600")} />
+ <item.icon className={cn("h-4 w-4 flex-shrink-0", isActive(item.page) &&"text-cyan-200")} />
  <span className="text-sm">{t(item.label)}</span>
  {item.premium && !isPremium && (
- <span className="text-xs bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded">PRO</span>
+ <span className="text-xs bg-amber-400/20 text-amber-200 px-1.5 py-0.5 rounded">PRO</span>
  )}
  </Link>
  ))}
@@ -195,12 +195,12 @@ export default function Sidebar({ isOpen, onClose, collapsed, onToggleCollapse }
  onClick={onClose}
  className={cn(
 "flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200",
-"hover:bg-slate-100",
- isActive(item.page) &&"bg-gradient-to-r from-cyan-500/10 to-blue-500/10 text-cyan-600 font-medium",
+ "text-slate-200 hover:bg-white/10",
+ isActive(item.page) &&"bg-gradient-to-r from-cyan-500/30 to-fuchsia-500/25 text-white font-medium border border-cyan-300/30",
 "justify-center px-2"
  )}
  >
- <item.icon className={cn("h-5 w-5 flex-shrink-0", isActive(item.page) &&"text-cyan-600")} />
+ <item.icon className={cn("h-5 w-5 flex-shrink-0", isActive(item.page) &&"text-cyan-200")} />
  </Link>
  );
  })}
@@ -208,12 +208,12 @@ export default function Sidebar({ isOpen, onClose, collapsed, onToggleCollapse }
  </nav>
 
  {/* Collapse Toggle (Desktop only) */}
- <div className="hidden md:block p-4 border-t border-slate-200">
+ <div className="hidden md:block p-4 border-t border-white/10">
  <Button
  variant="ghost"
  size="sm"
  onClick={onToggleCollapse}
- className="w-full justify-center"
+ className="w-full justify-center text-slate-200 hover:bg-white/10 hover:text-white"
  >
  {collapsed ? (
  isRTL ? <ChevronLeft className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />
@@ -224,12 +224,12 @@ export default function Sidebar({ isOpen, onClose, collapsed, onToggleCollapse }
  </div>
 
  {/* Logout */}
- <div className="p-4 border-t border-slate-200">
+ <div className="p-4 border-t border-white/10">
  <button
  onClick={handleLogout}
  className={cn(
 "flex items-center gap-3 px-4 py-3 rounded-xl w-full",
-"text-red-600 hover:bg-red-50 transition-colors",
+ "text-red-300 hover:bg-red-500/15 transition-colors",
  collapsed &&"justify-center px-2"
  )}
  >

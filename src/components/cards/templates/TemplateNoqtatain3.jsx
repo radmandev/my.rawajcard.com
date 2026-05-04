@@ -53,11 +53,11 @@ export default function TemplateNoqtatain3({ card, isRTL, onLinkClick }) {
         {/* Profile Circle Overlapping */}
         <div className="relative -mt-16 flex flex-col items-center px-6">
           {card.profile_image ? (
-            <div className="w-32 h-32 rounded-full border-4 border-white shadow-xl overflow-hidden bg-indigo-950/60">
+            <div className="w-32 h-32 rounded-full border-4 border-white shadow-xl overflow-hidden bg-white">
               <img src={card.profile_image} alt="" className="w-full h-full object-cover" />
             </div>
           ) : card.company_logo && (
-            <div className="w-32 h-32 rounded-full border-4 border-white shadow-xl overflow-hidden bg-indigo-950/60 p-4 flex items-center justify-center">
+            <div className="w-32 h-32 rounded-full border-4 border-white shadow-xl overflow-hidden bg-white p-4 flex items-center justify-center">
               <img src={card.company_logo} alt="" className="max-w-full max-h-full object-contain" />
             </div>
           )}
@@ -96,7 +96,7 @@ export default function TemplateNoqtatain3({ card, isRTL, onLinkClick }) {
       <div className="max-w-2xl mx-auto px-6 py-8 space-y-5">
         {/* About Me */}
         {card.bio && (
-          <div className="bg-indigo-950/60 rounded-2xl shadow-sm p-6 text-center">
+          <div className="bg-white rounded-2xl shadow-sm p-6 text-center">
             <h2 className="text-xl font-bold mb-3" style={{ color: accentColor }}>
               {isRTL ? 'نبذة عني' : 'About Me'}
             </h2>
@@ -107,7 +107,7 @@ export default function TemplateNoqtatain3({ card, isRTL, onLinkClick }) {
         )}
 
         {/* Contact */}
-        <div className="bg-indigo-950/60 rounded-2xl shadow-sm p-6">
+        <div className="bg-white rounded-2xl shadow-sm p-6">
           <div className="flex items-center gap-3 mb-5">
             <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ backgroundColor: `${accentColor}15`, color: accentColor }}>
               <Phone className="h-5 w-5" />
@@ -161,7 +161,7 @@ export default function TemplateNoqtatain3({ card, isRTL, onLinkClick }) {
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => onLinkClick?.(platform)}
-                  className="flex items-center justify-between bg-indigo-950/60 rounded-2xl shadow-sm p-4 hover:shadow-md transition-all"
+                  className="flex items-center justify-between bg-white rounded-2xl shadow-sm p-4 hover:shadow-md transition-all"
                 >
                   <div className="flex items-center gap-3">
                     <div className="w-11 h-11 rounded-xl flex items-center justify-center" style={{ backgroundColor: `${primaryColor}08`, color: primaryColor }}>
@@ -188,7 +188,7 @@ export default function TemplateNoqtatain3({ card, isRTL, onLinkClick }) {
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => onLinkClick?.('website')}
-            className="flex items-center justify-between bg-indigo-950/60 rounded-2xl shadow-sm p-4 hover:shadow-md transition-all"
+            className="flex items-center justify-between bg-white rounded-2xl shadow-sm p-4 hover:shadow-md transition-all"
             style={{ borderLeft: `4px solid ${accentColor}` }}
           >
             <div className="flex items-center gap-3">

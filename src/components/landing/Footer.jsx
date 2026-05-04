@@ -1,84 +1,145 @@
-import React from'react';
-import { Facebook, Twitter, Instagram, Linkedin, Youtube } from'lucide-react';
+import React, { useState } from 'react';
+import { Phone, Mail, MessageCircle, ArrowLeft } from 'lucide-react';
+import { useLanguage } from '@/components/shared/LanguageContext';
+import { useAuth } from '@/lib/AuthContext';
+import { useNavigate } from 'react-router-dom';
+import { createPageUrl } from '@/utils';
+import LoginModal from '@/components/auth/LoginModal';
 
-const footerLinks = {
- Product: ["Digital Cards","NFC Cards","QR Codes","Mobile App","Teams","Pricing"],
- Resources: ["Blog","Help Center","API Docs","Integrations","Case Studies"],
- Company: ["About Us","Careers","Press","Contact","Partners"],
- Legal: ["Privacy Policy","Terms of Service","Cookie Policy","GDPR"]
-};
+export default function Footer({ showCta = true }) {
+  const { isRTL } = useLanguage();
+  const { isAuthenticated } = useAuth();
+  const navigate = useNavigate();
+  const [loginOpen, setLoginOpen] = useState(false);
 
-const socialLinks = [
- { icon: Facebook, href:"#" },
- { icon: Twitter, href:"#" },
- { icon: Instagram, href:"#" },
- { icon: Linkedin, href:"#" },
- { icon: Youtube, href:"#" }
-];
+  const footerCtaLabel = isAuthenticated
+    ? (isRTL ? 'الذهاب إلى لوحة التحكم' : 'Go to Dashboard')
+    : (isRTL ? 'ابدأ مجاناً' : 'Get Started Free');
 
-export default function Footer() {
- return (
- <footer className="bg-slate-900 text-white pt-20 pb-10">
- <div className="container mx-auto px-4 md:px-6">
- <div className="grid md:grid-cols-2 lg:grid-cols-6 gap-12 mb-16">
- {/* Brand Column */}
- <div className="lg:col-span-2">
- <div className="flex items-center gap-3 mb-6">
- <img 
- src="/rawajcard-logo1.png" 
- alt="Rawajcard" 
- className="h-10 w-10 object-contain"
- />
- <span className="text-white text-xl font-bold tracking-wide">Rawajcard</span>
- </div>
- <p className="text-slate-400 mb-6 max-w-xs">
- Your digital business card platform. Turn real-life meetings into real revenue.
- </p>
- <div className="flex gap-4">
- {socialLinks.map((social, index) => (
- <a
- key={index}
- href={social.href}
- className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-cyan-600 transition-all hover:scale-110"
- >
- <social.icon className="w-5 h-5" />
- </a>
- ))}
- </div>
- </div>
- 
- {/* Links */}
- {Object.entries(footerLinks).map(([title, links], index) => (
- <div key={index}>
- <h4 className="font-semibold text-white mb-4">{title}</h4>
- <ul className="space-y-3">
- {links.map((link, linkIndex) => (
- <li key={linkIndex}>
- <a 
- href="#" 
- className="text-slate-400 hover:text-cyan-400 transition-colors text-sm"
- >
- {link}
- </a>
- </li>
- ))}
- </ul>
- </div>
- ))}
- </div>
- 
- {/* Bottom */}
- <div className="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
- <p className="text-slate-500 text-sm">
- © {new Date().getFullYear()} Rawajcard. All rights reserved.
- </p>
- <div className="flex items-center gap-6">
- <span className="text-slate-500 text-sm flex items-center gap-2">
- 🌳 50,000+ trees planted
- </span>
- </div>
- </div>
- </div>
- </footer>
- );
+  const handleCta = () => {
+    if (isAuthenticated) {
+      navigate(createPageUrl('Dashboard'));
+    } else {
+      setLoginOpen(true);
+    }
+  };
+
+  return (
+    <>
+      <footer style={{ background: '#0a0a0a' }} className="text-white">
+        {/* Top CTA strip */}
+        {showCta && (
+          <div className="border-b border-white/10 py-10">
+            <div className="container mx-auto px-4 md:px-10 flex flex-col md:flex-row items-center justify-between gap-6">
+              <div>
+                <h3 className="text-xl font-black mb-1">{isRTL ? 'جاهز تبدأ؟' : 'Ready to start?'}</h3>
+                <p className="text-slate-400 text-sm">{isRTL ? 'انشئ كرتك الرقمي مجاناً الآن' : 'Create your digital card for free today'}</p>
+              </div>
+              <button
+                onClick={handleCta}
+                className="inline-flex items-center gap-2 bg-gradient-to-r from-fuchsia-600 to-purple-700 hover:from-fuchsia-500 hover:to-purple-600 text-white font-bold px-8 py-3.5 rounded-2xl transition-all"
+              >
+                {footerCtaLabel}
+                <ArrowLeft className="h-4 w-4" />
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Main footer */}
+        <div className="container mx-auto px-4 md:px-10 py-16">
+          <div className="grid md:grid-cols-4 gap-10">
+            {/* Brand */}
+            <div className="md:col-span-1">
+              <div className="flex items-center gap-3 mb-4">
+                <img src="/rawajcard-logo1.png" alt="Rawajcard" className="h-12 w-12 object-contain" />
+                <div className="text-2xl font-black text-white">Rawajcard</div>
+              </div>
+              <p className="text-slate-400 text-sm leading-relaxed mb-5">
+                {isRTL ? 'الجيل الجديد من بطاقات التعارف الذكية في عالم الأعمال' : 'The next generation of smart business cards'}
+              </p>
+              <div className="flex gap-3">
+                {[
+                  { href: 'https://www.facebook.com/rawajcard', label: '𝒻' },
+                  { href: 'https://twitter.com/rawajcard', label: '𝓍' },
+                  { href: 'https://www.instagram.com/rawajcard', label: '𝒾𝑔' },
+                ].map((s, i) => (
+                  <a key={i} href={s.href} target="_blank" rel="noopener noreferrer"
+                    className="w-9 h-9 bg-white/5 hover:bg-cyan-600 rounded-full flex items-center justify-center text-sm transition-colors">
+                    {s.label}
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            {/* Links */}
+            {[
+              {
+                titleAr: 'روابط مهمة', titleEn: 'Quick Links',
+                links: [
+                  { labelAr: 'المتجر', labelEn: 'Shop', href: 'https://rawajcard.com/shop/' },
+                  { labelAr: 'حسابي', labelEn: 'My Account', href: 'https://rawajcard.com/my-account/' },
+                  { labelAr: 'طلبياتي', labelEn: 'My Orders', href: 'https://rawajcard.com/my-orders/' },
+                  { labelAr: 'جميع المنتجات', labelEn: 'All Products', href: 'https://rawajcard.com/shop/' },
+                ],
+              },
+              {
+                titleAr: 'معلومات مهمة', titleEn: 'Info',
+                links: [
+                  { labelAr: 'الشحن والتوصيل', labelEn: 'Shipping & Delivery', href: 'https://rawajcard.com/shipping' },
+                  { labelAr: 'سياسة التبديل والاسترجاع', labelEn: 'Returns Policy', href: 'https://rawajcard.com/returns' },
+                  { labelAr: 'سياسة الخصوصية', labelEn: 'Privacy Policy', href: 'https://rawajcard.com/privacy-policy' },
+                  { labelAr: 'وسائل الدفع', labelEn: 'Payment Methods', href: 'https://rawajcard.com/PaymentsPolicy' },
+                ],
+              },
+              {
+                titleAr: 'تواصل معنا', titleEn: 'Contact Us',
+                links: [],
+                contact: true,
+              },
+            ].map((col, i) => (
+              <div key={i}>
+                <h4 className="font-black text-white mb-5 text-base">{isRTL ? col.titleAr : col.titleEn}</h4>
+                {col.contact ? (
+                  <div className="space-y-4 text-sm text-slate-400">
+                    <a href="mailto:info@rawajcard.com" className="flex items-center gap-2 hover:text-cyan-400 transition-colors">
+                      <Mail className="h-4 w-4 flex-shrink-0" />
+                      info@rawajcard.com
+                    </a>
+                    <a href="https://wa.me/966531607223" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-cyan-400 transition-colors">
+                      <MessageCircle className="h-4 w-4 flex-shrink-0" />
+                      {isRTL ? 'واتساب: 966531607223+' : 'WhatsApp: +966531607223'}
+                    </a>
+                    <a href="tel:966531607223" className="flex items-center gap-2 hover:text-cyan-400 transition-colors">
+                      <Phone className="h-4 w-4 flex-shrink-0" />
+                      {isRTL ? 'اتصل بنا: 966531607223+' : 'Call: +966531607223'}
+                    </a>
+                  </div>
+                ) : (
+                  <ul className="space-y-3 text-sm text-slate-400">
+                    {col.links.map((link, j) => (
+                      <li key={j}>
+                        <a href={link.href} target="_blank" rel="noopener noreferrer"
+                          className="hover:text-cyan-400 transition-colors">
+                          {isRTL ? link.labelAr : link.labelEn}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="border-t border-white/10 py-6 text-center text-sm text-slate-500">
+          {isRTL
+            ? `جميع الحقوق محفوظة © ${new Date().getFullYear()} رواج كارد — تقنية NFC الذكية`
+            : `All rights reserved © ${new Date().getFullYear()} Rawajcard — Smart NFC Technology`}
+        </div>
+      </footer>
+
+      <LoginModal open={loginOpen} onClose={() => setLoginOpen(false)} />
+    </>
+  );
 }

@@ -149,7 +149,7 @@ const AuthenticatedApp = () => {
   const navigate = useNavigate();
   const isPublicRoute = [
     '/', '/demohome', '/much-hero', '/login', '/Login', '/Pricing', '/Products', '/ProductDetail', '/Store', '/NFC', '/customize', '/Checkout', '/CheckoutSuccess', '/Demo3D', '/MyOrders', '/PhysicalCards', '/CardSamples', '/HeaderVariants',
-    '/Return', '/PrivacyPolicy', '/Payments', '/returns', '/privacy-policy', '/payments', '/trackQRScan'
+    '/Return', '/PrivacyPolicy', '/PaymentsPolicy', '/returns', '/privacy-policy', '/payments', '/trackQRScan'
   ].includes(location.pathname) || location.pathname.startsWith('/c/') || location.pathname.startsWith('/q/') || location.pathname.startsWith('/products/');
 
   // Show loading spinner while checking app public settings or auth (skip for public routes)
@@ -235,7 +235,7 @@ const AuthenticatedApp = () => {
         <Route path="/PhysicalCards" element={<Navigate to={createPageUrl('MyOrders')} replace />} />
         <Route path="/returns" element={<Navigate to={createPageUrl('Return')} replace />} />
         <Route path="/privacy-policy" element={<Navigate to={createPageUrl('PrivacyPolicy')} replace />} />
-        <Route path="/payments" element={<Navigate to={createPageUrl('Payments')} replace />} />
+        <Route path="/payments" element={<Navigate to={createPageUrl('PaymentsPolicy')} replace />} />
         {Object.entries(Pages).map(([path, Page]) => (
           <Route
             key={path}

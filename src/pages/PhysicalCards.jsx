@@ -50,11 +50,11 @@ import {
 // ─── Status badge helper ───────────────────────────────────────────────────────
 
 const STATUS_CONFIG = {
- pending: { en:'Pending Review', ar:'قيد المراجعة', color:'bg-yellow-100 text-yellow-800' },
- in_review: { en:'In Review', ar:'يُراجع', color:'bg-blue-100 text-blue-800' },
- in_production:{ en:'In Production', ar:'قيد الإنتاج', color:'bg-purple-100 text-purple-800' },
- shipped: { en:'Shipped', ar:'تم الشحن', color:'bg-cyan-100/20 text-cyan-800' },
- delivered: { en:'Delivered', ar:'تم التسليم', color:'bg-green-100 text-green-800' },
+ pending: { en:'Pending Review', ar:'قيد المراجعة', color:'bg-yellow-900/40 text-yellow-300' },
+ in_review: { en:'In Review', ar:'يُراجع', color:'bg-blue-900/40 text-blue-300' },
+ in_production:{ en:'In Production', ar:'قيد الإنتاج', color:'bg-purple-900/40 text-purple-300' },
+ shipped: { en:'Shipped', ar:'تم الشحن', color:'bg-sky-900/40 text-sky-300' },
+ delivered: { en:'Delivered', ar:'تم التسليم', color:'bg-green-900/40 text-green-300' },
 };
 
 function StatusBadge({ status, isRTL }) {
@@ -165,8 +165,8 @@ function EditCardDialog({ card, digitalCards, isOpen, onClose, onSaved, isRTL })
  onClick={() => setTemplateId(t.id)}
  className={`rounded-xl border px-2 py-1.5 text-xs font-semibold transition-all ${
  templateId === t.id
- ?'border-cyan-600 bg-cyan-50 text-cyan-700'
- :'border-slate-200 hover:border-cyan-400 text-slate-700'
+ ?'border-sky-500 bg-sky-900/30 text-sky-300'
+ :'border-slate-700 hover:border-sky-400 text-slate-400'
  }`}
  >
  {isRTL ? t.nameAr : t.nameEn}
@@ -228,7 +228,7 @@ function EditCardDialog({ card, digitalCards, isOpen, onClose, onSaved, isRTL })
  {/* Photo */}
  <div className="space-y-2">
  <Label>{isRTL ?'الصورة (اختياري)' :'Photo (Optional)'}</Label>
- <label className="w-full cursor-pointer rounded-xl border-2 border-dashed border-slate-300 p-3 flex items-center justify-center gap-2 text-sm text-slate-600 hover:border-cyan-500 transition-colors">
+ <label className="w-full cursor-pointer rounded-xl border-2 border-dashed border-slate-600 p-3 flex items-center justify-center gap-2 text-sm text-slate-400 hover:border-sky-500 transition-colors">
  {picture
  ? <span className="text-cyan-600 font-medium">{isRTL ?'✓ صورة موجودة — اضغط لتغييرها' :'✓ Photo set — click to change'}</span>
  : <><ImagePlus className="h-4 w-4" />{isRTL ?'رفع صورة' :'Upload photo'}</>
@@ -254,7 +254,7 @@ function EditCardDialog({ card, digitalCards, isOpen, onClose, onSaved, isRTL })
  <DialogFooter className="gap-2">
  <Button variant="outline" onClick={onClose}>{isRTL ?'إلغاء' :'Cancel'}</Button>
  <Button
- className="bg-cyan-600 hover:bg-cyan-700"
+ className="bg-gradient-to-r from-sky-500 to-fuchsia-500 hover:from-sky-400 hover:to-fuchsia-400"
  onClick={() => saveMutation.mutate()}
  disabled={saveMutation.isPending || !name.trim()}
  >
@@ -359,14 +359,14 @@ export default function PhysicalCards() {
  if (!isAuthenticated || !user?.id) {
  return (
  <div className="max-w-2xl mx-auto py-16 text-center space-y-4">
- <div className="h-14 w-14 rounded-full bg-slate-100 flex items-center justify-center mx-auto">
- <CreditCard className="h-7 w-7 text-slate-400" />
+ <div className="h-14 w-14 rounded-full flex items-center justify-center mx-auto" style={{backgroundColor:'rgba(30,27,75,0.8)', border:'1px solid rgba(56,189,248,0.15)'}}>
+ <CreditCard className="h-7 w-7 text-sky-400" />
  </div>
  <div className="space-y-1">
- <h1 className="text-xl font-semibold text-slate-900">
+ <h1 className="text-xl font-semibold text-white">
  {isRTL ?'جاري إكمال تسجيل الدخول...' :'Completing your sign-in...'}
  </h1>
- <p className="text-sm text-slate-500">
+ <p className="text-sm text-slate-400">
  {isRTL
  ?'إذا لم يتم توجيهك تلقائياً، سجّل الدخول ثم ارجع إلى هذه الصفحة.'
  :'If you are not redirected automatically, sign in and return to this page.'}
@@ -383,11 +383,11 @@ export default function PhysicalCards() {
  {/* Header */}
  <div className="flex items-center justify-between gap-4">
  <div>
- <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
- <CreditCard className="h-6 w-6 text-cyan-600" />
+ <h1 className="text-2xl font-bold text-white flex items-center gap-2">
+ <CreditCard className="h-6 w-6" style={{color:'#38BDF8'}} />
  {isRTL ?'البطاقات الفيزيائية' :'Physical Cards'}
  </h1>
- <p className="text-slate-500 text-sm mt-1">
+ <p className="text-slate-400 text-sm mt-1">
  {isRTL
  ?'راجع وعدّل تصاميم بطاقات NFC الفيزيائية قبل الطباعة والشحن'
  :'Review and edit your NFC physical card designs before printing and shipping'}
@@ -397,16 +397,16 @@ export default function PhysicalCards() {
 
  {/* Empty state */}
  {physicalCards.length === 0 && (
- <Card className="border-dashed border-2 border-slate-200">
+ <Card style={{border:'2px dashed rgba(56,189,248,0.25)', backgroundColor:'rgba(30,27,75,0.5)'}}>
  <CardContent className="py-16 text-center space-y-4">
- <div className="h-14 w-14 rounded-full bg-slate-100 flex items-center justify-center mx-auto">
- <Package className="h-7 w-7 text-slate-400" />
+ <div className="h-14 w-14 rounded-full flex items-center justify-center mx-auto" style={{backgroundColor:'rgba(56,189,248,0.1)'}}>
+ <Package className="h-7 w-7 text-sky-400" />
  </div>
  <div>
- <p className="font-semibold text-slate-700">
+ <p className="font-semibold text-white">
  {isRTL ?'لا توجد بطاقات فيزيائية بعد' :'No physical cards yet'}
  </p>
- <p className="text-sm text-slate-500 mt-1">
+ <p className="text-sm text-slate-400 mt-1">
  {isRTL
  ?'بعد إتمام طلب شراء بطاقة NFC ستجد تصاميمك هنا'
  :'After placing an NFC card order, your designs will appear here'}
@@ -491,7 +491,7 @@ function PhysicalCardItem({ card, digitalCards, isRTL, onEdit, onDelete }) {
  exit={{ opacity: 0, y: -16 }}
  transition={{ duration: 0.25 }}
  >
- <Card className="overflow-hidden border-slate-200">
+ <Card className="overflow-hidden" style={{border:'1px solid rgba(56,189,248,0.18)', backgroundColor:'#1E1B4B'}}>
  {/* Card preview */}
  <div className="p-3">
  <PhysicalCardPreview
@@ -508,7 +508,7 @@ function PhysicalCardItem({ card, digitalCards, isRTL, onEdit, onDelete }) {
  {/* Name + status */}
  <div className="flex items-start justify-between gap-2">
  <div>
- <p className="font-semibold text-slate-900 text-sm">{card.name}</p>
+ <p className="font-semibold text-white text-sm">{card.name}</p>
  {card.order_number && (
  <p className="text-xs text-slate-400 font-mono mt-0.5">#{card.order_number}</p>
  )}
@@ -518,7 +518,7 @@ function PhysicalCardItem({ card, digitalCards, isRTL, onEdit, onDelete }) {
 
  {/* Linked digital card */}
  {linkedDigital && (
- <div className="flex items-center gap-1.5 text-xs text-cyan-600 bg-cyan-50 rounded-lg px-2.5 py-1.5">
+ <div className="flex items-center gap-1.5 text-xs text-sky-300 rounded-lg px-2.5 py-1.5" style={{backgroundColor:'rgba(56,189,248,0.08)'}}>
  <Link2 className="h-3 w-3 flex-shrink-0" />
  <span className="truncate">
  {isRTL ?'مرتبطة بـ:' :'Linked to:'}
@@ -528,7 +528,7 @@ function PhysicalCardItem({ card, digitalCards, isRTL, onEdit, onDelete }) {
  )}
 
  {/* Template name */}
- <div className="flex items-center gap-1.5 text-xs text-slate-500">
+ <div className="flex items-center gap-1.5 text-xs text-slate-400">
  <Wifi className="h-3 w-3" />
  {isRTL ? template.nameAr : template.nameEn}
  </div>

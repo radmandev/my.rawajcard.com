@@ -56,19 +56,19 @@ export default function TemplateNoqtatain6({ card, isRTL, onLinkClick }) {
           <div className="flex justify-center gap-3 mt-6">
             {card.phone && (
               <a href={`tel:${card.phone}`} onClick={() => onLinkClick?.('phone')}
-                className="w-12 h-12 rounded-full bg-indigo-950/60/20 backdrop-blur-md flex items-center justify-center hover:bg-indigo-950/60/30 transition-colors border border-white/30">
+                className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center hover:bg-white/30 transition-colors border border-white/30">
                 <Phone className="h-5 w-5" />
               </a>
             )}
             {card.email && (
               <a href={`mailto:${card.email}`} onClick={() => onLinkClick?.('email')}
-                className="w-12 h-12 rounded-full bg-indigo-950/60/20 backdrop-blur-md flex items-center justify-center hover:bg-indigo-950/60/30 transition-colors border border-white/30">
+                className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center hover:bg-white/30 transition-colors border border-white/30">
                 <Mail className="h-5 w-5" />
               </a>
             )}
             {card.whatsapp && (
               <a href={`https://wa.me/${card.whatsapp}`} onClick={() => onLinkClick?.('whatsapp')}
-                className="w-12 h-12 rounded-full bg-indigo-950/60/20 backdrop-blur-md flex items-center justify-center hover:bg-indigo-950/60/30 transition-colors border border-white/30">
+                className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center hover:bg-white/30 transition-colors border border-white/30">
                 <MessageSquare className="h-5 w-5" />
               </a>
             )}
@@ -83,7 +83,7 @@ export default function TemplateNoqtatain6({ card, isRTL, onLinkClick }) {
           <div className="max-w-2xl mx-auto px-6 py-8 space-y-5">
             {/* About Me */}
             {card.bio && (
-              <div className="bg-indigo-950/60 rounded-2xl shadow-sm p-6 text-center">
+              <div className="bg-white rounded-2xl shadow-sm p-6 text-center">
                 <h2 className="text-xl font-bold mb-3" style={{ color: accentColor }}>
                   {isRTL ? 'نبذة عني' : 'About Me'}
                 </h2>
@@ -94,7 +94,7 @@ export default function TemplateNoqtatain6({ card, isRTL, onLinkClick }) {
             )}
 
             {/* Contact Information */}
-            <div className="bg-indigo-950/60 rounded-2xl shadow-sm p-6">
+            <div className="bg-white rounded-2xl shadow-sm p-6">
               <div className="flex items-center gap-3 mb-5">
                 <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ backgroundColor: `${primaryColor}15`, color: primaryColor }}>
                   <Phone className="h-5 w-5" />
@@ -140,7 +140,7 @@ export default function TemplateNoqtatain6({ card, isRTL, onLinkClick }) {
 
             {/* Gallery */}
             {card.gallery_images && card.gallery_images.length > 0 && (
-              <div className="bg-indigo-950/60 rounded-2xl shadow-sm p-6">
+              <div className="bg-white rounded-2xl shadow-sm p-6">
                 <h2 className="text-lg font-bold mb-4 text-center">{isRTL ? 'معرض الصور' : 'Gallery'}</h2>
                 <div className="grid grid-cols-2 gap-3">
                   {card.gallery_images.slice(0, 4).map((img, idx) => (
@@ -162,7 +162,7 @@ export default function TemplateNoqtatain6({ card, isRTL, onLinkClick }) {
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={() => onLinkClick?.(platform)}
-                      className="flex items-center justify-between bg-indigo-950/60 rounded-2xl shadow-sm p-4 hover:shadow-md transition-shadow"
+                      className="flex items-center justify-between bg-white rounded-2xl shadow-sm p-4 hover:shadow-md transition-shadow"
                     >
                       <div className="flex items-center gap-3">
                         <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ backgroundColor: `${primaryColor}12`, color: primaryColor }}>
@@ -189,7 +189,7 @@ export default function TemplateNoqtatain6({ card, isRTL, onLinkClick }) {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => onLinkClick?.('website')}
-                className="flex items-center justify-between bg-indigo-950/60 rounded-2xl shadow-sm p-4 hover:shadow-md transition-shadow"
+                className="flex items-center justify-between bg-white rounded-2xl shadow-sm p-4 hover:shadow-md transition-shadow"
               >
                 <div className="flex items-center gap-3">
                   <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ backgroundColor: `${accentColor}15`, color: accentColor }}>
