@@ -75,7 +75,7 @@ END:VCARD`;
           )}
           {/* Company Logo Overlay */}
           {card.company_logo && (
-            <div className="absolute top-4 left-4 h-12 w-12 rounded-lg overflow-hidden bg-white shadow-lg p-1.5">
+            <div className="absolute top-4 left-4 h-12 w-12 rounded-lg overflow-hidden bg-indigo-950/60 shadow-lg p-1.5">
               <img src={card.company_logo} alt={card.company} className="h-full w-full object-contain" />
             </div>
           )}
@@ -92,7 +92,7 @@ END:VCARD`;
         <div className="px-6 -mt-20 relative z-10">
           <div className="relative flex justify-center">
             {/* Profile Image */}
-            <div className="h-32 w-32 rounded-full overflow-hidden bg-white p-1 shadow-xl">
+            <div className="h-32 w-32 rounded-full overflow-hidden bg-indigo-950/60 p-1 shadow-xl">
               <div className="h-full w-full rounded-full overflow-hidden bg-slate-200">
                 {card.profile_image ? (
                   <img src={card.profile_image} alt={card.name} className="h-full w-full object-cover" />
@@ -162,7 +162,7 @@ END:VCARD`;
       <div className="px-4 py-6 space-y-4">
         {/* About */}
         {card.bio && (
-          <div className="bg-white rounded-2xl p-5 shadow-lg">
+          <div className="bg-indigo-950/60 rounded-2xl p-5 shadow-lg">
             <h2 className="text-center font-semibold mb-2" style={{ color: accentColor }}>
               {isRTL ? 'نبذة عني' : 'About Me'}
             </h2>
@@ -173,7 +173,7 @@ END:VCARD`;
         )}
 
         {/* Contact */}
-        <div className="bg-white rounded-2xl p-5 shadow-lg">
+        <div className="bg-indigo-950/60 rounded-2xl p-5 shadow-lg">
           <div className="flex items-center gap-2 mb-4">
             <div className="h-8 w-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: `${accentColor}20` }}>
               <Phone className="h-4 w-4" style={{ color: accentColor }} />
@@ -220,7 +220,7 @@ END:VCARD`;
 
         {/* Social Links */}
         {socialLinks.length > 0 && (
-          <div className="bg-white rounded-2xl p-5 shadow-lg">
+          <div className="bg-indigo-950/60 rounded-2xl p-5 shadow-lg">
             <h2 className="text-center font-semibold mb-4" style={{ color: accentColor }}>
               {isRTL ? 'روابط التواصل' : 'Social Links'}
             </h2>
@@ -259,7 +259,7 @@ END:VCARD`;
           <Button
             onClick={handleShare}
             variant="outline"
-            className="w-full h-12 rounded-full font-medium border-2 bg-white/10"
+            className="w-full h-12 rounded-full font-medium border-2 bg-indigo-950/60/10"
             style={{ borderColor: accentColor, color: accentColor }}
           >
             <Share2 className="h-5 w-5 mr-2" />

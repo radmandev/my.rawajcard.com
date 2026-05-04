@@ -54,7 +54,7 @@ export default function TemplateSunsetWarm({ card, isRTL, onLinkClick }) {
 
         {/* Bio */}
         {(card.bio || card.bio_ar) && (
-          <div className="bg-white/60 backdrop-blur-lg rounded-3xl p-6 mb-6 shadow-lg border border-white/40">
+          <div className="bg-indigo-950/60/60 backdrop-blur-lg rounded-3xl p-6 mb-6 shadow-lg border border-white/40">
             <p className="text-slate-700 leading-relaxed text-center">
               {isRTL && card.bio_ar ? card.bio_ar : card.bio}
             </p>
@@ -127,7 +127,7 @@ export default function TemplateSunsetWarm({ card, isRTL, onLinkClick }) {
                   onClick={() => onLinkClick?.(platform)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-14 h-14 rounded-2xl bg-white/60 backdrop-blur-lg flex items-center justify-center shadow-lg hover:shadow-xl transition-all hover:scale-110 border border-white/40"
+                  className="w-14 h-14 rounded-2xl bg-indigo-950/60/60 backdrop-blur-lg flex items-center justify-center shadow-lg hover:shadow-xl transition-all hover:scale-110 border border-white/40"
                 >
                   <Icon className="h-6 w-6 text-orange-600" />
                 </a>

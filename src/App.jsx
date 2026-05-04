@@ -4,6 +4,7 @@ import { Toaster as SonnerToaster } from 'sonner'
 import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClientInstance } from '@/lib/query-client'
 import NavigationTracker from '@/lib/NavigationTracker'
+import WebsiteRouteTracker from '@/lib/WebsiteRouteTracker'
 import { pagesConfig } from './pages.config'
 import { createPageUrl } from '@/utils';
 import { BrowserRouter as Router, Route, Routes, useLocation, useNavigate, Navigate } from 'react-router-dom';
@@ -18,6 +19,7 @@ const Login = React.lazy(() => import('@/pages/Login'));
 const PublicCard = React.lazy(() => import('@/pages/PublicCard'));
 const HomePage = React.lazy(() => import('@/pages/Home'));
 const DemoHomePage = React.lazy(() => import('@/pages/DemoHomeMerged'));
+const MuchHeroPage = React.lazy(() => import('@/pages/MuchHero'));
 const AlternateLandingPage = React.lazy(() => import('@/pages/AlternateLanding'));
 const NFCCustomizerPage = React.lazy(() => import('@/pages/NFCCustomizer'));
 import { supabase } from '@/lib/supabaseClient';
@@ -133,7 +135,7 @@ const QRCardRedirect = () => {
   if (state === 'loading') {
     return (
       <div className="min-h-screen flex items-center justify-center bg-slate-950 text-slate-100">
-        <div className="w-8 h-8 border-4 border-slate-200 border-t-teal-600 rounded-full animate-spin" />
+        <div className="w-8 h-8 border-4 border-slate-200 border-t-cyan-600 rounded-full animate-spin" />
       </div>
     );
   }
@@ -146,7 +148,7 @@ const AuthenticatedApp = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const isPublicRoute = [
-    '/', '/demohome', '/login', '/Pricing', '/Products', '/ProductDetail', '/Store', '/NFC', '/customize', '/Checkout', '/CheckoutSuccess', '/Demo3D', '/MyOrders', '/PhysicalCards', '/CardSamples', '/HeaderVariants',
+    '/', '/demohome', '/much-hero', '/login', '/Login', '/Pricing', '/Products', '/ProductDetail', '/Store', '/NFC', '/customize', '/Checkout', '/CheckoutSuccess', '/Demo3D', '/MyOrders', '/PhysicalCards', '/CardSamples', '/HeaderVariants',
     '/Return', '/PrivacyPolicy', '/Payments', '/returns', '/privacy-policy', '/payments', '/trackQRScan'
   ].includes(location.pathname) || location.pathname.startsWith('/c/') || location.pathname.startsWith('/q/') || location.pathname.startsWith('/products/');
 
@@ -189,9 +191,10 @@ const AuthenticatedApp = () => {
   return (
     <Suspense fallback={
       <div className="fixed inset-0 flex items-center justify-center">
-        <div className="w-8 h-8 border-4 border-slate-200 border-t-teal-600 rounded-full animate-spin" />
+        <div className="w-8 h-8 border-4 border-slate-200 border-t-cyan-600 rounded-full animate-spin" />
       </div>
     }>
+      <WebsiteRouteTracker />
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/c/:slug" element={<PublicCard />} />
@@ -217,6 +220,7 @@ const AuthenticatedApp = () => {
             <DemoHomePage />
           </LayoutWrapper>
         } />
+        <Route path="/much-hero" element={<MuchHeroPage />} />
         <Route path="/TestLanding" element={<Navigate to="/" replace />} />
         <Route path="/customize" element={
           <LayoutWrapper currentPageName="NFCCustomizer">

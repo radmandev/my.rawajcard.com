@@ -61,7 +61,7 @@ export default function ContactFormDialog({ isOpen, onClose, cardId, cardOwner, 
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
-            <UserPlus className="h-5 w-5 text-teal-600" />
+            <UserPlus className="h-5 w-5 text-cyan-600" />
             {isRTL ? 'شارك معلوماتك' : 'Share Your Details'}
           </DialogTitle>
           <DialogDescription>
@@ -126,7 +126,7 @@ export default function ContactFormDialog({ isOpen, onClose, cardId, cardOwner, 
             <Button type="button" variant="outline" onClick={onClose} className="flex-1">
               {isRTL ? 'إلغاء' : 'Cancel'}
             </Button>
-            <Button type="submit" disabled={loading} className="flex-1 bg-teal-600 hover:bg-teal-700">
+            <Button type="submit" disabled={loading} className="flex-1 bg-cyan-600 hover:bg-cyan-700">
               {loading ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
               ) : (

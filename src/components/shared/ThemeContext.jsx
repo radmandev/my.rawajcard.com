@@ -1,40 +1,24 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useMemo, useEffect } from 'react';
 
 const ThemeContext = createContext();
 
 export function ThemeProvider({ children }) {
-  const [theme, setTheme] = useState(() => {
-    if (typeof window !== 'undefined') {
-      const savedTheme = localStorage.getItem('rawajcard_theme');
-      if (savedTheme) return savedTheme;
-
-      const path = window.location.pathname;
-      if (path === '/' || path === '/Home') {
-        return 'dark';
-      }
-
-      return 'light';
-    }
-    return 'light';
-  });
+  const theme = 'brand';
 
   useEffect(() => {
-    localStorage.setItem('rawajcard_theme', theme);
-    if (theme === 'dark') {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  }, [theme]);
+    document.documentElement.classList.remove('dark');
+    document.documentElement.dataset.theme = 'brand';
+    localStorage.removeItem('rawajcard_theme');
+  }, []);
 
-  const toggleTheme = () => {
-    setTheme(prev => prev === 'light' ? 'dark' : 'light');
-  };
+  const setTheme = () => {};
+  const toggleTheme = () => {};
 
-  const isDark = theme === 'dark';
+  const isDark = false;
+  const contextValue = useMemo(() => ({ theme, setTheme, toggleTheme, isDark }), [theme, isDark]);
 
   return (
-    <ThemeContext.Provider value={{ theme, setTheme, toggleTheme, isDark }}>
+    <ThemeContext.Provider value={contextValue}>
       {children}
     </ThemeContext.Provider>
   );

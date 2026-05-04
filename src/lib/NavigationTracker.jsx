@@ -32,7 +32,15 @@ export default function NavigationTracker() {
         }
 
         if (isAuthenticated && pageName) {
-            api.appLogs.logUserInApp(pageName).catch(() => {
+            const dedupeKey = `rawaj_nav_log:${pathname}`;
+            const now = Date.now();
+            const lastLoggedAt = Number(sessionStorage.getItem(dedupeKey) || 0);
+
+            if (now - lastLoggedAt < 4000) return;
+
+            sessionStorage.setItem(dedupeKey, String(now));
+
+            api.appLogs.logUserInApp(pageName, pathname).catch(() => {
                 // Silently fail - logging shouldn't break the app
             });
         }

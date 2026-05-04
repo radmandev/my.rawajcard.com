@@ -584,9 +584,24 @@ export const api = {
 
   // App logging
   appLogs: {
-    logUserInApp: async (pageName) => {
-      // Log user activity (can be extended to save to database)
-      console.log('User activity:', pageName);
+    logUserInApp: async (pageName, pathname = null) => {
+      const { data: authData, error: authError } = await supabase.auth.getUser();
+      if (authError) throw authError;
+
+      const user = authData?.user;
+      if (!user) return false;
+
+      const { error } = await supabase.from('activity_logs').insert({
+        action: 'page_view',
+        created_by: user.email || null,
+        metadata: {
+          page_name: pageName,
+          pathname,
+          source: 'app_navigation'
+        }
+      });
+
+      if (error) throw error;
       return true;
     }
   },

@@ -24,12 +24,12 @@ export default function PageNotFound({}) {
     
     return (
         <div className="relative min-h-screen overflow-hidden bg-slate-950 px-6 py-10">
-            <div className="pointer-events-none absolute -top-24 -left-20 h-72 w-72 rounded-full bg-teal-500/20 blur-3xl" />
+            <div className="pointer-events-none absolute -top-24 -left-20 h-72 w-72 rounded-full bg-cyan-500/20 blur-3xl" />
             <div className="pointer-events-none absolute -bottom-24 -right-20 h-80 w-80 rounded-full bg-indigo-500/20 blur-3xl" />
 
             <div className="relative mx-auto flex min-h-[85vh] max-w-3xl items-center justify-center">
                 <div className="w-full rounded-3xl border border-white/10 bg-slate-900/70 p-8 shadow-2xl backdrop-blur-xl md:p-12">
-                    <div className="mx-auto mb-8 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-teal-500 to-blue-600 text-white shadow-lg shadow-teal-900/40">
+                    <div className="mx-auto mb-8 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-500 to-magenta-600 text-white shadow-lg shadow-cyan-900/40">
                         <Sparkles className="h-7 w-7" />
                     </div>
 
@@ -43,8 +43,8 @@ export default function PageNotFound({}) {
                         </h2>
                         <p className="mx-auto mt-4 max-w-xl text-slate-300 leading-relaxed">
                             {isRTL
-                                ? <>لم نتمكن من العثور على المسار <span className="rounded bg-white/10 px-2 py-1 font-mono text-slate-100">/{pageName || ''}</span>. ربما تم نقله أو حذفه.</>
-                                : <>We couldn&apos;t find <span className="rounded bg-white/10 px-2 py-1 font-mono text-slate-100">/{pageName || ''}</span>. It may have been moved or deleted.</>}
+                                ? <>لم نتمكن من العثور على المسار <span className="rounded bg-indigo-950/60/10 px-2 py-1 font-mono text-slate-100">/{pageName || ''}</span>. ربما تم نقله أو حذفه.</>
+                                : <>We couldn&apos;t find <span className="rounded bg-indigo-950/60/10 px-2 py-1 font-mono text-slate-100">/{pageName || ''}</span>. It may have been moved or deleted.</>}
                         </p>
                     </div>
 
@@ -62,14 +62,14 @@ export default function PageNotFound({}) {
                     <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
                         <button
                             onClick={() => window.location.href = '/'}
-                            className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-teal-500 to-blue-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-teal-900/30 transition hover:opacity-95"
+                            className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-cyan-500 to-magenta-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-cyan-900/30 transition hover:opacity-95"
                         >
                             <Home className="h-4 w-4" />
                             {isRTL ? 'العودة للرئيسية' : 'Go Home'}
                         </button>
                         <button
                             onClick={() => window.history.back()}
-                            className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/20 bg-white/5 px-5 py-3 text-sm font-semibold text-slate-200 transition hover:bg-white/10"
+                            className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/20 bg-indigo-950/60/5 px-5 py-3 text-sm font-semibold text-slate-200 transition hover:bg-indigo-950/60/10"
                         >
                             <RotateCcw className="h-4 w-4" />
                             {isRTL ? 'رجوع' : 'Go Back'}

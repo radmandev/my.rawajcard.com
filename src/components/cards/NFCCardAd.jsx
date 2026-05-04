@@ -21,7 +21,7 @@ export default function NFCCardAd({ cardName, cardUrl }) {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-600/50"
+      className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-slate-800 to-slate-900 border border-indigo-700/50"
     >
       {/* Subtle shimmer overlay */}
       <div className="absolute inset-0 opacity-10"
@@ -30,7 +30,7 @@ export default function NFCCardAd({ cardName, cardUrl }) {
       <div className="relative p-6">
         {/* Header */}
         <div className="flex items-start gap-3 mb-5">
-          <div className="p-2 rounded-xl bg-slate-700/60 border border-slate-500/40">
+          <div className="p-2 rounded-xl bg-indigo-900/60 border border-slate-500/40">
             <Gem className="h-5 w-5 text-slate-200" />
           </div>
           <div>
@@ -95,7 +95,7 @@ export default function NFCCardAd({ cardName, cardUrl }) {
 
                   {/* QR code */}
                   {qrCodeUrl && (
-                    <div className="p-1.5 rounded-lg bg-white/95 shadow-inner">
+                    <div className="p-1.5 rounded-lg bg-indigo-950/60/95 shadow-inner">
                       <img src={qrCodeUrl} alt="QR" className="w-16 h-16 block" />
                     </div>
                   )}

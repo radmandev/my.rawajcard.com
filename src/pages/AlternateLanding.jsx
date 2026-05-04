@@ -46,7 +46,7 @@ const PRODUCTS = [
     reviews: 29,
     image: 'https://beta.rawajcard.com/wp-content/uploads/2024/12/Google-NFC-Instagam-Facebook-WhatsApp-Youtube-Snapchat-Android-iPhone-450x450.webp',
     badgeAr: 'الأكثر مبيعاً', badgeEn: 'Best Seller',
-    badgeColor: 'bg-teal-600',
+    badgeColor: 'bg-cyan-600',
   },
   {
     id: 2,
@@ -163,7 +163,7 @@ const FEATURES = [
     titleAr: 'وصول فوري', titleEn: 'Instant Access',
     descAr: 'مشاركة ملفك الشخصي بنقرة واحدة بدون تطبيق',
     descEn: 'Share your profile with one tap — no app needed',
-    color: 'text-teal-500', bg: 'bg-teal-50',
+    color: 'text-cyan-500', bg: 'bg-cyan-50',
   },
   {
     icon: Smartphone,
@@ -226,7 +226,7 @@ function ProductCard({ product, index, onAddToCart, onView, onBuyNow, isRTL }) {
   return (
     <Reveal delay={index * 0.07}>
       <div
-        className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 group cursor-pointer border border-slate-100"
+        className="bg-indigo-950/60 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 group cursor-pointer border border-slate-100"
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
         onClick={onView}
@@ -253,7 +253,7 @@ function ProductCard({ product, index, onAddToCart, onView, onBuyNow, isRTL }) {
           >
             <button
               onClick={(e) => { e.stopPropagation(); onAddToCart?.(); }}
-              className="w-full bg-teal-600 hover:bg-teal-700 text-white py-2 rounded-xl text-sm font-bold flex items-center justify-center gap-2 shadow-lg"
+              className="w-full bg-cyan-600 hover:bg-cyan-700 text-white py-2 rounded-xl text-sm font-bold flex items-center justify-center gap-2 shadow-lg"
             >
               <ShoppingCart className="h-4 w-4" />
               {isRTL ? 'أضف إلى السلة' : 'Add to Cart'}
@@ -278,7 +278,7 @@ function ProductCard({ product, index, onAddToCart, onView, onBuyNow, isRTL }) {
             <span className="text-xs text-slate-400 mr-1">({product.reviews})</span>
           </div>
           <div className="flex items-baseline gap-2">
-            <span className="text-xl font-black text-teal-700">
+            <span className="text-xl font-black text-cyan-700">
               {product.price.toLocaleString(isRTL ? 'ar-SA' : 'en-US')} {isRTL ? 'ر.س' : 'SAR'}
             </span>
             {product.originalPrice && (
@@ -329,7 +329,7 @@ export default function AlternateLanding() {
     : (isRTL ? 'ابدأ مجاناً' : 'Start for Free');
 
   return (
-    <div className="min-h-screen bg-white pb-16 md:pb-0" dir={isRTL ? 'rtl' : 'ltr'} style={{ fontFamily: isRTL ? "'Tajawal', 'Cairo', sans-serif" : "'Inter', 'Segoe UI', sans-serif" }}>
+    <div className="min-h-screen bg-indigo-950/60 pb-16 md:pb-0" dir={isRTL ? 'rtl' : 'ltr'} style={{ fontFamily: isRTL ? "'Tajawal', 'Cairo', sans-serif" : "'Inter', 'Segoe UI', sans-serif" }}>
       {/* Google Fonts */}
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=Cairo:wght@400;600;700;800&display=swap');
@@ -374,7 +374,7 @@ export default function AlternateLanding() {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.7, delay: 0.1 }}
               >
-                <span className="inline-flex items-center gap-2 bg-teal-500/15 text-teal-300 text-sm font-semibold px-4 py-1.5 rounded-full border border-teal-500/30 mb-6">
+                <span className="inline-flex items-center gap-2 bg-cyan-500/15 text-cyan-300 text-sm font-semibold px-4 py-1.5 rounded-full border border-cyan-500/30 mb-6">
                   <Wifi className="h-4 w-4" />
                   {isRTL ? 'تقنية NFC الذكية' : 'Smart NFC Technology'}
                 </span>
@@ -446,8 +446,8 @@ export default function AlternateLanding() {
                     }}
                     className={`flex items-center gap-1.5 text-white text-sm font-medium px-4 py-2 rounded-xl border cursor-pointer transition-all ${
                       selectedProductTypeIdx === i
-                        ? 'bg-teal-500/40 border-teal-400/60 ring-1 ring-teal-400/40'
-                        : 'bg-white/10 hover:bg-teal-500/25 border-white/15'
+                        ? 'bg-cyan-500/40 border-cyan-400/60 ring-1 ring-cyan-400/40'
+                        : 'bg-indigo-950/60/10 hover:bg-cyan-500/25 border-white/15'
                     }`}
                   >
                     <span>{item.icon}</span>
@@ -466,7 +466,7 @@ export default function AlternateLanding() {
                   <motion.span
                     whileHover={{ scale: 1.03 }}
                     whileTap={{ scale: 0.97 }}
-                    className="inline-flex items-center gap-2 bg-gradient-to-l from-teal-600 to-teal-500 hover:from-teal-500 hover:to-teal-400 text-white font-bold px-8 py-4 rounded-2xl shadow-lg shadow-teal-600/30 transition-all text-base cursor-pointer"
+                    className="inline-flex items-center gap-2 bg-gradient-to-r from-fuchsia-600 to-purple-700 hover:from-fuchsia-500 hover:to-purple-600 text-white font-bold px-8 py-4 rounded-2xl shadow-lg shadow-cyan-600/30 transition-all text-base cursor-pointer"
                   >
                     احصل على بطاقتك الآن
                     <ArrowLeft className="h-5 w-5" />
@@ -487,7 +487,7 @@ export default function AlternateLanding() {
                   { value: '2 يوم', labelAr: 'توصيل سريع', labelEn: 'Fast Delivery' },
                 ].map((stat, i) => (
                   <div key={i} className="text-center">
-                    <div className="text-2xl font-black text-teal-400">{stat.value}</div>
+                    <div className="text-2xl font-black text-cyan-400">{stat.value}</div>
                     <div className="text-xs text-slate-400 mt-0.5">{isRTL ? stat.labelAr : stat.labelEn}</div>
                   </div>
                 ))}
@@ -503,9 +503,9 @@ export default function AlternateLanding() {
             >
               <div className="relative w-full max-w-md">
                 {/* Glow ring */}
-                <div className="absolute inset-0 m-8 rounded-3xl bg-teal-400/10 blur-2xl" />
+                <div className="absolute inset-0 m-8 rounded-3xl bg-cyan-400/10 blur-2xl" />
 
-                <div className="relative bg-white/5 backdrop-blur-sm rounded-3xl border border-white/10 p-6 shadow-2xl overflow-hidden">
+                <div className="relative bg-indigo-950/60/5 backdrop-blur-sm rounded-3xl border border-white/10 p-6 shadow-2xl overflow-hidden">
                   <motion.img
                     key={heroProduct}
                     src={heroImages[heroProduct]}
@@ -527,7 +527,7 @@ export default function AlternateLanding() {
                       <button
                         key={i}
                         onClick={() => setHeroProduct(i)}
-                        className={`h-2 rounded-full transition-all duration-300 ${i === heroProduct ? 'w-6 bg-teal-400' : 'w-2 bg-white/30'}`}
+                        className={`h-2 rounded-full transition-all duration-300 ${i === heroProduct ? 'w-6 bg-cyan-400' : 'w-2 bg-indigo-950/60/30'}`}
                       />
                     ))}
                   </div>
@@ -535,13 +535,13 @@ export default function AlternateLanding() {
                   {/* Nav arrows */}
                   <button
                     onClick={() => setHeroProduct(p => (p - 1 + heroImages.length) % heroImages.length)}
-                    className="absolute top-1/2 right-2 -translate-y-1/2 bg-white/10 hover:bg-white/20 text-white rounded-full p-2 transition-colors"
+                    className="absolute top-1/2 right-2 -translate-y-1/2 bg-indigo-950/60/10 hover:bg-indigo-950/60/20 text-white rounded-full p-2 transition-colors"
                   >
                     <ChevronRight className="h-5 w-5" />
                   </button>
                   <button
                     onClick={() => setHeroProduct(p => (p + 1) % heroImages.length)}
-                    className="absolute top-1/2 left-2 -translate-y-1/2 bg-white/10 hover:bg-white/20 text-white rounded-full p-2 transition-colors"
+                    className="absolute top-1/2 left-2 -translate-y-1/2 bg-indigo-950/60/10 hover:bg-indigo-950/60/20 text-white rounded-full p-2 transition-colors"
                   >
                     <ChevronLeft className="h-5 w-5" />
                   </button>
@@ -549,12 +549,12 @@ export default function AlternateLanding() {
 
                 {/* Floating badge */}
                 <motion.div
-                  className="absolute -bottom-4 -right-4 bg-white rounded-2xl shadow-xl p-3 flex items-center gap-2"
+                  className="absolute -bottom-4 -right-4 bg-indigo-950/60 rounded-2xl shadow-xl p-3 flex items-center gap-2"
                   animate={{ y: [0, -6, 0] }}
                   transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
                 >
-                  <div className="w-10 h-10 bg-teal-100 rounded-xl flex items-center justify-center">
-                    <Wifi className="h-5 w-5 text-teal-600" />
+                  <div className="w-10 h-10 bg-cyan-100 rounded-xl flex items-center justify-center">
+                    <Wifi className="h-5 w-5 text-cyan-600" />
                   </div>
                   <div>
                     <div className="text-xs font-bold text-slate-800">{isRTL ? 'NFC تقنية' : 'NFC Tech'}</div>
@@ -572,7 +572,7 @@ export default function AlternateLanding() {
         <div className="container mx-auto px-4 md:px-10">
           <Reveal>
             <div className="text-center mb-14">
-              <span className="inline-block text-teal-600 text-sm font-bold tracking-widest uppercase mb-3">
+              <span className="inline-block text-cyan-600 text-sm font-bold tracking-widest uppercase mb-3">
                 {isRTL ? 'مجموعتنا' : 'Our Collection'}
               </span>
               <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-4">
@@ -594,8 +594,8 @@ export default function AlternateLanding() {
                   onClick={() => setActiveTab(tab.id)}
                   className={`px-5 py-2 rounded-full text-sm font-semibold transition-all duration-200 ${
                     activeTab === tab.id
-                      ? 'bg-teal-600 text-white shadow-md shadow-teal-500/30'
-                      : 'bg-white text-slate-600 hover:bg-teal-50 border border-slate-200'
+                      ? 'bg-cyan-600 text-white shadow-md shadow-cyan-500/30'
+                      : 'bg-indigo-950/60 text-slate-600 hover:bg-cyan-50 border border-slate-200'
                   }`}
                 >
                   {isRTL ? tab.labelAr : tab.labelEn}
@@ -611,9 +611,9 @@ export default function AlternateLanding() {
                 product={product}
                 index={i}
                 isRTL={isRTL}
-                onAddToCart={() => addItem(product)}
+                onAddToCart={() => addItem(product, { pageName: 'NFC Landing', source: 'alternate_landing_collection' })}
                 onView={() => setPreviewProduct(product)}
-                onBuyNow={() => { addItem(product); navigate(createPageUrl('Checkout')); }}
+                onBuyNow={() => { addItem(product, { pageName: 'NFC Landing', source: 'alternate_landing_buy_now', flow: 'buy_now' }); navigate(createPageUrl('Checkout')); }}
               />
             ))}
           </div>
@@ -622,7 +622,7 @@ export default function AlternateLanding() {
             <div className="text-center mt-12">
               <Link
                 to={createPageUrl('Store')}
-                className="inline-flex items-center gap-2 bg-teal-600 hover:bg-teal-700 text-white font-bold px-10 py-4 rounded-2xl shadow-lg shadow-teal-500/25 transition-all text-base"
+                className="inline-flex items-center gap-2 bg-cyan-600 hover:bg-cyan-700 text-white font-bold px-10 py-4 rounded-2xl shadow-lg shadow-cyan-500/25 transition-all text-base"
               >
                 {isRTL ? 'عرض جميع المنتجات' : 'View All Products'}
                 <ArrowLeft className="h-5 w-5" />
@@ -645,7 +645,7 @@ export default function AlternateLanding() {
               <Reveal key={i} delay={i * 0.08}>
                 <motion.div
                   whileHover={{ y: -5 }}
-                  className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm hover:shadow-md transition-all"
+                  className="bg-indigo-950/60 rounded-2xl p-6 border border-slate-100 shadow-sm hover:shadow-md transition-all"
                 >
                   <div className={`w-12 h-12 ${f.bg} rounded-2xl flex items-center justify-center mb-4`}>
                     <f.icon className={`h-6 w-6 ${f.color}`} />
@@ -678,16 +678,16 @@ export default function AlternateLanding() {
 
         <div className="container mx-auto px-4 md:px-10 relative z-10 text-center">
           <Reveal>
-            <span className="inline-block text-teal-300 text-sm font-bold tracking-widest uppercase mb-4 border border-teal-400/30 rounded-full px-4 py-1.5">
+            <span className="inline-block text-cyan-300 text-sm font-bold tracking-widest uppercase mb-4 border border-cyan-400/30 rounded-full px-4 py-1.5">
               {isRTL ? 'مع رواج كارد' : 'With Rawajcard'}
             </span>
           </Reveal>
           <Reveal delay={0.1}>
             <h2 className="text-4xl md:text-6xl font-black text-white mb-6 leading-tight">
               {isRTL ? (
-                <>الوصول أصبح{' '}<span className="text-transparent bg-clip-text bg-gradient-to-l from-teal-300 to-teal-500">أسرع</span></>
+                <>الوصول أصبح{' '}<span className="text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-600 to-purple-700 hover:from-fuchsia-500 hover:to-purple-600">أسرع</span></>
               ) : (
-                <>Access is now{' '}<span className="text-transparent bg-clip-text bg-gradient-to-l from-teal-300 to-teal-500">Faster</span></>
+                <>Access is now{' '}<span className="text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-600 to-purple-700 hover:from-fuchsia-500 hover:to-purple-600">Faster</span></>
               )}
             </h2>
           </Reveal>
@@ -704,7 +704,7 @@ export default function AlternateLanding() {
                 <motion.span
                   whileHover={{ scale: 1.04 }}
                   whileTap={{ scale: 0.97 }}
-                  className="inline-flex items-center gap-2 bg-teal-500 hover:bg-teal-400 text-white font-black px-10 py-5 rounded-2xl shadow-2xl shadow-teal-500/40 transition-all text-lg cursor-pointer"
+                  className="inline-flex items-center gap-2 bg-cyan-500 hover:bg-cyan-400 text-white font-black px-10 py-5 rounded-2xl shadow-2xl shadow-cyan-500/40 transition-all text-lg cursor-pointer"
                 >
               {isRTL ? 'اختر بطاقتك الآن' : 'Choose Your Card Now'}
                   <ArrowLeft className="h-5 w-5" />
@@ -749,7 +749,7 @@ export default function AlternateLanding() {
                 roleAr: 'مدير مبيعات', roleEn: 'Sales Manager',
                 textAr: 'منتج رائع! وفّر عليّ الكثير من الوقت. أعطيته لعملائي وكلهم انبهروا. التوصيل كان سريع جداً.',
                 textEn: 'Amazing product! Saved me so much time. Shared it with my clients and they were all impressed. Delivery was super fast.',
-                stars: 5, avatar: 'ع', avatarBg: 'bg-teal-600',
+                stars: 5, avatar: 'ع', avatarBg: 'bg-cyan-600',
               },
               {
                 nameAr: 'سارة الأحمدي', nameEn: 'Sara Al-Ahmadi',
@@ -767,7 +767,7 @@ export default function AlternateLanding() {
               },
             ].map((review, i) => (
               <Reveal key={i} delay={i * 0.1}>
-                <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
+                <div className="bg-indigo-950/60 rounded-2xl p-6 shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
                   <div className="flex gap-1 mb-4">
                     {[...Array(review.stars)].map((_, j) => (
                       <Star key={j} className="h-4 w-4 fill-amber-400 text-amber-400" />
@@ -801,7 +801,7 @@ export default function AlternateLanding() {
             </div>
             <Link
               to={createPageUrl('Products')}
-              className="inline-flex items-center gap-2 bg-teal-600 hover:bg-teal-500 text-white font-bold px-8 py-3.5 rounded-2xl transition-colors"
+              className="inline-flex items-center gap-2 bg-cyan-600 hover:bg-cyan-500 text-white font-bold px-8 py-3.5 rounded-2xl transition-colors"
             >
               {isRTL ? 'اختر بطاقتك الآن' : 'Choose Your Card Now'}
               <ArrowLeft className="h-4 w-4" />
@@ -814,20 +814,14 @@ export default function AlternateLanding() {
           <div className="grid md:grid-cols-4 gap-10">
             {/* Brand */}
             <div className="md:col-span-1">
-              <img
-                src="/rawajcard-logo.png"
-                alt="Rawajcard"
-                className="h-12 w-auto mb-4 brightness-200"
-                onError={(e) => {
-                  if (e.target instanceof HTMLImageElement) {
-                    e.target.style.display = 'none';
-                    if (e.target.nextSibling && e.target.nextSibling instanceof HTMLElement) {
-                      e.target.nextSibling.style.display = 'block';
-                    }
-                  }
-                }}
-              />
-              <div className="hidden text-2xl font-black text-teal-400 mb-4">Rawajcard</div>
+              <div className="flex items-center gap-3 mb-4">
+                <img
+                  src="/rawajcard-logo1.png"
+                  alt="Rawajcard"
+                  className="h-12 w-12 object-contain"
+                />
+                <div className="text-2xl font-black text-white">Rawajcard</div>
+              </div>
               <p className="text-slate-400 text-sm leading-relaxed mb-5">
                 {isRTL ? 'الجيل الجديد من بطاقات التعارف الذكية في عالم الأعمال' : 'The next generation of smart business cards'}
               </p>
@@ -838,7 +832,7 @@ export default function AlternateLanding() {
                   { href: 'https://www.instagram.com/rawajcard', icon: '𝒾𝑔' },
                 ].map((s, i) => (
                   <a key={i} href={s.href} target="_blank" rel="noopener noreferrer"
-                    className="w-9 h-9 bg-white/10 hover:bg-teal-600 rounded-full flex items-center justify-center text-sm transition-colors">
+                    className="w-9 h-9 bg-indigo-950/60/10 hover:bg-cyan-600 rounded-full flex items-center justify-center text-sm transition-colors">
                     {s.icon}
                   </a>
                 ))}
@@ -875,15 +869,15 @@ export default function AlternateLanding() {
                 <h4 className="font-black text-white mb-5 text-base">{isRTL ? col.titleAr : col.titleEn}</h4>
                 {col.contact ? (
                   <div className="space-y-4 text-sm text-slate-400">
-                    <a href="mailto:info@rawajcard.com" className="flex items-center gap-2 hover:text-teal-400 transition-colors">
+                    <a href="mailto:info@rawajcard.com" className="flex items-center gap-2 hover:text-cyan-400 transition-colors">
                       <Mail className="h-4 w-4 flex-shrink-0" />
                       info@rawajcard.com
                     </a>
-                    <a href="https://wa.me/966531607223" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-teal-400 transition-colors">
+                    <a href="https://wa.me/966531607223" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-cyan-400 transition-colors">
                       <MessageCircle className="h-4 w-4 flex-shrink-0" />
                       {isRTL ? 'واتساب: 966531607223+' : 'WhatsApp: +966531607223'}
                     </a>
-                    <a href="tel:966531607223" className="flex items-center gap-2 hover:text-teal-400 transition-colors">
+                    <a href="tel:966531607223" className="flex items-center gap-2 hover:text-cyan-400 transition-colors">
                       <Phone className="h-4 w-4 flex-shrink-0" />
                       {isRTL ? 'اتصل بنا: 966531607223+' : 'Call: +966531607223'}
                     </a>
@@ -893,7 +887,7 @@ export default function AlternateLanding() {
                     {col.links.map((link, j) => (
                       <li key={j}>
                         <a href={link.href} target="_blank" rel="noopener noreferrer"
-                          className="hover:text-teal-400 transition-colors">
+                          className="hover:text-cyan-400 transition-colors">
                           {isRTL ? link.labelAr : link.labelEn}
                         </a>
                       </li>

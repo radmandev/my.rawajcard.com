@@ -79,7 +79,7 @@ END:VCARD`;
         {/* Profile */}
         <div className="px-6 -mt-16 relative z-10">
           <div className="flex items-end gap-4">
-            <div className="h-24 w-24 rounded-xl overflow-hidden bg-slate-700 border-2 border-slate-600">
+            <div className="h-24 w-24 rounded-xl overflow-hidden bg-slate-700 border-2 border-indigo-700">
               {card.profile_image ? (
                 <img src={card.profile_image} alt={card.name} className="h-full w-full object-cover grayscale" />
               ) : (
@@ -98,7 +98,7 @@ END:VCARD`;
               {(card.company_logo || card.company) && (
                 <div className="flex items-center gap-2 mt-1">
                   {card.company_logo ? (
-                    <div className="h-5 w-5 rounded bg-white flex items-center justify-center p-0.5">
+                    <div className="h-5 w-5 rounded bg-indigo-950/60 flex items-center justify-center p-0.5">
                       <img src={card.company_logo} alt={card.company} className="h-full w-full object-contain" />
                     </div>
                   ) : (
@@ -233,7 +233,7 @@ END:VCARD`;
         <div className="space-y-3 pt-4">
           <Button
             onClick={handleSaveContact}
-            className="w-full h-12 rounded-xl bg-white text-black hover:bg-slate-200 font-medium"
+            className="w-full h-12 rounded-xl bg-indigo-950/60 text-black hover:bg-slate-200 font-medium"
           >
             <UserPlus className="h-5 w-5 mr-2" />
             {isRTL ? 'حفظ جهة الاتصال' : 'Add to Contact'}
@@ -242,7 +242,7 @@ END:VCARD`;
           <Button
             onClick={handleShare}
             variant="outline"
-            className="w-full h-12 rounded-xl border-slate-700 text-white hover:bg-slate-800 font-medium"
+            className="w-full h-12 rounded-xl border-indigo-800 text-white hover:bg-slate-800 font-medium"
           >
             <Share2 className="h-5 w-5 mr-2" />
             {isRTL ? 'مشاركة البطاقة' : 'Share Contact details'}

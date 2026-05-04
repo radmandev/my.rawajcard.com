@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 
@@ -31,75 +31,36 @@ const PARTICLES = [
 
 export default function DemoHome() {
   const navigate = useNavigate();
-  const [isDark, setIsDark] = useState(false);
-
-  useEffect(() => {
-    const root = document.documentElement;
-    const syncTheme = () => {
-      const isDataDark = root.dataset.theme === 'dark';
-      const hasDarkClass = root.classList.contains('dark');
-      setIsDark(isDataDark || hasDarkClass);
-    };
-
-    syncTheme();
-    const observer = new MutationObserver(syncTheme);
-    observer.observe(root, { attributes: true, attributeFilter: ['data-theme', 'class'] });
-
-    return () => observer.disconnect();
-  }, []);
 
   const particles = useMemo(() => PARTICLES, []);
 
   return (
-    <section className="rc-hero relative min-h-screen w-full overflow-hidden" data-resolved-theme={isDark ? 'dark' : 'light'}>
+    <section className="rc-hero relative min-h-screen w-full overflow-hidden" data-theme="brand">
       <style>{`
         :root {
-          --color-bg:          #F7F9F9;
+          --color-bg:          #0C1429;
           --color-surface:     #FFFFFF;
-          --color-primary:     #1BA098;
-          --color-primary-lt:  #4ECDC4;
-          --color-secondary:   #7BBFB5;
-          --color-accent:      #1A4D48;
-          --color-deep:        #0D3330;
-          --color-muted:       #6B7A8E;
-          --color-text:        #131C2B;
-          --color-text-sub:    #3D5A57;
-          --color-glow:        rgba(27, 160, 152, 0.18);
-          --color-card-bg:     rgba(255, 255, 255, 0.75);
-          --color-card-border: rgba(78, 205, 196, 0.25);
+          --color-primary:     #38BDF8;
+          --color-primary-lt:  #38BDF8;
+          --color-secondary:   #E879F9;
+          --color-accent:      #1E1B4B;
+          --color-deep:        #1E1B4B;
+          --color-muted:       #9FB3D1;
+          --color-text:        #FFFFFF;
+          --color-text-sub:    #C7D8F3;
+          --color-glow:        rgba(56, 189, 248, 0.20);
+          --color-card-bg:     rgba(30, 27, 75, 0.80);
+          --color-card-border: rgba(56, 189, 248, 0.25);
 
-          --color-frame:       #E0E8E8;
-          --color-frame-dark:  #1C2535;
+          --color-frame:       #1E1B4B;
+          --color-frame-dark:  #1E1B4B;
           --color-white:       #FFFFFF;
           --color-black:       rgba(0, 0, 0, 0.35);
-          --color-bloom:       rgba(78, 205, 196, 0.08);
-          --color-ring:        rgba(27, 160, 152, 0.09);
-          --color-particle:    rgba(27, 160, 152, 0.15);
+          --color-bloom:       rgba(56, 189, 248, 0.10);
+          --color-ring:        rgba(232, 121, 249, 0.15);
+          --color-particle:    rgba(56, 189, 248, 0.20);
           --color-shimmer:     rgba(255, 255, 255, 0.12);
           --color-glass-line:  rgba(107, 122, 142, 0.40);
-          --reflection-opacity: 0;
-        }
-
-        [data-theme="dark"],
-        .dark {
-          --color-bg:          #131C2B;
-          --color-surface:     #0D3330;
-          --color-primary:     #4ECDC4;
-          --color-primary-lt:  #7BBFB5;
-          --color-secondary:   #1BA098;
-          --color-accent:      #4ECDC4;
-          --color-deep:        #0D3330;
-          --color-muted:       #6B7A8E;
-          --color-text:        #F0FAFA;
-          --color-text-sub:    #7BBFB5;
-          --color-glow:        rgba(78, 205, 196, 0.20);
-          --color-card-bg:     rgba(13, 51, 48, 0.80);
-          --color-card-border: rgba(78, 205, 196, 0.15);
-
-          --color-frame:       var(--color-frame-dark);
-          --color-bloom:       rgba(78, 205, 196, 0.10);
-          --color-ring:        rgba(78, 205, 196, 0.10);
-          --color-particle:    rgba(78, 205, 196, 0.15);
           --reflection-opacity: 1;
         }
 

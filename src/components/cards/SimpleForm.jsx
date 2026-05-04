@@ -35,14 +35,14 @@ const Section = ({ id, icon: Icon, title, children, isExpanded, onToggle }) => {
   const { sectionsToShow } = React.useContext(FormContext) || {};
   if (sectionsToShow && !sectionsToShow.includes(id)) return null;
   return (
-    <div className="border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden">
+    <div className="border border-slate-200 rounded-lg overflow-hidden">
       <button
         onClick={onToggle}
-        className="w-full flex items-center justify-between p-4 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-750 transition-colors"
+        className="w-full flex items-center justify-between p-4 bg-indigo-950/60 hover:bg-slate-50 transition-colors"
       >
         <div className="flex items-center gap-3">
-          <Icon className="h-5 w-5 text-teal-600" />
-          <h3 className="font-semibold text-slate-900 dark:text-white">{title}</h3>
+          <Icon className="h-5 w-5 text-cyan-600" />
+          <h3 className="font-semibold text-slate-900">{title}</h3>
         </div>
         {isExpanded ? (
           <ChevronUp className="h-5 w-5 text-slate-400" />
@@ -52,7 +52,7 @@ const Section = ({ id, icon: Icon, title, children, isExpanded, onToggle }) => {
       </button>
       
       {isExpanded && (
-        <div className="p-4 bg-slate-50 dark:bg-slate-900/50 border-t border-slate-200 dark:border-slate-700">
+        <div className="p-4 bg-slate-50 border-t border-slate-200">
           {children}
         </div>
       )}
@@ -180,7 +180,7 @@ export default function SimpleForm({ card, onChange, onSaveDraft, sectionsToShow
                     </button>
                   </div>
                 ) : (
-                  <div className="h-24 w-24 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
+                  <div className="h-24 w-24 rounded-full bg-slate-100 flex items-center justify-center">
                     <User className="h-10 w-10 text-slate-400" />
                   </div>
                 )}
@@ -208,7 +208,7 @@ export default function SimpleForm({ card, onChange, onSaveDraft, sectionsToShow
                     onClick={() => profileImageRef.current?.click()}
                   >
                     {uploadingProfileImage ? (
-                      <span className="h-4 w-4 mr-2 inline-block animate-spin border-2 border-slate-300 border-t-teal-600 rounded-full" />
+                      <span className="h-4 w-4 mr-2 inline-block animate-spin border-2 border-slate-300 border-t-cyan-600 rounded-full" />
                     ) : (
                       <Upload className="h-4 w-4 mr-2" />
                     )}
@@ -236,7 +236,7 @@ export default function SimpleForm({ card, onChange, onSaveDraft, sectionsToShow
                     <img 
                       src={card.company_logo} 
                       alt="Logo"
-                      className="h-24 w-24 rounded-lg object-contain bg-white p-2"
+                      className="h-24 w-24 rounded-lg object-contain bg-indigo-950/60 p-2"
                     />
                     <button
                       type="button"
@@ -247,7 +247,7 @@ export default function SimpleForm({ card, onChange, onSaveDraft, sectionsToShow
                     </button>
                   </div>
                 ) : (
-                  <div className="h-24 w-24 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
+                  <div className="h-24 w-24 rounded-lg bg-slate-100 flex items-center justify-center">
                     <Building2 className="h-10 w-10 text-slate-400" />
                   </div>
                 )}
@@ -327,7 +327,7 @@ export default function SimpleForm({ card, onChange, onSaveDraft, sectionsToShow
                     className="hidden"
                     onChange={(e) => handleImageUpload(e, 'cover_image')}
                   />
-                  <div className="h-24 border-2 border-dashed border-slate-300 dark:border-slate-600 rounded-lg flex items-center justify-center hover:border-teal-500 transition-colors">
+                  <div className="h-24 border-2 border-dashed border-slate-300 rounded-lg flex items-center justify-center hover:border-cyan-500 transition-colors">
                     <div className="text-center">
                       <Upload className="h-6 w-6 mx-auto text-slate-400 mb-1" />
                       <p className="text-sm text-slate-500">{isRTL ? 'رفع صورة غلاف' : 'Upload cover image'}</p>
@@ -481,7 +481,7 @@ export default function SimpleForm({ card, onChange, onSaveDraft, sectionsToShow
                       }
                     }}
                   />
-                  <div className="h-24 border-2 border-dashed border-slate-300 dark:border-slate-600 rounded-lg flex items-center justify-center hover:border-teal-500 transition-colors">
+                  <div className="h-24 border-2 border-dashed border-slate-300 rounded-lg flex items-center justify-center hover:border-cyan-500 transition-colors">
                     <div className="text-center">
                       <Upload className="h-6 w-6 mx-auto text-slate-400 mb-1" />
                       <p className="text-sm text-slate-500">{isRTL ? 'رفع صورة خلفية' : 'Upload background'}</p>
@@ -498,12 +498,12 @@ export default function SimpleForm({ card, onChange, onSaveDraft, sectionsToShow
               <div className="flex gap-2 items-center">
                 <input
                   type="color"
-                  value={card.design?.primary_color || '#0D7377'}
+                  value={card.design?.primary_color || '#38BDF8'}
                   onChange={(e) => handleDesignChange('primary_color', e.target.value)}
                   className="h-10 w-16 rounded cursor-pointer"
                 />
                 <Input
-                  value={card.design?.primary_color || '#0D7377'}
+                  value={card.design?.primary_color || '#38BDF8'}
                   onChange={(e) => handleDesignChange('primary_color', e.target.value)}
                   className="flex-1"
                 />
@@ -515,12 +515,12 @@ export default function SimpleForm({ card, onChange, onSaveDraft, sectionsToShow
               <div className="flex gap-2 items-center">
                 <input
                   type="color"
-                  value={card.design?.secondary_color || '#14274E'}
+                  value={card.design?.secondary_color || '#1E1B4B'}
                   onChange={(e) => handleDesignChange('secondary_color', e.target.value)}
                   className="h-10 w-16 rounded cursor-pointer"
                 />
                 <Input
-                  value={card.design?.secondary_color || '#14274E'}
+                  value={card.design?.secondary_color || '#1E1B4B'}
                   onChange={(e) => handleDesignChange('secondary_color', e.target.value)}
                   className="flex-1"
                 />
@@ -532,12 +532,12 @@ export default function SimpleForm({ card, onChange, onSaveDraft, sectionsToShow
               <div className="flex gap-2 items-center">
                 <input
                   type="color"
-                  value={card.design?.accent_color || '#00B4D8'}
+                  value={card.design?.accent_color || '#E879F9'}
                   onChange={(e) => handleDesignChange('accent_color', e.target.value)}
                   className="h-10 w-16 rounded cursor-pointer"
                 />
                 <Input
-                  value={card.design?.accent_color || '#00B4D8'}
+                  value={card.design?.accent_color || '#E879F9'}
                   onChange={(e) => handleDesignChange('accent_color', e.target.value)}
                   className="flex-1"
                 />
@@ -550,7 +550,7 @@ export default function SimpleForm({ card, onChange, onSaveDraft, sectionsToShow
             <Label>{isRTL ? 'ألوان مقترحة' : 'Preset Colors'}</Label>
             <div className="flex flex-wrap gap-2">
               {[
-                { primary: '#0D7377', secondary: '#14274E', accent: '#00B4D8', name: 'Teal Navy' },
+                { primary: '#38BDF8', secondary: '#1E1B4B', accent: '#E879F9', name: 'Rawaj Brand' },
                 { primary: '#7C3AED', secondary: '#4C1D95', accent: '#EC4899', name: 'Purple Pink' },
                 { primary: '#059669', secondary: '#064E3B', accent: '#10B981', name: 'Green Emerald' },
                 { primary: '#DC2626', secondary: '#7F1D1D', accent: '#F97316', name: 'Red Orange' },
@@ -558,7 +558,7 @@ export default function SimpleForm({ card, onChange, onSaveDraft, sectionsToShow
                 { primary: '#D97706', secondary: '#78350F', accent: '#F59E0B', name: 'Amber Gold' },
                 { primary: '#F43F5E', secondary: '#9F1239', accent: '#FB7185', name: 'Rose Red' },
                 { primary: '#8B5CF6', secondary: '#6D28D9', accent: '#A78BFA', name: 'Violet Purple' },
-                { primary: '#14B8A6', secondary: '#0F766E', accent: '#2DD4BF', name: 'Teal Cyan' },
+                { primary: '#38BDF8', secondary: '#0C1429', accent: '#E879F9', name: 'Cyan Magenta' },
                 { primary: '#F59E0B', secondary: '#B45309', accent: '#FBBF24', name: 'Yellow Amber' },
                 { primary: '#EC4899', secondary: '#BE185D', accent: '#F9A8D4', name: 'Pink Magenta' },
                 { primary: '#6366F1', secondary: '#4338CA', accent: '#818CF8', name: 'Indigo Blue' },
@@ -577,7 +577,7 @@ export default function SimpleForm({ card, onChange, onSaveDraft, sectionsToShow
                       }
                     });
                   }}
-                  className="flex rounded-lg overflow-hidden border-2 border-slate-200 dark:border-slate-700 hover:border-teal-400 hover:scale-105 transition-all"
+                  className="flex rounded-lg overflow-hidden border-2 border-slate-200 hover:border-cyan-400 hover:scale-105 transition-all"
                   title={preset.name}
                 >
                   <div className="h-8 w-8" style={{ backgroundColor: preset.primary }} />
@@ -592,7 +592,7 @@ export default function SimpleForm({ card, onChange, onSaveDraft, sectionsToShow
           {card.company_logo && (
             <div className="space-y-2">
               <Label className="flex items-center gap-2">
-                <Sparkles className="h-4 w-4 text-teal-600" />
+                <Sparkles className="h-4 w-4 text-cyan-600" />
                 {isRTL ? 'استخراج الألوان من الشعار' : 'Extract Colors from Logo'}
               </Label>
               <Button
@@ -644,9 +644,9 @@ export default function SimpleForm({ card, onChange, onSaveDraft, sectionsToShow
           )}
 
           {/* Advanced Options */}
-          <div className="space-y-4 pt-4 border-t border-slate-200 dark:border-slate-700">
+          <div className="space-y-4 pt-4 border-t border-slate-200">
             <div className="flex items-center gap-2 mb-2">
-              <Sparkles className="h-4 w-4 text-teal-600" />
+              <Sparkles className="h-4 w-4 text-cyan-600" />
               <Label className="text-base font-semibold">
                 {isRTL ? 'خيارات متقدمة' : 'Advanced Customization'}
               </Label>
@@ -674,7 +674,7 @@ export default function SimpleForm({ card, onChange, onSaveDraft, sectionsToShow
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <Label>{isRTL ? 'استدارة الحواف' : 'Border Radius'}</Label>
-                <span className="text-sm font-mono bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded">
+                <span className="text-sm font-mono bg-slate-100 px-2 py-1 rounded">
                   {(card.design?.border_radius || '12').toString().replace('px', '')}px
                 </span>
               </div>
@@ -691,7 +691,7 @@ export default function SimpleForm({ card, onChange, onSaveDraft, sectionsToShow
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <Label>{isRTL ? 'المسافات الداخلية' : 'Card Padding'}</Label>
-                <span className="text-sm font-mono bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded">
+                <span className="text-sm font-mono bg-slate-100 px-2 py-1 rounded">
                   {(card.design?.card_padding || '24').toString().replace('px', '')}px
                 </span>
               </div>
@@ -727,12 +727,12 @@ export default function SimpleForm({ card, onChange, onSaveDraft, sectionsToShow
       >
         <div className="space-y-4">
           {subscription?.plan !== 'premium' ? (
-            <div className="bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20 border-2 border-amber-200 dark:border-amber-700 rounded-xl p-6 text-center">
+            <div className="bg-gradient-to-br from-amber-50 to-orange-50 border-2 border-amber-200 rounded-xl p-6 text-center">
               <Sparkles className="h-12 w-12 mx-auto text-amber-500 mb-3" />
-              <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">
+              <h3 className="text-lg font-bold text-slate-900 mb-2">
                 {isRTL ? 'ميزة مميزة' : 'Premium Feature'}
               </h3>
-              <p className="text-sm text-slate-600 dark:text-slate-300 mb-4">
+              <p className="text-sm text-slate-600 mb-4">
                 {isRTL 
                   ? 'قم بالترقية إلى الخطة المميزة لتفعيل حجز المواعيد'
                   : 'Upgrade to Premium to enable appointment booking'
@@ -767,7 +767,7 @@ export default function SimpleForm({ card, onChange, onSaveDraft, sectionsToShow
           {card.appointment_settings?.enabled && (
             <div className="space-y-4 pt-4">
               {(card.appointment_settings?.appointments || []).map((apt, index) => (
-                <div key={index} className="p-4 bg-white dark:bg-slate-800 rounded-lg border space-y-3">
+                <div key={index} className="p-4 bg-indigo-950/60 rounded-lg border space-y-3">
                   <div className="flex justify-between items-start">
                     <h4 className="font-medium text-sm">{isRTL ? `موعد ${index + 1}` : `Appointment ${index + 1}`}</h4>
                     <Button
@@ -921,12 +921,12 @@ export default function SimpleForm({ card, onChange, onSaveDraft, sectionsToShow
       >
         <div className="space-y-4">
           {subscription?.plan !== 'premium' ? (
-            <div className="bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20 border-2 border-amber-200 dark:border-amber-700 rounded-xl p-6 text-center">
+            <div className="bg-gradient-to-br from-amber-50 to-orange-50 border-2 border-amber-200 rounded-xl p-6 text-center">
               <Sparkles className="h-12 w-12 mx-auto text-amber-500 mb-3" />
-              <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">
+              <h3 className="text-lg font-bold text-slate-900 mb-2">
                 {isRTL ? 'ميزة مميزة' : 'Premium Feature'}
               </h3>
-              <p className="text-sm text-slate-600 dark:text-slate-300 mb-4">
+              <p className="text-sm text-slate-600 mb-4">
                 {isRTL 
                   ? 'قم بالترقية إلى الخطة المميزة لتفعيل النماذج المخصصة'
                   : 'Upgrade to Premium to enable custom forms'
@@ -1035,12 +1035,12 @@ export default function SimpleForm({ card, onChange, onSaveDraft, sectionsToShow
       >
         <div className="space-y-4">
           {subscription?.plan !== 'premium' ? (
-            <div className="bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20 border-2 border-amber-200 dark:border-amber-700 rounded-xl p-6 text-center">
+            <div className="bg-gradient-to-br from-amber-50 to-orange-50 border-2 border-amber-200 rounded-xl p-6 text-center">
               <Sparkles className="h-12 w-12 mx-auto text-amber-500 mb-3" />
-              <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">
+              <h3 className="text-lg font-bold text-slate-900 mb-2">
                 {isRTL ? 'ميزة مميزة' : 'Premium Feature'}
               </h3>
-              <p className="text-sm text-slate-600 dark:text-slate-300 mb-4">
+              <p className="text-sm text-slate-600 mb-4">
                 {isRTL 
                   ? 'قم بالترقية إلى الخطة المميزة لجمع جهات الاتصال'
                   : 'Upgrade to Premium to collect visitor contacts'
@@ -1292,7 +1292,7 @@ export default function SimpleForm({ card, onChange, onSaveDraft, sectionsToShow
                 <Label className="text-sm font-semibold mb-3 block">{isRTL ? 'حقول النموذج' : 'Form Fields'}</Label>
                 <div className="space-y-3">
                   {(card.contact_form?.fields || []).map((field, index) => (
-                    <div key={index} className="p-3 bg-white dark:bg-slate-800 rounded-lg border space-y-2">
+                    <div key={index} className="p-3 bg-indigo-950/60 rounded-lg border space-y-2">
                       <div className="flex justify-between items-start mb-2">
                         <Input
                           placeholder={isRTL ? 'عنوان الحقل' : 'Field Label'}
@@ -1481,12 +1481,12 @@ export default function SimpleForm({ card, onChange, onSaveDraft, sectionsToShow
         isExpanded={expandedSections.includes('crm')}
         onToggle={() => toggleSection('crm')}
       >
-        <div className="bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20 border-2 border-blue-200 dark:border-blue-700 rounded-xl p-6 text-center">
+        <div className="bg-gradient-to-br from-blue-50 to-cyan-50 border-2 border-blue-200 rounded-xl p-6 text-center">
           <Sparkles className="h-12 w-12 mx-auto text-blue-500 mb-3" />
-          <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">
+          <h3 className="text-lg font-bold text-slate-900 mb-2">
             {isRTL ? 'قريباً' : 'Coming Soon'}
           </h3>
-          <p className="text-sm text-slate-600 dark:text-slate-300">
+          <p className="text-sm text-slate-600">
             {isRTL 
               ? 'ربط تلقائي مع Bitrix24، HubSpot، Salesforce وغيرها'
               : 'Automatic integration with Bitrix24, HubSpot, Salesforce and more'

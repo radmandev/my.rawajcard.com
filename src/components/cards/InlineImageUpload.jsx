@@ -67,19 +67,19 @@ export default function InlineImageUpload({
           
           <button
             onClick={() => fileInputRef.current?.click()}
-            className="p-2 bg-white rounded-full shadow-lg hover:scale-110 transition-transform"
+            className="p-2 bg-indigo-950/60 rounded-full shadow-lg hover:scale-110 transition-transform"
             title={isRTL ? 'رفع صورة' : 'Upload Image'}
           >
-            <Upload className="h-4 w-4 text-teal-600" />
+            <Upload className="h-4 w-4 text-cyan-600" />
           </button>
 
           {showCameraOption && (
             <button
               onClick={() => cameraInputRef.current?.click()}
-              className="p-2 bg-white rounded-full shadow-lg hover:scale-110 transition-transform"
+              className="p-2 bg-indigo-950/60 rounded-full shadow-lg hover:scale-110 transition-transform"
               title={isRTL ? 'التقاط صورة' : 'Take Photo'}
             >
-              <Camera className="h-4 w-4 text-teal-600" />
+              <Camera className="h-4 w-4 text-cyan-600" />
             </button>
           )}
 

@@ -47,7 +47,7 @@ const PRODUCTS = [
     reviews: 29,
     image: 'https://beta.rawajcard.com/wp-content/uploads/2024/12/Google-NFC-Instagam-Facebook-WhatsApp-Youtube-Snapchat-Android-iPhone-450x450.webp',
     badgeAr: 'الأكثر مبيعاً', badgeEn: 'Best Seller',
-    badgeColor: 'bg-teal-600',
+    badgeColor: 'bg-cyan-600',
   },
   {
     id: 2,
@@ -164,7 +164,7 @@ const FEATURES = [
     titleAr: 'وصول فوري', titleEn: 'Instant Access',
     descAr: 'مشاركة ملفك الشخصي بنقرة واحدة بدون تطبيق',
     descEn: 'Share your profile with one tap — no app needed',
-    color: 'text-teal-500', bg: 'bg-teal-50',
+    color: 'text-cyan-500', bg: 'bg-slate-50',
   },
   {
     icon: Smartphone,
@@ -195,66 +195,68 @@ function ProductCard({ product, index, onAddToCart, onView, onBuyNow, isRTL }) {
   return (
     <Reveal delay={index * 0.07}>
       <div
-        className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 group cursor-pointer border border-slate-100"
+        className="rounded-2xl p-[1px] bg-gradient-to-br from-cyan-400 to-fuchsia-400 shadow-md hover:shadow-xl transition-all duration-300 group cursor-pointer"
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
         onClick={onView}
       >
-        <div className="relative overflow-hidden bg-slate-50 aspect-square">
-          <motion.img
-            src={product.image}
-            alt={isRTL ? product.nameAr : product.nameEn}
-            className="w-full h-full object-cover"
-            animate={{ scale: hovered ? 1.06 : 1 }}
-            transition={{ duration: 0.4 }}
-            onError={(e) => { e.target.src = 'https://placehold.co/400x400/f1f5f9/94a3b8?text=Product'; }}
-          />
-          {(isRTL ? product.badgeAr : product.badgeEn) && (
-            <span className={`absolute top-3 right-3 ${product.badgeColor} text-white text-xs font-bold px-2.5 py-1 rounded-full shadow`}>
-              {isRTL ? product.badgeAr : product.badgeEn}
-            </span>
-          )}
-          <motion.div
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: hovered ? 1 : 0, y: hovered ? 0 : 8 }}
-            transition={{ duration: 0.22 }}
-            className="absolute inset-x-3 bottom-3 flex flex-col gap-2"
-          >
-            <button
-              onClick={(e) => { e.stopPropagation(); onAddToCart?.(); }}
-              className="w-full bg-teal-600 hover:bg-teal-700 text-white py-2 rounded-xl text-sm font-bold flex items-center justify-center gap-2 shadow-lg"
-            >
-              <ShoppingCart className="h-4 w-4" />
-              {isRTL ? 'أضف إلى السلة' : 'Add to Cart'}
-            </button>
-            <button
-              onClick={(e) => { e.stopPropagation(); onBuyNow?.(); }}
-              className="w-full bg-slate-800 hover:bg-slate-900 text-white py-2 rounded-xl text-sm font-bold flex items-center justify-center gap-2 shadow-lg"
-            >
-              <Zap className="h-4 w-4" />
-              {isRTL ? 'اشتر الآن' : 'Buy Now'}
-            </button>
-          </motion.div>
-        </div>
-        <div className="p-4">
-          <h3 className="font-bold text-slate-800 text-sm leading-snug mb-2 line-clamp-2 min-h-[2.5rem]">
-            {isRTL ? product.nameAr : product.nameEn}
-          </h3>
-          <div className="flex items-center gap-1 mb-3">
-            {[...Array(5)].map((_, i) => (
-              <Star key={i} className="h-3.5 w-3.5 fill-amber-400 text-amber-400" />
-            ))}
-            <span className="text-xs text-slate-400 mr-1">({product.reviews})</span>
-          </div>
-          <div className="flex items-baseline gap-2">
-            <span className="text-xl font-black text-teal-700">
-              {product.price.toLocaleString(isRTL ? 'ar-SA' : 'en-US')} {isRTL ? 'ر.س' : 'SAR'}
-            </span>
-            {product.originalPrice && (
-              <span className="text-sm text-slate-400 line-through">
-                {product.originalPrice} {isRTL ? 'ر.س' : 'SAR'}
+        <div className="bg-white rounded-[calc(1rem-1px)] overflow-hidden">
+          <div className="relative overflow-hidden bg-slate-50 aspect-square">
+            <motion.img
+              src={product.image}
+              alt={isRTL ? product.nameAr : product.nameEn}
+              className="w-full h-full object-cover"
+              animate={{ scale: hovered ? 1.06 : 1 }}
+              transition={{ duration: 0.4 }}
+              onError={(e) => { e.target.src = 'https://placehold.co/400x400/f1f5f9/94a3b8?text=Product'; }}
+            />
+            {(isRTL ? product.badgeAr : product.badgeEn) && (
+              <span className={`absolute top-3 right-3 ${product.badgeColor} text-white text-xs font-bold px-2.5 py-1 rounded-full shadow`}>
+                {isRTL ? product.badgeAr : product.badgeEn}
               </span>
             )}
+            <motion.div
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: hovered ? 1 : 0, y: hovered ? 0 : 8 }}
+              transition={{ duration: 0.22 }}
+              className="absolute inset-x-3 bottom-3 flex flex-col gap-2"
+            >
+              <button
+                onClick={(e) => { e.stopPropagation(); onAddToCart?.(); }}
+                className="w-full bg-gradient-to-r from-fuchsia-600 to-purple-700 hover:from-fuchsia-500 hover:to-purple-600 text-white py-2 rounded-xl text-sm font-bold flex items-center justify-center gap-2 shadow-lg"
+              >
+                <ShoppingCart className="h-4 w-4" />
+                {isRTL ? 'أضف إلى السلة' : 'Add to Cart'}
+              </button>
+              <button
+                onClick={(e) => { e.stopPropagation(); onBuyNow?.(); }}
+                className="w-full bg-slate-800 hover:bg-slate-900 text-white py-2 rounded-xl text-sm font-bold flex items-center justify-center gap-2 shadow-lg"
+              >
+                <Zap className="h-4 w-4" />
+                {isRTL ? 'اشتر الآن' : 'Buy Now'}
+              </button>
+            </motion.div>
+          </div>
+          <div className="p-4">
+            <h3 className="font-bold text-slate-900 text-sm leading-snug mb-2 line-clamp-2 min-h-[2.5rem]">
+              {isRTL ? product.nameAr : product.nameEn}
+            </h3>
+            <div className="flex items-center gap-1 mb-3">
+              {[...Array(5)].map((_, i) => (
+                <Star key={i} className="h-3.5 w-3.5 fill-amber-400 text-amber-400" />
+              ))}
+              <span className="text-xs text-slate-500 mr-1">({product.reviews})</span>
+            </div>
+            <div className="flex items-baseline gap-2">
+              <span className="text-xl font-black text-slate-900">
+                {product.price.toLocaleString(isRTL ? 'ar-SA' : 'en-US')} {isRTL ? 'ر.س' : 'SAR'}
+              </span>
+              {product.originalPrice && (
+                <span className="text-sm text-slate-500 line-through">
+                  {product.originalPrice} {isRTL ? 'ر.س' : 'SAR'}
+                </span>
+              )}
+            </div>
           </div>
         </div>
       </div>
@@ -283,16 +285,18 @@ export default function Home() {
   const footerCtaLabel = isAuthenticated
     ? (isRTL ? 'تسجيل الدخول' : 'Login')
     : (isRTL ? 'ابدأ مجاناً' : 'Start for Free');
+  const heroSectionBackground = { background: 'linear-gradient(135deg, #0C1429 0%, #1E1B4B 50%, #0C1429 100%)' };
+  const heroGlassCardClass = 'bg-white/10 backdrop-blur-xl border border-white/15 shadow-[0_24px_80px_rgba(12,20,41,0.35)]';
 
   return (
-    <div className="min-h-screen bg-white pb-16 md:pb-0" dir={isRTL ? 'rtl' : 'ltr'} style={{ fontFamily: isRTL ? "'Tajawal', 'Cairo', sans-serif" : "'Inter', 'Segoe UI', sans-serif" }}>
+    <div className="min-h-screen bg-indigo-950/60 pb-16 md:pb-0" dir={isRTL ? 'rtl' : 'ltr'} style={{ fontFamily: isRTL ? "'Tajawal', 'Cairo', sans-serif" : "'Inter', 'Segoe UI', sans-serif" }}>
       {/* Google Fonts */}
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=Cairo:wght@400;600;700;800&display=swap');
       `}</style>
 
       {/* ── Announcement Bar ─────────────────────────────────────── */}
-      <div className="bg-[#0f4c3a] text-white text-center py-2.5 text-sm font-medium tracking-wide">
+      <div className="bg-[#0C1429] text-white text-center py-2.5 text-sm font-medium tracking-wide">
         🚚&nbsp; توصيل مجاني لطلبات 250 ريال فأكثر &nbsp;|&nbsp; اطلب الآن واستلم خلال يومين
       </div>
 
@@ -307,7 +311,7 @@ export default function Home() {
         <div className="container mx-auto px-4 md:px-10">
           <Reveal>
             <div className="text-center mb-14">
-              <span className="inline-block text-teal-600 text-sm font-bold tracking-widest uppercase mb-3">
+              <span className="inline-block text-cyan-600 text-sm font-bold tracking-widest uppercase mb-3">
                 {isRTL ? 'مجموعتنا' : 'Our Collection'}
               </span>
               <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-4">
@@ -329,8 +333,8 @@ export default function Home() {
                   onClick={() => setActiveTab(tab.id)}
                   className={`px-5 py-2 rounded-full text-sm font-semibold transition-all duration-200 ${
                     activeTab === tab.id
-                      ? 'bg-teal-600 text-white shadow-md shadow-teal-500/30'
-                      : 'bg-white text-slate-600 hover:bg-teal-50 border border-slate-200'
+                      ? 'bg-gradient-to-r from-fuchsia-600 to-purple-700 text-white shadow-md shadow-fuchsia-500/30 border border-transparent'
+                      : 'bg-white text-slate-900 hover:bg-slate-50 border border-transparent [background:linear-gradient(#fff,#fff)_padding-box,linear-gradient(135deg,#38BDF8,#E879F9)_border-box]'
                   }`}
                 >
                   {isRTL ? tab.labelAr : tab.labelEn}
@@ -346,9 +350,9 @@ export default function Home() {
                 product={product}
                 index={i}
                 isRTL={isRTL}
-                onAddToCart={() => addItem(product)}
+                onAddToCart={() => addItem(product, { pageName: 'Home', source: 'home_collection' })}
                 onView={() => setPreviewProduct(product)}
-                onBuyNow={() => { addItem(product); navigate(createPageUrl('Checkout')); }}
+                onBuyNow={() => { addItem(product, { pageName: 'Home', source: 'home_buy_now', flow: 'buy_now' }); navigate(createPageUrl('Checkout')); }}
               />
             ))}
           </div>
@@ -357,7 +361,7 @@ export default function Home() {
             <div className="text-center mt-12">
               <Link
                 to={createPageUrl('Store')}
-                className="inline-flex items-center gap-2 bg-teal-600 hover:bg-teal-700 text-white font-bold px-10 py-4 rounded-2xl shadow-lg shadow-teal-500/25 transition-all text-base"
+                className="inline-flex items-center gap-2 bg-gradient-to-r from-fuchsia-600 to-purple-700 hover:from-fuchsia-500 hover:to-purple-600 text-white font-bold px-10 py-4 rounded-2xl shadow-lg shadow-fuchsia-500/30 transition-all text-base"
               >
                 {isRTL ? 'عرض جميع المنتجات' : 'View All Products'}
                 <ArrowLeft className="h-5 w-5" />
@@ -368,14 +372,18 @@ export default function Home() {
       </section>
 
       {/* ── Instant Access Feature ─────────────────────────────────── */}
-      <section className="py-24 bg-white overflow-hidden">
-        <div className="container mx-auto px-4 md:px-10">
+      <section className="py-24 relative overflow-hidden" style={heroSectionBackground}>
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <div className="absolute top-[-120px] right-[-80px] w-[420px] h-[420px] rounded-full opacity-25 blur-3xl" style={{ background: 'radial-gradient(circle, rgba(56, 189, 248, 0.55), transparent 70%)' }} />
+          <div className="absolute bottom-[-110px] left-[-60px] w-[360px] h-[360px] rounded-full opacity-20 blur-3xl" style={{ background: 'radial-gradient(circle, rgba(232, 121, 249, 0.48), transparent 70%)' }} />
+        </div>
+        <div className="container mx-auto px-4 md:px-10 relative z-10">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
 
             {/* Image */}
             <Reveal className="order-2 lg:order-1">
               <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-br from-teal-50 to-slate-50 rounded-3xl" />
+                <div className="absolute inset-0 bg-gradient-to-br from-slate-50 to-slate-50 rounded-3xl" />
                 <div className="relative p-8 md:p-12">
                   <motion.img
                     src="https://beta.rawajcard.com/wp-content/uploads/2024/10/InstagramStandwhite_1800x1800-450x450.webp"
@@ -388,7 +396,7 @@ export default function Home() {
                 </div>
                 {/* floating chip */}
                 <motion.div
-                  className="absolute top-6 left-6 bg-teal-600 text-white rounded-2xl px-4 py-2 shadow-xl text-sm font-bold"
+                  className="absolute top-6 left-6 bg-cyan-600 text-white rounded-2xl px-4 py-2 shadow-xl text-sm font-bold"
                   animate={{ rotate: [-2, 2, -2] }}
                   transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
                 >
@@ -399,17 +407,17 @@ export default function Home() {
 
             {/* Text */}
             <Reveal delay={0.15} className="order-1 lg:order-2">
-              <span className="inline-block text-teal-600 text-sm font-bold tracking-widest uppercase mb-4">
+              <span className="inline-block text-cyan-600 text-sm font-bold tracking-widest uppercase mb-4">
                 {isRTL ? 'سهل وسريع' : 'Easy & Fast'}
               </span>
-              <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-6 leading-snug">
+              <h2 className="text-4xl md:text-5xl font-black text-slate-100 mb-6 leading-snug">
                 {isRTL ? (
-                  <>الوصول بلمح{' '}<span className="text-teal-600">البصر</span></>
+                  <>الوصول بلمح{' '}<span className="text-cyan-600">البصر</span></>
                 ) : (
-                  <>Access at the{' '}<span className="text-teal-600">Speed of Light</span></>
+                  <>Access at the{' '}<span className="text-cyan-600">Speed of Light</span></>
                 )}
               </h2>
-              <p className="text-slate-600 text-lg leading-relaxed mb-8">
+              <p className="text-slate-200 text-lg leading-relaxed mb-8">
                 {isRTL
                   ? 'باستخدام هذا الكرت يمكنك الوصول إلى هاتف عميلك بلمح البصر بدون الحاجة إلى فتح الكاميرا أو واجهة حفظ الأرقام'
                   : 'With this card, you can reach your client instantly — no camera or contact-saving screen needed'}
@@ -427,14 +435,14 @@ export default function Home() {
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: i * 0.12 + 0.2 }}
-                    className="flex items-start gap-4 bg-slate-50 rounded-2xl p-4 border border-slate-100"
+                    className={`flex items-start gap-4 rounded-2xl p-4 ${heroGlassCardClass}`}
                   >
-                    <div className="w-8 h-8 rounded-full bg-teal-600 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <div className="w-8 h-8 rounded-full bg-cyan-600 flex items-center justify-center flex-shrink-0 mt-0.5">
                       <Check className="h-4 w-4 text-white" />
                     </div>
                     <div>
-                      <div className="font-bold text-slate-900">{isRTL ? item.titleAr : item.titleEn}</div>
-                      <div className="text-sm text-slate-500 mt-0.5">{isRTL ? item.descAr : item.descEn}</div>
+                      <div className="font-bold text-white">{isRTL ? item.titleAr : item.titleEn}</div>
+                      <div className="text-sm text-slate-200 mt-0.5">{isRTL ? item.descAr : item.descEn}</div>
                     </div>
                   </motion.div>
                 ))}
@@ -453,10 +461,14 @@ export default function Home() {
       </section>
 
       {/* ── Features Row ─────────────────────────────────────────────── */}
-      <section className="py-20 bg-slate-50">
-        <div className="container mx-auto px-4 md:px-10">
+      <section className="py-20 relative overflow-hidden" style={heroSectionBackground}>
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <div className="absolute top-[-140px] left-[8%] w-[380px] h-[380px] rounded-full opacity-20 blur-3xl" style={{ background: 'radial-gradient(circle, rgba(56, 189, 248, 0.52), transparent 70%)' }} />
+          <div className="absolute bottom-[-120px] right-[6%] w-[340px] h-[340px] rounded-full opacity-20 blur-3xl" style={{ background: 'radial-gradient(circle, rgba(232, 121, 249, 0.42), transparent 70%)' }} />
+        </div>
+        <div className="container mx-auto px-4 md:px-10 relative z-10">
           <Reveal>
-            <h2 className="text-3xl md:text-4xl font-black text-slate-900 text-center mb-14">
+            <h2 className="text-3xl md:text-4xl font-black text-white text-center mb-14">
               {isRTL ? 'لماذا يختار الجميع رواج كارد؟' : 'Why Everyone Chooses Rawajcard'}
             </h2>
           </Reveal>
@@ -465,13 +477,13 @@ export default function Home() {
               <Reveal key={i} delay={i * 0.08}>
                 <motion.div
                   whileHover={{ y: -5 }}
-                  className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm hover:shadow-md transition-all"
+                  className={`rounded-2xl p-6 transition-all hover:-translate-y-1 ${heroGlassCardClass}`}
                 >
                   <div className={`w-12 h-12 ${f.bg} rounded-2xl flex items-center justify-center mb-4`}>
                     <f.icon className={`h-6 w-6 ${f.color}`} />
                   </div>
-                  <h3 className="font-bold text-slate-900 text-lg mb-2">{isRTL ? f.titleAr : f.titleEn}</h3>
-                  <p className="text-slate-500 text-sm leading-relaxed">{isRTL ? f.descAr : f.descEn}</p>
+                  <h3 className="font-bold text-white text-lg mb-2">{isRTL ? f.titleAr : f.titleEn}</h3>
+                  <p className="text-slate-200 text-sm leading-relaxed">{isRTL ? f.descAr : f.descEn}</p>
                 </motion.div>
               </Reveal>
             ))}
@@ -485,29 +497,35 @@ export default function Home() {
       {/* ── CTA Section "مع رواج كارد" ──────────────────────────────── */}
       <section
         className="py-28 relative overflow-hidden"
-        style={{ background: 'linear-gradient(135deg, #0a0a0a 0%, #0d1b2a 50%, #0a3d2e 100%)' }}
+        style={heroSectionBackground}
       >
         <div className="absolute inset-0 pointer-events-none">
           <motion.div
             className="absolute top-[-60px] left-1/2 -translate-x-1/2 w-[600px] h-[300px] rounded-full opacity-10"
-            style={{ background: 'radial-gradient(ellipse, #14b8a6, transparent 70%)' }}
+            style={{ background: 'radial-gradient(ellipse, #38BDF8, transparent 70%)' }}
             animate={{ scale: [1, 1.1, 1] }}
             transition={{ duration: 6, repeat: Infinity }}
+          />
+          <motion.div
+            className="absolute bottom-[-120px] right-[-40px] w-[360px] h-[360px] rounded-full opacity-15"
+            style={{ background: 'radial-gradient(circle, #E879F9, transparent 70%)' }}
+            animate={{ scale: [1, 1.15, 1] }}
+            transition={{ duration: 8, repeat: Infinity, delay: 1.5 }}
           />
         </div>
 
         <div className="container mx-auto px-4 md:px-10 relative z-10 text-center">
           <Reveal>
-            <span className="inline-block text-teal-300 text-sm font-bold tracking-widest uppercase mb-4 border border-teal-400/30 rounded-full px-4 py-1.5">
+            <span className="inline-block text-cyan-300 text-sm font-bold tracking-widest uppercase mb-4 border border-cyan-400/30 rounded-full px-4 py-1.5">
               {isRTL ? 'مع رواج كارد' : 'With Rawajcard'}
             </span>
           </Reveal>
           <Reveal delay={0.1}>
             <h2 className="text-4xl md:text-6xl font-black text-white mb-6 leading-tight">
               {isRTL ? (
-                <>الوصول أصبح{' '}<span className="text-transparent bg-clip-text bg-gradient-to-l from-teal-300 to-teal-500">أسرع</span></>
-              ) : (
-                <>Access is now{' '}<span className="text-transparent bg-clip-text bg-gradient-to-l from-teal-300 to-teal-500">Faster</span></>
+                <>الوصول أصبح{' '}<span className="text-transparent bg-clip-text bg-gradient-to-l from-cyan-300 to-cyan-500">أسرع</span></>
+                ) : (
+                  <>Access is now{' '}<span className="text-transparent bg-clip-text bg-gradient-to-l from-cyan-300 to-cyan-500">Faster</span></>
               )}
             </h2>
           </Reveal>
@@ -524,7 +542,7 @@ export default function Home() {
                 <motion.span
                   whileHover={{ scale: 1.04 }}
                   whileTap={{ scale: 0.97 }}
-                  className="inline-flex items-center gap-2 bg-teal-500 hover:bg-teal-400 text-white font-black px-10 py-5 rounded-2xl shadow-2xl shadow-teal-500/40 transition-all text-lg cursor-pointer"
+                  className="inline-flex items-center gap-2 bg-gradient-to-r from-fuchsia-600 to-purple-700 hover:from-fuchsia-500 hover:to-purple-600 text-white font-black px-10 py-5 rounded-2xl shadow-2xl shadow-fuchsia-500/30 transition-all text-lg cursor-pointer"
                   onClick={(e) => { e.preventDefault(); setLoginOpen(true); }}
                 >
                   {midPageCtaLabel}
@@ -535,7 +553,7 @@ export default function Home() {
                 <motion.span
                   whileHover={{ scale: 1.04 }}
                   whileTap={{ scale: 0.97 }}
-                  className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white font-bold px-10 py-5 rounded-2xl border border-white/20 transition-all text-lg cursor-pointer"
+                  className="inline-flex items-center gap-2 bg-indigo-950/60/10 hover:bg-indigo-950/60/20 text-white font-bold px-10 py-5 rounded-2xl border border-white/20 transition-all text-lg cursor-pointer"
                 >
                   {isRTL ? 'خصص كرتك المفضل' : 'Customize Your Favorite Card'}
                 </motion.span>
@@ -562,23 +580,27 @@ export default function Home() {
       </section>
 
       {/* ── Table Stand Promo ────────────────────────────────────────── */}
-      <section className="py-24 bg-white overflow-hidden">
-        <div className="container mx-auto px-4 md:px-10">
+      <section className="py-24 relative overflow-hidden" style={heroSectionBackground}>
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <div className="absolute top-[-100px] right-[-60px] w-[420px] h-[420px] rounded-full opacity-20 blur-3xl" style={{ background: 'radial-gradient(circle, rgba(56, 189, 248, 0.5), transparent 70%)' }} />
+          <div className="absolute bottom-[-120px] left-[-70px] w-[360px] h-[360px] rounded-full opacity-20 blur-3xl" style={{ background: 'radial-gradient(circle, rgba(232, 121, 249, 0.45), transparent 70%)' }} />
+        </div>
+        <div className="container mx-auto px-4 md:px-10 relative z-10">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
 
             {/* Text */}
             <Reveal>
-              <span className="inline-block text-teal-600 text-sm font-bold tracking-widest uppercase mb-4">
+              <span className="inline-block text-cyan-600 text-sm font-bold tracking-widest uppercase mb-4">
                 {isRTL ? 'للمطاعم والمحلات' : 'For Restaurants & Shops'}
               </span>
-              <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-6 leading-snug">
+              <h2 className="text-4xl md:text-5xl font-black text-slate-100 mb-6 leading-snug">
                 {isRTL ? (
-                  <>خلّ عملاءك يتفاعلون{' '}<span className="text-teal-600">أسرع</span></>
+                  <>خلّ عملاءك يتفاعلون{' '}<span className="text-cyan-600">أسرع</span></>
                 ) : (
-                  <>Let customers engage{' '}<span className="text-teal-600">faster</span></>
+                  <>Let customers engage{' '}<span className="text-cyan-600">faster</span></>
                 )}
               </h2>
-              <p className="text-slate-600 text-lg leading-relaxed mb-8">
+              <p className="text-slate-200 text-lg leading-relaxed mb-8">
                 {isRTL
                   ? 'مع ستاند تفاعلي يصل إليك العميل بواسطته بلمح البصر — يصلح لطلبات الطعام، المراجعات على جوجل، مشاركة وسائل التواصل، وأكثر'
                   : 'With an interactive stand, customers reach you instantly — perfect for food orders, Google reviews, social sharing, and more'}
@@ -597,10 +619,10 @@ export default function Home() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: i * 0.1 }}
-                    className="flex items-center gap-3 bg-slate-50 rounded-xl p-3 border border-slate-100"
+                    className={`flex items-center gap-3 rounded-xl p-3 ${heroGlassCardClass}`}
                   >
                     <span className="text-2xl">{use.icon}</span>
-                    <span className="font-semibold text-slate-700 text-sm">{isRTL ? use.labelAr : use.labelEn}</span>
+                    <span className="font-semibold text-white text-sm">{isRTL ? use.labelAr : use.labelEn}</span>
                   </motion.div>
                 ))}
               </div>
@@ -608,14 +630,14 @@ export default function Home() {
               <div className="flex flex-wrap gap-3">
                 <Link
                   to={createPageUrl('Store')}
-                  className="inline-flex items-center gap-2 bg-teal-600 hover:bg-teal-700 text-white font-bold px-8 py-4 rounded-2xl shadow-lg shadow-teal-500/25 transition-all"
+                  className="inline-flex items-center gap-2 bg-gradient-to-r from-fuchsia-600 to-purple-700 hover:from-fuchsia-500 hover:to-purple-600 text-white font-bold px-8 py-4 rounded-2xl shadow-lg shadow-fuchsia-500/30 transition-all"
                 >
                   {isRTL ? 'خل عملاءك يتفاعلون أسرع' : 'Boost Customer Engagement'}
                   <ArrowLeft className="h-5 w-5" />
                 </Link>
                 <Link
                   to={createPageUrl('Store')}
-                  className="inline-flex items-center gap-2 border-2 border-slate-200 hover:border-teal-400 text-slate-700 font-semibold px-8 py-4 rounded-2xl transition-all"
+                  className={`inline-flex items-center gap-2 text-white font-semibold px-8 py-4 rounded-2xl transition-all ${heroGlassCardClass}`}
                 >
                   {isRTL ? 'عرض الكل' : 'View All'}
                 </Link>
@@ -625,7 +647,7 @@ export default function Home() {
             {/* Image */}
             <Reveal delay={0.15}>
               <div className="relative">
-                <div className="absolute -inset-4 bg-gradient-to-br from-teal-50 to-slate-100 rounded-3xl -z-10" />
+                <div className="absolute -inset-4 bg-gradient-to-br from-slate-50 to-slate-100 rounded-3xl -z-10" />
                 <motion.img
                   src="https://beta.rawajcard.com/wp-content/uploads/2024/12/unnamed-file-12-450x450.webp"
                   alt="ستاند طاولة NFC"
@@ -636,12 +658,12 @@ export default function Home() {
                 />
                 {/* Price badge */}
                 <motion.div
-                  className="absolute bottom-4 left-4 bg-white rounded-2xl shadow-xl px-5 py-3 border border-slate-100"
+                  className={`absolute bottom-4 left-4 rounded-2xl px-5 py-3 ${heroGlassCardClass}`}
                   animate={{ y: [0, -5, 0] }}
                   transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
                 >
                   <div className="text-xs text-slate-400 line-through mb-0.5">{isRTL ? '190 ر.س' : '190 SAR'}</div>
-                  <div className="text-2xl font-black text-teal-700">{isRTL ? '149 ر.س' : '149 SAR'}</div>
+                  <div className="text-2xl font-black text-cyan-700">{isRTL ? '149 ر.س' : '149 SAR'}</div>
                   <div className="text-xs text-red-500 font-bold">{isRTL ? 'وفّر 41 ر.س' : 'Save 41 SAR'}</div>
                 </motion.div>
               </div>
@@ -651,14 +673,18 @@ export default function Home() {
       </section>
 
       {/* ── Testimonials ─────────────────────────────────────────────── */}
-      <section className="py-20 bg-slate-50">
-        <div className="container mx-auto px-4 md:px-10">
+      <section className="py-20 relative overflow-hidden" style={heroSectionBackground}>
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <div className="absolute top-[-120px] right-[5%] w-[380px] h-[380px] rounded-full opacity-20 blur-3xl" style={{ background: 'radial-gradient(circle, rgba(56, 189, 248, 0.5), transparent 70%)' }} />
+          <div className="absolute bottom-[-120px] left-[4%] w-[340px] h-[340px] rounded-full opacity-20 blur-3xl" style={{ background: 'radial-gradient(circle, rgba(232, 121, 249, 0.45), transparent 70%)' }} />
+        </div>
+        <div className="container mx-auto px-4 md:px-10 relative z-10">
           <Reveal>
             <div className="text-center mb-14">
-              <h2 className="text-3xl md:text-4xl font-black text-slate-900 mb-3">
+              <h2 className="text-3xl md:text-4xl font-black text-white mb-3">
                 {isRTL ? 'ماذا يقول عملاؤنا؟' : 'What Our Customers Say'}
               </h2>
-              <p className="text-slate-500">{isRTL ? 'آراء حقيقية من عملاء رواج كارد' : 'Real reviews from Rawajcard customers'}</p>
+              <p className="text-slate-300">{isRTL ? 'آراء حقيقية من عملاء رواج كارد' : 'Real reviews from Rawajcard customers'}</p>
             </div>
           </Reveal>
           <div className="grid md:grid-cols-3 gap-6">
@@ -668,7 +694,7 @@ export default function Home() {
                 roleAr: 'مدير مبيعات', roleEn: 'Sales Manager',
                 textAr: 'منتج رائع! وفّر عليّ الكثير من الوقت. أعطيته لعملائي وكلهم انبهروا. التوصيل كان سريع جداً.',
                 textEn: 'Amazing product! Saved me so much time. Shared it with my clients and they were all impressed. Delivery was super fast.',
-                stars: 5, avatar: 'ع', avatarBg: 'bg-teal-600',
+                stars: 5, avatar: 'ع', avatarBg: 'bg-cyan-600',
               },
               {
                 nameAr: 'سارة الأحمدي', nameEn: 'Sara Al-Ahmadi',
@@ -686,20 +712,20 @@ export default function Home() {
               },
             ].map((review, i) => (
               <Reveal key={i} delay={i * 0.1}>
-                <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
+                <div className={`rounded-2xl p-6 transition-all hover:-translate-y-1 ${heroGlassCardClass}`}>
                   <div className="flex gap-1 mb-4">
                     {[...Array(review.stars)].map((_, j) => (
                       <Star key={j} className="h-4 w-4 fill-amber-400 text-amber-400" />
                     ))}
                   </div>
-                  <p className="text-slate-600 leading-relaxed mb-5 text-sm">"{isRTL ? review.textAr : review.textEn}"</p>
+                  <p className="text-slate-200 leading-relaxed mb-5 text-sm">"{isRTL ? review.textAr : review.textEn}"</p>
                   <div className="flex items-center gap-3">
                     <div className={`w-10 h-10 rounded-full ${review.avatarBg} flex items-center justify-center text-white font-bold text-sm`}>
                       {review.avatar}
                     </div>
                     <div>
-                      <div className="font-bold text-slate-900 text-sm">{isRTL ? review.nameAr : review.nameEn}</div>
-                      <div className="text-xs text-slate-400">{isRTL ? review.roleAr : review.roleEn}</div>
+                      <div className="font-bold text-white text-sm">{isRTL ? review.nameAr : review.nameEn}</div>
+                      <div className="text-xs text-slate-300">{isRTL ? review.roleAr : review.roleEn}</div>
                     </div>
                   </div>
                 </div>
@@ -720,7 +746,7 @@ export default function Home() {
             </div>
             <button
               onClick={() => setLoginOpen(true)}
-              className="inline-flex items-center gap-2 bg-teal-600 hover:bg-teal-500 text-white font-bold px-8 py-3.5 rounded-2xl transition-colors"
+              className="inline-flex items-center gap-2 bg-gradient-to-r from-fuchsia-600 to-purple-700 hover:from-fuchsia-500 hover:to-purple-600 text-white font-bold px-8 py-3.5 rounded-2xl transition-all"
             >
               {footerCtaLabel}
               <ArrowLeft className="h-4 w-4" />
@@ -733,16 +759,14 @@ export default function Home() {
           <div className="grid md:grid-cols-4 gap-10">
             {/* Brand */}
             <div className="md:col-span-1">
-              <img
-                src="/rawajcard-logo.png"
-                alt="Rawajcard"
-                className="h-12 w-auto mb-4 brightness-200"
-                onError={(e) => {
-                  e.target.style.display = 'none';
-                  e.target.nextSibling.style.display = 'block';
-                }}
-              />
-              <div className="hidden text-2xl font-black text-teal-400 mb-4">Rawajcard</div>
+              <div className="flex items-center gap-3 mb-4">
+                <img
+                  src="/rawajcard-logo1.png"
+                  alt="Rawajcard"
+                  className="h-12 w-12 object-contain"
+                />
+                <div className="text-2xl font-black text-white">Rawajcard</div>
+              </div>
               <p className="text-slate-400 text-sm leading-relaxed mb-5">
                 {isRTL ? 'الجيل الجديد من بطاقات التعارف الذكية في عالم الأعمال' : 'The next generation of smart business cards'}
               </p>
@@ -753,7 +777,7 @@ export default function Home() {
                   { href: 'https://www.instagram.com/rawajcard', icon: '𝒾𝑔' },
                 ].map((s, i) => (
                   <a key={i} href={s.href} target="_blank" rel="noopener noreferrer"
-                    className="w-9 h-9 bg-white/10 hover:bg-teal-600 rounded-full flex items-center justify-center text-sm transition-colors">
+                    className="w-9 h-9 bg-indigo-950/60/10 hover:bg-cyan-600 rounded-full flex items-center justify-center text-sm transition-colors">
                     {s.icon}
                   </a>
                 ))}
@@ -790,15 +814,15 @@ export default function Home() {
                 <h4 className="font-black text-white mb-5 text-base">{isRTL ? col.titleAr : col.titleEn}</h4>
                 {col.contact ? (
                   <div className="space-y-4 text-sm text-slate-400">
-                    <a href="mailto:info@rawajcard.com" className="flex items-center gap-2 hover:text-teal-400 transition-colors">
+                    <a href="mailto:info@rawajcard.com" className="flex items-center gap-2 hover:text-cyan-400 transition-colors">
                       <Mail className="h-4 w-4 flex-shrink-0" />
                       info@rawajcard.com
                     </a>
-                    <a href="https://wa.me/966531607223" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-teal-400 transition-colors">
+                    <a href="https://wa.me/966531607223" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-cyan-400 transition-colors">
                       <MessageCircle className="h-4 w-4 flex-shrink-0" />
                       {isRTL ? 'واتساب: 966531607223+' : 'WhatsApp: +966531607223'}
                     </a>
-                    <a href="tel:966531607223" className="flex items-center gap-2 hover:text-teal-400 transition-colors">
+                    <a href="tel:966531607223" className="flex items-center gap-2 hover:text-cyan-400 transition-colors">
                       <Phone className="h-4 w-4 flex-shrink-0" />
                       {isRTL ? 'اتصل بنا: 966531607223+' : 'Call: +966531607223'}
                     </a>
@@ -808,7 +832,7 @@ export default function Home() {
                     {col.links.map((link, j) => (
                       <li key={j}>
                         <a href={link.href} target="_blank" rel="noopener noreferrer"
-                          className="hover:text-teal-400 transition-colors">
+                          className="hover:text-cyan-400 transition-colors">
                           {isRTL ? link.labelAr : link.labelEn}
                         </a>
                       </li>

@@ -10,7 +10,7 @@ export default function TemplateForestGreen({ card, isRTL, onLinkClick }) {
   };
 
   return (
-    <div className="relative min-h-screen bg-gradient-to-br from-emerald-50 via-green-50 to-teal-50">
+    <div className="relative min-h-screen bg-gradient-to-br from-emerald-50 via-green-50 to-cyan-50">
       {/* Organic patterns */}
       <div className="absolute inset-0 opacity-5">
         <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
@@ -73,7 +73,7 @@ export default function TemplateForestGreen({ card, isRTL, onLinkClick }) {
 
         {/* Bio */}
         {(card.bio || card.bio_ar) && (
-          <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 mb-6 shadow-lg border-2 border-green-200">
+          <div className="bg-indigo-950/60/70 backdrop-blur-sm rounded-2xl p-6 mb-6 shadow-lg border-2 border-green-200">
             <p className="text-slate-700 leading-relaxed text-center">
               {isRTL && card.bio_ar ? card.bio_ar : card.bio}
             </p>
@@ -86,7 +86,7 @@ export default function TemplateForestGreen({ card, isRTL, onLinkClick }) {
             <a
               href={`mailto:${card.email}`}
               onClick={() => onLinkClick?.('email')}
-              className="flex items-center justify-between bg-white/80 backdrop-blur-sm border-2 border-green-300 rounded-xl p-4 shadow-md hover:shadow-lg hover:border-green-500 transition-all group"
+              className="flex items-center justify-between bg-indigo-950/60/80 backdrop-blur-sm border-2 border-green-300 rounded-xl p-4 shadow-md hover:shadow-lg hover:border-green-500 transition-all group"
             >
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center group-hover:bg-green-500 transition-colors">
@@ -104,7 +104,7 @@ export default function TemplateForestGreen({ card, isRTL, onLinkClick }) {
             <a
               href={`tel:${card.phone}`}
               onClick={() => onLinkClick?.('phone')}
-              className="flex items-center justify-between bg-white/80 backdrop-blur-sm border-2 border-emerald-300 rounded-xl p-4 shadow-md hover:shadow-lg hover:border-emerald-500 transition-all group"
+              className="flex items-center justify-between bg-indigo-950/60/80 backdrop-blur-sm border-2 border-emerald-300 rounded-xl p-4 shadow-md hover:shadow-lg hover:border-emerald-500 transition-all group"
             >
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center group-hover:bg-emerald-500 transition-colors">
@@ -124,7 +124,7 @@ export default function TemplateForestGreen({ card, isRTL, onLinkClick }) {
               onClick={() => onLinkClick?.('whatsapp')}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-between bg-white/80 backdrop-blur-sm border-2 border-green-300 rounded-xl p-4 shadow-md hover:shadow-lg hover:border-green-500 transition-all group"
+              className="flex items-center justify-between bg-indigo-950/60/80 backdrop-blur-sm border-2 border-green-300 rounded-xl p-4 shadow-md hover:shadow-lg hover:border-green-500 transition-all group"
             >
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center group-hover:bg-green-500 transition-colors">
@@ -161,7 +161,7 @@ export default function TemplateForestGreen({ card, isRTL, onLinkClick }) {
                   onClick={() => onLinkClick?.(platform)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-12 h-12 rounded-full bg-white/80 backdrop-blur-sm border-2 border-green-300 flex items-center justify-center hover:bg-green-500 hover:border-green-500 transition-all group shadow-md"
+                  className="w-12 h-12 rounded-full bg-indigo-950/60/80 backdrop-blur-sm border-2 border-green-300 flex items-center justify-center hover:bg-green-500 hover:border-green-500 transition-all group shadow-md"
                 >
                   <Icon className="h-5 w-5 text-green-600 group-hover:text-white" />
                 </a>

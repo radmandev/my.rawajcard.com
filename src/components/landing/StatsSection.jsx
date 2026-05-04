@@ -34,7 +34,7 @@ function AnimatedCounter({ value, suffix, inView }) {
   return (
     <span>
       {count.toLocaleString()}
-      <span className="text-teal-500">{suffix}</span>
+      <span className="text-cyan-500">{suffix}</span>
     </span>
   );
 }
@@ -65,16 +65,16 @@ export default function StatsSection() {
   }, []);
   
   return (
-    <section className="py-20 bg-gradient-to-br from-slate-900 via-slate-800 to-teal-900 relative overflow-hidden">
+    <section className="py-20 bg-gradient-to-br from-slate-900 via-slate-800 to-cyan-900 relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 opacity-30">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-teal-500 rounded-full blur-3xl" />
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-cyan-500 rounded-full blur-3xl" />
         <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-500 rounded-full blur-3xl" />
       </div>
       
       <div className="container mx-auto px-4 md:px-6 relative z-10">
         <div className="text-center mb-4">
-          <span className="text-teal-400 text-sm font-semibold tracking-wider uppercase">Why Rawajcard</span>
+          <span className="text-cyan-400 text-sm font-semibold tracking-wider uppercase">Why Rawajcard</span>
         </div>
         
         <h2 className="text-3xl md:text-4xl font-bold text-white text-center mb-16">
@@ -101,8 +101,8 @@ export default function StatsSection() {
               className="w-full h-full object-cover opacity-80 group-hover:opacity-90 transition-opacity"
             />
             <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform">
-                <div className="w-0 h-0 border-t-8 border-t-transparent border-l-12 border-l-teal-600 border-b-8 border-b-transparent ml-1" 
+              <div className="w-20 h-20 bg-indigo-950/60 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform">
+                <div className="w-0 h-0 border-t-8 border-t-transparent border-l-12 border-l-cyan-600 border-b-8 border-b-transparent ml-1" 
                   style={{ borderLeftWidth: '16px' }}
                 />
               </div>

@@ -6,41 +6,69 @@ import Navbar from '@/components/landing/Navbar';
 import LoginModal from '@/components/auth/LoginModal';
 import { useLanguage } from '@/components/shared/LanguageContext';
 import { useAuth } from '@/lib/AuthContext';
-import { ShoppingCart, ChevronLeft, ChevronRight, LogIn } from 'lucide-react';
+import {
+  ShoppingCart,
+  ChevronLeft,
+  ChevronRight,
+  LogIn,
+  Gem,
+  Shield,
+  RectangleHorizontal,
+  Monitor,
+  KeyRound,
+  Smartphone,
+  Phone,
+  Mail,
+  ContactRound,
+  MessageCircle,
+  Instagram,
+} from 'lucide-react';
 
 const CYCLING_WORDS_AR = ['بنفسك', 'بشركتك', 'بفكرتك'];
 const CYCLING_WORDS_EN = ['yourself', 'your business', 'your idea'];
 
 const HERO_PRODUCT_TYPES = [
   {
+    key: 'gold',
     labelAr: 'معدني ذهبي',
     labelEn: 'Gold Metal',
-    icon: '💳',
+    icon: Gem,
   },
   {
+    key: 'silver',
     labelAr: 'معدني فضي',
     labelEn: 'Silver Metal',
-    icon: '🩶',
+    icon: Gem,
   },
   {
+    key: 'black',
+    labelAr: 'معدني أسود',
+    labelEn: 'Metal Black',
+    icon: Shield,
+  },
+  {
+    key: 'wood',
     labelAr: 'بطاقة خشبية',
     labelEn: 'Wooden Card',
-    icon: '🪵',
+    icon: RectangleHorizontal,
   },
   {
+    key: 'stand',
     labelAr: 'ستاند',
     labelEn: 'Table Stand',
-    icon: '🪧',
+    icon: Monitor,
   },
   {
+    key: 'keychain',
     labelAr: 'تعليقة',
     labelEn: 'Keychain',
-    icon: '🔑',
+    icon: KeyRound,
   },
   {
+    key: 'sticker',
     labelAr: 'ملصق جوال',
     labelEn: 'Phone Sticker',
-    icon: '📱',
+    icon: Smartphone,
   },
 ];
 
@@ -58,6 +86,7 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
   const [wordIdx, setWordIdx] = useState(0);
   const [selectedProductTypeIdx, setSelectedProductTypeIdx] = useState(0);
   const [loginOpen, setLoginOpen] = useState(false);
+  const selectedProductType = HERO_PRODUCT_TYPES[selectedProductTypeIdx];
 
   const CYCLING_WORDS = isRTL ? CYCLING_WORDS_AR : CYCLING_WORDS_EN;
 
@@ -88,7 +117,7 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
   };
 
   const renderPhoneExperience = () => {
-    if (selectedProductTypeIdx === 2) {
+    if (selectedProductType?.key === 'wood') {
       return (
         <>
           <div className="demo-digital-card demo-profile-card">
@@ -113,7 +142,7 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
       );
     }
 
-    if (selectedProductTypeIdx === 4) {
+    if (selectedProductType?.key === 'keychain') {
       return (
         <>
           <div className="demo-digital-card demo-wa-card">
@@ -136,7 +165,7 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
       );
     }
 
-    if (selectedProductTypeIdx === 3) {
+    if (selectedProductType?.key === 'stand') {
       return (
         <>
           <div className="demo-digital-card demo-menu-card">
@@ -205,7 +234,7 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
   };
 
   return (
-    <div className="min-h-screen bg-white pb-16 md:pb-0" dir={isRTL ? 'rtl' : 'ltr'} style={{ fontFamily: isRTL ? "'Tajawal', 'Cairo', sans-serif" : "'Inter', 'Segoe UI', sans-serif" }}>
+    <div className="min-h-screen bg-indigo-950/60 pb-16 md:pb-0" dir={isRTL ? 'rtl' : 'ltr'} style={{ fontFamily: isRTL ? "'Tajawal', 'Cairo', sans-serif" : "'Inter', 'Segoe UI', sans-serif" }}>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=Cairo:wght@400;600;700;800&display=swap');
 
@@ -250,7 +279,7 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
 
         .demo-type-scroll {
           display: grid;
-          grid-template-columns: repeat(6, minmax(0, 1fr));
+          grid-template-columns: repeat(7, minmax(0, 1fr));
           gap: 1rem;
           min-width: 0;
         }
@@ -260,7 +289,7 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
           padding: 0 0 0.7rem;
           border: none;
           background: transparent;
-          text-align: start;
+          text-align: center;
           transition: opacity 0.2s ease, color 0.2s ease;
           opacity: 0.52;
         }
@@ -273,11 +302,51 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
           opacity: 1;
         }
 
+        .demo-slider-icon {
+          width: 1.9rem;
+          height: 1.9rem;
+          margin: 0 auto 0.38rem;
+          display: grid;
+          place-items: center;
+          color: #8f7bff;
+          background: transparent;
+          border: none;
+          box-shadow: none;
+          filter: drop-shadow(0 0 6px rgba(140, 82, 255, 0.35));
+          transition: all 0.25s ease;
+        }
+
+        .demo-slider-icon svg {
+          stroke: currentColor;
+          transition: stroke 0.25s ease, filter 0.25s ease;
+        }
+
+        .demo-slider-item:hover .demo-slider-icon {
+          color: #a98bff;
+          filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.48));
+        }
+
+        .demo-slider-item.is-active .demo-slider-icon {
+          color: #bd9fff;
+          filter: drop-shadow(0 0 14px rgba(192, 132, 252, 0.6));
+        }
+
+        .demo-slider-item.is-active .demo-slider-icon svg {
+          stroke: url(#demoSliderGradient);
+        }
+
         .demo-slider-label {
           font-size: 0.8rem;
           font-weight: 500;
           color: rgba(226, 232, 240, 0.9);
           line-height: 1.4;
+        }
+
+        .demo-slider-item.is-active .demo-slider-label {
+          background: linear-gradient(to right, #38BDF8, #E879F9);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
         }
 
         .demo-slider-indicator-track {
@@ -295,7 +364,7 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
           right: 0;
           bottom: 0;
           height: 1.5px;
-          background: linear-gradient(90deg, #5eead4, #67e8f9);
+          background: linear-gradient(90deg, #38BDF8, #E879F9);
           transform-origin: left center;
         }
 
@@ -321,8 +390,8 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
           left: 50%;
           top: 46%;
           transform: translate(-50%, -50%);
-          width: 27rem;
-          height: 27rem;
+          width: 29rem;
+          height: 29rem;
           pointer-events: none;
           z-index: 0;
         }
@@ -331,10 +400,10 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
           position: absolute;
           left: 50%;
           top: 50%;
-          width: 11rem;
-          height: 11rem;
+          width: 10.5rem;
+          height: 10.5rem;
           border-radius: 9999px;
-          border: 1px solid rgba(78, 205, 196, 0.28);
+          border: 1px solid rgba(56, 189, 248, 0.34);
           transform: translate(-50%, -50%) scale(1);
           animation: demoRingPulse 6s linear infinite;
           opacity: 0;
@@ -343,6 +412,55 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
 
         .demo-phone-ring.r2 { animation-delay: 2s; }
         .demo-phone-ring.r3 { animation-delay: 4s; }
+        .demo-phone-ring.r4 { animation-delay: 1s; border-color: rgba(232, 121, 249, 0.34); }
+
+        .demo-ring-orbit {
+          position: absolute;
+          inset: 10%;
+          border-radius: 9999px;
+          border: 1px solid rgba(56, 189, 248, 0.2);
+          box-shadow: inset 0 0 0 1px rgba(232, 121, 249, 0.08);
+        }
+
+        .demo-ring-orbit.o2 {
+          inset: 18%;
+          border-color: rgba(232, 121, 249, 0.22);
+          transform: rotate(22deg);
+        }
+
+        .demo-ring-orbit.o3 {
+          inset: 26%;
+          border-color: rgba(56, 189, 248, 0.18);
+          transform: rotate(-16deg);
+        }
+
+        .demo-fancy-circles {
+          position: absolute;
+          inset: 0;
+          pointer-events: none;
+          z-index: 2;
+        }
+
+        .demo-fancy-circle {
+          position: absolute;
+          width: 2.5rem;
+          height: 2.5rem;
+          border-radius: 9999px;
+          display: grid;
+          place-items: center;
+          color: rgba(225, 243, 255, 0.95);
+          background: rgba(30, 27, 75, 0.42);
+          border: 1px solid rgba(56, 189, 248, 0.42);
+          box-shadow: 0 0 20px rgba(56, 189, 248, 0.2), inset 0 1px 0 rgba(255,255,255,0.16);
+          backdrop-filter: blur(10px);
+          animation: demoIconFloat 5.5s ease-in-out infinite;
+        }
+
+        .demo-fancy-circle.c1 { top: 18%; left: 8%; }
+        .demo-fancy-circle.c2 { top: 31%; right: 9%; animation-delay: 0.8s; border-color: rgba(232, 121, 249, 0.44); }
+        .demo-fancy-circle.c3 { top: 48%; left: 4%; animation-delay: 1.3s; }
+        .demo-fancy-circle.c4 { top: 62%; right: 5%; animation-delay: 1.9s; border-color: rgba(232, 121, 249, 0.44); }
+        .demo-fancy-circle.c5 { bottom: 15%; left: 12%; animation-delay: 2.4s; }
 
         .demo-phone-glow {
           position: absolute;
@@ -351,7 +469,7 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
           left: 50%;
           top: 44%;
           transform: translate(-50%, -50%);
-          background: rgba(20, 184, 166, 0.18);
+          background: rgba(56, 189, 248, 0.18);
           filter: blur(70px);
           border-radius: 9999px;
         }
@@ -362,19 +480,19 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
           height: 35rem;
           border-radius: 2.2rem;
           background: #1c2535;
-          border: 1px solid rgba(78, 205, 196, 0.25);
+          border: 1px solid rgba(56, 189, 248, 0.25);
           box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
           overflow: hidden;
         }
 
         .dark .demo-phone {
           background: #1c2535;
-          border-color: rgba(78, 205, 196, 0.15);
+          border-color: rgba(56, 189, 248, 0.15);
         }
 
         html:not(.dark) .demo-phone {
           background: #e0e8e8;
-          border-color: rgba(78, 205, 196, 0.25);
+          border-color: rgba(56, 189, 248, 0.25);
         }
 
         .demo-screen {
@@ -382,7 +500,7 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
           inset: 0.5rem;
           border-radius: 1.8rem;
           background: linear-gradient(155deg, rgba(255, 255, 255, 0.96), rgba(240, 248, 248, 0.9));
-          border: 1px solid rgba(78, 205, 196, 0.22);
+          border: 1px solid rgba(56, 189, 248, 0.22);
           backdrop-filter: blur(12px);
           padding: 1rem;
           display: flex;
@@ -394,7 +512,7 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
           width: 100%;
           border-radius: 1.25rem;
           background: #ffffff;
-          border: 1px solid rgba(78, 205, 196, 0.22);
+          border: 1px solid rgba(56, 189, 248, 0.22);
           box-shadow: 0 16px 30px rgba(12, 54, 66, 0.14);
           overflow: hidden;
           color: #12313b;
@@ -402,7 +520,7 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
 
         .demo-digital-top {
           height: 4.2rem;
-          background: linear-gradient(120deg, rgba(78, 205, 196, 0.28), rgba(27, 160, 152, 0.35));
+          background: linear-gradient(120deg, rgba(56, 189, 248, 0.28), rgba(232, 121, 249, 0.35));
         }
 
         .demo-avatar {
@@ -412,8 +530,8 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
           margin-top: -2rem;
           margin-inline: auto;
           border: 3px solid #ffffff;
-          box-shadow: 0 10px 18px rgba(20, 88, 92, 0.2);
-          background: linear-gradient(135deg, #4ecdc4, #1a4d48);
+          box-shadow: 0 10px 18px rgba(56, 189, 248, 0.2);
+          background: linear-gradient(135deg, #38BDF8, #E879F9);
         }
 
         .demo-card-body {
@@ -437,7 +555,7 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
         .demo-divider {
           width: 100%;
           height: 1px;
-          background: rgba(78, 205, 196, 0.25);
+          background: rgba(56, 189, 248, 0.25);
           margin: 0.7rem 0;
         }
 
@@ -452,7 +570,7 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
           gap: 0.5rem;
           border-radius: 0.65rem;
           background: #f7fbfc;
-          border: 1px solid rgba(78, 205, 196, 0.22);
+          border: 1px solid rgba(56, 189, 248, 0.22);
           padding: 0.42rem 0.5rem;
           font-size: 0.68rem;
           color: #29515d;
@@ -463,8 +581,8 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
           height: 1.4rem;
           border-radius: 9999px;
           background: #ffffff;
-          border: 1px solid rgba(78, 205, 196, 0.25);
-          color: #1ba098;
+          border: 1px solid rgba(56, 189, 248, 0.25);
+          color: #38BDF8;
           display: grid;
           place-items: center;
           font-size: 0.66rem;
@@ -483,8 +601,8 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
         .demo-chip {
           border-radius: 9999px;
           background: #eef8f7;
-          border: 1px solid rgba(78, 205, 196, 0.26);
-          color: #1f5b63;
+          border: 1px solid rgba(56, 189, 248, 0.26);
+          color: #38BDF8;
           font-size: 0.62rem;
           font-weight: 700;
           padding: 0.25rem 0.52rem;
@@ -494,10 +612,10 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
           width: 2.45rem;
           height: 2.45rem;
           border-radius: 0.45rem;
-          border: 1px solid rgba(78, 205, 196, 0.25);
+          border: 1px solid rgba(56, 189, 248, 0.25);
           background:
-            linear-gradient(90deg, rgba(27, 160, 152, 0.18) 1px, transparent 1px),
-            linear-gradient(rgba(27, 160, 152, 0.18) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(56, 189, 248, 0.18) 1px, transparent 1px),
+            linear-gradient(rgba(56, 189, 248, 0.18) 1px, transparent 1px),
             #ffffff;
           background-size: 6px 6px, 6px 6px, auto;
         }
@@ -509,7 +627,7 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
           border-radius: 9999px;
           padding: 0.62rem 0.75rem;
           color: #ffffff;
-          background: linear-gradient(135deg, #4ecdc4, #1ba098);
+          background: linear-gradient(135deg, #38BDF8, #E879F9);
           font-size: 0.82rem;
           font-weight: 700;
         }
@@ -923,6 +1041,83 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
           font-size: 0.6rem;
           font-weight: 800;
           color: rgba(86,98,110,0.78);
+          letter-spacing: 0.17em;
+          text-transform: uppercase;
+        }
+
+        /* ===== METAL BLACK CARD ===== */
+        .demo-black-card {
+          position: relative;
+          --demo-card-base-transform: rotateZ(-5deg) rotateX(10deg);
+          width: min(18.5rem, 78vw);
+          aspect-ratio: 1.586;
+          border-radius: 1rem;
+          background: linear-gradient(145deg,
+            #05080f 0%,
+            #0b1220 22%,
+            #101829 45%,
+            #090e18 66%,
+            #05070c 100%
+          );
+          border: 1px solid rgba(107, 124, 155, 0.38);
+          box-shadow:
+            0 24px 52px rgba(0,0,0,0.6),
+            inset 0 1px 0 rgba(255,255,255,0.08),
+            inset 0 -1px 0 rgba(0,0,0,0.55);
+          overflow: hidden;
+          animation: demoCardFloat 4s ease-in-out infinite;
+          animation-delay: -2s;
+          will-change: transform;
+        }
+        .demo-black-card::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: repeating-linear-gradient(95deg, transparent 0px, rgba(255,255,255,0.04) 1px, transparent 2px, transparent 6px);
+          z-index: 1;
+        }
+        .demo-black-card::after {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(110deg, transparent 20%, rgba(56, 189, 248, 0.18) 45%, rgba(232, 121, 249, 0.22) 55%, transparent 82%);
+          background-size: 260% 100%;
+          animation: demoShimmer 4.8s linear infinite;
+          z-index: 2;
+        }
+        .demo-black-card-inner {
+          position: absolute;
+          inset: 0;
+          z-index: 3;
+          padding: 1.1rem 1.2rem;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          align-items: center;
+          text-align: center;
+        }
+        .demo-black-nfc-badge {
+          width: 3.2rem;
+          height: 3.2rem;
+          border-radius: 0.65rem;
+          border: 1px solid rgba(91, 108, 140, 0.45);
+          background: linear-gradient(180deg, rgba(25, 36, 58, 0.85), rgba(10, 15, 27, 0.92));
+          color: rgba(199, 230, 255, 0.92);
+          box-shadow: inset 0 1px 0 rgba(255,255,255,0.1), 0 8px 16px rgba(0,0,0,0.35);
+          display: grid;
+          place-items: center;
+        }
+        .demo-black-name {
+          font-size: 0.75rem;
+          font-weight: 800;
+          color: rgba(225, 241, 255, 0.95);
+          letter-spacing: 0.13em;
+          text-transform: uppercase;
+        }
+        .demo-black-brand {
+          font-size: 0.6rem;
+          font-weight: 800;
+          color: rgba(150, 177, 210, 0.8);
           letter-spacing: 0.17em;
           text-transform: uppercase;
         }
@@ -1438,7 +1633,7 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
           }
 
           .demo-type-wrap {
-            margin-bottom: 1.1rem !important;
+            display: none !important;
           }
 
           .demo-slider-main {
@@ -1507,6 +1702,7 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
           }
 
           .demo-metal-card,
+          .demo-black-card,
           .demo-wood-card {
             width: min(17rem, 82vw);
           }
@@ -1568,10 +1764,15 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
           0% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
           100% { transform: translate(-50%, -50%) scale(2.8); opacity: 0; }
         }
+
+        @keyframes demoIconFloat {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-7px); }
+        }
       `}</style>
 
       {!heroOnly && (
-        <div className="bg-[#0f4c3a] text-white text-center py-2.5 text-sm font-medium tracking-wide">
+        <div className="bg-[#0C1429] text-white text-center py-2.5 text-sm font-medium tracking-wide">
           🚚&nbsp; توصيل مجاني لطلبات 250 ريال فأكثر &nbsp;|&nbsp; اطلب الآن واستلم خلال يومين
         </div>
       )}
@@ -1580,18 +1781,26 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
 
       <section
         className="demo-hero-section relative min-h-[92vh] flex items-center overflow-hidden"
-        style={{ background: 'linear-gradient(135deg, #0a0a0a 0%, #0d1b2a 40%, #0a3d2e 100%)' }}
+        style={{ background: 'linear-gradient(135deg, #0C1429 0%, #1E1B4B 50%, #0C1429 100%)' }}
       >
+        <svg width="0" height="0" aria-hidden="true" focusable="false" style={{ position: 'absolute' }}>
+          <defs>
+            <linearGradient id="demoSliderGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#38BDF8" />
+              <stop offset="100%" stopColor="#E879F9" />
+            </linearGradient>
+          </defs>
+        </svg>
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <motion.div
             className="absolute top-[-120px] right-[-80px] w-[500px] h-[500px] rounded-full opacity-20"
-            style={{ background: 'radial-gradient(circle, #14b8a6, transparent 70%)' }}
+            style={{ background: 'radial-gradient(circle, #38BDF8, transparent 70%)' }}
             animate={{ scale: [1, 1.15, 1], opacity: [0.18, 0.28, 0.18] }}
             transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
           />
           <motion.div
             className="absolute bottom-[-100px] left-[-60px] w-[400px] h-[400px] rounded-full opacity-15"
-            style={{ background: 'radial-gradient(circle, #6366f1, transparent 70%)' }}
+            style={{ background: 'radial-gradient(circle, #E879F9, transparent 70%)' }}
             animate={{ scale: [1, 1.2, 1], opacity: [0.12, 0.22, 0.12] }}
             transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
           />
@@ -1618,7 +1827,7 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
                     transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
                     style={{
                       display: 'inline-block',
-                      background: 'linear-gradient(to left, #5eead4, #14b8a6)',
+                      background: 'linear-gradient(to right, #38BDF8, #E879F9)',
                       WebkitBackgroundClip: 'text',
                       WebkitTextFillColor: 'transparent',
                       backgroundClip: 'text',
@@ -1630,7 +1839,7 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
                 <br />
                 <span
                   style={{
-                    background: 'linear-gradient(to left, #5eead4, #14b8a6)',
+                    background: 'linear-gradient(to right, #38BDF8, #E879F9)',
                     WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent',
                     backgroundClip: 'text',
@@ -1666,24 +1875,30 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
                     </button>
 
                     <div className="demo-type-scroll">
-                      {HERO_PRODUCT_TYPES.map((item, i) => (
-                        <button
-                          key={i}
-                          onClick={() => setSelectedProductTypeIdx(i)}
-                          className={`demo-slider-item ${selectedProductTypeIdx === i ? 'is-active' : ''}`}
-                          aria-pressed={selectedProductTypeIdx === i}
-                        >
-                          <div className="demo-slider-label">{isRTL ? item.labelAr : item.labelEn}</div>
-                          <span className="demo-slider-indicator-track" />
-                          <motion.span
-                            className="demo-slider-indicator"
-                            initial={false}
-                            animate={{ scaleX: selectedProductTypeIdx === i ? 1 : 0 }}
-                            transition={{ duration: 0.25, ease: 'easeInOut' }}
-                            style={{ transformOrigin: isRTL ? 'right center' : 'left center' }}
-                          />
-                        </button>
-                      ))}
+                      {HERO_PRODUCT_TYPES.map((item, i) => {
+                        const Icon = item.icon;
+                        return (
+                          <button
+                            key={item.key}
+                            onClick={() => setSelectedProductTypeIdx(i)}
+                            className={`demo-slider-item ${selectedProductTypeIdx === i ? 'is-active' : ''}`}
+                            aria-pressed={selectedProductTypeIdx === i}
+                          >
+                            <span className="demo-slider-icon" aria-hidden="true">
+                              <Icon className="w-[1.1rem] h-[1.1rem]" />
+                            </span>
+                            <div className="demo-slider-label">{isRTL ? item.labelAr : item.labelEn}</div>
+                            <span className="demo-slider-indicator-track" />
+                            <motion.span
+                              className="demo-slider-indicator"
+                              initial={false}
+                              animate={{ scaleX: selectedProductTypeIdx === i ? 1 : 0 }}
+                              transition={{ duration: 0.25, ease: 'easeInOut' }}
+                              style={{ transformOrigin: isRTL ? 'right center' : 'left center' }}
+                            />
+                          </button>
+                        );
+                      })}
                     </div>
 
                     <button
@@ -1707,7 +1922,7 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
                   whileHover={{ scale: 1.03, y: -2 }}
                   whileTap={{ scale: 0.97 }}
                   onClick={() => navigate('/customize')}
-                  className="inline-flex items-center gap-2 bg-gradient-to-l from-teal-600 via-cyan-600 to-teal-500 hover:from-teal-500 hover:via-cyan-500 hover:to-teal-400 text-white font-bold px-8 py-4 rounded-2xl shadow-lg shadow-teal-600/30 transition-all text-base cursor-pointer border border-white/20"
+                  className="inline-flex items-center gap-2 bg-gradient-to-r from-fuchsia-500 via-purple-500 to-purple-600 hover:from-fuchsia-400 hover:via-purple-400 hover:to-purple-500 text-white font-bold px-8 py-4 rounded-2xl shadow-lg shadow-fuchsia-500/30 transition-all text-base cursor-pointer border border-white/20"
                 >
                   <ShoppingCart className="h-5 w-5" />
                   {isRTL ? 'اشتر بطاقة NFC' : 'Buy NFC Card'}
@@ -1717,7 +1932,7 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
                   whileHover={{ scale: 1.03, y: -2 }}
                   whileTap={{ scale: 0.97 }}
                   onClick={handleCreateDigital}
-                  className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white font-bold px-8 py-4 rounded-2xl border border-white/20 shadow-lg shadow-slate-900/20 transition-all text-base cursor-pointer backdrop-blur-sm"
+                  className="inline-flex items-center gap-2 bg-indigo-950/60/10 hover:bg-indigo-950/60/20 text-white font-bold px-8 py-4 rounded-2xl border border-white/20 shadow-lg shadow-slate-900/20 transition-all text-base cursor-pointer backdrop-blur-sm"
                 >
                   <LogIn className="h-5 w-5" />
                   {isRTL ? 'أنشئ بطاقة رقمية' : 'Create Digital Card'}
@@ -1736,7 +1951,7 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
                   { value: '2 يوم', labelAr: 'توصيل سريع', labelEn: '2 days Delivery' },
                 ].map((stat, i) => (
                   <div key={i} className="text-center">
-                    <div className="text-2xl font-black text-teal-400">{stat.value}</div>
+                    <div className="text-2xl font-black text-cyan-400">{stat.value}</div>
                     <div className="text-xs text-slate-400 mt-0.5">{isRTL ? stat.labelAr : stat.labelEn}</div>
                   </div>
                 ))}
@@ -1751,9 +1966,21 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
             >
               <div className="demo-mockup-wrap">
                 <div className="demo-phone-rings" aria-hidden="true">
+                  <span className="demo-ring-orbit" />
+                  <span className="demo-ring-orbit o2" />
+                  <span className="demo-ring-orbit o3" />
                   <span className="demo-phone-ring" />
                   <span className="demo-phone-ring r2" />
                   <span className="demo-phone-ring r3" />
+                  <span className="demo-phone-ring r4" />
+                </div>
+
+                <div className="demo-fancy-circles" aria-hidden="true">
+                  <span className="demo-fancy-circle c1"><Phone className="w-4 h-4" /></span>
+                  <span className="demo-fancy-circle c2"><Mail className="w-4 h-4" /></span>
+                  <span className="demo-fancy-circle c3"><ContactRound className="w-4 h-4" /></span>
+                  <span className="demo-fancy-circle c4"><MessageCircle className="w-4 h-4" /></span>
+                  <span className="demo-fancy-circle c5"><Instagram className="w-4 h-4" /></span>
                 </div>
 
                 <div className="demo-phone-wrap">
@@ -1767,7 +1994,7 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
 
                 <div className="demo-product-mockup">
                   <AnimatePresence mode="wait">
-                    {selectedProductTypeIdx === 0 && (
+                    {selectedProductType?.key === 'gold' && (
                       <motion.div
                         key="metal"
                         initial={{ opacity: 0, scale: 0.84, y: 20 }}
@@ -1794,7 +2021,7 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
                       </motion.div>
                     )}
 
-                    {selectedProductTypeIdx === 1 && (
+                    {selectedProductType?.key === 'silver' && (
                       <motion.div
                         key="silver"
                         initial={{ opacity: 0, scale: 0.84, y: 20 }}
@@ -1821,7 +2048,34 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
                       </motion.div>
                     )}
 
-                    {selectedProductTypeIdx === 2 && (
+                    {selectedProductType?.key === 'black' && (
+                      <motion.div
+                        key="black"
+                        initial={{ opacity: 0, scale: 0.84, y: 20 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.88, y: -14 }}
+                        transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                      >
+                        <div className="demo-black-card">
+                          <div className="demo-black-card-inner">
+                            <div className="demo-black-nfc-badge" aria-hidden="true">
+                              <div className="demo-nfc-icon">
+                                <span className="demo-nfc-dot" />
+                                <span className="demo-nfc-wave w1" />
+                                <span className="demo-nfc-wave w2" />
+                                <span className="demo-nfc-wave w3" />
+                              </div>
+                            </div>
+                            <div>
+                              <div className="demo-black-name">Ahmed Al-Rashidi</div>
+                              <div className="demo-black-brand">RAWAJCARD · METAL BLACK</div>
+                            </div>
+                          </div>
+                        </div>
+                      </motion.div>
+                    )}
+
+                    {selectedProductType?.key === 'wood' && (
                       <motion.div
                         key="wood"
                         initial={{ opacity: 0, scale: 0.84, y: 20 }}
@@ -1848,7 +2102,7 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
                       </motion.div>
                     )}
 
-                    {selectedProductTypeIdx === 3 && (
+                    {selectedProductType?.key === 'stand' && (
                       <motion.div
                         key="stand"
                         initial={{ opacity: 0, scale: 0.84, y: 20 }}
@@ -1890,7 +2144,7 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
                       </motion.div>
                     )}
 
-                    {selectedProductTypeIdx === 4 && (
+                    {selectedProductType?.key === 'keychain' && (
                       <motion.div
                         key="keychain"
                         initial={{ opacity: 0, scale: 0.84, y: 20 }}
@@ -1920,7 +2174,7 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
                       </motion.div>
                     )}
 
-                    {selectedProductTypeIdx === 5 && (
+                    {selectedProductType?.key === 'sticker' && (
                       <motion.div
                         key="sticker"
                         initial={{ opacity: 0, scale: 0.84, y: 20 }}

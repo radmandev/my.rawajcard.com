@@ -53,7 +53,7 @@ export default function TemplateLuxuryGold({ card, isRTL, onLinkClick }) {
           )}
 
           {(card.company || card.company_ar) && (
-            <p className="text-sm text-gray-400 font-light uppercase tracking-widest">
+            <p className="text-sm text-slate-400 font-light uppercase tracking-widest">
               {isRTL && card.company_ar ? card.company_ar : card.company}
             </p>
           )}
@@ -83,7 +83,7 @@ export default function TemplateLuxuryGold({ card, isRTL, onLinkClick }) {
                   <Mail className="h-5 w-5 text-yellow-500 group-hover:text-black" />
                 </div>
                 <div className="flex-1 text-left">
-                  <p className="text-xs text-gray-400 uppercase tracking-wide">Email</p>
+                  <p className="text-xs text-slate-400 uppercase tracking-wide">Email</p>
                   <p className="text-white font-medium">{card.email}</p>
                 </div>
               </div>
@@ -101,7 +101,7 @@ export default function TemplateLuxuryGold({ card, isRTL, onLinkClick }) {
                   <Phone className="h-5 w-5 text-yellow-500 group-hover:text-black" />
                 </div>
                 <div className="flex-1 text-left">
-                  <p className="text-xs text-gray-400 uppercase tracking-wide">Phone</p>
+                  <p className="text-xs text-slate-400 uppercase tracking-wide">Phone</p>
                   <p className="text-white font-medium">{card.phone}</p>
                 </div>
               </div>
@@ -121,7 +121,7 @@ export default function TemplateLuxuryGold({ card, isRTL, onLinkClick }) {
                   <MessageCircle className="h-5 w-5 text-yellow-500 group-hover:text-black" />
                 </div>
                 <div className="flex-1 text-left">
-                  <p className="text-xs text-gray-400 uppercase tracking-wide">WhatsApp</p>
+                  <p className="text-xs text-slate-400 uppercase tracking-wide">WhatsApp</p>
                   <p className="text-white font-medium">Message Me</p>
                 </div>
               </div>
@@ -129,7 +129,7 @@ export default function TemplateLuxuryGold({ card, isRTL, onLinkClick }) {
           )}
 
           {card.location && (
-            <div className="flex items-center justify-center gap-2 text-gray-400 pt-4">
+            <div className="flex items-center justify-center gap-2 text-slate-400 pt-4">
               <MapPin className="h-4 w-4 text-yellow-500" />
               <span className="text-sm">{isRTL && card.location_ar ? card.location_ar : card.location}</span>
             </div>

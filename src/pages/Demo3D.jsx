@@ -15,7 +15,7 @@ export default function Demo3D() {
           </p>
         </div>
         <div className="w-full flex-1 px-4 pb-10" style={{ minHeight: '75vh' }}>
-          <div className="w-full h-full rounded-2xl overflow-hidden shadow-2xl border border-slate-700" style={{ minHeight: '75vh' }}>
+          <div className="w-full h-full rounded-2xl overflow-hidden shadow-2xl border border-indigo-800" style={{ minHeight: '75vh' }}>
             <iframe
               src="https://emadssms.shapespark.com/demo-room/"
               title="3D Demo Room"

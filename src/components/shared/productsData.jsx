@@ -55,7 +55,7 @@ export const productsData = [
     discount_percentage: 42,
     image_url: "https://beta.rawajcard.com/wp-content/uploads/2024/12/Google-NFC-Instagam-Facebook-WhatsApp-Youtube-Snapchat-Android-iPhone-450x450.webp",
     category: "business_cards",
-    is_customizable: true,
+    is_customizable: false,
     features_en: ['Direct to Google', 'Instant reviews', 'Professional look', 'Easy to use'],
     features_ar: ['مباشرة لجوجل', 'تقييمات فورية', 'مظهر احترافي', 'سهل الاستخدام']
   },

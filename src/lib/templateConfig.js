@@ -100,7 +100,7 @@ export const ALL_TEMPLATES = [
     description: 'Professional wave background design',
     descriptionAr: 'تصميم خلفية موجية احترافية',
     colors: ['#0f766e', '#99f6e4', '#FFFFFF'],
-    preview: 'bg-gradient-to-br from-teal-700 to-teal-900',
+    preview: 'bg-gradient-to-br from-cyan-700 to-slate-900',
     defaultTier: 'free',
   },
   {

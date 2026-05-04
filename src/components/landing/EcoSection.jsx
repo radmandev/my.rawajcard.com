@@ -20,7 +20,7 @@ const features = [
 
 export default function EcoSection() {
   return (
-    <section className="py-20 bg-gradient-to-br from-green-50 via-teal-50 to-blue-50">
+    <section className="py-20 bg-gradient-to-br from-green-50 via-cyan-50 to-blue-50">
       <div className="container mx-auto px-4 md:px-6">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           {/* Content */}
@@ -84,7 +84,7 @@ export default function EcoSection() {
             className="relative">
 
             <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-br from-green-500/20 to-teal-500/20 rounded-3xl transform rotate-3 scale-105" />
+              <div className="absolute inset-0 bg-gradient-to-br from-green-500/20 to-cyan-500/20 rounded-3xl transform rotate-3 scale-105" />
               <div className="relative rounded-2xl overflow-hidden shadow-2xl shadow-green-900/20">
                 <img
                   src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=800&h=600&fit=crop"
@@ -94,7 +94,7 @@ export default function EcoSection() {
                 <div className="absolute inset-0 bg-gradient-to-t from-green-900/60 via-transparent to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-8">
                   <div className="flex items-center gap-4">
-                    <div className="bg-white rounded-xl p-4 shadow-lg">
+                    <div className="bg-indigo-950/60 rounded-xl p-4 shadow-lg">
                       <img
                         src="https://tree-nation.com/images/svg/logo-tree-nation-blue.svg"
                         alt="Tree-Nation"

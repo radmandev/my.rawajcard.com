@@ -80,7 +80,7 @@ export default function WhatsAppButton() {
           >
             {/* Header */}
             <div className="flex items-center gap-3 px-4 py-3" style={{ background: '#25D366' }}>
-              <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
+              <div className="w-10 h-10 rounded-full bg-indigo-950/60/20 flex items-center justify-center flex-shrink-0">
                 <svg viewBox="0 0 24 24" fill="white" className="w-6 h-6">{WA_ICON}</svg>
               </div>
               <div className="flex-1 min-w-0">
@@ -89,7 +89,7 @@ export default function WhatsAppButton() {
               </div>
               <button
                 onClick={() => setOpen(false)}
-                className="text-white/80 hover:text-white transition-colors p-1 rounded-full hover:bg-white/20"
+                className="text-white/80 hover:text-white transition-colors p-1 rounded-full hover:bg-indigo-950/60/20"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -98,19 +98,19 @@ export default function WhatsAppButton() {
             {/* Chat bubble */}
             <div className="px-4 py-4" style={{ background: '#e5ddd5' }}>
               <div
-                className={`bg-white px-4 py-3 shadow-sm max-w-[85%] ${
+                className={`bg-indigo-950/60 px-4 py-3 shadow-sm max-w-[85%] ${
                   isRTL ? 'rounded-2xl rounded-tr-none mr-auto' : 'rounded-2xl rounded-tl-none'
                 }`}
               >
-                <p className="text-gray-700 text-sm leading-relaxed">{tx.greeting}</p>
-                <p className={`text-gray-400 text-[10px] mt-1 ${isRTL ? 'text-left' : 'text-right'}`}>
+                <p className="text-slate-200 text-sm leading-relaxed">{tx.greeting}</p>
+                <p className={`text-slate-400 text-[10px] mt-1 ${isRTL ? 'text-left' : 'text-right'}`}>
                   {tx.team}
                 </p>
               </div>
             </div>
 
             {/* Message input */}
-            <div className="px-3 py-3 bg-white border-t border-gray-100">
+            <div className="px-3 py-3 bg-indigo-950/60 border-t border-indigo-800/50">
               <div className={`flex items-end gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
                 <textarea
                   value={message}
@@ -119,7 +119,7 @@ export default function WhatsAppButton() {
                   rows={2}
                   dir={isRTL ? 'rtl' : 'ltr'}
                   placeholder={tx.placeholder}
-                  className="flex-1 resize-none rounded-xl border border-gray-200 px-3 py-2 text-sm text-gray-700 placeholder-gray-400 focus:outline-none focus:border-green-400 focus:ring-1 focus:ring-green-400 transition"
+                  className="flex-1 resize-none rounded-xl border border-indigo-800 px-3 py-2 text-sm text-slate-200 placeholder-gray-400 focus:outline-none focus:border-green-400 focus:ring-1 focus:ring-green-400 transition"
                   style={{ maxHeight: '96px' }}
                 />
                 <button
@@ -131,7 +131,7 @@ export default function WhatsAppButton() {
                   <Send className={`w-4 h-4 ${isRTL ? 'rotate-180' : ''}`} />
                 </button>
               </div>
-              <p className="text-center text-gray-400 text-[10px] mt-2">{tx.hint}</p>
+              <p className="text-center text-slate-400 text-[10px] mt-2">{tx.hint}</p>
             </div>
           </div>
         )}

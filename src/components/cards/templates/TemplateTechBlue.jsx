@@ -70,7 +70,7 @@ export default function TemplateTechBlue({ card, isRTL, onLinkClick }) {
 
         {/* Bio Card */}
         {(card.bio || card.bio_ar) && (
-          <div className="bg-slate-800/50 backdrop-blur-sm border border-blue-500/30 rounded-2xl p-6 mb-6 shadow-xl">
+          <div className="bg-indigo-950/50 backdrop-blur-sm border border-blue-500/30 rounded-2xl p-6 mb-6 shadow-xl">
             <div className="flex items-start gap-3">
               <div className="w-1 h-full bg-gradient-to-b from-cyan-400 to-blue-500 rounded" />
               <p className="text-gray-300 leading-relaxed text-sm">
@@ -89,7 +89,7 @@ export default function TemplateTechBlue({ card, isRTL, onLinkClick }) {
               className="col-span-2 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-xl p-4 hover:scale-105 transition-transform shadow-lg hover:shadow-cyan-500/50"
             >
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center">
+                <div className="w-10 h-10 rounded-lg bg-indigo-950/60/10 flex items-center justify-center">
                   <Mail className="h-5 w-5 text-white" />
                 </div>
                 <div className="flex-1 text-left">
@@ -135,7 +135,7 @@ export default function TemplateTechBlue({ card, isRTL, onLinkClick }) {
           )}
 
           {card.location && (
-            <div className="col-span-2 flex items-center justify-center gap-2 text-gray-400 py-2">
+            <div className="col-span-2 flex items-center justify-center gap-2 text-slate-400 py-2">
               <MapPin className="h-4 w-4 text-cyan-400" />
               <span className="text-sm font-mono">{isRTL && card.location_ar ? card.location_ar : card.location}</span>
             </div>
@@ -157,7 +157,7 @@ export default function TemplateTechBlue({ card, isRTL, onLinkClick }) {
                   onClick={() => onLinkClick?.(platform)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-11 h-11 rounded-lg bg-slate-800/50 border border-blue-400/30 flex items-center justify-center hover:bg-blue-500 hover:border-blue-400 transition-all"
+                  className="w-11 h-11 rounded-lg bg-indigo-950/50 border border-blue-400/30 flex items-center justify-center hover:bg-blue-500 hover:border-blue-400 transition-all"
                 >
                   <Icon className="h-5 w-5 text-cyan-400" />
                 </a>

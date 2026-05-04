@@ -1,8 +1,9 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import { buildProductTrackingData, trackWebsiteEvent } from '@/lib/websiteTracker';
 
 const CartContext = createContext(null);
 
-const trackAddToCart = (product) => {
+const trackAddToCart = (product, tracking = {}) => {
   if (typeof window === 'undefined' || typeof window.gtag !== 'function') return;
 
   const price = Number(product?.price ?? 0) || 0;
@@ -20,6 +21,18 @@ const trackAddToCart = (product) => {
         quantity: 1,
       },
     ],
+  });
+
+  void trackWebsiteEvent('add_to_cart', {
+    pageName: tracking.pageName || null,
+    path: tracking.path || window.location.pathname,
+    metadata: buildProductTrackingData(product, {
+      quantity: Math.max(1, Number(tracking.quantity) || 1),
+      source: tracking.source || 'website',
+      flow: tracking.flow || null,
+    }),
+    userId: tracking.userId || null,
+    userEmail: tracking.userEmail || null,
   });
 };
 
@@ -44,8 +57,8 @@ export function CartProvider({ children }) {
     localStorage.setItem('rawaj_cart', JSON.stringify(items));
   }, [items]);
 
-  const addItem = useCallback((product) => {
-    trackAddToCart(product);
+  const addItem = useCallback((product, tracking = {}) => {
+    trackAddToCart(product, tracking);
     trackGoogleAdsAddToCartConversion();
 
     setItems(prev => {

@@ -44,7 +44,7 @@ const SocialIcon = ({ platform, className }) => {
 };
 
 export default function TemplateNavyGold({ card, isRTL, onLinkClick, editMode = false, onCardChange }) {
-  const isDarkMode = card.design?.dark_mode || false;
+  const isDarkMode = false;
   
   // Adjust colors for dark mode
   const primaryColor = isDarkMode 
@@ -140,7 +140,7 @@ END:VCARD`;
             className="absolute top-0 left-6 h-14 w-14"
             displayComponent={
               card.company_logo ? (
-                <div className="h-14 w-14 rounded-xl overflow-hidden bg-white shadow-lg p-2">
+                <div className="h-14 w-14 rounded-xl overflow-hidden bg-indigo-950/60 shadow-lg p-2">
                   <img src={card.company_logo} alt={card.company} className="h-full w-full object-contain" />
                 </div>
               ) : card.company ? (

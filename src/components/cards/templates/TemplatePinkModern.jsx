@@ -78,7 +78,7 @@ END:VCARD`;
         {/* Profile */}
         <div className="px-6 -mt-10 relative z-10">
           <div className="flex gap-4">
-            <div className="h-24 w-24 rounded-2xl overflow-hidden shadow-lg bg-white">
+            <div className="h-24 w-24 rounded-2xl overflow-hidden shadow-lg bg-indigo-950/60">
               {card.profile_image ? (
                 <img src={card.profile_image} alt={card.name} className="h-full w-full object-cover" />
               ) : (
@@ -97,7 +97,7 @@ END:VCARD`;
               {(card.company_logo || card.company) && (
                 <div className="flex items-center gap-2 mt-1">
                   {card.company_logo ? (
-                    <div className="h-5 w-5 rounded overflow-hidden bg-white shadow p-0.5">
+                    <div className="h-5 w-5 rounded overflow-hidden bg-indigo-950/60 shadow p-0.5">
                       <img src={card.company_logo} alt={card.company} className="h-full w-full object-contain" />
                     </div>
                   ) : (
@@ -151,7 +151,7 @@ END:VCARD`;
       <div className="px-4 py-6 space-y-4">
         {/* About */}
         {card.bio && (
-          <div className="bg-white rounded-2xl p-5 shadow-sm">
+          <div className="bg-indigo-950/60 rounded-2xl p-5 shadow-sm">
             <h2 className="text-center font-semibold mb-2" style={{ color: primaryColor }}>
               {isRTL ? 'نبذة عني' : 'About Me'}
             </h2>
@@ -162,7 +162,7 @@ END:VCARD`;
         )}
 
         {/* Contact */}
-        <div className="bg-white rounded-2xl p-5 shadow-sm">
+        <div className="bg-indigo-950/60 rounded-2xl p-5 shadow-sm">
           <div className="flex items-center gap-2 mb-4">
             <div className="h-8 w-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: `${primaryColor}15` }}>
               <Phone className="h-4 w-4" style={{ color: primaryColor }} />
@@ -209,7 +209,7 @@ END:VCARD`;
 
         {/* Social Links */}
         {socialLinks.length > 0 && (
-          <div className="bg-white rounded-2xl p-5 shadow-sm">
+          <div className="bg-indigo-950/60 rounded-2xl p-5 shadow-sm">
             <h2 className="text-center font-semibold mb-4" style={{ color: primaryColor }}>
               {isRTL ? 'روابط التواصل' : 'Social Links'}
             </h2>

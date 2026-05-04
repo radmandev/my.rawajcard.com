@@ -62,21 +62,21 @@ export default function TemplateNoqtatain1({ card, isRTL, onLinkClick }) {
       <div className="flex justify-center gap-4 -mt-8 px-6 relative z-10">
         {card.phone && (
           <a href={`tel:${card.phone}`} onClick={() => onLinkClick?.('phone')} 
-            className="w-14 h-14 rounded-full bg-white shadow-lg flex items-center justify-center hover:scale-110 transition-transform"
+            className="w-14 h-14 rounded-full bg-indigo-950/60 shadow-lg flex items-center justify-center hover:scale-110 transition-transform"
             style={{ color: primaryColor }}>
             <Phone className="h-6 w-6" />
           </a>
         )}
         {card.email && (
           <a href={`mailto:${card.email}`} onClick={() => onLinkClick?.('email')}
-            className="w-14 h-14 rounded-full bg-white shadow-lg flex items-center justify-center hover:scale-110 transition-transform"
+            className="w-14 h-14 rounded-full bg-indigo-950/60 shadow-lg flex items-center justify-center hover:scale-110 transition-transform"
             style={{ color: primaryColor }}>
             <Mail className="h-6 w-6" />
           </a>
         )}
         {card.whatsapp && (
           <a href={`https://wa.me/${card.whatsapp}`} onClick={() => onLinkClick?.('whatsapp')}
-            className="w-14 h-14 rounded-full bg-white shadow-lg flex items-center justify-center hover:scale-110 transition-transform"
+            className="w-14 h-14 rounded-full bg-indigo-950/60 shadow-lg flex items-center justify-center hover:scale-110 transition-transform"
             style={{ color: primaryColor }}>
             <MessageSquare className="h-6 w-6" />
           </a>
@@ -86,7 +86,7 @@ export default function TemplateNoqtatain1({ card, isRTL, onLinkClick }) {
       <div className="max-w-2xl mx-auto px-6 py-8 space-y-6">
         {/* About Me */}
         {card.bio && (
-          <div className="bg-white rounded-2xl shadow-sm p-6 text-center">
+          <div className="bg-indigo-950/60 rounded-2xl shadow-sm p-6 text-center">
             <h2 className="text-xl font-bold mb-3" style={{ color: accentColor }}>
               {isRTL ? 'نبذة عني' : 'About Me'}
             </h2>
@@ -97,7 +97,7 @@ export default function TemplateNoqtatain1({ card, isRTL, onLinkClick }) {
         )}
 
         {/* Contact Section */}
-        <div className="bg-white rounded-2xl shadow-sm p-6">
+        <div className="bg-indigo-950/60 rounded-2xl shadow-sm p-6">
           <div className="flex items-center gap-3 mb-4">
             <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ backgroundColor: `${primaryColor}20`, color: primaryColor }}>
               <Phone className="h-5 w-5" />
@@ -108,7 +108,7 @@ export default function TemplateNoqtatain1({ card, isRTL, onLinkClick }) {
           <div className="space-y-3">
             {card.phone && (
               <div>
-                <p className="text-xs text-gray-500 mb-1">{isRTL ? 'اتصل بنا' : 'Call Us'}</p>
+                <p className="text-xs text-slate-400 mb-1">{isRTL ? 'اتصل بنا' : 'Call Us'}</p>
                 <a href={`tel:${card.phone}`} className="text-base font-medium" style={{ color: primaryColor }}>
                   {card.phone}
                 </a>
@@ -116,7 +116,7 @@ export default function TemplateNoqtatain1({ card, isRTL, onLinkClick }) {
             )}
             {card.email && (
               <div>
-                <p className="text-xs text-gray-500 mb-1">{isRTL ? 'البريد الإلكتروني' : 'Email'}</p>
+                <p className="text-xs text-slate-400 mb-1">{isRTL ? 'البريد الإلكتروني' : 'Email'}</p>
                 <a href={`mailto:${card.email}`} className="text-base font-medium" style={{ color: primaryColor }}>
                   {card.email}
                 </a>
@@ -124,7 +124,7 @@ export default function TemplateNoqtatain1({ card, isRTL, onLinkClick }) {
             )}
             {card.location && (
               <div>
-                <p className="text-xs text-gray-500 mb-1">{isRTL ? 'العنوان' : 'Address'}</p>
+                <p className="text-xs text-slate-400 mb-1">{isRTL ? 'العنوان' : 'Address'}</p>
                 <p className="text-sm">{isRTL && card.location_ar ? card.location_ar : card.location}</p>
                 <a
                   href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(isRTL && card.location_ar ? card.location_ar : card.location)}`}
@@ -152,7 +152,7 @@ export default function TemplateNoqtatain1({ card, isRTL, onLinkClick }) {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => onLinkClick?.(platform)}
-                className="flex items-center justify-between bg-white rounded-2xl shadow-sm p-4 hover:shadow-md transition-shadow"
+                className="flex items-center justify-between bg-indigo-950/60 rounded-2xl shadow-sm p-4 hover:shadow-md transition-shadow"
               >
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ backgroundColor: `${primaryColor}15`, color: primaryColor }}>
@@ -160,10 +160,10 @@ export default function TemplateNoqtatain1({ card, isRTL, onLinkClick }) {
                   </div>
                   <div>
                     <p className="font-medium capitalize">{platform}</p>
-                    <p className="text-xs text-gray-500">{isRTL ? `تابعنا على ${platform}` : `Follow us on ${platform}`}</p>
+                    <p className="text-xs text-slate-400">{isRTL ? `تابعنا على ${platform}` : `Follow us on ${platform}`}</p>
                   </div>
                 </div>
-                <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
               </a>
@@ -178,7 +178,7 @@ export default function TemplateNoqtatain1({ card, isRTL, onLinkClick }) {
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => onLinkClick?.('website')}
-            className="flex items-center justify-between bg-white rounded-2xl shadow-sm p-4 hover:shadow-md transition-shadow"
+            className="flex items-center justify-between bg-indigo-950/60 rounded-2xl shadow-sm p-4 hover:shadow-md transition-shadow"
           >
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ backgroundColor: `${accentColor}15`, color: accentColor }}>
@@ -186,10 +186,10 @@ export default function TemplateNoqtatain1({ card, isRTL, onLinkClick }) {
               </div>
               <div>
                 <p className="font-medium">{isRTL ? 'موقعنا الإلكتروني' : 'Our Website'}</p>
-                <p className="text-xs text-gray-500">{card.website}</p>
+                <p className="text-xs text-slate-400">{card.website}</p>
               </div>
             </div>
-            <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
           </a>

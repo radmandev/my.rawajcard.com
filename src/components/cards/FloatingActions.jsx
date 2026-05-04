@@ -69,7 +69,7 @@ export default function FloatingActions({ card, isRTL, cardUrl, embedded = false
           <DialogTitle className="text-center">{isRTL ? 'رمز QR' : 'QR Code'}</DialogTitle>
         </DialogHeader>
         <div className="flex flex-col items-center gap-4 py-4">
-          {qrDataUrl && <div className="p-4 bg-white rounded-2xl shadow-lg"><img src={qrDataUrl} alt="QR" className="w-64 h-64" /></div>}
+          {qrDataUrl && <div className="p-4 bg-indigo-950/60 rounded-2xl shadow-lg"><img src={qrDataUrl} alt="QR" className="w-64 h-64" /></div>}
           <p className="text-sm text-slate-500 text-center px-4">{isRTL ? 'امسح هذا الرمز لفتح البطاقة' : 'Scan to open card'}</p>
         </div>
       </DialogContent>
