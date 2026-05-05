@@ -236,7 +236,6 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
   return (
     <div className="min-h-screen bg-slate-50 md:bg-indigo-950/60 pb-16 md:pb-0" dir={isRTL ? 'rtl' : 'ltr'} style={{ fontFamily: "'Tajawal', sans-serif" }}>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=Cairo:wght@400;600;700;800&display=swap');
 
         .demo-mockup-wrap {
           position: relative;

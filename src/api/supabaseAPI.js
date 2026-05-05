@@ -1,11 +1,5 @@
 import { supabase } from '@/lib/supabaseClient';
 
-// Hardcoded admin emails — users with these emails always get admin role
-const ADMIN_EMAILS = [
-  'emadradman.dev@gmail.com',
-  'admin@rawajcard.com'
-];
-
 // Table name mapping for entity names
 const entityTableMap = {
   User: 'profiles',
@@ -43,6 +37,18 @@ const normalizeSubscription = (row) => {
   if (!row) return row;
   if (!row.plan && row.plan_type) return { ...row, plan: row.plan_type };
   return row;
+};
+
+/**
+ * Fetch a single published card by slug using the safe RPC function.
+ * This avoids giving anon users direct table access (prevents bulk enumeration).
+ * @param {string} slug
+ * @returns {Promise<Object|null>}
+ */
+export const getPublicCardBySlug = async (slug) => {
+  const { data, error } = await supabase.rpc('get_public_card_by_slug', { p_slug: slug });
+  if (error) throw error;
+  return data?.[0] ?? null;
 };
 
 const createEntityApi = (entityName) => {
@@ -280,9 +286,8 @@ export const api = {
         .eq('id', authUser.id)
         .single();
 
-      // Determine role: hardcoded admins always get admin role
-      const isHardcodedAdmin = ADMIN_EMAILS.includes(authUser.email);
-      const role = isHardcodedAdmin ? 'admin' : (profile?.role || 'user');
+      // Role comes from DB profile — frontend is UX only, RLS is the real gate
+      const role = profile?.role || 'user';
 
       return {
         ...authUser,

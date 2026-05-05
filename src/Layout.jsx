@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from'react';
 import { cn } from'@/lib/utils';
-import { LanguageProvider, useLanguage } from'@/components/shared/LanguageContext';
+import { useLanguage } from'@/components/shared/LanguageContext';
 import Header from'@/components/shared/Header';
 import Sidebar from'@/components/shared/Sidebar';
 import MobileBottomNav from'@/components/shared/MobileBottomNav';
@@ -10,7 +10,6 @@ import CartMiniPopup from'@/components/store/CartMiniPopup';
 import { useCart } from'@/contexts/CartContext';
 import { useAuth } from'@/lib/AuthContext';
 import WhatsAppButton from'@/components/shared/WhatsAppButton';
-import PromotionPopup from'@/components/shared/PromotionPopup';
 
 function LayoutContent({ children, currentPageName }) {
  const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -20,7 +19,7 @@ function LayoutContent({ children, currentPageName }) {
  const { isAuthenticated, isLoadingAuth } = useAuth();
 
  // Public pages that don't need sidebar
- const publicPages = ['PublicCard','CheckoutSuccess','Home','Products','ProductDetail','Pricing','Store','Checkout','Demo3D','PhysicalCards','CardSamples','NFCCustomizer','PrivacyPolicy','Return','PaymentsPolicy'];
+ const publicPages = ['PublicCard','CheckoutSuccess','Home','Products','ProductDetail','Pricing','Store','Checkout','PhysicalCards','CardSamples','NFCCustomizer','PrivacyPolicy','Return','PaymentsPolicy'];
  const isPublicPage = publicPages.includes(currentPageName);
  const isHomePage = currentPageName ==='Home';
 
@@ -70,57 +69,7 @@ function LayoutContent({ children, currentPageName }) {
 
  return (
  <div className={cn("min-h-screen bg-[#0C1429]", isRTL &&"rtl")} style={{ overscrollBehavior:'none' }}>
- <style>{`
- @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Tajawal:wght@300;400;500;700&display=swap');
- 
- :root {
- --color-primary: #0D7377;
- --color-secondary: #14274E;
- --color-accent: #00B4D8;
- }
- 
- body {
- font-family: 'Tajawal', sans-serif;
- overscroll-behavior: none;
- padding-top: env(safe-area-inset-top);
- padding-bottom: env(safe-area-inset-bottom);
- }
- 
- .rtl {
- direction: rtl;
- }
- 
- .ltr {
- direction: ltr;
- }
-
- /* Disable text selection on buttons and icons */
- button, a, .cursor-pointer, svg, [role="button"] {
- user-select: none;
- -webkit-user-select: none;
- -moz-user-select: none;
- -ms-user-select: none;
- }
-
- /* Custom scrollbar */
- ::-webkit-scrollbar {
- width: 6px;
- height: 6px;
- }
- 
- ::-webkit-scrollbar-track {
- background: transparent;
- }
- 
- ::-webkit-scrollbar-thumb {
- background: #CBD5E1;
- border-radius: 3px;
- }
- 
- .dark ::-webkit-scrollbar-thumb {
- background: #475569;
- }
-`}</style>
+ <style>{``}</style>
 
  <Header 
  onMenuToggle={() => setSidebarOpen(!sidebarOpen)}

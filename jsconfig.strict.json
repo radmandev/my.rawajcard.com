@@ -1,0 +1,16 @@
+{
+  // Full-scope typecheck — run with: npm run typecheck:strict
+  // Use this to track progress on eliminating all remaining type errors.
+  // Do NOT use this as the CI gate until error count reaches 0.
+  "extends": "./jsconfig.json",
+  "include": [
+    "src/components/**/*.js",
+    "src/components/**/*.jsx",
+    "src/pages/**/*.jsx",
+    "src/Layout.jsx",
+    "src/lib/**/*.js",
+    "src/lib/**/*.jsx",
+    "src/api/**/*.js"
+  ],
+  "exclude": ["node_modules", "dist", "src/components/ui"]
+}

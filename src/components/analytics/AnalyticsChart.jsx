@@ -1,5 +1,4 @@
 import React from'react';
-import { cn } from'@/lib/utils';
 import { useLanguage } from'@/components/shared/LanguageContext';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from'recharts';
 import { format, subDays } from'date-fns';

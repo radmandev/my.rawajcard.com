@@ -22,7 +22,6 @@ import {
 import { toast } from'sonner';
 import {
  ArrowRight,
- CreditCard,
  ImagePlus,
  Link2,
  Loader2,
@@ -30,7 +29,6 @@ import {
  Palette,
  Save,
  ShoppingBag,
- Wifi,
 } from'lucide-react';
 import { PREMADE_TEMPLATES, PhysicalCardPreview } from'@/components/store/PhysicalCardCustomizationModule';
 
@@ -357,7 +355,7 @@ export default function MyOrders() {
 
  return (
  <div className="max-w-7xl mx-auto space-y-6">
- <style>{`@import url('https://fonts.googleapis.com/css2?family=Alexandria:wght@400;600;700&display=swap'); @import url('https://fonts.cdnfonts.com/css/amsterdam-four');`}</style>
+ <style>{`@import url('https://fonts.cdnfonts.com/css/amsterdam-four');`}</style>
 
  <div className="space-y-1">
  <h1 className="text-2xl md:text-3xl font-bold text-slate-900 flex items-center gap-2">

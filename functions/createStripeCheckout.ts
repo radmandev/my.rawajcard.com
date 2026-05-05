@@ -1,10 +1,27 @@
 // No imports — zero startup failures
-Deno.serve(async (req: Request) => {
-  const cors = {
-    'Access-Control-Allow-Origin': '*',
+
+// Trusted origin allowlist — set APP_BASE_URL in Supabase secrets.
+// e.g. APP_BASE_URL=https://rawajcard.com
+// Falls back to the production domain so the function never silently breaks.
+const ALLOWED_ORIGINS = [
+  Deno.env.get('APP_BASE_URL') || 'https://rawajcard.com',
+  'https://rawajcard.com',
+];
+
+const getCorsHeaders = (reqOrigin: string | null) => {
+  const origin = reqOrigin && ALLOWED_ORIGINS.includes(reqOrigin)
+    ? reqOrigin
+    : ALLOWED_ORIGINS[0];
+  return {
+    'Access-Control-Allow-Origin': origin,
     'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+    'Vary': 'Origin',
     'Content-Type': 'application/json',
   };
+};
+
+Deno.serve(async (req: Request) => {
+  const cors = getCorsHeaders(req.headers.get('origin'));
 
   if (req.method === 'OPTIONS') return new Response('ok', { headers: cors });
 
@@ -159,7 +176,9 @@ Deno.serve(async (req: Request) => {
       }
     }
 
-    const origin = req.headers.get('origin') || 'https://rawajcard.com';
+    // Always use the trusted server-side base URL — never trust the request Origin header
+    // for constructing payment callback URLs.
+    const origin = Deno.env.get('APP_BASE_URL') || 'https://rawajcard.com';
 
     const params = new URLSearchParams();
     params.set('mode', 'subscription');

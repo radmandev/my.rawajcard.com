@@ -1,4 +1,5 @@
 import React from'react';
+import DOMPurify from'dompurify';
 import { Dialog, DialogContent } from'@/components/ui/dialog';
 import { Button } from'@/components/ui/button';
 import { X } from'lucide-react';
@@ -145,10 +146,18 @@ export default function TemplatePreview({ layout, onClose }) {
  </div>
  );
 
- case'custom':
+ case'custom': {
+ // Sanitize before rendering — strips scripts and event handlers
+ // while preserving safe layout/styling HTML.
+ const safeHtml = DOMPurify.sanitize(section.settings?.html || '', {
+ USE_PROFILES: { html: true },
+ FORBID_TAGS: ['script', 'iframe', 'object', 'embed'],
+ FORBID_ATTR: ['onerror', 'onload', 'onclick', 'onmouseover'],
+ });
  return (
- <div key={section.id} style={style} dangerouslySetInnerHTML={{ __html: section.settings?.html ||'' }} />
+ <div key={section.id} style={style} dangerouslySetInnerHTML={{ __html: safeHtml }} />
  );
+ }
 
  default:
  return null;

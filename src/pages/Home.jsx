@@ -1,8 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
-import { motion, useInView, AnimatePresence } from 'framer-motion';
-import { Button } from '@/components/ui/button';
+import { motion, useInView } from 'framer-motion';
 import Navbar from '@/components/landing/Navbar';
 import Footer from '@/components/landing/Footer';
 import GetStartedSteps from '@/components/landing/GetStartedSteps';
@@ -12,10 +11,8 @@ import DemoHomeMerged from './DemoHomeMerged';
 import { useCart } from '@/contexts/CartContext';
 import { useLanguage } from '@/components/shared/LanguageContext';
 import { useAuth } from '@/lib/AuthContext';
-import {
-  Wifi, Star, ShoppingCart, ChevronLeft, ChevronRight,
-  Phone, Mail, MessageCircle, MapPin, ArrowLeft, Check,
-  Zap, Award, Users, LogIn
+import { Star, ShoppingCart, ArrowLeft, Check,
+  Zap
 } from 'lucide-react';
 
 /* ─── helpers ─────────────────────────────────────────────────────── */
@@ -260,10 +257,6 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-slate-50 md:bg-indigo-950/60 pb-16 md:pb-0" dir={isRTL ? 'rtl' : 'ltr'} style={{ fontFamily: "'Tajawal', sans-serif" }}>
-      {/* Google Fonts */}
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=Cairo:wght@400;600;700;800&display=swap');
-      `}</style>
 
       {/* ── Announcement Bar ─────────────────────────────────────── */}
       <div className="bg-[#0C1429] text-white text-center py-2.5 text-sm font-medium tracking-wide">

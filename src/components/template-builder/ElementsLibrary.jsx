@@ -9,7 +9,6 @@ import {
  MessageCircle,
  MapPin,
  QrCode,
- Image,
  Share2,
  Camera,
  ImageIcon,

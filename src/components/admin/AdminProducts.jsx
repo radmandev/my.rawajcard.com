@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useRef } from'react';
 import { useLanguage } from'@/components/shared/LanguageContext';
-import { api } from'@/api/supabaseAPI';
 import { useQuery, useMutation, useQueryClient } from'@tanstack/react-query';
 import { supabase } from'@/lib/supabaseClient';
 import {
- Card, CardContent, CardHeader, CardTitle,
+ Card, CardContent,
 } from'@/components/ui/card';
 import { Button } from'@/components/ui/button';
 import { Input } from'@/components/ui/input';
@@ -22,8 +21,8 @@ import {
 } from'@/components/ui/alert-dialog';
 import {
  Plus, Pencil, Trash2, Eye, EyeOff, Search,
- Package, ImagePlus, X, Loader2, GripVertical,
- Tag, Globe, FileText, DollarSign, ChevronDown, ExternalLink,
+ Package, ImagePlus, X, Loader2,
+ Tag, Globe, FileText, DollarSign, ExternalLink,
 } from'lucide-react';
 import { toast } from'sonner';
 

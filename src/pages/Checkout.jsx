@@ -14,8 +14,6 @@ import { Textarea } from'@/components/ui/textarea';
 import { Separator } from'@/components/ui/separator';
 import Navbar from'@/components/landing/Navbar';
 import {
- ArrowLeft,
- ArrowRight,
  Truck,
  Loader2,
  ShoppingBag,

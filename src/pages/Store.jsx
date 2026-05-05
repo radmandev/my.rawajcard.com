@@ -1,17 +1,15 @@
 import React, { useState } from'react';
-import { cn } from'@/lib/utils';
 import { useLanguage } from'@/components/shared/LanguageContext';
 import { useQuery } from'@tanstack/react-query';
 import { Button } from'@/components/ui/button';
-import { Badge } from'@/components/ui/badge';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from'@/components/ui/tabs';
+import { Tabs, TabsList, TabsTrigger } from'@/components/ui/tabs';
 import ProductCard from'@/components/store/ProductCard';
 import ProductPreviewModal from'@/components/store/ProductPreviewModal';
 import Navbar from'@/components/landing/Navbar';
 import { ShoppingCart, Loader2 } from'lucide-react';
 import { motion } from'framer-motion';
 import { supabase } from'@/lib/supabaseClient';
-import { productsData, productCategories } from'@/components/shared/productsData';
+import { productsData } from'@/components/shared/productsData';
 import { useCart } from'@/contexts/CartContext';
 
 // Map a Supabase products row → shape that ProductCard expects

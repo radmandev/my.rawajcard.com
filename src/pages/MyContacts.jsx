@@ -1,5 +1,4 @@
 import React, { useState, useCallback } from'react';
-import { cn } from'@/lib/utils';
 import { useLanguage } from'@/components/shared/LanguageContext';
 import { api } from'@/api/supabaseAPI';
 import { useQuery, useMutation, useQueryClient } from'@tanstack/react-query';
@@ -36,7 +35,7 @@ import {
 import { format } from'date-fns';
 import { motion } from'framer-motion';
 import { toast } from'sonner';
-import * as XLSX from'xlsx';
+// xlsx removed (no security fix available) — replaced with plain CSV export below
 
 export default function MyContacts() {
  const { t, isRTL } = useLanguage();
@@ -164,23 +163,34 @@ export default function MyContacts() {
  return card ? (isRTL && card.name_ar ? card.name_ar : card.name) : cardId;
  };
 
- // Export to Excel
+ // Export to CSV (xlsx removed — no security fix available for that package)
  const exportToExcel = () => {
- const data = filteredContacts.map(c => ({
-'Name': getContactName(c),
-'Email': getContactEmail(c),
-'Phone': getContactPhone(c),
-'Company': getContactCompany(c),
-'Notes': getContactNotes(c),
-'From Card': getCardName(c.card_id),
-'Date': formatContactDate(getContactCreatedAt(c),'yyyy-MM-dd HH:mm')
+ const rows = filteredContacts.map(c => ({
+ 'Name': getContactName(c),
+ 'Email': getContactEmail(c),
+ 'Phone': getContactPhone(c),
+ 'Company': getContactCompany(c),
+ 'Notes': getContactNotes(c),
+ 'From Card': getCardName(c.card_id),
+ 'Date': formatContactDate(getContactCreatedAt(c),'yyyy-MM-dd HH:mm')
  }));
 
- const ws = XLSX.utils.json_to_sheet(data);
- const wb = XLSX.utils.book_new();
- XLSX.utils.book_append_sheet(wb, ws,'Contacts');
- 
- XLSX.writeFile(wb,`contacts_${format(new Date(),'yyyy-MM-dd')}.xlsx`);
+ if (!rows.length) return;
+
+ const headers = Object.keys(rows[0]);
+ const escape = (v) => `"${String(v ?? '').replace(/"/g, '""')}"`;
+ const csv = [
+ headers.map(escape).join(','),
+ ...rows.map(r => headers.map(h => escape(r[h])).join(','))
+ ].join('\n');
+
+ const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+ const url = URL.createObjectURL(blob);
+ const a = document.createElement('a');
+ a.href = url;
+ a.download = `contacts_${format(new Date(),'yyyy-MM-dd')}.csv`;
+ a.click();
+ URL.revokeObjectURL(url);
  toast.success(isRTL ?'تم التصدير بنجاح' :'Exported successfully');
  };
 

@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { cn } from '@/lib/utils';
-import { Upload, Camera, X, Edit2 } from 'lucide-react';
+import { Upload, Camera, X } from 'lucide-react';
 import { api } from '@/api/supabaseAPI';
 import { motion, AnimatePresence } from 'framer-motion';
 

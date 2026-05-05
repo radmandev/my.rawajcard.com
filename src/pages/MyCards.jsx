@@ -17,17 +17,12 @@ import {
  DialogDescription,
  DialogFooter
 } from'@/components/ui/dialog';
-import { 
- DropdownMenu,
- DropdownMenuContent,
- DropdownMenuItem,
- DropdownMenuTrigger,
-} from'@/components/ui/dropdown-menu';
+
+
 import QRCodeDisplay from'@/components/cards/QRCodeDisplay';
 import CustomizationRequestDialog from'@/components/shared/CustomizationRequestDialog';
 import { 
  Plus, 
- MoreVertical, 
  Edit, 
  Trash2, 
  Eye, 
@@ -36,11 +31,9 @@ import {
  Copy,
  Check,
  CreditCard,
- BarChart3,
  Sparkles
 } from'lucide-react';
 import { motion, AnimatePresence } from'framer-motion';
-import { format } from'date-fns';
 import { toast } from'sonner';
 
 export default function MyCards() {

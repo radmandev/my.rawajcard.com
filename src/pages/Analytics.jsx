@@ -17,13 +17,11 @@ import {
  SelectTrigger, 
  SelectValue 
 } from'@/components/ui/select';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from'@/components/ui/tabs';
 import { 
  Eye, 
  QrCode, 
  MousePointerClick, 
  TrendingUp,
- Calendar,
  CreditCard,
  Lock,
  Sparkles

@@ -2,7 +2,7 @@ import React, { useState } from'react';
 import { Dialog, DialogContent } from'@/components/ui/dialog';
 import { Button } from'@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from'@/components/ui/tabs';
-import { X, User, Briefcase } from'lucide-react';
+import { X } from'lucide-react';
 import CanvasElement from'./CanvasElement';
 
 export default function PreviewDialog({ elements, canvas, theme, onClose }) {

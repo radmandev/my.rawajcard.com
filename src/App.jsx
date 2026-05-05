@@ -15,11 +15,11 @@ import { LanguageProvider } from '@/components/shared/LanguageContext';
 import { ThemeProvider } from '@/components/shared/ThemeContext';
 import { CartProvider } from '@/contexts/CartContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
+import CookieConsent from '@/components/shared/CookieConsent';
 const Login = React.lazy(() => import('@/pages/Login'));
 const PublicCard = React.lazy(() => import('@/pages/PublicCard'));
 const HomePage = React.lazy(() => import('@/pages/Home'));
 const DemoHomePage = React.lazy(() => import('@/pages/DemoHomeMerged'));
-const AlternateLandingPage = React.lazy(() => import('@/pages/AlternateLanding'));
 const NFCCustomizerPage = React.lazy(() => import('@/pages/NFCCustomizer'));
 import { supabase } from '@/lib/supabaseClient';
 
@@ -147,7 +147,7 @@ const AuthenticatedApp = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const isPublicRoute = [
-    '/', '/demohome', '/much-hero', '/login', '/Login', '/Pricing', '/Products', '/ProductDetail', '/Store', '/NFC', '/customize', '/Checkout', '/CheckoutSuccess', '/Demo3D', '/MyOrders', '/PhysicalCards', '/CardSamples', '/HeaderVariants',
+    '/', '/demohome', '/much-hero', '/login', '/Login', '/Pricing', '/Products', '/ProductDetail', '/Store', '/customize', '/Checkout', '/CheckoutSuccess', '/MyOrders', '/PhysicalCards', '/CardSamples',
     '/Return', '/PrivacyPolicy', '/PaymentsPolicy', '/returns', '/privacy-policy', '/payments', '/trackQRScan'
   ].includes(location.pathname) || location.pathname.startsWith('/c/') || location.pathname.startsWith('/q/') || location.pathname.startsWith('/products/');
 
@@ -226,10 +226,8 @@ const AuthenticatedApp = () => {
             <NFCCustomizerPage />
           </LayoutWrapper>
         } />
-        <Route path="/NFC" element={
-          <AlternateLandingPage />
-        } />
-        <Route path="/AlternateLanding" element={<Navigate to="/NFC" replace />} />
+        <Route path="/NFC" element={<Navigate to="/" replace />} />
+        <Route path="/AlternateLanding" element={<Navigate to="/" replace />} />
         <Route path="/Home" element={<Navigate to="/" replace />} />
         <Route path="/PhysicalCards" element={<Navigate to={createPageUrl('MyOrders')} replace />} />
         <Route path="/returns" element={<Navigate to={createPageUrl('Return')} replace />} />
@@ -271,6 +269,7 @@ function App() {
               </Router>
               <Toaster />
               <SonnerToaster position="top-center" richColors />
+              <CookieConsent />
             </QueryClientProvider>
           </AuthProvider>
         </LanguageProvider>

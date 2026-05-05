@@ -397,7 +397,7 @@ export default function PhysicalCardCustomizationModule({ orderNumber }) {
  if (step ==='saved') {
  return (
  <Card className="bg-indigo-950/60 border-cyan-200 text-start">
- <style>{`@import url('https://fonts.googleapis.com/css2?family=Alexandria:wght@400;600;700&display=swap'); @import url('https://fonts.cdnfonts.com/css/amsterdam-four');`}</style>
+ <style>{`@import url('https://fonts.cdnfonts.com/css/amsterdam-four');`}</style>
  <CardContent className="p-6 space-y-5">
  {/* Success header */}
  <div className="flex items-center gap-3">
@@ -500,7 +500,7 @@ export default function PhysicalCardCustomizationModule({ orderNumber }) {
  return (
  <Card className="bg-indigo-950/60 border-slate-200 text-start">
  <CardHeader>
- <style>{`@import url('https://fonts.googleapis.com/css2?family=Alexandria:wght@400;600;700&display=swap'); @import url('https://fonts.cdnfonts.com/css/amsterdam-four');`}</style>
+ <style>{`@import url('https://fonts.cdnfonts.com/css/amsterdam-four');`}</style>
  <CardTitle className="text-lg md:text-xl">
  {isRTL ?'🪪 خصّص بطاقة NFC الفيزيائية' :'🪪 Customize Your Physical NFC Card'}
  </CardTitle>

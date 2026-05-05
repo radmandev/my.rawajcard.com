@@ -1,5 +1,4 @@
 import React, { useRef, useState } from'react';
-import { cn } from'@/lib/utils';
 import { useLanguage } from'@/components/shared/LanguageContext';
 import { Input } from'@/components/ui/input';
 import { Label } from'@/components/ui/label';
@@ -14,7 +13,6 @@ import DraggableColorPicker from'@/components/cards/DraggableColorPicker';
 import { 
  User, 
  Building2, 
- Globe, 
  Share2, 
  Palette,
  Upload,

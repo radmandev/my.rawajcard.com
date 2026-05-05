@@ -4,20 +4,8 @@ import { createPageUrl } from'@/utils';
 import { useLanguage } from'@/components/shared/LanguageContext';
 import { api } from'@/api/supabaseAPI';
 import { useQuery, useMutation, useQueryClient } from'@tanstack/react-query';
-import { Button } from'@/components/ui/button';
-import { Input } from'@/components/ui/input';
-import { Badge } from'@/components/ui/badge';
-import { 
- ArrowLeft, 
- Save, 
- Eye, 
- Smartphone,
- Monitor,
- Undo,
- Redo,
- Check,
- History
-} from'lucide-react';
+
+
 import { toast } from'sonner';
 import VisualCanvas from'@/components/template-builder/VisualCanvas';
 import ElementsLibrary from'@/components/template-builder/ElementsLibrary';

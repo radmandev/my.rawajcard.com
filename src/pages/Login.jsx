@@ -17,11 +17,22 @@ export default function Login() {
  const [forgotMode, setForgotMode] = useState(false);
  const nextParam = new URLSearchParams(window.location.search).get('next');
 
+ // Returns a safe internal path, rejecting any absolute or protocol-relative URLs.
+ // Prevents open-redirect attacks via the ?next= param or stored redirect value.
+ const getSafeRedirect = (target) => {
+ if (!target) return null;
+ // Reject absolute URLs (http://, https://) and protocol-relative (//)
+ if (/^(https?:|\/\/)/i.test(target)) return null;
+ // Must start with a single /
+ if (!target.startsWith('/')) return null;
+ return target;
+ };
+
  const getRedirectPath = async () => {
  const stored = getPostAuthRedirect();
  if (nextParam || stored) {
  const target = nextParam || stored;
- return target.startsWith('/') ? target : createPageUrl('Dashboard');
+ return getSafeRedirect(target) ?? createPageUrl('Dashboard');
  }
  try {
  const me = await api.auth.me();
@@ -33,7 +44,7 @@ export default function Login() {
 
  const getPasswordResetRedirect = async () => {
  const target = await getRedirectPath();
- return target.startsWith('/') ? target : createPageUrl('Dashboard');
+ return getSafeRedirect(target) ?? createPageUrl('Dashboard');
  };
 
  useEffect(() => {

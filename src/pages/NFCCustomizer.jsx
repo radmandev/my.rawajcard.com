@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from'react';
 import { useNavigate, useLocation } from'react-router-dom';
-import { motion, AnimatePresence } from'framer-motion';
-import { ChevronLeft, ChevronRight, Upload, X, ShoppingCart, Check, RotateCcw, Type, Image, Palette, Phone, Mail, Globe, MapPin } from'lucide-react';
+import { motion } from'framer-motion';
+import { ChevronLeft, ChevronRight, Upload, X, ShoppingCart, Check, RotateCcw, Image, Palette, Phone, Mail, Globe, MapPin } from'lucide-react';
 import { useLanguage } from'@/components/shared/LanguageContext';
 import { useAuth } from'@/lib/AuthContext';
 import { buildProductTrackingData, trackWebsiteEvent } from'@/lib/websiteTracker';

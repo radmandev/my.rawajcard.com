@@ -1,5 +1,4 @@
 import React from 'react';
-import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import InlineEditableField from '@/components/cards/InlineEditableField';
 import InlineImageUpload from '@/components/cards/InlineImageUpload';
@@ -7,9 +6,9 @@ import AppointmentSection from '@/components/cards/AppointmentSection';
 import CustomFormEmbed from '@/components/cards/CustomFormEmbed';
 import ContactCollectionForm from '@/components/cards/ContactCollectionForm';
 import { 
-  Phone, Mail, MapPin, Globe, MessageCircle,
-  Facebook, Instagram, Twitter, Linkedin, Youtube, Github,
-  Share2, UserPlus, Calendar, ExternalLink, ChevronRight,
+  Phone, Mail, Globe, MessageCircle,
+  Facebook, Instagram, Linkedin, Youtube, Github,
+  Share2, UserPlus, ExternalLink, ChevronRight,
   Navigation
 } from 'lucide-react';
 

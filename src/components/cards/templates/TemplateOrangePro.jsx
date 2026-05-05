@@ -1,10 +1,9 @@
 import React from 'react';
-import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { 
-  Phone, Mail, MapPin, Globe, MessageCircle,
-  Facebook, Instagram, Twitter, Linkedin, Youtube, Github,
-  Share2, UserPlus, Calendar, ExternalLink, ChevronRight,
+  Phone, Mail, Globe,
+  Facebook, Instagram, Linkedin, Youtube, Github,
+  Share2, UserPlus, ChevronRight,
   Navigation
 } from 'lucide-react';
 

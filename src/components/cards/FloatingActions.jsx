@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Download, QrCode, Share2, Plus } from 'lucide-react';
+import { QrCode, Share2, Plus } from 'lucide-react';
 import { motion } from 'framer-motion';
 import QRCode from 'qrcode';
 import { toast } from 'sonner';

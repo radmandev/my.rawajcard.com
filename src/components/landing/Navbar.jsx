@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from'react';
+import React, { useState, useEffect, useRef } from'react';
 import { ChevronDown, Menu, X, ShoppingCart, LogIn } from'lucide-react';
 import { Link, useNavigate } from'react-router-dom';
 import { createPageUrl } from'@/utils';

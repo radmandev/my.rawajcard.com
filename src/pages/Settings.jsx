@@ -1,6 +1,5 @@
 import React, { useState } from'react';
 import { useNavigate } from'react-router-dom';
-import { createPageUrl } from'@/utils';
 import { useLanguage } from'@/components/shared/LanguageContext';
 import { useUpgrade } from'@/lib/UpgradeContext';
 import { api } from'@/api/supabaseAPI';
@@ -30,7 +29,6 @@ import {
  AlertDialogTitle,
 } from'@/components/ui/alert-dialog';
 import { 
- Settings as SettingsIcon, 
  Trash2, 
  AlertTriangle,
  User,
@@ -40,8 +38,7 @@ import {
  Shield,
  Globe,
  Sparkles,
- Crown,
- CheckCircle2
+ Crown
 } from'lucide-react';
 import { toast } from'sonner';
 import { format } from'date-fns';

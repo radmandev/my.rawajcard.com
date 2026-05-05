@@ -1,6 +1,6 @@
 import React from'react';
 import { DragDropContext, Droppable, Draggable } from'@hello-pangea/dnd';
-import { Trash2, Move, Copy } from'lucide-react';
+import { Trash2, Move } from'lucide-react';
 import CanvasElement from'./CanvasElement';
 
 export default function VisualCanvas({

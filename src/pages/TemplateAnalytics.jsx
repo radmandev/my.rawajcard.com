@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from'@/comp
 import { Badge } from'@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from'@/components/ui/tabs';
 import { BarChart, Bar, PieChart, Pie, Cell, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from'recharts';
-import { TrendingUp, Eye, MousePointerClick, Users, Award, Calendar, Mail, Share2 } from'lucide-react';
+import { TrendingUp, Eye, MousePointerClick, Users, Award, Mail } from'lucide-react';
 
 const COLORS = ['#38BDF8','#E879F9','#60A5FA','#22D3EE','#A78BFA','#34D399','#F472B6','#F59E0B','#C084FC','#2DD4BF'];
 const HERO_CARD = 'bg-[linear-gradient(135deg,#0C1429_0%,#1E1B4B_52%,#0C1429_100%)] border-white/15 backdrop-blur-xl shadow-[0_24px_80px_rgba(12,20,41,0.45)]';

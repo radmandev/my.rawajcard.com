@@ -15,8 +15,6 @@ import { api } from'@/api/supabaseAPI';
 import { useQuery } from'@tanstack/react-query';
 import { useNavigate } from'react-router-dom';
 
-const ADMIN_EMAILS = ['emadradman.dev@gmail.com','admin@rawajcard.com'];
-
 export default function Admin() {
  const { t, isRTL } = useLanguage();
  const navigate = useNavigate();
@@ -44,7 +42,7 @@ export default function Admin() {
 
  if (!user) return null;
 
- const isAdmin = user.role ==='admin' || ADMIN_EMAILS.includes(user.email);
+ const isAdmin = user.role === 'admin';
 
  if (!isAdmin) {
  return (

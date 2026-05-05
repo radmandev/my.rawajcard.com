@@ -72,3 +72,34 @@
     display: none;
   }
 }
+
+/* ── App-wide design tokens (moved from Layout.jsx) ──────────────── */
+:root {
+  --color-primary: #0D7377;
+  --color-secondary: #14274E;
+  --color-accent: #00B4D8;
+}
+
+body {
+  font-family: 'Tajawal', sans-serif;
+  overscroll-behavior: none;
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.rtl { direction: rtl; }
+.ltr { direction: ltr; }
+
+/* Disable text selection on interactive elements */
+button, a, .cursor-pointer, svg, [role="button"] {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 3px; }
+.dark ::-webkit-scrollbar-thumb { background: #475569; }

@@ -10,7 +10,6 @@ import {
  Palette, 
  Type, 
  Smartphone,
- Settings,
  Sparkles
 } from'lucide-react';
 

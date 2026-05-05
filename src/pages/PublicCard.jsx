@@ -1,7 +1,7 @@
 import React, { useEffect, useState, lazy, Suspense } from'react';
 import { useParams } from'react-router-dom';
 import { cn } from'@/lib/utils';
-import { api } from'@/api/supabaseAPI';
+import { api, getPublicCardBySlug } from'@/api/supabaseAPI';
 import { useQuery, useMutation } from'@tanstack/react-query';
 import ContactFormDialog from'@/components/cards/ContactFormDialog';
 import FloatingActions from'@/components/cards/FloatingActions';
@@ -80,18 +80,18 @@ export default function PublicCard() {
  window.history.replaceState({},'', next);
  }, [slug, rawSlug]);
 
- // Fetch card by slug — cached for 5 minutes so repeat visits are instant
+ // Fetch card by slug — uses SECURITY DEFINER RPC so anon users never touch the table directly
  // @ts-ignore
- const { data: cards, isLoading, error } = useQuery({
+ const { data: rawCard, isLoading, error } = useQuery({
  queryKey: ['public-card', slug],
  // @ts-ignore
- queryFn: () => api.entities.BusinessCard.filter({ slug, status:'published' }),
+ queryFn: () => getPublicCardBySlug(slug),
  enabled: !!slug,
  staleTime: 5 * 60 * 1000, // 5 minutes
  gcTime: 10 * 60 * 1000, // keep in memory 10 minutes
  });
 
- const card = cards?.[0] || buildTemplateSampleCard(sampleTemplate, slug);
+ const card = rawCard || buildTemplateSampleCard(sampleTemplate, slug);
  const isSampleCard = !!card?.is_sample;
 
  // Detect RTL from browser language

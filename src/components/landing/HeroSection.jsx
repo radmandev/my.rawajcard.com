@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from'react';
-import { Button } from"@/components/ui/button";
 import { Linkedin, MessageCircle, Mail, Calendar, ShoppingCart, LogIn } from'lucide-react';
 import { useNavigate } from'react-router-dom';
 import { createPageUrl } from'@/utils';

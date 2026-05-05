@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
   ChevronLeft, ChevronRight, Upload, X, ShoppingCart, Check,
@@ -11,7 +11,6 @@ import { buildProductTrackingData, trackWebsiteEvent } from '@/lib/websiteTracke
 import { useCart } from '@/contexts/CartContext';
 import { productsData } from '@/components/shared/productsData';
 import { createPageUrl } from '@/utils';
-import { getCustomizerPrefill } from '@/lib/customizerPrefill';
 
 /* ─── Constants ─────────────────────────────────────────────── */
 

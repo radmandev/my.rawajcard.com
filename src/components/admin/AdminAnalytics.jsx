@@ -27,7 +27,6 @@ import {
  Eye,
  TrendingUp,
  TrendingDown,
- MousePointerClick,
  Clock,
  ShoppingCart,
  CreditCard,
@@ -36,9 +35,6 @@ import {
  Monitor,
  Smartphone,
  Tablet,
- Globe,
- ArrowRight,
- ArrowLeft,
  Download,
  AlertTriangle,
  CheckCircle,
@@ -46,9 +42,6 @@ import {
  Activity,
  Home,
  LayoutDashboard,
- Calendar,
- ChevronDown,
- Info,
 } from'lucide-react';
 import { subDays, format } from'date-fns';
 import { motion } from'framer-motion';

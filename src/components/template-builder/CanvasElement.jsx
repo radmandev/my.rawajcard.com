@@ -1,9 +1,7 @@
 import React from'react';
 import { 
  User, 
- Briefcase, 
  Building, 
- FileText, 
  Phone, 
  Mail, 
  MessageCircle,
@@ -12,7 +10,6 @@ import {
  Instagram,
  Linkedin,
  Twitter,
- Youtube,
  Facebook
 } from'lucide-react';
 

@@ -1,13 +1,11 @@
 import React, { useEffect, useMemo, useState } from'react';
 import QRCode from'qrcode';
 import { api } from'@/api/supabaseAPI';
-import { supabase } from'@/lib/supabaseClient';
 import { useLanguage } from'@/components/shared/LanguageContext';
 import { useAuth } from'@/lib/AuthContext';
 import { useQuery, useMutation, useQueryClient } from'@tanstack/react-query';
 import { Button } from'@/components/ui/button';
-import { Badge } from'@/components/ui/badge';
-import { Card, CardContent, CardHeader, CardTitle } from'@/components/ui/card';
+import { Card, CardContent } from'@/components/ui/card';
 import { Input } from'@/components/ui/input';
 import { Label } from'@/components/ui/label';
 import {
@@ -33,8 +31,6 @@ import {
  Link2,
  Loader2,
  Package,
- Plus,
- QrCode,
  Save,
  Trash2,
  Wifi,
@@ -143,7 +139,6 @@ function EditCardDialog({ card, digitalCards, isOpen, onClose, onSaved, isRTL })
  return (
  <Dialog open={isOpen} onOpenChange={onClose}>
  <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
- <style>{`@import url('https://fonts.googleapis.com/css2?family=Alexandria:wght@400;600;700&display=swap');`}</style>
  <DialogHeader>
  <DialogTitle>{isRTL ?'تعديل البطاقة الفيزيائية' :'Edit Physical Card'}</DialogTitle>
  <DialogDescription>
@@ -378,7 +373,6 @@ export default function PhysicalCards() {
 
  return (
  <div className="max-w-5xl mx-auto space-y-6">
- <style>{`@import url('https://fonts.googleapis.com/css2?family=Alexandria:wght@400;600;700&display=swap');`}</style>
 
  {/* Header */}
  <div className="flex items-center justify-between gap-4">

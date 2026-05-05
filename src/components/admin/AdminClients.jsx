@@ -111,7 +111,7 @@ export default function AdminClients() {
  enterprise,
  mrr: premium * 19 + teams * 49 + enterprise * 99,
  };
- // eslint-disable-next-line react-hooks/exhaustive-deps
+  
  }, [users, subscriptionMap]);
 
  const deactivateMutation = useMutation({
