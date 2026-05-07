@@ -16,6 +16,7 @@ import { ThemeProvider } from '@/components/shared/ThemeContext';
 import { CartProvider } from '@/contexts/CartContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 import CookieConsent from '@/components/shared/CookieConsent';
+import NFCPulseLoader from '@/components/shared/NFCPulseLoader';
 const Login = React.lazy(() => import('@/pages/Login'));
 const PublicCard = React.lazy(() => import('@/pages/PublicCard'));
 const HomePage = React.lazy(() => import('@/pages/Home'));
@@ -132,11 +133,7 @@ const QRCardRedirect = () => {
   }, [cardId]);
 
   if (state === 'loading') {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-950 text-slate-100">
-        <div className="w-8 h-8 border-4 border-slate-200 border-t-cyan-600 rounded-full animate-spin" />
-      </div>
-    );
+    return <NFCPulseLoader />;
   }
 
   return <PageNotFound />;
@@ -153,11 +150,7 @@ const AuthenticatedApp = () => {
 
   // Show loading spinner while checking app public settings or auth (skip for public routes)
   if (!isPublicRoute && (isLoadingPublicSettings || isLoadingAuth)) {
-    return (
-      <div className="fixed inset-0 flex items-center justify-center">
-        <div className="w-8 h-8 border-4 border-slate-200 border-t-slate-800 rounded-full animate-spin"></div>
-      </div>
-    );
+    return <NFCPulseLoader />;
   }
 
   // Handle authentication errors
@@ -189,9 +182,7 @@ const AuthenticatedApp = () => {
   // Render the main app
   return (
     <Suspense fallback={
-      <div className="fixed inset-0 flex items-center justify-center">
-        <div className="w-8 h-8 border-4 border-slate-200 border-t-cyan-600 rounded-full animate-spin" />
-      </div>
+      <NFCPulseLoader />
     }>
       <WebsiteRouteTracker />
       <Routes>

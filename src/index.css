@@ -103,3 +103,67 @@ button, a, .cursor-pointer, svg, [role="button"] {
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 3px; }
 .dark ::-webkit-scrollbar-thumb { background: #475569; }
+
+@keyframes nfc-ring-pulse {
+  0% {
+    transform: translate(-50%, -50%) scale(0.3);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.85;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes nfc-core-glow {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(0.9);
+    box-shadow:
+      0 0 10px rgba(56, 182, 255, 0.5),
+      0 0 18px rgba(204, 57, 204, 0.45);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.1);
+    box-shadow:
+      0 0 14px rgba(56, 182, 255, 0.65),
+      0 0 24px rgba(204, 57, 204, 0.55);
+  }
+}
+
+.nfc-loader-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border: 2px solid;
+  border-radius: 9999px;
+  opacity: 0;
+  will-change: transform, opacity;
+  animation: nfc-ring-pulse 2s ease-out infinite;
+}
+
+.nfc-loader-ring--blur {
+  filter: blur(0.6px);
+}
+
+.nfc-loader-core {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 14px;
+  height: 14px;
+  border-radius: 9999px;
+  background: radial-gradient(circle at 30% 30%, #38B6FF 0%, #CC39CC 100%);
+  animation: nfc-core-glow 1.4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nfc-loader-ring,
+  .nfc-loader-core {
+    animation-duration: 0.01ms;
+    animation-iteration-count: 1;
+  }
+}
