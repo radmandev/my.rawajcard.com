@@ -323,7 +323,7 @@ export default function Home() {
           <Reveal delay={0.2}>
             <div className="text-center mt-12">
               <Link
-                to={createPageUrl('Store')}
+                to={createPageUrl('Products')}
                 className="inline-flex items-center gap-2 bg-gradient-to-r from-fuchsia-600 to-purple-700 hover:from-fuchsia-500 hover:to-purple-600 text-white font-bold px-10 py-4 rounded-2xl shadow-lg shadow-fuchsia-500/30 transition-all text-base"
               >
                 {isRTL ? 'عرض جميع المنتجات' : 'View All Products'}
@@ -412,7 +412,7 @@ export default function Home() {
               </div>
 
               <Link
-                to={createPageUrl('Store')}
+                to={createPageUrl('Porudcts')}
                 className="inline-flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white font-bold px-8 py-4 rounded-2xl transition-colors"
               >
                 {isRTL ? 'اختر كرتك الآن' : 'Choose Your Card'}
@@ -481,7 +481,7 @@ export default function Home() {
                   <ArrowLeft className="h-5 w-5" />
                 </motion.span>
               </Link>
-              <Link to={createPageUrl('Store')}>
+              <Link to={createPageUrl('Customize')}>
                 <motion.span
                   whileHover={{ scale: 1.04 }}
                   whileTap={{ scale: 0.97 }}
@@ -557,14 +557,14 @@ export default function Home() {
 
               <div className="flex flex-wrap gap-3">
                 <Link
-                  to={createPageUrl('Store')}
+                  to={createPageUrl('Customize')}
                   className="inline-flex items-center gap-2 bg-gradient-to-r from-fuchsia-600 to-purple-700 hover:from-fuchsia-500 hover:to-purple-600 text-white font-bold px-8 py-4 rounded-2xl shadow-lg shadow-fuchsia-500/30 transition-all"
                 >
                   {isRTL ? 'خل عملاءك يتفاعلون أسرع' : 'Boost Customer Engagement'}
                   <ArrowLeft className="h-5 w-5" />
                 </Link>
                 <Link
-                  to={createPageUrl('Store')}
+                  to={createPageUrl('Products')}
                   className="inline-flex items-center gap-2 text-slate-900 font-semibold px-8 py-4 rounded-2xl transition-all bg-white border border-slate-200 shadow-sm hover:bg-slate-100"
                 >
                   {isRTL ? 'عرض الكل' : 'View All'}

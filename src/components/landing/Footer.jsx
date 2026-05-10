@@ -77,10 +77,10 @@ export default function Footer({ showCta = true }) {
               {
                 titleAr: 'روابط مهمة', titleEn: 'Quick Links',
                 links: [
-                  { labelAr: 'المتجر', labelEn: 'Shop', href: 'https://rawajcard.com/shop/' },
-                  { labelAr: 'حسابي', labelEn: 'My Account', href: 'https://rawajcard.com/my-account/' },
-                  { labelAr: 'طلبياتي', labelEn: 'My Orders', href: 'https://rawajcard.com/my-orders/' },
-                  { labelAr: 'جميع المنتجات', labelEn: 'All Products', href: 'https://rawajcard.com/shop/' },
+                  { labelAr: 'خصص كرتك الآن', labelEn: 'Customize your card', href: 'https://rawajcard.com/customize/' },
+                  { labelAr: 'حسابي', labelEn: 'My Account', href: 'https://rawajcard.com/Settings/' },
+                  { labelAr: 'طلبياتي', labelEn: 'My Orders', href: 'https://rawajcard.com/MyOrders/' },
+                  { labelAr: 'جميع المنتجات', labelEn: 'All Products', href: 'https://rawajcard.com/products/' },
                 ],
               },
               {
@@ -102,9 +102,9 @@ export default function Footer({ showCta = true }) {
                 <h4 className="font-black text-white mb-5 text-base">{isRTL ? col.titleAr : col.titleEn}</h4>
                 {col.contact ? (
                   <div className="space-y-4 text-sm text-slate-400">
-                    <a href="mailto:info@rawajcard.com" className="flex items-center gap-2 hover:text-cyan-400 transition-colors">
+                    <a href="mailto:contact@rawajcard.com" className="flex items-center gap-2 hover:text-cyan-400 transition-colors">
                       <Mail className="h-4 w-4 flex-shrink-0" />
-                      info@rawajcard.com
+                      contact@rawajcard.com
                     </a>
                     <a href="https://wa.me/966531607223" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-cyan-400 transition-colors">
                       <MessageCircle className="h-4 w-4 flex-shrink-0" />

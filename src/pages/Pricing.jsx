@@ -262,7 +262,7 @@ export default function Pricing() {
  }
  >
  {plan.planKey === 'premium'
- ? (language === 'ar' ? 'تجربة مجانية 3 أشهر (بدون بطاقة دفع)' : 'Free 3 month trial (no credit card)')
+ ? (language === 'ar' ? 'جرب مجاناً 3 أشهر ' : 'Free 3 month trial')
  : (language === 'ar' ? plan.ctaAr : plan.cta)
  }
  </Button>
