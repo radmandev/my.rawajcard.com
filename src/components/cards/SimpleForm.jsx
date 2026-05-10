@@ -13,6 +13,7 @@ import {
   Building2, 
   Share2, 
   Palette,
+  Globe,
   Upload,
   X,
   ChevronDown,
@@ -23,8 +24,11 @@ import {
   Settings,
   MessageSquare,
   Plus,
-  Trash2
+  Trash2,
+  Zap,
+  Lock as LockIcon
 } from 'lucide-react';
+import { ALL_TEMPLATES } from '@/lib/templateConfig';
 import { Switch } from '@/components/ui/switch';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 
@@ -63,6 +67,9 @@ export default function SimpleForm({ card, onChange, onSaveDraft, sectionsToShow
   const { t, isRTL } = useLanguage();
   const [expandedSections, setExpandedSections] = useState(['personal', 'company', 'social', 'design']);
   const [subscription, setSubscription] = React.useState(null);
+  const [multiLangEnabled, setMultiLangEnabled] = useState(
+    !!(card?.name_ar || card?.title_ar || card?.company_ar || card?.bio_ar || card?.location_ar)
+  );
   const [uploadingProfileImage, setUploadingProfileImage] = React.useState(false);
   const profileImageRef = useRef(null);
   const profileCameraRef = useRef(null);
@@ -268,32 +275,126 @@ export default function SimpleForm({ card, onChange, onSaveDraft, sectionsToShow
             </div>
           </div>
 
-          <div className="space-y-2">
-            <Label>{t('name')} *</Label>
-            <Input
-              value={card.name || ''}
-              onChange={(e) => handleChange('name', e.target.value)}
-              placeholder={isRTL ? 'اسمك' : 'Your name'}
+          {/* Multi-language toggle */}
+          <div className="flex items-center justify-between p-3 rounded-lg border border-white/10 bg-slate-800/40">
+            <div className="flex items-center gap-2">
+              <Globe className="h-4 w-4 text-cyan-500" />
+              <span className="text-sm font-medium text-slate-100">
+                {isRTL ? 'تفعيل التعدد اللغوي' : 'Enable Multi-language'}
+              </span>
+              {subscription?.plan === 'free' && (
+                <span className="text-xs bg-amber-500/20 text-amber-400 border border-amber-500/30 px-2 py-0.5 rounded-full font-medium">
+                  {isRTL ? 'Pro · ترقية للاستخدام' : 'Pro · Upgrade to use'}
+                </span>
+              )}
+            </div>
+            <Switch
+              checked={multiLangEnabled}
+              disabled={subscription?.plan === 'free'}
+              onCheckedChange={(val) => {
+                if (subscription?.plan === 'free') return;
+                setMultiLangEnabled(val);
+              }}
             />
           </div>
 
+          {/* Name */}
+          <div className="space-y-2">
+            <Label>{isRTL ? 'الاسم' : 'Name'} *</Label>
+            {multiLangEnabled ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div className="space-y-1">
+                  <Label className="text-xs text-slate-300">{isRTL ? 'الاسم بالإنجليزية' : 'Name in English'}</Label>
+                  <Input
+                    value={card.name || ''}
+                    onChange={(e) => handleChange('name', e.target.value)}
+                    placeholder="Ahmed Mohammed"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <Label className="text-xs text-slate-300">{isRTL ? 'الاسم بالعربية' : 'Name in Arabic'}</Label>
+                  <Input
+                    value={card.name_ar || ''}
+                    onChange={(e) => handleChange('name_ar', e.target.value)}
+                    placeholder="أحمد محمد"
+                    dir="rtl"
+                  />
+                </div>
+              </div>
+            ) : (
+              <Input
+                value={card.name || ''}
+                onChange={(e) => handleChange('name', e.target.value)}
+                placeholder="Ahmed Mohammed"
+              />
+            )}
+          </div>
+
+          {/* Position / Job Title */}
           <div className="space-y-2">
             <Label>{t('jobTitle')}</Label>
-            <Input
-              value={card.title || ''}
-              onChange={(e) => handleChange('title', e.target.value)}
-              placeholder={isRTL ? 'المسمى الوظيفي' : 'Your job title'}
-            />
+            {multiLangEnabled ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div className="space-y-1">
+                  <Label className="text-xs text-slate-300">{isRTL ? 'بالإنجليزية' : 'In English'}</Label>
+                  <Input
+                    value={card.title || ''}
+                    onChange={(e) => handleChange('title', e.target.value)}
+                    placeholder="Software Engineer"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <Label className="text-xs text-slate-300">{isRTL ? 'بالعربية' : 'In Arabic'}</Label>
+                  <Input
+                    value={card.title_ar || ''}
+                    onChange={(e) => handleChange('title_ar', e.target.value)}
+                    placeholder="مهندس برمجيات"
+                    dir="rtl"
+                  />
+                </div>
+              </div>
+            ) : (
+              <Input
+                value={card.title || ''}
+                onChange={(e) => handleChange('title', e.target.value)}
+                placeholder={isRTL ? 'المسمى الوظيفي' : 'Your job title'}
+              />
+            )}
           </div>
 
+          {/* Bio / About */}
           <div className="space-y-2">
             <Label>{t('bio')}</Label>
-            <Textarea
-              value={card.bio || ''}
-              onChange={(e) => handleChange('bio', e.target.value)}
-              placeholder={isRTL ? 'نبذة عنك' : 'A short bio about yourself'}
-              rows={3}
-            />
+            {multiLangEnabled ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div className="space-y-1">
+                  <Label className="text-xs text-slate-300">{isRTL ? 'بالإنجليزية' : 'In English'}</Label>
+                  <Textarea
+                    value={card.bio || ''}
+                    onChange={(e) => handleChange('bio', e.target.value)}
+                    placeholder="A short bio about yourself"
+                    rows={3}
+                  />
+                </div>
+                <div className="space-y-1">
+                  <Label className="text-xs text-slate-300">{isRTL ? 'بالعربية' : 'In Arabic'}</Label>
+                  <Textarea
+                    value={card.bio_ar || ''}
+                    onChange={(e) => handleChange('bio_ar', e.target.value)}
+                    placeholder="نبذة مختصرة عنك"
+                    rows={3}
+                    dir="rtl"
+                  />
+                </div>
+              </div>
+            ) : (
+              <Textarea
+                value={card.bio || ''}
+                onChange={(e) => handleChange('bio', e.target.value)}
+                placeholder={isRTL ? 'نبذة عنك' : 'A short bio about yourself'}
+                rows={3}
+              />
+            )}
             <p className="text-xs text-slate-300">
               {isRTL ? 'اضغط Enter لإضافة سطر جديد' : 'Press Enter to add line breaks'}
             </p>
@@ -350,11 +451,33 @@ export default function SimpleForm({ card, onChange, onSaveDraft, sectionsToShow
         <div className="space-y-4">
           <div className="space-y-2">
             <Label>{t('company')}</Label>
-            <Input
-              value={card.company || ''}
-              onChange={(e) => handleChange('company', e.target.value)}
-              placeholder={isRTL ? 'اسم الشركة' : 'Company name'}
-            />
+            {multiLangEnabled ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div className="space-y-1">
+                  <Label className="text-xs text-slate-300">{isRTL ? 'بالإنجليزية' : 'In English'}</Label>
+                  <Input
+                    value={card.company || ''}
+                    onChange={(e) => handleChange('company', e.target.value)}
+                    placeholder="Company name"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <Label className="text-xs text-slate-300">{isRTL ? 'بالعربية' : 'In Arabic'}</Label>
+                  <Input
+                    value={card.company_ar || ''}
+                    onChange={(e) => handleChange('company_ar', e.target.value)}
+                    placeholder="اسم الشركة"
+                    dir="rtl"
+                  />
+                </div>
+              </div>
+            ) : (
+              <Input
+                value={card.company || ''}
+                onChange={(e) => handleChange('company', e.target.value)}
+                placeholder={isRTL ? 'اسم الشركة' : 'Company name'}
+              />
+            )}
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -400,11 +523,33 @@ export default function SimpleForm({ card, onChange, onSaveDraft, sectionsToShow
 
           <div className="space-y-2">
             <Label>{t('location')}</Label>
-            <Input
-              value={card.location || ''}
-              onChange={(e) => handleChange('location', e.target.value)}
-              placeholder={isRTL ? 'المدينة، البلد' : 'City, Country'}
-            />
+            {multiLangEnabled ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div className="space-y-1">
+                  <Label className="text-xs text-slate-300">{isRTL ? 'بالإنجليزية' : 'In English'}</Label>
+                  <Input
+                    value={card.location || ''}
+                    onChange={(e) => handleChange('location', e.target.value)}
+                    placeholder="City, Country"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <Label className="text-xs text-slate-300">{isRTL ? 'بالعربية' : 'In Arabic'}</Label>
+                  <Input
+                    value={card.location_ar || ''}
+                    onChange={(e) => handleChange('location_ar', e.target.value)}
+                    placeholder="المدينة، البلد"
+                    dir="rtl"
+                  />
+                </div>
+              </div>
+            ) : (
+              <Input
+                value={card.location || ''}
+                onChange={(e) => handleChange('location', e.target.value)}
+                placeholder={isRTL ? 'المدينة، البلد' : 'City, Country'}
+              />
+            )}
           </div>
         </div>
       </Section>
@@ -492,6 +637,30 @@ export default function SimpleForm({ card, onChange, onSaveDraft, sectionsToShow
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            {/* Template customizable notice */}
+            {(() => {
+              const tpl = ALL_TEMPLATES.find(t => t.id === card.template);
+              if (!tpl) return null;
+              return tpl.customizable ? (
+                <div className="col-span-full flex items-start gap-2 p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/25 text-emerald-400">
+                  <Zap className="h-4 w-4 mt-0.5 flex-shrink-0" />
+                  <p className="text-xs leading-relaxed">
+                    {isRTL
+                      ? 'هذا القالب يدعم التخصيص الكامل — تغييرات الألوان ستظهر على بطاقتك فوراً.'
+                      : 'This template is fully customizable — color changes will reflect on your card instantly.'}
+                  </p>
+                </div>
+              ) : (
+                <div className="col-span-full flex items-start gap-2 p-3 rounded-xl bg-slate-500/10 border border-slate-500/25 text-slate-400">
+                  <LockIcon className="h-4 w-4 mt-0.5 flex-shrink-0" />
+                  <p className="text-xs leading-relaxed">
+                    {isRTL
+                      ? 'هذا القالب يستخدم ألواناً ثابتة ولا يتأثر بالتغييرات اللونية. اختر قالباً آخر من نوع “قابل للتخصيص” للتحكم في الألوان.'
+                      : 'This template uses fixed colors and does not respond to color changes. Choose a “Customizable” template to control the colors.'}
+                  </p>
+                </div>
+              );
+            })()}
             <div className="space-y-2">
               <Label>{t('primaryColor')}</Label>
               <div className="flex gap-2 items-center">
@@ -704,6 +873,75 @@ export default function SimpleForm({ card, onChange, onSaveDraft, sectionsToShow
               />
             </div>
           </div>
+        </div>
+      </Section>
+
+      {/* Appointment Booking */}
+      <Section
+        id="language"
+        icon={Globe}
+        title={
+          <div className="flex items-center gap-2">
+            {isRTL ? 'لغة العرض الافتراضية' : 'Default Card Language'}
+            {subscription?.plan !== 'premium' && (
+              <span className="px-2 py-0.5 rounded-full bg-gradient-to-r from-amber-400 to-orange-500 text-white text-xs font-semibold">
+                {isRTL ? 'مميز' : 'PREMIUM'}
+              </span>
+            )}
+          </div>
+        }
+        isExpanded={expandedSections.includes('language')}
+        onToggle={() => toggleSection('language')}
+      >
+        <div className="space-y-4">
+          {subscription?.plan !== 'premium' ? (
+            <div className="bg-gradient-to-br from-amber-50 to-orange-50 border-2 border-amber-200 rounded-xl p-6 text-center">
+              <Sparkles className="h-12 w-12 mx-auto text-amber-500 mb-3" />
+              <h3 className="text-lg font-bold text-slate-900 mb-2">
+                {isRTL ? 'ميزة مميزة' : 'Premium Feature'}
+              </h3>
+              <p className="text-sm text-slate-300 mb-4">
+                {isRTL
+                  ? 'قم بالترقية إلى الخطة المميزة لتحديد لغة العرض الافتراضية للبطاقة'
+                  : 'Upgrade to Premium to set the card default display language'}
+              </p>
+              <Button
+                onClick={onSaveDraft}
+                className="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white"
+              >
+                {isRTL ? 'ترقية الآن' : 'Upgrade Now'}
+              </Button>
+            </div>
+          ) : (
+            <div className="space-y-3">
+              <Label className="text-sm font-semibold">{isRTL ? 'اختر لغة العرض الافتراضية' : 'Choose default display language'}</Label>
+              <RadioGroup
+                value={card.design?.default_language || 'auto'}
+                onValueChange={(value) => {
+                  onChange({
+                    ...card,
+                    design: {
+                      ...card.design,
+                      default_language: value
+                    }
+                  });
+                }}
+              >
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="auto" id="card-lang-auto" />
+                  <Label htmlFor="card-lang-auto">{isRTL ? 'تلقائي (حسب لغة الزائر)' : 'Auto (Visitor language)'}</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="en" id="card-lang-en" />
+                  <Label htmlFor="card-lang-en">English</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="ar" id="card-lang-ar" />
+                  <Label htmlFor="card-lang-ar">العربية</Label>
+                </div>
+              </RadioGroup>
+            </div>
+          )}
         </div>
       </Section>
 

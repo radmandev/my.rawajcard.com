@@ -1783,7 +1783,7 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
         </div>
       )}
 
-      {!heroOnly && <Navbar />}
+      {!heroOnly && <Navbar onLoginClick={() => setLoginOpen(true)} />}
 
       <section
         className="demo-hero-section relative min-h-[92vh] flex items-center"

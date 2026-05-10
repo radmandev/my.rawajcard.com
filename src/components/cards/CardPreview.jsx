@@ -48,12 +48,14 @@ const templateComponents = {
 
 export default function CardPreview({ card, template, showPlaceholder, onLinkClick, editMode = false, onCardChange }) {
   const { isRTL } = useLanguage();
+  const forcedLanguage = card?.default_language || card?.design?.default_language || 'auto';
+  const effectiveIsRTL = forcedLanguage === 'ar' ? true : forcedLanguage === 'en' ? false : isRTL;
   
   const cardData = showPlaceholder ? {
-    name: isRTL ? 'اسمك هنا' : 'Your Name',
-    title: isRTL ? 'المسمى الوظيفي' : 'Job Title',
-    company: isRTL ? 'الشركة' : 'Company',
-    bio: isRTL ? 'نبذة عنك تظهر هنا...' : 'Your bio appears here...',
+    name: effectiveIsRTL ? 'اسمك هنا' : 'Your Name',
+    title: effectiveIsRTL ? 'المسمى الوظيفي' : 'Job Title',
+    company: effectiveIsRTL ? 'الشركة' : 'Company',
+    bio: effectiveIsRTL ? 'نبذة عنك تظهر هنا...' : 'Your bio appears here...',
     email: 'email@example.com',
     phone: '+966 5X XXX XXXX',
     social_links: { linkedin: '#', twitter: '#', instagram: '#' },
@@ -66,7 +68,7 @@ export default function CardPreview({ card, template, showPlaceholder, onLinkCli
     <div className="rounded-2xl overflow-hidden shadow-2xl max-w-sm mx-auto">
       <TemplateComponent 
         card={cardData} 
-        isRTL={isRTL} 
+        isRTL={effectiveIsRTL} 
         onLinkClick={onLinkClick}
         editMode={editMode}
         onCardChange={onCardChange}

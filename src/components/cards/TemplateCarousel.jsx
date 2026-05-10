@@ -3,7 +3,7 @@ import { cn } from'@/lib/utils';
 import { useLanguage } from'@/components/shared/LanguageContext';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from'@/components/ui/dialog';
 import { Button } from'@/components/ui/button';
-import { ChevronLeft, ChevronRight, Eye, Crown, Lock } from'lucide-react';
+import { ChevronLeft, ChevronRight, Eye, Crown, Lock, Zap } from 'lucide-react';
 import CardPreview from'./CardPreview';
 import { ALL_TEMPLATES, DEFAULT_TIERS, canUseTemplate } from'@/lib/templateConfig';
 import { api } from'@/api/supabaseAPI';
@@ -140,7 +140,7 @@ export default function TemplateCarousel({ selectedTemplate, onSelect, onFocusCh
  <Button
  variant="outline"
  size="sm"
- className="bg-indigo-950/60/90 hover:bg-indigo-950/60 text-slate-800"
+ className="bg-indigo-950/60/90 hover:bg-indigo-950/60 text-white border-white/30"
  onClick={() => setPreviewTemplate(template.id)}
  >
  <Eye className="h-3.5 w-3.5 mr-1.5" />
@@ -152,12 +152,25 @@ export default function TemplateCarousel({ selectedTemplate, onSelect, onFocusCh
 
  <div className="p-3 bg-indigo-950/60 border-t border-slate-200 flex items-start justify-between gap-2">
  <div className="min-w-0">
- <h3 className="font-semibold text-sm text-slate-900 truncate">
+ <h3 className="font-semibold text-sm text-slate-100 truncate">
  {isRTL ? template.nameAr : template.name}
  </h3>
- <p className="text-xs text-slate-500 mt-0.5 line-clamp-1">
+ <p className="text-xs text-slate-300 mt-0.5 line-clamp-1">
  {isRTL ? template.descriptionAr : template.description}
  </p>
+ <div className="mt-1.5">
+ {template.customizable ? (
+ <span className="inline-flex items-center gap-1 text-[10px] font-semibold px-1.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+ <Zap className="h-2.5 w-2.5" />
+ {isRTL ? 'قابل للتخصيص' : 'Customizable'}
+ </span>
+ ) : (
+ <span className="inline-flex items-center gap-1 text-[10px] font-semibold px-1.5 py-0.5 rounded-full bg-slate-500/20 text-slate-400 border border-slate-500/30">
+ <Lock className="h-2.5 w-2.5" />
+ {isRTL ? 'ألوان ثابتة' : 'Fixed'}
+ </span>
+ )}
+ </div>
  </div>
  {!accessible && (
  <Crown className="h-4 w-4 text-amber-500 flex-shrink-0 mt-0.5" />

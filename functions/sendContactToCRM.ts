@@ -1,151 +1,224 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.6';
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  'Content-Type': 'application/json',
+};
 
-Deno.serve(async (req) => {
+const json = (data: unknown, status = 200) =>
+  new Response(JSON.stringify(data), { status, headers: corsHeaders });
+
+const gatedProviders = new Set(['salesforce', 'hubspot', 'zoho', 'bitrix24']);
+const crmIntegrationsEnabled = String(Deno.env.get('CRM_INTEGRATIONS_ENABLED') || '').toLowerCase() === 'true';
+
+const getProviderEnabledMap = async (supabaseUrl: string, headers: Record<string, string>) => {
+  const defaults: Record<string, boolean> = {
+    salesforce: crmIntegrationsEnabled,
+    hubspot: crmIntegrationsEnabled,
+    zoho: crmIntegrationsEnabled,
+    bitrix24: crmIntegrationsEnabled,
+  };
+
   try {
-    const base44 = createClientFromRequest(req);
-    const { contactData } = await req.json();
+    const response = await fetch(
+      `${supabaseUrl}/rest/v1/app_settings?select=value&key=eq.crm_provider_flags&limit=1`,
+      { headers },
+    );
+    if (!response.ok) return defaults;
+    const rows = await response.json().catch(() => []);
+    const value = (Array.isArray(rows) ? rows?.[0]?.value : null) as Record<string, unknown> | null;
+    if (!value || typeof value !== 'object') return defaults;
 
-    // Get card owner info to fetch their webhook URL
-    const cardOwner = contactData.card_owner;
-    
-    // Query users to find the card owner's webhook
-    const users = await base44.asServiceRole.entities.User.filter({ 
-      email: cardOwner 
-    });
-    
-    if (users.length === 0 || !users[0].crm_webhook_url) {
-      return Response.json({ 
-        success: true, 
-        message: 'No webhook configured' 
-      });
+    return {
+      ...defaults,
+      salesforce: typeof value.salesforce === 'boolean' ? value.salesforce : defaults.salesforce,
+      hubspot: typeof value.hubspot === 'boolean' ? value.hubspot : defaults.hubspot,
+      zoho: typeof value.zoho === 'boolean' ? value.zoho : defaults.zoho,
+      bitrix24: typeof value.bitrix24 === 'boolean' ? value.bitrix24 : defaults.bitrix24,
+    };
+  } catch {
+    return defaults;
+  }
+};
+
+const isProviderTemporarilyDisabled = (provider: string, enabledMap: Record<string, boolean>) =>
+  gatedProviders.has(provider) && !Boolean(enabledMap[provider]);
+
+const getServiceEnv = () => {
+  const supabaseUrl = Deno.env.get('SUPABASE_URL');
+  const serviceRoleKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
+  if (!supabaseUrl) throw new Error('SUPABASE_URL is not configured.');
+  if (!serviceRoleKey) throw new Error('SUPABASE_SERVICE_ROLE_KEY is not configured.');
+  return { supabaseUrl, serviceRoleKey };
+};
+
+const getServiceHeaders = (serviceRoleKey: string) => ({
+  apikey: serviceRoleKey,
+  Authorization: `Bearer ${serviceRoleKey}`,
+  'Content-Type': 'application/json',
+});
+
+const getOwnerRecord = async (supabaseUrl: string, headers: Record<string, string>, cardOwnerEmail: string) => {
+  const emailFilter = encodeURIComponent(cardOwnerEmail);
+
+  const loadFrom = async (table: string) => {
+    const url = `${supabaseUrl}/rest/v1/${table}?select=id,email,crm_webhook_url,crm_config&email=eq.${emailFilter}&limit=1`;
+    const res = await fetch(url, { headers });
+    if (!res.ok) return null;
+    const rows = await res.json() as Array<Record<string, unknown>>;
+    return rows?.[0] || null;
+  };
+
+  return (await loadFrom('profiles')) || (await loadFrom('users'));
+};
+
+const normalizeContact = (contactData: Record<string, unknown>) => {
+  const fullName = String(contactData.visitor_name || contactData.name || '');
+  const nameParts = fullName.trim().split(/\s+/).filter(Boolean);
+  const firstName = nameParts[0] || '';
+  const lastName = nameParts.slice(1).join(' ') || 'Contact';
+
+  return {
+    fullName,
+    firstName,
+    lastName,
+    email: String(contactData.visitor_email || contactData.email || ''),
+    phone: String(contactData.visitor_phone || contactData.phone || ''),
+    company: String(contactData.visitor_company || contactData.company || ''),
+    notes: String(contactData.notes || contactData.message || ''),
+    cardId: String(contactData.card_id || ''),
+    createdAt: String(contactData.created_date || contactData.created_at || new Date().toISOString()),
+  };
+};
+
+Deno.serve(async (req: Request) => {
+  if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
+
+  try {
+    const { supabaseUrl, serviceRoleKey } = getServiceEnv();
+    const body = await req.json().catch(() => ({}));
+    const contactData = (body?.contactData || {}) as Record<string, unknown>;
+    const cardOwner = String(contactData.card_owner || '');
+
+    if (!cardOwner) {
+      return json({ success: false, error: 'Missing contactData.card_owner' }, 400);
     }
 
-    const webhookUrl = users[0].crm_webhook_url;
+    const owner = await getOwnerRecord(supabaseUrl, getServiceHeaders(serviceRoleKey), cardOwner);
+    if (!owner) {
+      return json({ success: true, message: 'No owner record found; skipping CRM send.' });
+    }
 
-    // Detect CRM type and format data accordingly
-    let payload;
+    const crmConfig = (owner.crm_config as Record<string, unknown>) || {};
+    const provider = String(crmConfig.provider || '').toLowerCase();
+    const providerEnabledMap = await getProviderEnabledMap(supabaseUrl, getServiceHeaders(serviceRoleKey));
+    if (isProviderTemporarilyDisabled(provider, providerEnabledMap)) {
+      return json({ success: false, coming_soon: true, message: `${provider} integration is coming soon` }, 503);
+    }
+
+    const webhookFromConfig = String((crmConfig.api_credentials as Record<string, unknown> | undefined)?.webhook_url || '');
+    const webhookUrl = String(owner.crm_webhook_url || webhookFromConfig || '');
+
+    if (!webhookUrl) {
+      return json({ success: true, message: 'No webhook configured' });
+    }
+
+    const mapped = normalizeContact(contactData);
+    let payload: Record<string, unknown>;
     let url = webhookUrl;
 
     if (webhookUrl.includes('bitrix24.com')) {
-      // Bitrix24 format
       payload = {
         fields: {
-          TITLE: `New contact: ${contactData.visitor_name}`,
-          NAME: contactData.visitor_name,
-          EMAIL: contactData.visitor_email ? [{ VALUE: contactData.visitor_email, VALUE_TYPE: 'WORK' }] : undefined,
-          PHONE: contactData.visitor_phone ? [{ VALUE: contactData.visitor_phone, VALUE_TYPE: 'WORK' }] : undefined,
-          COMPANY_TITLE: contactData.visitor_company || undefined,
-          COMMENTS: contactData.notes || `Contact from Rawajcard - Card ID: ${contactData.card_id}`,
+          TITLE: `New contact: ${mapped.fullName || mapped.email || 'Visitor'}`,
+          NAME: mapped.firstName || mapped.fullName,
+          LAST_NAME: mapped.lastName,
+          EMAIL: mapped.email ? [{ VALUE: mapped.email, VALUE_TYPE: 'WORK' }] : undefined,
+          PHONE: mapped.phone ? [{ VALUE: mapped.phone, VALUE_TYPE: 'WORK' }] : undefined,
+          COMPANY_TITLE: mapped.company || undefined,
+          COMMENTS: mapped.notes || `Contact from Rawajcard - Card ID: ${mapped.cardId}`,
           SOURCE_ID: 'WEB',
-          SOURCE_DESCRIPTION: 'Rawajcard Digital Business Card'
-        }
+          SOURCE_DESCRIPTION: 'Rawajcard Digital Business Card',
+        },
       };
 
-      // Bitrix24 uses query params for data
       const params = new URLSearchParams();
       params.append('fields', JSON.stringify(payload.fields));
-      
-      // Append to existing URL params
       const separator = webhookUrl.includes('?') ? '&' : '?';
       url = `${webhookUrl}${separator}${params.toString()}`;
 
-      const response = await fetch(url, {
-        method: 'GET'
-      });
-
-      const result = await response.json();
-      
-      if (!result.result) {
-        console.error('Bitrix24 error:', result);
-        return Response.json({ 
-          success: false, 
-          error: result.error_description || 'Bitrix24 API error',
-          details: result
-        }, { status: 500 });
+      const response = await fetch(url, { method: 'GET' });
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok || !result?.result) {
+        return json({
+          success: false,
+          error: result?.error_description || 'Bitrix24 API error',
+          details: result,
+        }, 500);
       }
 
-      return Response.json({ 
-        success: true, 
+      return json({
+        success: true,
         message: 'Contact added to Bitrix24',
-        lead_id: result.result
+        lead_id: result.result,
       });
+    }
 
-    } else if (webhookUrl.includes('pipedrive.com')) {
-      // Pipedrive format
+    if (webhookUrl.includes('pipedrive.com')) {
       payload = {
-        name: contactData.visitor_name,
-        email: contactData.visitor_email,
-        phone: contactData.visitor_phone,
-        organization_name: contactData.visitor_company,
-        notes: contactData.notes,
-        visible_to: '3'
+        name: mapped.fullName,
+        email: mapped.email,
+        phone: mapped.phone,
+        organization_name: mapped.company,
+        notes: mapped.notes,
+        visible_to: 3,
       };
     } else if (webhookUrl.includes('hubspot.com')) {
-      // HubSpot format
       payload = {
         properties: {
-          firstname: contactData.visitor_name?.split(' ')[0],
-          lastname: contactData.visitor_name?.split(' ').slice(1).join(' '),
-          email: contactData.visitor_email,
-          phone: contactData.visitor_phone,
-          company: contactData.visitor_company,
-          notes: contactData.notes,
-          hs_lead_status: 'NEW'
-        }
+          firstname: mapped.firstName,
+          lastname: mapped.lastName,
+          email: mapped.email,
+          phone: mapped.phone,
+          company: mapped.company,
+          notes: mapped.notes,
+          hs_lead_status: 'NEW',
+        },
       };
     } else {
-      // Generic webhook format
       payload = {
-        name: contactData.visitor_name,
-        email: contactData.visitor_email,
-        phone: contactData.visitor_phone,
-        company: contactData.visitor_company,
-        notes: contactData.notes,
+        name: mapped.fullName,
+        email: mapped.email,
+        phone: mapped.phone,
+        company: mapped.company,
+        notes: mapped.notes,
         source: 'Rawajcard',
-        card_id: contactData.card_id,
-        created_at: contactData.created_date
+        card_id: mapped.cardId,
+        created_at: mapped.createdAt,
       };
     }
 
-    // Send to webhook (for non-Bitrix24)
-    if (!webhookUrl.includes('bitrix24.com')) {
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload)
-      });
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
 
-      const responseText = await response.text();
-      let result;
-      try {
-        result = JSON.parse(responseText);
-      } catch {
-        result = responseText;
-      }
-
-      if (!response.ok) {
-        console.error('Webhook failed:', result);
-        return Response.json({ 
-          success: false, 
-          error: 'Webhook request failed',
-          details: result
-        }, { status: 500 });
-      }
-
-      return Response.json({ 
-        success: true, 
-        message: 'Contact sent to CRM',
-        response: result
-      });
+    const responseText = await response.text();
+    let result: unknown;
+    try {
+      result = JSON.parse(responseText);
+    } catch {
+      result = responseText;
     }
 
+    if (!response.ok) {
+      return json({ success: false, error: 'Webhook request failed', details: result }, 500);
+    }
+
+    return json({ success: true, message: 'Contact sent to CRM', response: result });
   } catch (error) {
-    console.error('Error sending to CRM:', error);
-    return Response.json({ 
-      success: false, 
-      error: error.message 
-    }, { status: 500 });
+    const message = error instanceof Error ? error.message : String(error);
+    console.error('Error sending to CRM:', message);
+    return json({ success: false, error: message }, 500);
   }
 });

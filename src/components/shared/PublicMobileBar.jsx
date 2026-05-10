@@ -9,7 +9,7 @@ import { motion, AnimatePresence } from'framer-motion';
 
 /**
  * PublicMobileBar — a phone-only fixed bottom bar shown on public pages
- * (TestLanding, Home, Products, Pricing, Store).
+ * (TestLanding, Home, Products, Pricing).
  * Shows: Store link | Cart (with count) | Login
  */
 export default function PublicMobileBar() {
@@ -32,18 +32,18 @@ export default function PublicMobileBar() {
  <div className="bg-indigo-950/60/95 backdrop-blur-xl border-t border-slate-200 shadow-2xl">
  <div className="flex items-stretch justify-around h-16">
 
- {/* ── Store ─────────────────────────────────── */}
+ {/* ── Products ──────────────────────────────── */}
  <Link
- to={createPageUrl('Store')}
+ to={createPageUrl('Products')}
  className={cn(
 'flex flex-col items-center justify-center gap-1 flex-1 transition-colors',
- isActive(createPageUrl('Store'))
+ isActive(createPageUrl('Products'))
  ?'text-primary'
  :'text-slate-500'
  )}
  >
  <Store className="h-5 w-5" />
- <span className="text-[10px] font-semibold">{isRTL ?'المتجر' :'Store'}</span>
+ <span className="text-[10px] font-semibold">{isRTL ?'المنتجات' :'Products'}</span>
  </Link>
 
  {/* ── Cart ──────────────────────────────────── */}

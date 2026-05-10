@@ -14,12 +14,18 @@ import {
  LogOut,
  ChevronLeft,
  ChevronRight,
- Shield,
  Users,
  Database,
  UsersRound,
  Sparkles,
- Wifi
+ Wifi,
+ BarChart2,
+ ShoppingBag,
+ Package,
+ Layout,
+ UserSquare2,
+ Wand2,
+ User,
 } from'lucide-react';
 import { Button } from'@/components/ui/button';
 import { useQuery } from'@tanstack/react-query';
@@ -45,10 +51,22 @@ const advancedItems = [
  { key:'settings', icon: Settings, page:'Settings', label:'settings' },
 ];
 
+const adminSections = [
+ { key:'analytics', icon: BarChart2, section:'analytics', labelAr:'التحليلات', labelEn:'Analytics' },
+ { key:'orders', icon: ShoppingBag, section:'orders', labelAr:'الطلبات', labelEn:'Orders' },
+ { key:'products', icon: Package, section:'products', labelAr:'المنتجات', labelEn:'Products' },
+ { key:'templates', icon: Layout, section:'templates', labelAr:'القوالب', labelEn:'Templates' },
+ { key:'clients', icon: UserSquare2, section:'clients', labelAr:'العملاء', labelEn:'Clients' },
+ { key:'cards', icon: CreditCard, section:'cards', labelAr:'البطاقات', labelEn:'Cards' },
+ { key:'requests', icon: Wand2, section:'requests', labelAr:'طلبات التخصيص', labelEn:'Customizations' },
+ { key:'adminSettings', icon: Settings, section:'settings', labelAr:'الإعدادات', labelEn:'Settings' },
+];
+
 export default function Sidebar({ isOpen, onClose, collapsed, onToggleCollapse }) {
  const { t, isRTL } = useLanguage();
  const location = useLocation();
  const [advancedOpen, setAdvancedOpen] = useState(false);
+ const [normalUserOpen, setNormalUserOpen] = useState(false);
 
  const { data: user } = useQuery({
  queryKey: ['current-user'],
@@ -60,17 +78,13 @@ export default function Sidebar({ isOpen, onClose, collapsed, onToggleCollapse }
  queryFn: async () => {
  const me = await api.auth.me();
  if (!me?.id && !me?.email) return { plan:'free', card_limit: 2, status:'active' };
-
  const subsByUserId = me?.id
  ? await api.entities.Subscription.filter({ created_by_user_id: me.id },'-created_at')
  : [];
-
  if (subsByUserId[0]) return subsByUserId[0];
-
  const subsByEmail = me?.email
  ? await api.entities.Subscription.filter({ created_by: me.email },'-created_at')
  : [];
-
  return subsByEmail[0] || { plan:'free', card_limit: 2, status:'active' };
  }
  });
@@ -78,8 +92,14 @@ export default function Sidebar({ isOpen, onClose, collapsed, onToggleCollapse }
  const isAdmin = user?.role ==='admin';
  const isPremium = subscription?.plan ==='premium';
 
- const isActive = (page) => {
- return location.pathname.includes(page);
+ const isActive = (page) => location.pathname.includes(page);
+
+ // For admin sections: check if we're on Admin page with matching section param
+ const isAdminSectionActive = (section) => {
+ if (!location.pathname.includes('Admin')) return false;
+ const params = new URLSearchParams(location.search);
+ const current = params.get('section') || 'analytics';
+ return current === section;
  };
 
  const handleLogout = () => {
@@ -106,59 +126,134 @@ export default function Sidebar({ isOpen, onClose, collapsed, onToggleCollapse }
  isOpen ?"translate-x-0" : isRTL ?"translate-x-full md:translate-x-0" :"-translate-x-full md:translate-x-0"
  )}>
  {/* Nav Items — scrollable so logout is always visible */}
- <nav className="flex-1 overflow-y-auto p-4 space-y-2">
+ <nav className="flex-1 overflow-y-auto p-4 space-y-1">
+
+ {/* ── ADMIN SECTIONS ─────────────────────────────── */}
  {isAdmin && (
+ <>
+ {!collapsed && (
+ <p className="px-4 py-1 text-[10px] font-bold uppercase tracking-widest text-violet-300/70">
+ {isRTL ?'إدارة النظام' :'Admin'}
+ </p>
+ )}
+ {adminSections.map((item) => (
  <Link
- to={createPageUrl('Admin')}
+ key={item.key}
+ to={`${createPageUrl('Admin')}?section=${item.section}`}
+ onClick={onClose}
+ className={cn(
+"flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all duration-200",
+ isAdminSectionActive(item.section)
+ ?"bg-gradient-to-r from-violet-500/30 to-indigo-500/20 text-white font-medium border border-violet-300/30"
+ :"text-slate-300 hover:bg-white/10 hover:text-white",
+ collapsed &&"justify-center px-2"
+ )}
+ >
+ <item.icon className={cn("h-4 w-4 flex-shrink-0", isAdminSectionActive(item.section) &&"text-violet-200")} />
+ {!collapsed && <span className="text-sm">{isRTL ? item.labelAr : item.labelEn}</span>}
+ </Link>
+ ))}
+
+ <div className="my-3 border-t border-white/10" />
+
+ {/* ── NORMAL USER collapsible ────────────────────── */}
+ {!collapsed ? (
+ <Collapsible open={normalUserOpen} onOpenChange={setNormalUserOpen}>
+ <CollapsibleTrigger className={cn(
+"flex items-center gap-3 px-4 py-2.5 rounded-xl w-full transition-all duration-200",
+ "text-slate-300 hover:bg-white/10 hover:text-white"
+ )}>
+ <User className="h-4 w-4 flex-shrink-0" />
+ <span className="flex-1 text-sm text-left">{isRTL ?'المستخدم العادي' :'Normal User'}</span>
+ <ChevronRight className={cn("h-4 w-4 transition-transform", normalUserOpen &&"rotate-90")} />
+ </CollapsibleTrigger>
+ <CollapsibleContent className="space-y-1 mt-1">
+ {navItems.map((item) => (
+ <Link
+ key={item.key}
+ to={createPageUrl(item.page)}
+ onClick={onClose}
+ className={cn(
+"flex items-center gap-3 py-2 px-4 rounded-xl transition-all duration-200",
+ "text-slate-300 hover:bg-white/10 hover:text-white",
+ isRTL ?"mr-5" :"ml-5",
+ isActive(item.page) &&"bg-gradient-to-r from-cyan-500/30 to-fuchsia-500/25 text-white font-medium border border-cyan-300/30"
+ )}
+ >
+ <item.icon className={cn("h-4 w-4 flex-shrink-0", isActive(item.page) &&"text-cyan-200")} />
+ <span className="text-sm">{item.key ==='nfcProducts' ? (isRTL ?'منتجات NFC' :'NFC Products') : t(item.label)}</span>
+ </Link>
+ ))}
+ <div className="mt-1">
+ {advancedItems.map((item) => (
+ <Link
+ key={item.key}
+ to={createPageUrl(item.page)}
+ onClick={onClose}
+ className={cn(
+"flex items-center gap-3 py-2 px-4 rounded-xl transition-all duration-200",
+ "text-slate-300 hover:bg-white/10 hover:text-white",
+ isRTL ?"mr-5" :"ml-5",
+ isActive(item.page) &&"bg-gradient-to-r from-cyan-500/30 to-fuchsia-500/25 text-white font-medium border border-cyan-300/30"
+ )}
+ >
+ <item.icon className={cn("h-4 w-4 flex-shrink-0", isActive(item.page) &&"text-cyan-200")} />
+ <span className="text-sm">{t(item.label)}</span>
+ {item.premium && !isPremium && (
+ <span className="text-xs bg-amber-400/20 text-amber-200 px-1.5 py-0.5 rounded">PRO</span>
+ )}
+ </Link>
+ ))}
+ </div>
+ </CollapsibleContent>
+ </Collapsible>
+ ) : (
+ /* Collapsed: show normal user items as icons */
+ navItems.concat(advancedItems).map((item) => (
+ <Link
+ key={item.key}
+ to={createPageUrl(item.page)}
+ onClick={onClose}
+ className={cn(
+"flex items-center justify-center px-2 py-2.5 rounded-xl transition-all duration-200",
+ "text-slate-300 hover:bg-white/10 hover:text-white",
+ isActive(item.page) &&"bg-gradient-to-r from-cyan-500/30 to-fuchsia-500/25 text-white font-medium border border-cyan-300/30"
+ )}
+ >
+ <item.icon className={cn("h-4 w-4 flex-shrink-0", isActive(item.page) &&"text-cyan-200")} />
+ </Link>
+ ))
+ )}
+ </>
+ )}
+
+ {/* ── NON-ADMIN: original layout ─────────────────── */}
+ {!isAdmin && (
+ <>
+ {navItems.map((item) => (
+ <Link
+ key={item.key}
+ to={createPageUrl(item.page)}
  onClick={onClose}
  className={cn(
 "flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200",
- "border border-violet-300/30 bg-gradient-to-r from-violet-500/20 to-indigo-500/20 text-violet-100",
-"hover:shadow-md hover:scale-[1.01]",
- isActive('Admin') &&"ring-2 ring-violet-300/70",
- collapsed &&"justify-center px-2"
- )}
- >
- <Shield className={cn("h-5 w-5 flex-shrink-0 text-violet-200", isActive('Admin') &&"text-violet-100")} />
- {!collapsed && <span className="font-semibold text-violet-100">{isRTL ?'لوحة المسؤول' :'Admin Panel'}</span>}
- </Link>
- )}
-
- {navItems.map((item) => {
- const targetPage = isAdmin && item.key ==='dashboard' ?'Admin' : item.page;
- const itemClass = cn(
-"flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200",
  "text-slate-200 hover:bg-white/10",
- isActive(targetPage) &&"bg-gradient-to-r from-cyan-500/30 to-fuchsia-500/25 text-white font-medium border border-cyan-300/30",
+ isActive(item.page) &&"bg-gradient-to-r from-cyan-500/30 to-fuchsia-500/25 text-white font-medium border border-cyan-300/30",
  collapsed &&"justify-center px-2"
- );
- const itemContent = (
- <>
- <item.icon className={cn("h-5 w-5 flex-shrink-0", isActive(targetPage) &&"text-cyan-200")} />
- {!collapsed && <span>{item.key ==='nfcProducts' ? (isRTL ?'منتجات NFC' :'NFC Products') : t(item.label)}</span>}
- </>
- );
- return (
- <Link
- key={item.key}
- to={createPageUrl(targetPage)}
- onClick={onClose}
- className={itemClass}
+ )}
  >
- {itemContent}
+ <item.icon className={cn("h-5 w-5 flex-shrink-0", isActive(item.page) &&"text-cyan-200")} />
+ {!collapsed && <span>{item.key ==='nfcProducts' ? (isRTL ?'منتجات NFC' :'NFC Products') : t(item.label)}</span>}
  </Link>
- );
- })}
+ ))}
 
  {/* Advanced Section */}
  {!collapsed && (
  <Collapsible open={advancedOpen} onOpenChange={setAdvancedOpen}>
- <CollapsibleTrigger
- className={cn(
+ <CollapsibleTrigger className={cn(
 "flex items-center gap-3 px-4 py-3 rounded-xl w-full transition-all duration-200",
  "text-slate-200 hover:bg-white/10"
- )}
- >
+ )}>
  <Sparkles className="h-5 w-5 flex-shrink-0" />
  <span className="flex-1 text-left">{isRTL ?'متقدم' :'Advanced'}</span>
  <ChevronRight className={cn("h-4 w-4 transition-transform", advancedOpen &&"rotate-90")} />
@@ -187,23 +282,22 @@ export default function Sidebar({ isOpen, onClose, collapsed, onToggleCollapse }
  </Collapsible>
  )}
 
- {collapsed && advancedItems.map((item) => {
- return (
+ {collapsed && advancedItems.map((item) => (
  <Link
  key={item.key}
  to={createPageUrl(item.page)}
  onClick={onClose}
  className={cn(
-"flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200",
+"flex items-center justify-center px-2 py-3 rounded-xl transition-all duration-200",
  "text-slate-200 hover:bg-white/10",
- isActive(item.page) &&"bg-gradient-to-r from-cyan-500/30 to-fuchsia-500/25 text-white font-medium border border-cyan-300/30",
-"justify-center px-2"
+ isActive(item.page) &&"bg-gradient-to-r from-cyan-500/30 to-fuchsia-500/25 text-white font-medium border border-cyan-300/30"
  )}
  >
  <item.icon className={cn("h-5 w-5 flex-shrink-0", isActive(item.page) &&"text-cyan-200")} />
  </Link>
- );
- })}
+ ))}
+ </>
+ )}
 
  </nav>
 

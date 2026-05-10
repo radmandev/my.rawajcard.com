@@ -1,8 +1,7 @@
-import React, { useState } from'react';
+import React from'react';
 import { useLanguage } from'@/components/shared/LanguageContext';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from'@/components/ui/tabs';
 import { Card } from'@/components/ui/card';
-import { Shield, Layout, Users, CreditCard, Settings, Sparkles, Package, ShoppingBag, BarChart2 } from'lucide-react';
+import { Shield } from'lucide-react';
 import AdminTemplates from'@/components/admin/AdminTemplates';
 import AdminClients from'@/components/admin/AdminClients';
 import AdminCards from'@/components/admin/AdminCards';
@@ -13,21 +12,30 @@ import AdminOrders from'@/components/admin/AdminOrders';
 import AdminAnalytics from'@/components/admin/AdminAnalyticsReal';
 import { api } from'@/api/supabaseAPI';
 import { useQuery } from'@tanstack/react-query';
-import { useNavigate } from'react-router-dom';
+import { useNavigate, useSearchParams } from'react-router-dom';
+
+const sectionTitles = {
+ analytics: { ar:'التحليلات', en:'Analytics' },
+ orders: { ar:'الطلبات', en:'Orders' },
+ products: { ar:'المنتجات', en:'Products' },
+ templates: { ar:'القوالب', en:'Templates' },
+ clients: { ar:'العملاء', en:'Clients' },
+ cards: { ar:'البطاقات', en:'Cards' },
+ requests: { ar:'طلبات التخصيص', en:'Customization Requests' },
+ settings: { ar:'الإعدادات', en:'Settings' },
+};
 
 export default function Admin() {
- const { t, isRTL } = useLanguage();
+ const { isRTL } = useLanguage();
  const navigate = useNavigate();
- const [activeTab, setActiveTab] = useState('templates');
+ const [searchParams] = useSearchParams();
+ const activeSection = searchParams.get('section') || 'analytics';
 
  const { data: user, isLoading } = useQuery({
  queryKey: ['current-user'],
  queryFn: async () => {
  const authenticated = await api.auth.isAuthenticated();
- if (!authenticated) {
- navigate('/login');
- return null;
- }
+ if (!authenticated) { navigate('/login'); return null; }
  return api.auth.me();
  }
  });
@@ -42,7 +50,7 @@ export default function Admin() {
 
  if (!user) return null;
 
- const isAdmin = user.role === 'admin';
+ const isAdmin = user.role ==='admin';
 
  if (!isAdmin) {
  return (
@@ -66,88 +74,32 @@ export default function Admin() {
  );
  }
 
+ const title = sectionTitles[activeSection] || sectionTitles.analytics;
+
  return (
- <div className="max-w-7xl mx-auto">
- <div className="mb-8">
- <div className="flex items-center gap-3 mb-2">
- <Shield className="h-8 w-8 text-cyan-600" />
- <h1 className="text-3xl font-bold text-slate-900">
- {isRTL ?'لوحة تحكم المسؤول' :'Admin Dashboard'}
+ <div className="space-y-6">
+ {/* Section Header */}
+ <div className="flex items-center gap-3">
+ <Shield className="h-6 w-6 text-violet-400" />
+ <div>
+ <h1 className="text-2xl font-bold text-slate-100">
+ {isRTL ? title.ar : title.en}
  </h1>
- </div>
- <p className="text-slate-500">
- {isRTL ?'إدارة القوالب والعملاء والإعدادات' :'Manage templates, clients, and settings'}
+ <p className="text-slate-400 text-sm">
+ {isRTL ?'لوحة تحكم المسؤول' :'Admin Dashboard'}
  </p>
  </div>
+ </div>
 
- <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
- <TabsList className="grid w-full grid-cols-8 lg:w-auto lg:inline-grid">
- <TabsTrigger value="analytics" className="flex items-center gap-2">
- <BarChart2 className="h-4 w-4" />
- <span className="hidden sm:inline">{isRTL ?'التحليلات' :'Analytics'}</span>
- </TabsTrigger>
- <TabsTrigger value="orders" className="flex items-center gap-2">
- <ShoppingBag className="h-4 w-4" />
- <span className="hidden sm:inline">{isRTL ?'الطلبات' :'Orders'}</span>
- </TabsTrigger>
- <TabsTrigger value="products" className="flex items-center gap-2">
- <Package className="h-4 w-4" />
- <span className="hidden sm:inline">{isRTL ?'المنتجات' :'Products'}</span>
- </TabsTrigger>
- <TabsTrigger value="templates" className="flex items-center gap-2">
- <Layout className="h-4 w-4" />
- <span className="hidden sm:inline">{isRTL ?'القوالب' :'Templates'}</span>
- </TabsTrigger>
- <TabsTrigger value="clients" className="flex items-center gap-2">
- <Users className="h-4 w-4" />
- <span className="hidden sm:inline">{isRTL ?'العملاء' :'Clients'}</span>
- </TabsTrigger>
- <TabsTrigger value="cards" className="flex items-center gap-2">
- <CreditCard className="h-4 w-4" />
- <span className="hidden sm:inline">{isRTL ?'البطاقات' :'Cards'}</span>
- </TabsTrigger>
- <TabsTrigger value="requests" className="flex items-center gap-2">
- <Sparkles className="h-4 w-4" />
- <span className="hidden sm:inline">{isRTL ?'الطلبات' :'Requests'}</span>
- </TabsTrigger>
- <TabsTrigger value="settings" className="flex items-center gap-2">
- <Settings className="h-4 w-4" />
- <span className="hidden sm:inline">{isRTL ?'الإعدادات' :'Settings'}</span>
- </TabsTrigger>
- </TabsList>
-
- <TabsContent value="analytics" className="space-y-6">
- <AdminAnalytics />
- </TabsContent>
-
- <TabsContent value="orders" className="space-y-6">
- <AdminOrders />
- </TabsContent>
-
- <TabsContent value="products" className="space-y-6">
- <AdminProducts />
- </TabsContent>
-
- <TabsContent value="templates" className="space-y-6">
- <AdminTemplates />
- </TabsContent>
-
- <TabsContent value="clients" className="space-y-6">
- <AdminClients />
- </TabsContent>
-
- <TabsContent value="cards" className="space-y-6">
- <AdminCards />
- </TabsContent>
-
- <TabsContent value="requests" className="space-y-6">
- <AdminCustomizationRequests />
- </TabsContent>
-
- <TabsContent value="settings" className="space-y-6">
- <AdminSettings />
- </TabsContent>
- </Tabs>
+ {/* Section Content */}
+ {activeSection ==='analytics' && <AdminAnalytics />}
+ {activeSection ==='orders' && <AdminOrders />}
+ {activeSection ==='products' && <AdminProducts />}
+ {activeSection ==='templates' && <AdminTemplates />}
+ {activeSection ==='clients' && <AdminClients />}
+ {activeSection ==='cards' && <AdminCards />}
+ {activeSection ==='requests' && <AdminCustomizationRequests />}
+ {activeSection ==='settings' && <AdminSettings />}
  </div>
  );
 }

@@ -1,39 +1,47 @@
-**Welcome to your Base44 project** 
+# Rawajcard — Frontend App
 
-**About**
+Supabase-native web application for Rawajcard.
 
-View and Edit  your app on [Base44.com](http://Base44.com) 
+## Prerequisites
 
-This project contains everything you need to run your app locally.
+- Node.js 18.18+
+- npm
 
-**Edit the code in your local development environment**
+## Local development
 
-Any change pushed to the repo will also be reflected in the Base44 Builder.
+1. Install dependencies:
 
-**Prerequisites:** 
-
-1. Clone the repository using the project's Git URL 
-2. Navigate to the project directory
-3. Install dependencies: `npm install`
-4. Create an `.env.local` file and set the right environment variables
-
-```
-VITE_BASE44_APP_ID=your_app_id
-VITE_BASE44_APP_BASE_URL=your_backend_url
-
-e.g.
-VITE_BASE44_APP_ID=cbef744a8545c389ef439ea6
-VITE_BASE44_APP_BASE_URL=https://my-to-do-list-81bfaad7.base44.app
+```bash
+npm install
 ```
 
-Run the app: `npm run dev`
+2. Create `.env.local` and set required values:
 
-**Publish your changes**
+```env
+VITE_SUPABASE_URL=your_supabase_project_url
+VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+VITE_PUBLIC_BASE_PATH=/
 
-Open [Base44.com](http://Base44.com) and click on Publish.
+# Optional frontend CRM flag (admin can also override per provider in app_settings)
+VITE_CRM_INTEGRATIONS_ENABLED=false
+```
 
-**Docs & Support**
+3. Start development server:
 
-Documentation: [https://docs.base44.com/Integrations/Using-GitHub](https://docs.base44.com/Integrations/Using-GitHub)
+```bash
+npm run dev
+```
 
-Support: [https://app.base44.com/support](https://app.base44.com/support)
+## Build
+
+```bash
+npm run build
+```
+
+## CRM notes
+
+- Runtime CRM provider availability is controlled by:
+	- Edge function env: `CRM_INTEGRATIONS_ENABLED`
+	- Frontend env: `VITE_CRM_INTEGRATIONS_ENABLED`
+	- Admin per-provider overrides in `app_settings.crm_provider_flags`
+- See `CRM_INTEGRATION_ENABLEMENT_GUIDE_2026-05-08.md` for full rollout steps.

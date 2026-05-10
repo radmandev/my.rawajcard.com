@@ -71,53 +71,57 @@ export default function SlugInput({ value, onChange, currentCardId, onValidation
  };
 
  return (
- <div className="space-y-4">
- <div className="space-y-2">
- <Label className="flex items-center gap-2">
- <Link2 className="h-4 w-4" />
+ <div className="space-y-5">
+ <div className="space-y-1">
+ <Label className="flex items-center gap-2 text-slate-200 font-medium">
+ <Link2 className="h-4 w-4 text-cyan-400" />
  {t('customLink')}
  </Label>
- <p className="text-sm text-slate-500">
+ <p className="text-sm text-slate-400">
  {t('yourCardLink')}
  </p>
  </div>
 
  <div className={cn(
-"flex items-center rounded-xl overflow-hidden border-2 transition-colors",
- isAvailable === true &&"border-green-500 bg-green-50",
- isAvailable === false &&"border-red-500 bg-red-50",
- isAvailable === null &&"border-slate-200"
+ "flex items-center rounded-xl overflow-hidden border-2 transition-all duration-200 bg-slate-800/60",
+ isAvailable === true && "border-emerald-500 shadow-[0_0_12px_rgba(52,211,153,0.2)]",
+ isAvailable === false && "border-red-500 shadow-[0_0_12px_rgba(239,68,68,0.2)]",
+ isAvailable === null && "border-white/10 hover:border-cyan-500/40"
  )}>
- <div className="px-4 py-3 bg-slate-100 text-slate-500 text-sm font-medium whitespace-nowrap">
+ <div className="px-4 py-3 bg-slate-700/60 text-cyan-400 text-sm font-mono whitespace-nowrap border-r border-white/10">
  {baseUrl}
  </div>
  <Input
- value={value ||''}
+ value={value || ''}
  onChange={handleChange}
  placeholder={t('slugPlaceholder')}
- className="border-0 focus-visible:ring-0 text-lg text-slate-900"
+ className="border-0 focus-visible:ring-0 text-base font-mono text-slate-100 bg-transparent placeholder:text-slate-500"
  />
  <div className="px-4">
  {checking && <Loader2 className="h-5 w-5 animate-spin text-slate-400" />}
- {!checking && isAvailable === true && <Check className="h-5 w-5 text-green-500" />}
- {!checking && isAvailable === false && <X className="h-5 w-5 text-red-500" />}
+ {!checking && isAvailable === true && <Check className="h-5 w-5 text-emerald-400" />}
+ {!checking && isAvailable === false && <X className="h-5 w-5 text-red-400" />}
  </div>
  </div>
 
  {error && (
- <p className="text-sm text-red-500">{error}</p>
+ <p className="text-sm text-red-400 flex items-center gap-1.5">
+ <X className="h-3.5 w-3.5" />{error}
+ </p>
  )}
 
  {isAvailable && !error && (
- <p className="text-sm text-green-500">{t('slugAvailable')}</p>
+ <p className="text-sm text-emerald-400 flex items-center gap-1.5">
+ <Check className="h-3.5 w-3.5" />{t('slugAvailable')}
+ </p>
  )}
 
- <div className="p-4 bg-slate-50 rounded-xl">
- <p className="text-sm text-slate-600">
- {isRTL 
- ?'سيتمكن الأشخاص من الوصول إلى بطاقتك عبر هذا الرابط الدائم. اختر رابطاً سهل التذكر!'
- :'People will access your card through this permanent link. Choose something memorable!'
- }
+ <div className="flex items-start gap-3 p-4 rounded-xl bg-cyan-500/5 border border-cyan-500/20">
+ <Link2 className="h-4 w-4 text-cyan-400 mt-0.5 shrink-0" />
+ <p className="text-sm text-slate-300">
+ {isRTL
+ ? 'سيتمكن الأشخاص من الوصول إلى بطاقتك عبر هذا الرابط الدائم. اختر رابطاً سهل التذكر!'
+ : 'People will access your card through this permanent link. Choose something memorable!'}
  </p>
  </div>
  </div>

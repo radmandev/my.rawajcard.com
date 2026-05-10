@@ -12,6 +12,7 @@ export const ALL_TEMPLATES = [
     colors: ['#14274E', '#F4B400', '#FFFFFF'],
     preview: 'bg-gradient-to-br from-[#14274E] to-[#0D1B3E]',
     defaultTier: 'free',
+    customizable: true,
   },
   {
     id: 'dark_minimal',
@@ -22,6 +23,7 @@ export const ALL_TEMPLATES = [
     colors: ['#000000', '#1F2937', '#FFFFFF'],
     preview: 'bg-gradient-to-br from-black to-slate-900',
     defaultTier: 'free',
+    customizable: false,
   },
   {
     id: 'purple_coral',
@@ -32,6 +34,7 @@ export const ALL_TEMPLATES = [
     colors: ['#7C3AED', '#F87171', '#FFFFFF'],
     preview: 'bg-gradient-to-br from-purple-600 to-violet-800',
     defaultTier: 'free',
+    customizable: false,
   },
   {
     id: 'earthy_minimal',
@@ -42,6 +45,7 @@ export const ALL_TEMPLATES = [
     colors: ['#92400E', '#FEF7ED', '#D97706'],
     preview: 'bg-gradient-to-br from-amber-100 to-orange-100',
     defaultTier: 'free',
+    customizable: false,
   },
   {
     id: 'pink_modern',
@@ -52,6 +56,7 @@ export const ALL_TEMPLATES = [
     colors: ['#F43F5E', '#FFF1F2', '#FB7185'],
     preview: 'bg-gradient-to-br from-pink-100 to-rose-200',
     defaultTier: 'free',
+    customizable: false,
   },
   {
     id: 'orange_pro',
@@ -62,6 +67,7 @@ export const ALL_TEMPLATES = [
     colors: ['#3730A3', '#F97316', '#F8FAFC'],
     preview: 'bg-gradient-to-br from-indigo-700 to-purple-800',
     defaultTier: 'free',
+    customizable: false,
   },
   {
     id: 'noqtatain1',
@@ -72,6 +78,7 @@ export const ALL_TEMPLATES = [
     colors: ['#1e40af', '#93c5fd', '#FFFFFF'],
     preview: 'bg-gradient-to-br from-blue-600 to-blue-900',
     defaultTier: 'free',
+    customizable: true,
   },
   {
     id: 'noqtatain2',
@@ -82,6 +89,7 @@ export const ALL_TEMPLATES = [
     colors: ['#0f172a', '#6366f1', '#e0e7ff'],
     preview: 'bg-gradient-to-br from-slate-900 to-indigo-900',
     defaultTier: 'free',
+    customizable: true,
   },
   {
     id: 'noqtatain3',
@@ -92,6 +100,7 @@ export const ALL_TEMPLATES = [
     colors: ['#1e293b', '#38bdf8', '#FFFFFF'],
     preview: 'bg-gradient-to-br from-slate-800 to-sky-900',
     defaultTier: 'free',
+    customizable: true,
   },
   {
     id: 'noqtatain4',
@@ -102,6 +111,7 @@ export const ALL_TEMPLATES = [
     colors: ['#0f766e', '#99f6e4', '#FFFFFF'],
     preview: 'bg-gradient-to-br from-cyan-700 to-slate-900',
     defaultTier: 'free',
+    customizable: true,
   },
   {
     id: 'noqtatain6',
@@ -112,6 +122,7 @@ export const ALL_TEMPLATES = [
     colors: ['#ec4899', '#fbbf24', '#FFFFFF'],
     preview: 'bg-gradient-to-br from-pink-500 to-yellow-400',
     defaultTier: 'free',
+    customizable: true,
   },
   {
     id: 'modern_gradient',
@@ -122,6 +133,7 @@ export const ALL_TEMPLATES = [
     colors: ['#6d28d9', '#db2777', '#f9fafb'],
     preview: 'bg-gradient-to-br from-violet-700 to-pink-600',
     defaultTier: 'premium',
+    customizable: true,
   },
   {
     id: 'luxury_gold',
@@ -132,6 +144,7 @@ export const ALL_TEMPLATES = [
     colors: ['#1c1917', '#ca8a04', '#fef9c3'],
     preview: 'bg-gradient-to-br from-stone-900 to-yellow-900',
     defaultTier: 'premium',
+    customizable: false,
   },
   {
     id: 'tech_blue',
@@ -142,6 +155,7 @@ export const ALL_TEMPLATES = [
     colors: ['#0f172a', '#0ea5e9', '#e0f2fe'],
     preview: 'bg-gradient-to-br from-slate-900 to-sky-900',
     defaultTier: 'premium',
+    customizable: false,
   },
   {
     id: 'sunset_warm',
@@ -152,6 +166,7 @@ export const ALL_TEMPLATES = [
     colors: ['#c2410c', '#fb923c', '#fef3c7'],
     preview: 'bg-gradient-to-br from-orange-700 to-amber-400',
     defaultTier: 'premium',
+    customizable: false,
   },
   {
     id: 'forest_green',
@@ -162,6 +177,7 @@ export const ALL_TEMPLATES = [
     colors: ['#14532d', '#4ade80', '#f0fdf4'],
     preview: 'bg-gradient-to-br from-green-900 to-green-600',
     defaultTier: 'premium',
+    customizable: false,
   },
   {
     id: 'aurora_glass',
@@ -172,6 +188,7 @@ export const ALL_TEMPLATES = [
     colors: ['#7c3aed', '#38bdf8', '#f472b6'],
     preview: 'bg-gradient-to-br from-[#0f0c29] via-[#1a0533] to-[#0d1b6e]',
     defaultTier: 'free',
+    customizable: false,
   },
 ];
 

@@ -52,17 +52,18 @@ export default function CRMSettings() {
  const { data: crmConfig, isLoading: configLoading } = useQuery({
  queryKey: ['crm-config'],
  queryFn: async () => {
- const users = await api.entities.User.filter({ email: user.email });
- return users[0]?.crm_config || null;
+ const profile = await api.entities.User.get(user.id);
+ return profile?.crm_config || null;
  },
- enabled: !!user
+ enabled: !!user?.id
  });
 
  const updateCRMConfigMutation = useMutation({
  mutationFn: async (config) => {
- await api.auth.updateMe({ crm_config: config });
+ await api.entities.User.update(user.id, { crm_config: config });
  },
  onSuccess: () => {
+ queryClient.invalidateQueries({ queryKey: ['current-user'] });
  queryClient.invalidateQueries({ queryKey: ['crm-config'] });
  toast.success(isRTL ?'تم حفظ إعدادات CRM' :'CRM settings saved');
  }
@@ -85,12 +86,53 @@ export default function CRMSettings() {
  }
  });
 
+ const crmIntegrationsEnabled = String(import.meta.env.VITE_CRM_INTEGRATIONS_ENABLED || '').toLowerCase() === 'true';
+ const gatedProviderIds = ['salesforce', 'hubspot', 'zoho', 'bitrix24'];
+ const gatedProviderSet = new Set(gatedProviderIds);
+ const isAdmin = user?.role === 'admin';
+ const [adminProviderFlags, setAdminProviderFlags] = useState({});
+
+ const { data: crmProviderFlags, isLoading: crmProviderFlagsLoading } = useQuery({
+ queryKey: ['crm-provider-flags'],
+ queryFn: async () => {
+ const value = await api.appSettings.get('crm_provider_flags');
+ return value && typeof value === 'object' ? value : {};
+ },
+ enabled: isAdmin
+ });
+
+ const updateProviderFlagsMutation = useMutation({
+ mutationFn: async (flags) => {
+ return api.appSettings.set('crm_provider_flags', flags);
+ },
+ onSuccess: () => {
+ queryClient.invalidateQueries({ queryKey: ['crm-provider-flags'] });
+ toast.success(isRTL ? 'تم حفظ إعدادات المنصات' : 'CRM platform settings saved');
+ },
+ onError: () => {
+ toast.error(isRTL ? 'تعذر حفظ إعدادات المنصات' : 'Failed to save CRM platform settings');
+ }
+ });
+
+ useEffect(() => {
+ if (crmProviderFlags && typeof crmProviderFlags === 'object') {
+ setAdminProviderFlags(crmProviderFlags);
+ }
+ }, [crmProviderFlags]);
+
+ const providerEnabledMap = gatedProviderIds.reduce((acc, providerId) => {
+ const adminValue = adminProviderFlags?.[providerId];
+ acc[providerId] = typeof adminValue === 'boolean' ? adminValue : crmIntegrationsEnabled;
+ return acc;
+ }, {});
+
  const crmProviders = [
  {
  id:'salesforce',
  name:'Salesforce',
  icon:'☁️',
  description:'World\'s #1 CRM platform',
+ comingSoon: !providerEnabledMap.salesforce,
  oauth: true,
  fields: ['FirstName','LastName','Email','Phone','Company','Description']
  },
@@ -99,6 +141,7 @@ export default function CRMSettings() {
  name:'HubSpot',
  icon:'🟠',
  description:'Inbound marketing and sales',
+ comingSoon: !providerEnabledMap.hubspot,
  oauth: true,
  fields: ['firstname','lastname','email','phone','company','notes']
  },
@@ -107,6 +150,7 @@ export default function CRMSettings() {
  name:'Zoho CRM',
  icon:'🔷',
  description:'All-in-one CRM solution',
+ comingSoon: !providerEnabledMap.zoho,
  oauth: false,
  fields: ['First_Name','Last_Name','Email','Phone','Company','Description']
  },
@@ -115,6 +159,7 @@ export default function CRMSettings() {
  name:'Bitrix24',
  icon:'🔵',
  description:'Complete business toolkit',
+ comingSoon: !providerEnabledMap.bitrix24,
  oauth: false,
  needsWebhook: true,
  fields: ['NAME','LAST_NAME','EMAIL','PHONE','COMPANY_TITLE','COMMENTS']
@@ -147,7 +192,50 @@ export default function CRMSettings() {
  }
  }, [crmConfig]);
 
+ useEffect(() => {
+ const params = new URLSearchParams(window.location.search);
+ const oauthStatus = params.get('oauth');
+ const message = params.get('message');
+ const provider = params.get('provider');
+
+ if (!oauthStatus) return;
+
+ if (oauthStatus === 'success') {
+ queryClient.invalidateQueries({ queryKey: ['current-user'] });
+ queryClient.invalidateQueries({ queryKey: ['crm-config'] });
+ toast.success(message || (isRTL ? 'تم ربط CRM بنجاح' : `${provider || 'CRM'} connected successfully`));
+ } else if (oauthStatus === 'error') {
+ toast.error(message || (isRTL ? 'فشل ربط CRM' : 'CRM connection failed'));
+ }
+
+ params.delete('oauth');
+ params.delete('message');
+ params.delete('provider');
+ const nextSearch = params.toString();
+ const nextUrl = `${window.location.pathname}${nextSearch ? `?${nextSearch}` : ''}${window.location.hash || ''}`;
+ window.history.replaceState({}, '', nextUrl);
+ }, [isRTL, queryClient]);
+
+ const activeProviderId = selectedCRM || crmConfig?.provider || null;
+ const activeProvider = crmProviders.find((provider) => provider.id === activeProviderId);
+ const isSavedConnection = Boolean(crmConfig?.provider);
+ const isActiveProviderComingSoon = Boolean(activeProvider?.comingSoon && gatedProviderSet.has(activeProvider.id));
+
+ const handleAdminProviderToggle = (providerId, enabled) => {
+ setAdminProviderFlags((prev) => ({ ...prev, [providerId]: enabled }));
+ };
+
+ const handleSaveAdminCRMPlatforms = () => {
+ if (!isAdmin) return;
+ updateProviderFlagsMutation.mutate(adminProviderFlags);
+ };
+
  const handleConnectCRM = async (provider) => {
+ if (provider.comingSoon && gatedProviderSet.has(provider.id)) {
+ toast.info(isRTL ? 'هذا التكامل قريباً' : `${provider.name} integration is coming soon`);
+ return;
+ }
+
  if (provider.oauth) {
  try {
  // Request OAuth through backend function
@@ -155,8 +243,13 @@ export default function CRMSettings() {
  crm_type: provider.id 
  });
  
- if (response.data.auth_url) {
+ if (response.data?.auth_url) {
  window.location.href = response.data.auth_url;
+ return;
+ }
+
+ if (response.data?.message) {
+ toast.info(response.data.message);
  }
  } catch (error) {
  toast.error(isRTL ?'فشل الاتصال بـ CRM' :'Failed to connect to CRM');
@@ -167,6 +260,11 @@ export default function CRMSettings() {
  };
 
  const handleSaveConfig = () => {
+ if (isActiveProviderComingSoon) {
+ toast.info(isRTL ? 'هذا التكامل قريباً' : 'This integration is coming soon');
+ return;
+ }
+
  const config = {
  provider: selectedCRM,
  field_mapping: fieldMapping,
@@ -179,6 +277,11 @@ export default function CRMSettings() {
  };
 
  const handleTestConnection = async () => {
+ if (isActiveProviderComingSoon) {
+ toast.info(isRTL ? 'هذا التكامل قريباً' : 'This integration is coming soon');
+ return;
+ }
+
  try {
  const result = await testConnectionMutation.mutateAsync(selectedCRM);
  if (result.success) {
@@ -212,14 +315,14 @@ export default function CRMSettings() {
  <div>
  <h1 className="text-2xl md:text-3xl font-bold text-slate-900 flex items-center gap-3">
  {isRTL ?'إعدادات CRM' :'CRM Settings'}
- <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-100 text-amber-700 border border-amber-300">
- ⏳ {isRTL ?'قريباً' :'Coming Soon'}
+ <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-700 border border-emerald-300">
+ ✓ {isRTL ?'متاح' :'Available'}
  </span>
  </h1>
  <p className="text-slate-500 mt-1">
  {isRTL 
- ?'سيتوفر ربط CRM ومزامنة جهات الاتصال تلقائياً قريباً'
- :'CRM integration and automatic contact sync coming soon'
+ ?'يمكنك الآن ربط CRM ومزامنة جهات الاتصال من هذه الصفحة'
+ :'You can now connect your CRM and sync contacts from this page'
  }
  </p>
  </div>
@@ -236,20 +339,82 @@ export default function CRMSettings() {
  pageName={isRTL ?'إعدادات CRM' :'CRM Settings'}
  />
 
- {!crmConfig?.provider ? (
+ {isAdmin && (
+ <Card className="border-amber-300 bg-amber-50/40">
+ <CardHeader>
+ <CardTitle className="flex items-center gap-2">
+ <Settings className="h-5 w-5 text-amber-700" />
+ {isRTL ? 'إعدادات CRM للمشرف' : 'Admin CRM Controls'}
+ </CardTitle>
+ <CardDescription>
+ {isRTL
+ ? 'يمكنك تفعيل أو إيقاف كل منصة CRM. سيتم عرض "قريباً" للمستخدمين عندما تكون المنصة غير مفعلة.'
+ : 'Enable or disable each CRM platform. Disabled platforms are shown as "Soon" for users.'}
+ </CardDescription>
+ </CardHeader>
+ <CardContent className="space-y-5">
+ <div className="grid md:grid-cols-2 gap-4">
+ {crmProviders.filter((provider) => gatedProviderSet.has(provider.id)).map((provider) => (
+ <div key={`admin-${provider.id}`} className="flex items-center justify-between rounded-lg border bg-white p-3">
+ <div className="flex items-center gap-3">
+ <span className="text-2xl">{provider.icon}</span>
+ <div>
+ <p className="font-medium text-slate-900">{provider.name}</p>
+ <p className="text-xs text-slate-500">{providerEnabledMap[provider.id] ? (isRTL ? 'مفعّل' : 'Enabled') : (isRTL ? 'قريباً' : 'Soon')}</p>
+ </div>
+ </div>
+ <Switch
+ checked={Boolean(providerEnabledMap[provider.id])}
+ onCheckedChange={(checked) => handleAdminProviderToggle(provider.id, checked)}
+ disabled={crmProviderFlagsLoading || updateProviderFlagsMutation.isPending}
+ />
+ </div>
+ ))}
+ </div>
+
+ <Button onClick={handleSaveAdminCRMPlatforms} disabled={updateProviderFlagsMutation.isPending || crmProviderFlagsLoading}>
+ {updateProviderFlagsMutation.isPending ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Check className="h-4 w-4 mr-2" />}
+ {isRTL ? 'حفظ إعدادات المنصات' : 'Save Platform Settings'}
+ </Button>
+
+ <div className="rounded-lg border bg-white p-4 space-y-2 text-sm text-slate-700">
+ <p className="font-semibold text-slate-900">{isRTL ? 'دليل تفعيل لاحق' : 'Enablement Guide (Later)'}</p>
+ <ul className="list-disc pl-5 space-y-1">
+ <li>{isRTL ? 'Supabase: تشغيل migration رقم 022 ونشر دوال CRM.' : 'Supabase: run migration 022 and deploy CRM functions.'}</li>
+ <li>{isRTL ? 'إعداد أسرار OAuth (Salesforce/HubSpot) و APP_BASE_URL.' : 'Set OAuth secrets (Salesforce/HubSpot) and APP_BASE_URL.'}</li>
+ <li>{isRTL ? 'تعيين Redirect URI إلى crmOAuthCallback في إعدادات التطبيقات.' : 'Set provider redirect URI to crmOAuthCallback.'}</li>
+ <li>{isRTL ? 'جدولة refreshCRMTokens كل 5-10 دقائق.' : 'Schedule refreshCRMTokens every 5–10 minutes.'}</li>
+ </ul>
+ <p className="text-xs text-slate-500">
+ {isRTL
+ ? 'المرجع الكامل: CRM_INTEGRATION_ENABLEMENT_GUIDE_2026-05-08.md'
+ : 'Full reference: CRM_INTEGRATION_ENABLEMENT_GUIDE_2026-05-08.md'}
+ </p>
+ </div>
+ </CardContent>
+ </Card>
+ )}
+
+ {!activeProviderId ? (
  /* CRM Selection */
  <div className="grid md:grid-cols-3 gap-4">
  {crmProviders.map((provider) => (
  <Card 
  key={provider.id}
- className="transition-all opacity-80 cursor-default"
+ className={`transition-all ${provider.comingSoon ? 'opacity-80 cursor-default' : 'hover:shadow-lg cursor-pointer'}`}
  >
  <CardHeader>
  <div className="flex items-start justify-between">
  <div className="text-4xl mb-2">{provider.icon}</div>
+ {provider.comingSoon ? (
  <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-amber-100 text-amber-700 border border-amber-300">
- {isRTL ?'قريباً' :'Soon'}
+ {isRTL ? 'قريباً' : 'Soon'}
  </span>
+ ) : provider.oauth ? (
+ <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-cyan-100 text-cyan-700 border border-cyan-300">
+ OAuth
+ </span>
+ ) : null}
  </div>
  <CardTitle className="text-lg">{provider.name}</CardTitle>
  <CardDescription className="text-sm">
@@ -257,9 +422,13 @@ export default function CRMSettings() {
  </CardDescription>
  </CardHeader>
  <CardContent>
- <Button className="w-full" variant="outline" disabled>
- <Zap className="h-4 w-4 mr-2 opacity-50" />
- {isRTL ?'قريباً...' :'Coming Soon...'}
+ <Button className="w-full" variant="outline" onClick={() => handleConnectCRM(provider)} disabled={provider.comingSoon}>
+ <Zap className="h-4 w-4 mr-2" />
+ {provider.comingSoon
+ ? (isRTL ? 'قريباً...' : 'Coming Soon...')
+ : provider.oauth
+ ? (isRTL ? 'ربط الآن' : 'Connect Now')
+ : (isRTL ? 'إعداد الآن' : 'Configure Now')}
  </Button>
  </CardContent>
  </Card>
@@ -403,25 +572,27 @@ export default function CRMSettings() {
  <div className="flex items-center justify-between p-4 bg-green-50 rounded-lg border border-green-200">
  <div className="flex items-center gap-3">
  <div className="text-3xl">
- {crmProviders.find(p => p.id === crmConfig.provider)?.icon}
+ {activeProvider?.icon}
  </div>
  <div>
  <p className="font-semibold text-slate-900">
- {crmProviders.find(p => p.id === crmConfig.provider)?.name}
+ {activeProvider?.name}
  </p>
  <p className="text-sm text-slate-500">
- {isRTL ?'متصل منذ' :'Connected since'} {new Date(crmConfig.connected_at).toLocaleDateString()}
+ {isSavedConnection
+ ? `${isRTL ? 'متصل منذ' : 'Connected since'} ${new Date(crmConfig.connected_at).toLocaleDateString()}`
+ : (isRTL ? 'لم يتم الحفظ بعد' : 'Not saved yet')}
  </p>
  </div>
  </div>
- <Check className="h-6 w-6 text-green-600" />
+ {isSavedConnection ? <Check className="h-6 w-6 text-green-600" /> : <AlertCircle className="h-6 w-6 text-amber-500" />}
  </div>
 
  <div className="flex gap-2">
  <Button 
  variant="outline" 
  onClick={handleTestConnection}
- disabled={testConnectionMutation.isPending}
+ disabled={testConnectionMutation.isPending || isActiveProviderComingSoon}
  >
  {testConnectionMutation.isPending ? (
  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
@@ -433,7 +604,7 @@ export default function CRMSettings() {
  <Button 
  variant="outline"
  onClick={() => syncContactsMutation.mutate()}
- disabled={syncContactsMutation.isPending}
+ disabled={syncContactsMutation.isPending || isActiveProviderComingSoon}
  >
  {syncContactsMutation.isPending ? (
  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
@@ -486,7 +657,7 @@ export default function CRMSettings() {
  </SelectTrigger>
  <SelectContent>
  {crmProviders
- .find(p => p.id === crmConfig.provider)
+ .find(p => p.id === activeProviderId)
  ?.fields.map((field) => (
  <SelectItem key={field} value={field}>
  {field}

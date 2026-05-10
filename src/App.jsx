@@ -61,6 +61,7 @@ const { Pages, Layout, mainPage } = pagesConfig;
 const mainPageKey = mainPage ?? Object.keys(Pages)[0];
 const MainPage = mainPageKey ? Pages[mainPageKey] : <></>;
 const ProductDetailPage = Pages.ProductDetail;
+const ProductsPage = Pages.Products;
 
 const LayoutWrapper = ({ children, currentPageName }) => Layout ?
   <Layout currentPageName={currentPageName}>{children}</Layout>
@@ -144,7 +145,7 @@ const AuthenticatedApp = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const isPublicRoute = [
-    '/', '/demohome', '/much-hero', '/login', '/Login', '/Pricing', '/Products', '/ProductDetail', '/Store', '/customize', '/Checkout', '/CheckoutSuccess', '/MyOrders', '/PhysicalCards', '/CardSamples',
+    '/', '/demohome', '/much-hero', '/login', '/Login', '/Pricing', '/Products', '/products', '/ProductDetail', '/customize', '/Checkout', '/CheckoutSuccess', '/MyOrders', '/PhysicalCards', '/CardSamples',
     '/Return', '/PrivacyPolicy', '/PaymentsPolicy', '/returns', '/privacy-policy', '/payments', '/trackQRScan'
   ].includes(location.pathname) || location.pathname.startsWith('/c/') || location.pathname.startsWith('/q/') || location.pathname.startsWith('/products/');
 
@@ -200,6 +201,16 @@ const AuthenticatedApp = () => {
             }
           />
         )}
+        {ProductsPage && (
+          <Route
+            path="/products"
+            element={
+              <LayoutWrapper currentPageName="Products">
+                <ProductsPage />
+              </LayoutWrapper>
+            }
+          />
+        )}
         <Route path="/" element={
           <LayoutWrapper currentPageName="Home">
             <HomePage />
@@ -218,13 +229,18 @@ const AuthenticatedApp = () => {
           </LayoutWrapper>
         } />
         <Route path="/NFC" element={<Navigate to="/" replace />} />
+        <Route path="/Products" element={<Navigate to="/products" replace />} />
+        <Route path="/Store" element={<Navigate to="/products" replace />} />
+        <Route path="/store" element={<Navigate to="/products" replace />} />
         <Route path="/AlternateLanding" element={<Navigate to="/" replace />} />
         <Route path="/Home" element={<Navigate to="/" replace />} />
         <Route path="/PhysicalCards" element={<Navigate to={createPageUrl('MyOrders')} replace />} />
         <Route path="/returns" element={<Navigate to={createPageUrl('Return')} replace />} />
         <Route path="/privacy-policy" element={<Navigate to={createPageUrl('PrivacyPolicy')} replace />} />
         <Route path="/payments" element={<Navigate to={createPageUrl('PaymentsPolicy')} replace />} />
-        {Object.entries(Pages).map(([path, Page]) => (
+        {Object.entries(Pages)
+          .filter(([path]) => path !== 'Products')
+          .map(([path, Page]) => (
           <Route
             key={path}
             path={`/${path}`}

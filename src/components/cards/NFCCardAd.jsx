@@ -135,7 +135,7 @@ export default function NFCCardAd({ cardName, cardUrl }) {
                 </span>
               </div>
 
-              <Link to={createPageUrl('Store')}>
+              <Link to={createPageUrl('Products')}>
                 <Button className="w-full bg-gradient-to-r from-slate-500 to-slate-600 hover:from-slate-400 hover:to-slate-500 text-white shadow-lg border border-slate-400/30">
                   <ShoppingBag className="h-4 w-4 mr-2" />
                   {isRTL ? 'اطلب بطاقتك المعدنية' : 'Order Your Metal Card'}

@@ -27,7 +27,7 @@ const productItems = {
  labelAr:"مولد رمز QR",
  description:"Generate custom QR codes for free",
  descriptionAr:"إنشاء رموز QR مخصصة مجاناً",
- image:"https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6976201166a3bf5a05c8ac09/0e43eb66a_2026-01-2694340.png"
+ image:"https://placehold.co/800x600?text=Rawajcard"
  },
  {
  icon:"✉️",
@@ -35,7 +35,7 @@ const productItems = {
  labelAr:"مولد توقيع البريد الإلكتروني",
  description:"Generate custom email signatures for free",
  descriptionAr:"إنشاء توقيعات بريد إلكتروني مخصصة مجاناً",
- image:"https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6976201166a3bf5a05c8ac09/0e43eb66a_2026-01-2694340.png"
+ image:"https://placehold.co/800x600?text=Rawajcard"
  },
  {
  icon:"🎨",
@@ -43,7 +43,7 @@ const productItems = {
  labelAr:"مولد الخلفية الافتراضية",
  description:"Generate custom virtual backgrounds for free",
  descriptionAr:"إنشاء خلفيات افتراضية مخصصة مجاناً",
- image:"https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6976201166a3bf5a05c8ac09/0e43eb66a_2026-01-2694340.png"
+ image:"https://placehold.co/800x600?text=Rawajcard"
  }
  ]
 };
@@ -107,7 +107,7 @@ const translations = {
  }
 };
 
-export default function Navbar({ onLoginClick, hideFreeTools = false, logoPath ='/' } = {}) {
+export default function Navbar({ onLoginClick, hideFreeTools = false, logoPath ='/', forceDark = false } = {}) {
  const [scrollY, setScrollY] = useState(0);
  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
  const [activeDropdown, setActiveDropdown] = useState(null);
@@ -130,6 +130,29 @@ export default function Navbar({ onLoginClick, hideFreeTools = false, logoPath =
  const { totalCount: cartCount, setIsCartOpen } = useCart();
  const { data: me } = useQuery({ queryKey: ['current-user'], queryFn: () => api.auth.me(), enabled: isAuthenticated });
  const mainAppPage = me?.role ==='admin' ?'Admin' :'Dashboard';
+ const dashboardLabel = language === 'ar' ? 'لوحة التحكم' : 'Dashboard';
+ const createDigitalLabel = isAuthenticated
+ ? dashboardLabel
+ : (language === 'ar' ? 'أنشئ بطاقة رقمية' : 'Create Digital Card');
+ const createFreeDigitalLabel = isAuthenticated
+ ? dashboardLabel
+ : (language === 'ar' ? 'أنشئ بطاقة رقمية مجاناً' : 'Create Free Digital Card');
+ const handleDigitalCardAction = (onDone) => {
+ if (isAuthenticated) {
+ navigate(createPageUrl(mainAppPage));
+ onDone?.();
+ return;
+ }
+
+ if (typeof onLoginClick === 'function') {
+ onLoginClick();
+ onDone?.();
+ return;
+ }
+
+ navigate(createPageUrl('Login'));
+ onDone?.();
+ };
  const visibleNavItems = hideFreeTools ? navItems.filter(item => item.type !=='freetools') : navItems;
 
  // Use local products data
@@ -186,17 +209,17 @@ export default function Navbar({ onLoginClick, hideFreeTools = false, logoPath =
  <nav
  ref={navContainerRef}
  className={`fixed left-0 right-0 z-50 transition-all duration-300 ${
- isScrolled 
+ (isScrolled || forceDark)
  ?'bg-indigo-950/95 shadow-lg shadow-slate-900/20' 
  :'bg-transparent'
  }`}
  style={{ top:`${navTop}px` }}
  >
  <div className="container mx-auto px-4 md:px-6">
- <div className="flex items-center justify-between min-h-20 py-3 gap-3" dir="ltr">
+ <div className="relative flex items-center justify-between min-h-20 py-3 gap-3" dir="ltr">
 
  {/* Side A: actions (language, cart) */}
- <div className="flex flex-1 items-center gap-2 md:gap-3 justify-end lg:order-3">
+ <div className="absolute left-0 top-1/2 flex items-center gap-2 -translate-y-1/2 lg:static lg:flex-1 lg:translate-y-0 lg:justify-end lg:gap-3 lg:order-3">
  {/* Cart icon with badge */}
  <button onClick={() => setIsCartOpen(true)} className="relative p-2 rounded-lg hover:bg-white/10 transition-colors">
  <ShoppingCart className="w-5 h-5 text-slate-200" />
@@ -207,8 +230,32 @@ export default function Navbar({ onLoginClick, hideFreeTools = false, logoPath =
  )}
  </button>
 
+ {/* Language selector (mobile + tablet) */}
+ <div className="flex items-center gap-1 rounded-xl border border-white/10 bg-white/5 p-1 lg:hidden">
+ <button
+ onClick={() => setLang('en')}
+ className={`min-w-11 rounded-lg px-2.5 py-1.5 text-xs font-semibold transition-colors ${
+ language ==='en'
+ ?'bg-primary/15 text-primary'
+ :'text-slate-300 hover:bg-white/10'
+ }`}
+ >
+ EN
+ </button>
+ <button
+ onClick={() => setLang('ar')}
+ className={`min-w-11 rounded-lg px-2.5 py-1.5 text-xs font-semibold transition-colors ${
+ language ==='ar'
+ ?'bg-primary/15 text-primary'
+ :'text-slate-300 hover:bg-white/10'
+ }`}
+ >
+ عربي
+ </button>
+ </div>
+
  {/* Language selector (desktop) */}
- <div className="hidden md:flex items-center gap-1">
+ <div className="hidden lg:flex items-center gap-1">
  <button
  onClick={() => setLang('en')}
  className={`px-3 py-1.5 text-sm font-medium rounded-lg transition-colors ${
@@ -233,7 +280,7 @@ export default function Navbar({ onLoginClick, hideFreeTools = false, logoPath =
  </div>
 
  {/* Center: Logo */}
- <div className="flex items-center justify-center shrink-0 px-2 lg:order-2">
+ <div className="mx-auto flex items-center justify-center shrink-0 px-2 lg:mx-0 lg:order-2">
  <Link to={logoPath} className="flex flex-col items-center gap-1">
  <img
  src="/rawajcard-logo.svg"
@@ -248,9 +295,9 @@ export default function Navbar({ onLoginClick, hideFreeTools = false, logoPath =
  </div>
 
  {/* Side B: CTA buttons */}
- <div className="flex flex-1 items-center gap-2 md:gap-3 justify-start lg:order-1">
+ <div className="absolute right-0 top-1/2 flex items-center gap-2 -translate-y-1/2 lg:static lg:flex-1 lg:translate-y-0 lg:justify-start lg:gap-3 lg:order-1">
  {/* Auth CTAs */}
- <div className="hidden md:flex items-center gap-2">
+ <div className="hidden lg:flex items-center gap-2">
  <button
  className="group h-10 rounded-full px-5 text-sm font-semibold text-white bg-gradient-to-r from-fuchsia-600 to-purple-700 hover:from-fuchsia-500 hover:to-purple-600 border border-white/20 shadow-[0_8px_28px_-10px_rgba(13,148,136,0.85)] hover:shadow-[0_14px_36px_-12px_rgba(6,182,212,0.85)] transition-all duration-300 hover:-translate-y-0.5"
  onClick={() => navigate('/customize')}
@@ -262,11 +309,11 @@ export default function Navbar({ onLoginClick, hideFreeTools = false, logoPath =
  </button>
  <button
  className="group h-10 rounded-full px-5 text-sm font-semibold text-white bg-gradient-to-r from-slate-900 to-slate-700 hover:from-slate-800 hover:to-slate-600 border border-indigo-800/40 shadow-[0_8px_28px_-10px_rgba(15,23,42,0.78)] transition-all duration-300 hover:-translate-y-0.5"
- onClick={() => isAuthenticated ? navigate(createPageUrl('Dashboard')) : onLoginClick?.()}
+ onClick={() => handleDigitalCardAction()}
  >
  <span className="flex items-center gap-1.5">
  <LogIn className="w-4 h-4" />
- {language ==='ar' ?'أنشئ بطاقة رقمية' :'Create Digital Card'}
+ {createDigitalLabel}
  </span>
  </button>
  </div>
@@ -743,10 +790,10 @@ export default function Navbar({ onLoginClick, hideFreeTools = false, logoPath =
  {language ==='ar' ?'اطلب بطاقتك الآن' :'Order Your Card Now'}
  </button>
  <button
- onClick={() => { setActiveDropdown(null); isAuthenticated ? navigate(createPageUrl('Dashboard')) : onLoginClick?.(); }}
+ onClick={() => handleDigitalCardAction(() => setActiveDropdown(null))}
  className="flex-1 h-9 rounded-full text-xs font-semibold text-slate-200 bg-white/10 hover:bg-white/20 border border-slate-700 transition-all"
  >
- {language ==='ar' ?'أنشئ بطاقة رقمية مجاناً' :'Create Free Digital Card'}
+ {createFreeDigitalLabel}
  </button>
  </div>
  </div>
@@ -1069,11 +1116,11 @@ export default function Navbar({ onLoginClick, hideFreeTools = false, logoPath =
  </button>
  <button
  className="w-full h-11 rounded-full font-semibold text-white bg-gradient-to-r from-slate-900 to-slate-700 hover:from-slate-800 hover:to-slate-600 border border-indigo-800/40 shadow-[0_8px_24px_-12px_rgba(15,23,42,0.78)] transition-all duration-300"
- onClick={() => { setMobileMenuOpen(false); isAuthenticated ? navigate(createPageUrl('Dashboard')) : onLoginClick?.(); }}
+ onClick={() => handleDigitalCardAction(() => setMobileMenuOpen(false))}
  >
  <span className="flex items-center justify-center gap-1.5">
  <LogIn className="w-4 h-4" />
- {language ==='ar' ?'أنشئ بطاقة رقمية' :'Create Digital Card'}
+ {createDigitalLabel}
  </span>
  </button>
  </div>

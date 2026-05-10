@@ -98,6 +98,8 @@ export default function PublicCard() {
  // @ts-ignore
  const userLang = typeof navigator !=='undefined' ? (navigator.language || navigator.userLanguage) :'en';
  const isRTL = userLang.startsWith('ar');
+ const forcedLanguage = card?.default_language || card?.design?.default_language || 'auto';
+ const cardIsRTL = forcedLanguage ==='ar' ? true : forcedLanguage ==='en' ? false : isRTL;
 
  // Track view mutation
  // @ts-ignore
@@ -179,20 +181,20 @@ export default function PublicCard() {
  !isSampleCard && !!card?.contact_form?.enabled && card?.contact_form?.form_type !=='inline';
 
  return (
- <div className={cn("min-h-screen bg-slate-100 flex items-center justify-center p-4", isRTL &&"rtl")}>
+ <div className={cn("min-h-screen bg-slate-100 flex items-center justify-center p-4", cardIsRTL &&"rtl")}>
  {/* Mobile-sized Container */}
  <div className="w-full max-w-md mx-auto relative">
  <div className="bg-indigo-950/60 rounded-3xl shadow-2xl overflow-hidden">
  <Suspense fallback={<TemplateFallback />}>
  <TemplateComponent
  card={cardWithActions}
- isRTL={isRTL}
+ isRTL={cardIsRTL}
  onLinkClick={handleLinkClick}
  />
  </Suspense>
  <Suspense fallback={null}>
- {card.appointment_settings?.enabled && <AppointmentSection card={card} isRTL={isRTL} />}
- {card.custom_form?.enabled && <CustomFormEmbed card={card} isRTL={isRTL} />}
+ {card.appointment_settings?.enabled && <AppointmentSection card={card} isRTL={cardIsRTL} />}
+ {card.custom_form?.enabled && <CustomFormEmbed card={card} isRTL={cardIsRTL} />}
  </Suspense>
  </div>
 
@@ -221,19 +223,19 @@ export default function PublicCard() {
  onClose={() => setShowContactForm(false)}
  cardId={card.id}
  cardOwner={card.created_by}
- cardName={isRTL && card.name_ar ? card.name_ar : card.name}
+ cardName={cardIsRTL && card.name_ar ? card.name_ar : card.name}
  />
  )}
 
  <FloatingActions
  card={card}
- isRTL={isRTL}
+ isRTL={cardIsRTL}
  cardUrl={window.location.href}
  />
 
  {shouldRenderExternalContactForm && (
  <Suspense fallback={null}>
- <ContactCollectionForm card={card} isRTL={isRTL} />
+ <ContactCollectionForm card={card} isRTL={cardIsRTL} />
  </Suspense>
  )}
  </div>

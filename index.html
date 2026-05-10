@@ -76,19 +76,16 @@
         snaptr("init", "fb1f2ea8-15f7-412d-85d5-55c12eef47f3");
         snaptr("track", "PAGE_VIEW");
 
-        // Google Ads + GA4
-        var g1 = document.createElement('script');
-        g1.async = true; g1.src = 'https://www.googletagmanager.com/gtag/js?id=AW-17934411422';
-        document.head.appendChild(g1);
-        var g2 = document.createElement('script');
-        g2.async = true; g2.src = 'https://www.googletagmanager.com/gtag/js?id=G-8J8PT8NQV5';
-        document.head.appendChild(g2);
+        // Google tag (gtag.js)
+        var g = document.createElement('script');
+        g.async = true;
+        g.src = 'https://www.googletagmanager.com/gtag/js?id=G-ZRH4665YFB';
+        document.head.appendChild(g);
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         window.gtag = gtag;
         gtag('js', new Date());
-        gtag('config', 'AW-17934411422');
-        gtag('config', 'G-8J8PT8NQV5');
+        gtag('config', 'G-ZRH4665YFB');
       }
 
       // Defer tracking: use requestIdleCallback or fallback to 3.5s delay

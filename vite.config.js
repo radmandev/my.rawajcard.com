@@ -10,7 +10,6 @@ const __dirname = dirname(__filename)
 
 export default defineConfig(({ mode, command }) => {
   const env = loadEnv(mode, process.cwd(), '')
-  const offlineMock = env.VITE_OFFLINE_MOCK === 'true'
   const publicBasePath = env.VITE_PUBLIC_BASE_PATH || '/'
 
   return {
@@ -21,12 +20,6 @@ export default defineConfig(({ mode, command }) => {
     resolve: {
       alias: {
         '@': path.resolve(__dirname, 'src'),
-        ...(offlineMock
-          ? {
-              '@base44/sdk': path.resolve(__dirname, 'src/mocks/base44Sdk.js'),
-              '@base44/sdk/dist/utils/axios-client': path.resolve(__dirname, 'src/mocks/axiosClient.js')
-            }
-          : {})
       }
     },
     plugins: [
@@ -68,29 +61,3 @@ export default defineConfig(({ mode, command }) => {
     }
   }
 })
-
-// import react from '@vitejs/plugin-react'
-// import { defineConfig, loadEnv } from 'vite'
-// import path from 'path'
-
-// // https://vite.dev/config/
-// export default defineConfig(({ mode }) => {
-//   const env = loadEnv(mode, process.cwd(), '');
-//   const offlineMock = env.VITE_OFFLINE_MOCK === 'true';
-
-//   return {
-//     logLevel: 'error', // Suppress warnings, only show errors
-//     resolve: {
-//       alias: {
-//         '@': path.resolve(__dirname, 'src'),
-//         ...(offlineMock
-//           ? {
-//               '@base44/sdk': path.resolve(__dirname, 'src/mocks/base44Sdk.js'),
-//               '@base44/sdk/dist/utils/axios-client': path.resolve(__dirname, 'src/mocks/axiosClient.js')
-//             }
-//           : {})
-//       }
-//     },
-//     plugins: [react()]
-//   };
-// });

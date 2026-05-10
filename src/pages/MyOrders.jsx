@@ -381,7 +381,7 @@ export default function MyOrders() {
  {isRTL ?'ابدأ من المتجر ثم عد هنا لإدارة عناصر الطلب.' :'Start from the store, then come back here to manage your order items.'}
  </p>
  </div>
- <Link to={createPageUrl('Store')}>
+ <Link to={createPageUrl('Products')}>
  <Button variant="outline">{isRTL ?'اذهب إلى المتجر' :'Go to Store'}</Button>
  </Link>
  </CardContent>

@@ -56,7 +56,7 @@ export default function Header({ onMenuToggle, isMenuOpen, cartCount = 0 }) {
  {/* Right Actions */}
  <div className="flex items-center gap-2">
  {/* Cart */}
- <Link to={createPageUrl('Store')}>
+ <Link to={createPageUrl('Products')}>
  <Button variant="ghost" size="icon" className="relative text-slate-100 hover:text-white hover:bg-white/10">
  <ShoppingCart className="h-5 w-5" />
  {cartCount > 0 && (

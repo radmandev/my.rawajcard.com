@@ -67,6 +67,13 @@ export default function CardBuilder() {
  social_links: {}
  });
 
+ const scrollStepToTop = () => {
+ if (typeof window ==='undefined') return;
+ window.requestAnimationFrame(() => {
+ window.scrollTo({ top: 0, behavior:'smooth' });
+ });
+ };
+
  // Get current user
  const { data: currentUser } = useQuery({
  queryKey: ['current-user'],
@@ -280,6 +287,7 @@ export default function CardBuilder() {
  }
  if (currentStep < STEPS.length - 1) {
  setCurrentStep(currentStep + 1);
+ scrollStepToTop();
  }
  };
 
@@ -329,7 +337,7 @@ export default function CardBuilder() {
  const canProceed = () => {
  switch (currentStep) {
  case 0: return !!card.template;
- case 1: return !!card.name;
+ case 1: return !!(card.name || card.name_ar);
  case 2: return true;
  case 3: return true;
  case 4: return !!card.slug && slugValid;
@@ -359,10 +367,10 @@ export default function CardBuilder() {
  className={cn(
 "flex items-center gap-2 px-4 py-2 rounded-full transition-all",
  currentStep === index
- ?"bg-cyan-600 text-white"
+ ?"bg-cyan-600 text-white shadow-[0_0_0_1px_rgba(255,255,255,0.15),0_8px_20px_rgba(6,182,212,0.35)]"
  : currentStep > index
- ?"bg-cyan-100/20 text-cyan-600 cursor-pointer hover:bg-cyan-100/40"
- :"bg-slate-100 text-slate-400"
+ ?"bg-cyan-500/15 text-cyan-300 border border-cyan-400/40 cursor-pointer hover:bg-cyan-500/25"
+ :"bg-white/5 text-slate-300 border border-white/15"
  )}
  disabled={index > currentStep}
  >
@@ -374,7 +382,7 @@ export default function CardBuilder() {
  {index < STEPS.length - 1 && (
  <div className={cn(
 "w-8 md:w-16 h-0.5 mx-2",
- currentStep > index ?"bg-cyan-600" :"bg-slate-200"
+ currentStep > index ?"bg-cyan-500" :"bg-white/15"
  )} />
  )}
  </React.Fragment>
@@ -477,7 +485,7 @@ export default function CardBuilder() {
  </CardTitle>
  </CardHeader>
  <CardContent>
- <SimpleForm card={card} onChange={setCard} onSaveDraft={handleSaveDraftAndOpenPricing} sectionsToShow={['appointments','customForm','contactForm','crm']} />
+ <SimpleForm card={card} onChange={setCard} onSaveDraft={handleSaveDraftAndOpenPricing} sectionsToShow={['language','appointments','customForm','contactForm','crm']} />
  </CardContent>
  </Card>
  </motion.div>
@@ -491,22 +499,28 @@ export default function CardBuilder() {
  animate={{ opacity: 1, x: 0 }}
  exit={{ opacity: 0, x: isRTL ? -20 : 20 }}
  >
- <Card className="bg-indigo-950/60 border-slate-200/50">
- <CardHeader>
- <CardTitle>{t('customLink')}</CardTitle>
- </CardHeader>
- <CardContent>
+ <div className="rounded-2xl border border-white/10 bg-gradient-to-br from-slate-900/80 to-indigo-950/80 backdrop-blur-sm shadow-xl overflow-hidden">
+ <div className="px-6 pt-6 pb-2 border-b border-white/10 flex items-center gap-3">
+ <div className="h-9 w-9 rounded-lg bg-cyan-500/20 flex items-center justify-center">
+ <Link2 className="h-5 w-5 text-cyan-400" />
+ </div>
+ <div>
+ <h2 className="text-lg font-semibold text-slate-100">{t('customLink')}</h2>
+ <p className="text-xs text-slate-400">{isRTL ? 'أنشئ رابطك المخصص الدائم' : 'Create your permanent custom link'}</p>
+ </div>
+ </div>
+ <div className="p-6">
  <SlugInput
  value={card.slug}
  onChange={(slug) => {
  setCard({ ...card, slug });
- setSlugValid(false); // reset while user types
+ setSlugValid(false);
  }}
  currentCardId={card.id}
  onValidation={setSlugValid}
  />
- </CardContent>
- </Card>
+ </div>
+ </div>
  </motion.div>
  )}
 

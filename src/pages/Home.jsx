@@ -264,7 +264,7 @@ export default function Home() {
       </div>
 
       {/* ── Navbar (existing) ────────────────────────────────────── */}
-      <Navbar />
+      <Navbar onLoginClick={() => setLoginOpen(true)} />
 
       {/* ── Hero Section (Demo Hero) ────────────────────────────── */}
       <DemoHomeMerged heroOnly onLoginClick={() => setLoginOpen(true)} />

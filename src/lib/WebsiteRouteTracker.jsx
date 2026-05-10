@@ -8,8 +8,7 @@ function resolveTrackedPage(pathname) {
   if (pathname === '/NFC') return { pageName: 'NFC Landing', section: 'landing' };
   if (pathname === '/customize') return { pageName: 'Product Customization', section: 'customization' };
   if (pathname === '/CardSamples') return { pageName: 'Card Samples', section: 'samples' };
-  if (pathname === '/Store') return { pageName: 'Store', section: 'store' };
-  if (pathname === '/Products') return { pageName: 'Products', section: 'store' };
+  if (pathname === '/Products' || pathname === '/products') return { pageName: 'Products', section: 'store' };
   if (pathname === '/Checkout') return { pageName: 'Checkout', section: 'checkout' };
   if (pathname === '/CheckoutSuccess') return { pageName: 'Checkout Success', section: 'checkout' };
   if (pathname.startsWith('/products/')) return { pageName: 'Product Detail', section: 'store' };
