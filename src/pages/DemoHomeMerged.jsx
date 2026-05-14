@@ -265,7 +265,7 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
           justify-content: center;
           border: none;
           background: transparent;
-          color: rgba(203, 213, 225, 0.72);
+          color: rgba(225, 203, 203, 0.72);
           transition: color 0.2s ease, opacity 0.2s ease;
           flex-shrink: 0;
           opacity: 0.9;
@@ -464,45 +464,142 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
 
         .demo-phone-glow {
           position: absolute;
-          width: 14rem;
-          height: 18rem;
+          width: 18rem;
+          height: 22rem;
           left: 50%;
           top: 44%;
           transform: translate(-50%, -50%);
-          background: rgba(56, 189, 248, 0.18);
-          filter: blur(70px);
+          background: radial-gradient(ellipse at center, rgba(56, 189, 248, 0.26) 0%, rgba(139, 92, 246, 0.16) 45%, transparent 72%);
+          filter: blur(52px);
           border-radius: 9999px;
+        }
+
+        .demo-phone-3d-frame {
+          position: relative;
+          transform: perspective(1400px) rotateY(-5deg) rotateX(2deg);
+          transition: transform 0.6s ease;
+        }
+
+        .demo-phone-3d-frame:hover {
+          transform: perspective(1400px) rotateY(-2deg) rotateX(1deg);
         }
 
         .demo-phone {
           position: relative;
           width: 17.5rem;
           height: 35rem;
-          border-radius: 2.2rem;
-          background: #1c2535;
-          border: 1px solid rgba(56, 189, 248, 0.25);
-          box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+          border-radius: 2.8rem;
+          background: #000000;
+          box-shadow:
+            inset 0 0 0 1.5px rgba(255, 255, 255, 0.13),
+            inset 1.5px 0 0 rgba(255, 255, 255, 0.10),
+            inset 0 2px 0 rgba(255, 255, 255, 0.16),
+            inset -1.5px 0 0 rgba(0, 0, 0, 0.38),
+            inset 0 -2px 0 rgba(0, 0, 0, 0.48);
           overflow: hidden;
         }
 
         .dark .demo-phone {
-          background: #1c2535;
-          border-color: rgba(56, 189, 248, 0.15);
+          background: #000000;
         }
 
         html:not(.dark) .demo-phone {
-          background: #e0e8e8;
-          border-color: rgba(56, 189, 248, 0.25);
+          background: #000000;
+          box-shadow:
+            inset 0 0 0 1.5px rgba(255, 255, 255, 0.13),
+            inset 1.5px 0 0 rgba(255, 255, 255, 0.10),
+            inset 0 2px 0 rgba(255, 255, 255, 0.16),
+            inset -1.5px 0 0 rgba(0, 0, 0, 0.38),
+            inset 0 -2px 0 rgba(0, 0, 0, 0.48);
+        }
+
+        .demo-phone-island {
+          position: absolute;
+          top: 0.9rem;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 5.6rem;
+          height: 1.15rem;
+          border-radius: 9999px;
+          background: #000;
+          box-shadow: 0 0 0 1.5px rgba(255, 255, 255, 0.07), inset 0 1px 3px rgba(0, 0, 0, 0.9);
+          z-index: 10;
+          overflow: hidden;
+        }
+
+        .demo-phone-island::after {
+          content: '';
+          position: absolute;
+          top: 50%;
+          left: 62%;
+          transform: translate(-50%, -50%);
+          width: 0.42rem;
+          height: 0.42rem;
+          border-radius: 9999px;
+          background: rgba(56, 189, 248, 0.55);
+          box-shadow: 0 0 5px rgba(56, 189, 248, 0.5);
+        }
+
+        .demo-phone-btn {
+          position: absolute;
+          border-radius: 3px;
+        }
+
+        .demo-phone-btn-vol-u {
+          left: -3.5px;
+          top: 27%;
+          width: 3.5px;
+          height: 2.1rem;
+          background: linear-gradient(to right, #0c141f, #1a2738);
+          box-shadow: -2px 0 4px rgba(0, 0, 0, 0.65), inset 1px 0 0 rgba(255, 255, 255, 0.07);
+          border-radius: 3px 0 0 3px;
+        }
+
+        .demo-phone-btn-vol-d {
+          left: -3.5px;
+          top: calc(27% + 2.65rem);
+          width: 3.5px;
+          height: 2.1rem;
+          background: linear-gradient(to right, #0c141f, #1a2738);
+          box-shadow: -2px 0 4px rgba(0, 0, 0, 0.65), inset 1px 0 0 rgba(255, 255, 255, 0.07);
+          border-radius: 3px 0 0 3px;
+        }
+
+        .demo-phone-btn-power {
+          right: -3.5px;
+          top: 30%;
+          width: 3.5px;
+          height: 3.1rem;
+          background: linear-gradient(to left, #0c141f, #1a2738);
+          box-shadow: 2px 0 4px rgba(0, 0, 0, 0.65), inset -1px 0 0 rgba(255, 255, 255, 0.07);
+          border-radius: 0 3px 3px 0;
+        }
+
+        .demo-phone-glass {
+          position: absolute;
+          inset: 0;
+          border-radius: inherit;
+          background: linear-gradient(
+            125deg,
+            rgba(255, 255, 255, 0.13) 0%,
+            rgba(255, 255, 255, 0.05) 20%,
+            transparent 44%,
+            transparent 56%,
+            rgba(255, 255, 255, 0.02) 80%,
+            rgba(255, 255, 255, 0.05) 100%
+          );
+          pointer-events: none;
+          z-index: 15;
         }
 
         .demo-screen {
           position: absolute;
-          inset: 0.5rem;
-          border-radius: 1.8rem;
+          inset: 0.55rem;
+          border-radius: 2.35rem;
           background: linear-gradient(155deg, rgba(255, 255, 255, 0.96), rgba(240, 248, 248, 0.9));
           border: 1px solid rgba(56, 189, 248, 0.22);
           backdrop-filter: blur(12px);
-          padding: 1rem;
+          padding: 2.45rem 1rem 1rem;
           display: flex;
           flex-direction: column;
           overflow: hidden;
@@ -1961,23 +2058,6 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
                 </motion.button>
               </motion.div>
 
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.8, delay: 0.9 }}
-                className="demo-stats flex gap-8 mt-12"
-              >
-                {[
-                  { value: '+10', labelAr: 'منتجات NFC', labelEn: 'NFC Products' },
-                  { value: '+20', labelAr: 'قالب كرت ⭐', labelEn: 'Card Templates' },
-                  { value: '2 يوم', labelAr: 'توصيل سريع', labelEn: '2 days Delivery' },
-                ].map((stat, i) => (
-                  <div key={i} className="text-center">
-                    <div className="text-2xl font-black text-cyan-400">{stat.value}</div>
-                    <div className="text-xs text-slate-400 mt-0.5">{isRTL ? stat.labelAr : stat.labelEn}</div>
-                  </div>
-                ))}
-              </motion.div>
             </div>
 
             <motion.div
@@ -2007,11 +2087,18 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
 
                 <div className="demo-phone-wrap">
                   <div className="demo-phone-glow" />
-                  <article className="demo-phone">
-                    <div className="demo-screen">
-                      {renderPhoneExperience()}
-                    </div>
-                  </article>
+                  <div className="demo-phone-3d-frame">
+                    <span className="demo-phone-btn demo-phone-btn-vol-u" aria-hidden="true" />
+                    <span className="demo-phone-btn demo-phone-btn-vol-d" aria-hidden="true" />
+                    <span className="demo-phone-btn demo-phone-btn-power" aria-hidden="true" />
+                    <article className="demo-phone">
+                      <div className="demo-phone-island" aria-hidden="true" />
+                      <div className="demo-screen">
+                        {renderPhoneExperience()}
+                      </div>
+                      <div className="demo-phone-glass" aria-hidden="true" />
+                    </article>
+                  </div>
                 </div>
 
                 <div className="demo-product-mockup">
