@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useLanguage } from '@/components/shared/LanguageContext';
-import { api } from '@/api/supabaseAPI';
+import { supabase } from '@/lib/supabaseClient';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -35,11 +35,20 @@ export default function ContactFormDialog({ isOpen, onClose, cardId, cardOwner, 
 
     setLoading(true);
     try {
-      await api.entities.ContactSubmission.create({
-        card_id: cardId,
-        card_owner: cardOwner,
-        ...formData
+      // SECURITY DEFINER RPC (migration 023) — anon can't INSERT directly
+      // because the cs_public_insert RLS check needs SELECT on business_cards,
+      // which anon no longer has after migration 021.
+      const { error: rpcError } = await supabase.rpc('submit_contact_form', {
+        p_card_id: cardId,
+        p_name:    formData.visitor_name    || null,
+        p_email:   formData.visitor_email   || null,
+        p_phone:   formData.visitor_phone   || null,
+        p_message: formData.notes           || null,
+        p_data:    {
+          company: formData.visitor_company || null,
+        },
       });
+      if (rpcError) throw rpcError;
       toast.success(isRTL ? 'تم إرسال معلوماتك بنجاح!' : 'Your details have been shared!');
       setFormData({
         visitor_name: '',

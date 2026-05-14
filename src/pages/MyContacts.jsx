@@ -131,7 +131,9 @@ export default function MyContacts() {
  queryKey: ['contact-submissions'],
  queryFn: async () => {
  const me = await api.auth.me();
- return api.entities.ContactSubmission.filter({ card_owner: me.email },'-created_at');
+ // Live table uses `user_id uuid` (NOT NULL), not `card_owner text`.
+ // RLS already restricts to rows whose card belongs to auth.uid().
+ return api.entities.ContactSubmission.filter({ user_id: me.id },'-created_at');
  }
  });
 
