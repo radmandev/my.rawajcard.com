@@ -7,6 +7,7 @@ import { Label } from'@/components/ui/label';
 import { X, CheckCircle } from'lucide-react';
 import { motion, AnimatePresence } from'framer-motion';
 import { api } from'@/api/supabaseAPI';
+import { supabase } from'@/lib/supabaseClient';
 import { toast } from'sonner';
 
 export default function ContactCollectionForm({ card, isRTL }) {
@@ -104,32 +105,20 @@ export default function ContactCollectionForm({ card, isRTL }) {
  try {
  // Map dynamic form fields to Supabase contact_submissions schema
  const mapped = extractMappedFields();
- const submissionV2 = {
- card_id: card.id,
- card_owner: card.created_by ||'',
- name: mapped.name,
- email: mapped.email,
- phone: mapped.phone,
- message: mapped.message,
- data: formData
- };
 
- let createdSubmission;
- try {
- createdSubmission = await api.entities.ContactSubmission.create(submissionV2);
- } catch (insertError) {
- const submissionLegacy = {
- card_id: card.id,
- card_owner: card.created_by ||'',
- visitor_name: mapped.name,
- visitor_email: mapped.email,
- visitor_phone: mapped.phone,
- visitor_company: mapped.company,
- notes: mapped.message,
- data: formData
- };
- createdSubmission = await api.entities.ContactSubmission.create(submissionLegacy);
- }
+ // Anonymous visitors can't satisfy the table's RLS EXISTS check on
+ // business_cards (migration 021 removed anon SELECT). Route through a
+ // SECURITY DEFINER RPC (migration 023) that verifies the card is
+ // published and writes the row server-side.
+ const { data: createdSubmission, error: rpcError } = await supabase.rpc('submit_contact_form', {
+ p_card_id: card.id,
+ p_name: mapped.name ||null,
+ p_email: mapped.email ||null,
+ p_phone: mapped.phone ||null,
+ p_message: mapped.message ||null,
+ p_data: formData || {},
+ });
+ if (rpcError) throw rpcError;
  
  // Send to CRM webhook if configured
  try {
