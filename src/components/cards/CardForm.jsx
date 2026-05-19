@@ -10,14 +10,15 @@ import { api } from'@/api/supabaseAPI';
 import FontSelector from'@/components/shared/FontSelector';
 import ColorPresetSlider from'@/components/cards/ColorPresetSlider';
 import DraggableColorPicker from'@/components/cards/DraggableColorPicker';
-import { 
- User, 
- Building2, 
- Share2, 
+import {
+ User,
+ Building2,
+ Share2,
  Palette,
  Upload,
  X,
- Loader2
+ Loader2,
+ Plus
 } from'lucide-react';
 
 export default function CardForm({ card, onChange }) {
@@ -50,6 +51,25 @@ export default function CardForm({ card, onChange }) {
  [property]: value
  }
  });
+ };
+
+ const resolveArr = (pluralField, singularField) => {
+ if (Array.isArray(card[pluralField]) && card[pluralField].length) return card[pluralField];
+ return card[singularField] ? [card[singularField]] : [''];
+ };
+ const handleMultiChange = (pluralField, singularField, index, value) => {
+ const arr = [...resolveArr(pluralField, singularField)];
+ arr[index] = value;
+ onChange({ ...card, [pluralField]: arr, [singularField]: arr[0] || '' });
+ };
+ const handleMultiRemove = (pluralField, singularField, index) => {
+ const arr = resolveArr(pluralField, singularField).filter((_, i) => i !== index);
+ const final = arr.length ? arr : [''];
+ onChange({ ...card, [pluralField]: final, [singularField]: final[0] || '' });
+ };
+ const handleMultiAdd = (pluralField, singularField) => {
+ const arr = resolveArr(pluralField, singularField);
+ onChange({ ...card, [pluralField]: [...arr, ''] });
  };
 
  const handleImageUpload = async (e, field) => {
@@ -326,56 +346,120 @@ export default function CardForm({ card, onChange }) {
  </div>
  </div>
 
- <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
- <div className="space-y-2">
- <Label>{t('email')}</Label>
- <Input
- type="email"
- value={card.email ||''}
- onChange={(e) => handleChange('email', e.target.value)}
- placeholder="your@email.com"
- />
- </div>
+ {/* Phones */}
  <div className="space-y-2">
  <Label>{t('phone')}</Label>
+ {resolveArr('phones', 'phone').map((val, i) => (
+ <div key={i} className="flex gap-2">
  <Input
  type="tel"
- value={card.phone ||''}
- onChange={(e) => handleChange('phone', e.target.value)}
+ value={val}
+ onChange={(e) => handleMultiChange('phones', 'phone', i, e.target.value)}
  placeholder="+966 5X XXX XXXX"
  />
+ {i > 0 && (
+ <Button variant="ghost" size="icon" className="shrink-0" onClick={() => handleMultiRemove('phones', 'phone', i)}>
+ <X className="h-4 w-4" />
+ </Button>
+ )}
  </div>
+ ))}
+ <Button variant="outline" size="sm" className="w-full mt-1" onClick={() => handleMultiAdd('phones', 'phone')}>
+ <Plus className="h-3 w-3 mr-1" />{isRTL ?'إضافة رقم' :'Add Phone'}
+ </Button>
  </div>
 
- <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+ {/* Emails */}
+ <div className="space-y-2">
+ <Label>{t('email')}</Label>
+ {resolveArr('emails', 'email').map((val, i) => (
+ <div key={i} className="flex gap-2">
+ <Input
+ type="email"
+ value={val}
+ onChange={(e) => handleMultiChange('emails', 'email', i, e.target.value)}
+ placeholder="your@email.com"
+ />
+ {i > 0 && (
+ <Button variant="ghost" size="icon" className="shrink-0" onClick={() => handleMultiRemove('emails', 'email', i)}>
+ <X className="h-4 w-4" />
+ </Button>
+ )}
+ </div>
+ ))}
+ <Button variant="outline" size="sm" className="w-full mt-1" onClick={() => handleMultiAdd('emails', 'email')}>
+ <Plus className="h-3 w-3 mr-1" />{isRTL ?'إضافة بريد' :'Add Email'}
+ </Button>
+ </div>
+
+ {/* WhatsApp */}
  <div className="space-y-2">
  <Label>{t('whatsapp')}</Label>
+ {resolveArr('whatsapps', 'whatsapp').map((val, i) => (
+ <div key={i} className="flex gap-2">
  <Input
  type="tel"
- value={card.whatsapp ||''}
- onChange={(e) => handleChange('whatsapp', e.target.value)}
+ value={val}
+ onChange={(e) => handleMultiChange('whatsapps', 'whatsapp', i, e.target.value)}
  placeholder="+966 5X XXX XXXX"
  />
+ {i > 0 && (
+ <Button variant="ghost" size="icon" className="shrink-0" onClick={() => handleMultiRemove('whatsapps', 'whatsapp', i)}>
+ <X className="h-4 w-4" />
+ </Button>
+ )}
  </div>
+ ))}
+ <Button variant="outline" size="sm" className="w-full mt-1" onClick={() => handleMultiAdd('whatsapps', 'whatsapp')}>
+ <Plus className="h-3 w-3 mr-1" />{isRTL ?'إضافة واتساب' :'Add WhatsApp'}
+ </Button>
+ </div>
+
+ {/* Websites */}
  <div className="space-y-2">
  <Label>{t('website')}</Label>
+ {resolveArr('websites', 'website').map((val, i) => (
+ <div key={i} className="flex gap-2">
  <Input
- value={card.website ||''}
- onChange={(e) => handleChange('website', e.target.value)}
+ value={val}
+ onChange={(e) => handleMultiChange('websites', 'website', i, e.target.value)}
  placeholder="https://yourwebsite.com"
  />
+ {i > 0 && (
+ <Button variant="ghost" size="icon" className="shrink-0" onClick={() => handleMultiRemove('websites', 'website', i)}>
+ <X className="h-4 w-4" />
+ </Button>
+ )}
  </div>
+ ))}
+ <Button variant="outline" size="sm" className="w-full mt-1" onClick={() => handleMultiAdd('websites', 'website')}>
+ <Plus className="h-3 w-3 mr-1" />{isRTL ?'إضافة موقع' :'Add Website'}
+ </Button>
+ </div>
+
+ {/* Locations */}
+ <div className="space-y-2">
+ <Label>{t('location')}</Label>
+ {resolveArr('locations', 'location').map((val, i) => (
+ <div key={i} className="flex gap-2">
+ <Input
+ value={val}
+ onChange={(e) => handleMultiChange('locations', 'location', i, e.target.value)}
+ placeholder={isRTL ?'المدينة، البلد' :'City, Country'}
+ />
+ {i > 0 && (
+ <Button variant="ghost" size="icon" className="shrink-0" onClick={() => handleMultiRemove('locations', 'location', i)}>
+ <X className="h-4 w-4" />
+ </Button>
+ )}
+ </div>
+ ))}
+ <Button variant="outline" size="sm" className="w-full mt-1" onClick={() => handleMultiAdd('locations', 'location')}>
+ <Plus className="h-3 w-3 mr-1" />{isRTL ?'إضافة موقع' :'Add Location'}
+ </Button>
  </div>
 
  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
- <div className="space-y-2">
- <Label>{t('location')}</Label>
- <Input
- value={card.location ||''}
- onChange={(e) => handleChange('location', e.target.value)}
- placeholder={isRTL ?'المدينة، البلد' :'City, Country'}
- />
- </div>
  <div className="space-y-2">
  <Label>{t('locationAr')}</Label>
  <Input

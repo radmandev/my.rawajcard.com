@@ -1,11 +1,12 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { 
+import {
   Phone, Mail, Globe, MessageCircle,
   Facebook, Instagram, Linkedin, Youtube, Github,
   Share2, UserPlus, ChevronRight,
   Navigation
 } from 'lucide-react';
+import { getContactArrays } from '@/lib/cardContactFields';
 
 const XIcon = ({ className, style }) => (
   <svg className={className} style={style} viewBox="0 0 24 24" fill="currentColor">
@@ -27,6 +28,7 @@ const SocialIcon = ({ platform, className, style }) => {
 };
 
 export default function TemplateEarthyMinimal({ card, isRTL, onLinkClick }) {
+  const { phones, emails, whatsapps, websites, locations } = getContactArrays(card);
   const primaryColor = '#92400E'; // Earthy brown
   const bgColor = '#FEF7ED'; // Warm cream
 
@@ -119,36 +121,39 @@ END:VCARD`;
 
           {/* Quick Actions */}
           <div className="flex gap-2 mt-4">
-            {card.phone && (
-              <a 
-                href={`tel:${card.phone}`}
+            {phones.map((p, i) => (
+              <a
+                key={i}
+                href={`tel:${p}`}
                 onClick={() => onLinkClick?.('phone')}
                 className="h-10 w-10 rounded-xl flex items-center justify-center text-white shadow"
                 style={{ backgroundColor: primaryColor }}
               >
                 <Phone className="h-5 w-5" />
               </a>
-            )}
-            {card.email && (
-              <a 
-                href={`mailto:${card.email}`}
+            ))}
+            {emails.map((e, i) => (
+              <a
+                key={i}
+                href={`mailto:${e}`}
                 onClick={() => onLinkClick?.('email')}
                 className="h-10 w-10 rounded-xl flex items-center justify-center text-white shadow"
                 style={{ backgroundColor: primaryColor }}
               >
                 <Mail className="h-5 w-5" />
               </a>
-            )}
-            {card.whatsapp && (
-              <a 
-                href={`https://wa.me/${card.whatsapp.replace(/\D/g, '')}`}
+            ))}
+            {whatsapps.map((w, i) => (
+              <a
+                key={i}
+                href={`https://wa.me/${w.replace(/\D/g, '')}`}
                 onClick={() => onLinkClick?.('whatsapp')}
                 className="h-10 w-10 rounded-xl flex items-center justify-center text-white shadow"
                 style={{ backgroundColor: primaryColor }}
               >
                 <MessageCircle className="h-5 w-5" />
               </a>
-            )}
+            ))}
           </div>
         </div>
       </div>
@@ -179,37 +184,38 @@ END:VCARD`;
           </div>
           
           <div className="space-y-3 text-sm">
-            {card.phone && (
-              <a href={`tel:${card.phone}`} onClick={() => onLinkClick?.('phone')} className="block">
-                <p className="font-medium" style={{ color: primaryColor }}>{isRTL ? 'اتصل بنا' : 'Call Us'}</p>
-                <p className="text-slate-500">{card.phone}</p>
+            {phones.map((p, i) => (
+              <a key={i} href={`tel:${p}`} onClick={() => onLinkClick?.('phone')} className="block">
+                {i === 0 && <p className="font-medium" style={{ color: primaryColor }}>{isRTL ? 'اتصل بنا' : 'Call Us'}</p>}
+                <p className="text-slate-500">{p}</p>
               </a>
-            )}
-            {card.email && (
-              <a href={`mailto:${card.email}`} onClick={() => onLinkClick?.('email')} className="block">
-                <p className="font-medium" style={{ color: primaryColor }}>{isRTL ? 'البريد' : 'Email'}</p>
-                <p className="text-slate-500">{card.email}</p>
+            ))}
+            {emails.map((e, i) => (
+              <a key={i} href={`mailto:${e}`} onClick={() => onLinkClick?.('email')} className="block">
+                {i === 0 && <p className="font-medium" style={{ color: primaryColor }}>{isRTL ? 'البريد' : 'Email'}</p>}
+                <p className="text-slate-500">{e}</p>
               </a>
-            )}
-            {card.location && (
-              <div>
-                <p className="font-medium" style={{ color: primaryColor }}>{isRTL ? 'العنوان' : 'Address'}</p>
-                <p className="text-slate-500">{isRTL && card.location_ar ? card.location_ar : card.location}</p>
-              </div>
-            )}
-            {card.location && (
-              <a 
-                href={`https://maps.google.com/?q=${encodeURIComponent(card.location)}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => onLinkClick?.('directions')}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-white text-sm"
-                style={{ backgroundColor: primaryColor }}
-              >
-                <Navigation className="h-4 w-4" />
-                {isRTL ? 'الاتجاهات' : 'Direction'}
-              </a>
-            )}
+            ))}
+            {locations.map((loc, i) => {
+              const displayLoc = i === 0 && isRTL && card.location_ar ? card.location_ar : loc;
+              return (
+                <div key={i}>
+                  {i === 0 && <p className="font-medium" style={{ color: primaryColor }}>{isRTL ? 'العنوان' : 'Address'}</p>}
+                  <p className="text-slate-500">{displayLoc}</p>
+                  <a
+                    href={`https://maps.google.com/?q=${encodeURIComponent(displayLoc)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => onLinkClick?.('directions')}
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-white text-sm"
+                    style={{ backgroundColor: primaryColor }}
+                  >
+                    <Navigation className="h-4 w-4" />
+                    {isRTL ? 'الاتجاهات' : 'Direction'}
+                  </a>
+                </div>
+              );
+            })}
           </div>
         </div>
 

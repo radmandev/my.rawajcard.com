@@ -1,6 +1,7 @@
 import React from 'react';
 import { Phone, Mail, MapPin, Globe, Linkedin, Facebook, Instagram, Twitter, Youtube, MessageSquare } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { getContactArrays } from '@/lib/cardContactFields';
 
 const getSocialIcon = (platform) => {
   switch (platform) {
@@ -14,6 +15,7 @@ const getSocialIcon = (platform) => {
 };
 
 export default function TemplateNoqtatain2({ card, isRTL, onLinkClick }) {
+  const { phones, emails, whatsapps, websites, locations } = getContactArrays(card);
   const primaryColor = card.design?.primary_color || '#0D1B3E';
   const accentColor = card.design?.accent_color || '#4CAF50';
   const textColor = card.design?.text_color || '#1F2937';
@@ -53,24 +55,24 @@ export default function TemplateNoqtatain2({ card, isRTL, onLinkClick }) {
 
           {/* Quick Action Buttons */}
           <div className="flex justify-center gap-3 mt-6">
-            {card.phone && (
-              <a href={`tel:${card.phone}`} onClick={() => onLinkClick?.('phone')}
+            {phones.map((p, i) => (
+              <a key={i} href={`tel:${p}`} onClick={() => onLinkClick?.('phone')}
                 className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center hover:bg-white/30 transition-colors">
                 <Phone className="h-5 w-5" />
               </a>
-            )}
-            {card.email && (
-              <a href={`mailto:${card.email}`} onClick={() => onLinkClick?.('email')}
+            ))}
+            {emails.map((e, i) => (
+              <a key={i} href={`mailto:${e}`} onClick={() => onLinkClick?.('email')}
                 className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center hover:bg-white/30 transition-colors">
                 <Mail className="h-5 w-5" />
               </a>
-            )}
-            {card.whatsapp && (
-              <a href={`https://wa.me/${card.whatsapp}`} onClick={() => onLinkClick?.('whatsapp')}
+            ))}
+            {whatsapps.map((w, i) => (
+              <a key={i} href={`https://wa.me/${w}`} onClick={() => onLinkClick?.('whatsapp')}
                 className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center hover:bg-white/30 transition-colors">
                 <MessageSquare className="h-5 w-5" />
               </a>
-            )}
+            ))}
           </div>
         </div>
       </div>
@@ -98,38 +100,41 @@ export default function TemplateNoqtatain2({ card, isRTL, onLinkClick }) {
           </div>
 
           <div className="space-y-4">
-            {card.phone && (
-              <div>
-                <p className="text-xs text-slate-400 mb-1">{isRTL ? 'اتصل بنا' : 'Call Us'}</p>
-                <a href={`tel:${card.phone}`} className="text-base font-medium block" style={{ color: primaryColor }}>
-                  {card.phone}
+            {phones.map((p, i) => (
+              <div key={i}>
+                {i === 0 && <p className="text-xs text-slate-400 mb-1">{isRTL ? 'اتصل بنا' : 'Call Us'}</p>}
+                <a href={`tel:${p}`} className="text-base font-medium block" style={{ color: primaryColor }}>
+                  {p}
                 </a>
               </div>
-            )}
-            {card.email && (
-              <div>
-                <p className="text-xs text-slate-400 mb-1">{isRTL ? 'البريد الإلكتروني' : 'Email'}</p>
-                <a href={`mailto:${card.email}`} className="text-base font-medium block" style={{ color: primaryColor }}>
-                  {card.email}
+            ))}
+            {emails.map((e, i) => (
+              <div key={i}>
+                {i === 0 && <p className="text-xs text-slate-400 mb-1">{isRTL ? 'البريد الإلكتروني' : 'Email'}</p>}
+                <a href={`mailto:${e}`} className="text-base font-medium block" style={{ color: primaryColor }}>
+                  {e}
                 </a>
               </div>
-            )}
-            {card.location && (
-              <div>
-                <p className="text-xs text-slate-400 mb-1">{isRTL ? 'العنوان' : 'Address'}</p>
-                <p className="text-sm mb-2">{isRTL && card.location_ar ? card.location_ar : card.location}</p>
-                <a
-                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(isRTL && card.location_ar ? card.location_ar : card.location)}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 text-sm hover:underline"
-                  style={{ color: accentColor }}
-                >
-                  <MapPin className="h-4 w-4" />
-                  {isRTL ? 'الاتجاهات' : 'Directions'}
-                </a>
-              </div>
-            )}
+            ))}
+            {locations.map((loc, i) => {
+              const displayLoc = i === 0 && isRTL && card.location_ar ? card.location_ar : loc;
+              return (
+                <div key={i}>
+                  {i === 0 && <p className="text-xs text-slate-400 mb-1">{isRTL ? 'العنوان' : 'Address'}</p>}
+                  <p className="text-sm mb-2">{displayLoc}</p>
+                  <a
+                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(displayLoc)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 text-sm hover:underline"
+                    style={{ color: accentColor }}
+                  >
+                    <MapPin className="h-4 w-4" />
+                    {isRTL ? 'الاتجاهات' : 'Directions'}
+                  </a>
+                </div>
+              );
+            })}
           </div>
         </div>
 
@@ -178,9 +183,10 @@ export default function TemplateNoqtatain2({ card, isRTL, onLinkClick }) {
         )}
 
         {/* Website */}
-        {card.website && (
+        {websites.map((w, i) => (
           <a
-            href={card.website.startsWith('http') ? card.website : `https://${card.website}`}
+            key={i}
+            href={w.startsWith('http') ? w : `https://${w}`}
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => onLinkClick?.('website')}
@@ -194,7 +200,7 @@ export default function TemplateNoqtatain2({ card, isRTL, onLinkClick }) {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
             </svg>
           </a>
-        )}
+        ))}
       </div>
     </div>
   );

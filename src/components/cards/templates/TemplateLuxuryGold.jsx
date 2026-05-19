@@ -1,7 +1,9 @@
 import React from 'react';
 import { Mail, Phone, MapPin, MessageCircle, Linkedin, Instagram, Twitter, Facebook, Briefcase } from 'lucide-react';
+import { getContactArrays } from '@/lib/cardContactFields';
 
 export default function TemplateLuxuryGold({ card, isRTL, onLinkClick }) {
+  const { phones, emails, whatsapps, websites, locations } = getContactArrays(card);
   const socialIcons = {
     linkedin: Linkedin,
     instagram: Instagram,
@@ -72,9 +74,10 @@ export default function TemplateLuxuryGold({ card, isRTL, onLinkClick }) {
 
         {/* Contact Cards */}
         <div className="max-w-md mx-auto space-y-4 mb-8">
-          {card.email && (
+          {emails.map((e, i) => (
             <a
-              href={`mailto:${card.email}`}
+              key={i}
+              href={`mailto:${e}`}
               onClick={() => onLinkClick?.('email')}
               className="block bg-gradient-to-r from-yellow-900/20 to-yellow-800/20 border-2 border-yellow-500/30 rounded-xl p-4 hover:border-yellow-500 transition-all group"
             >
@@ -83,16 +86,17 @@ export default function TemplateLuxuryGold({ card, isRTL, onLinkClick }) {
                   <Mail className="h-5 w-5 text-yellow-500 group-hover:text-black" />
                 </div>
                 <div className="flex-1 text-left">
-                  <p className="text-xs text-slate-400 uppercase tracking-wide">Email</p>
-                  <p className="text-white font-medium">{card.email}</p>
+                  {i === 0 && <p className="text-xs text-slate-400 uppercase tracking-wide">Email</p>}
+                  <p className="text-white font-medium">{e}</p>
                 </div>
               </div>
             </a>
-          )}
+          ))}
 
-          {card.phone && (
+          {phones.map((p, i) => (
             <a
-              href={`tel:${card.phone}`}
+              key={i}
+              href={`tel:${p}`}
               onClick={() => onLinkClick?.('phone')}
               className="block bg-gradient-to-r from-yellow-900/20 to-yellow-800/20 border-2 border-yellow-500/30 rounded-xl p-4 hover:border-yellow-500 transition-all group"
             >
@@ -101,16 +105,17 @@ export default function TemplateLuxuryGold({ card, isRTL, onLinkClick }) {
                   <Phone className="h-5 w-5 text-yellow-500 group-hover:text-black" />
                 </div>
                 <div className="flex-1 text-left">
-                  <p className="text-xs text-slate-400 uppercase tracking-wide">Phone</p>
-                  <p className="text-white font-medium">{card.phone}</p>
+                  {i === 0 && <p className="text-xs text-slate-400 uppercase tracking-wide">Phone</p>}
+                  <p className="text-white font-medium">{p}</p>
                 </div>
               </div>
             </a>
-          )}
+          ))}
 
-          {card.whatsapp && (
+          {whatsapps.map((w, i) => (
             <a
-              href={`https://wa.me/${card.whatsapp.replace(/[^0-9]/g, '')}`}
+              key={i}
+              href={`https://wa.me/${w.replace(/[^0-9]/g, '')}`}
               onClick={() => onLinkClick?.('whatsapp')}
               target="_blank"
               rel="noopener noreferrer"
@@ -121,19 +126,19 @@ export default function TemplateLuxuryGold({ card, isRTL, onLinkClick }) {
                   <MessageCircle className="h-5 w-5 text-yellow-500 group-hover:text-black" />
                 </div>
                 <div className="flex-1 text-left">
-                  <p className="text-xs text-slate-400 uppercase tracking-wide">WhatsApp</p>
+                  {i === 0 && <p className="text-xs text-slate-400 uppercase tracking-wide">WhatsApp</p>}
                   <p className="text-white font-medium">Message Me</p>
                 </div>
               </div>
             </a>
-          )}
+          ))}
 
-          {card.location && (
-            <div className="flex items-center justify-center gap-2 text-slate-400 pt-4">
+          {locations.map((loc, i) => (
+            <div key={i} className="flex items-center justify-center gap-2 text-slate-400 pt-4">
               <MapPin className="h-4 w-4 text-yellow-500" />
-              <span className="text-sm">{isRTL && card.location_ar ? card.location_ar : card.location}</span>
+              <span className="text-sm">{i === 0 && isRTL && card.location_ar ? card.location_ar : loc}</span>
             </div>
-          )}
+          ))}
         </div>
 
         {/* Social Links */}

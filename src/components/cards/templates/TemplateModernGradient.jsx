@@ -1,7 +1,9 @@
-import React from'react';
-import { Mail, Phone, MapPin, MessageCircle, Linkedin, Instagram, Twitter, Facebook } from'lucide-react';
+import React from 'react';
+import { Mail, Phone, MapPin, MessageCircle, Linkedin, Instagram, Twitter, Facebook } from 'lucide-react';
+import { getContactArrays } from '@/lib/cardContactFields';
 
 export default function TemplateModernGradient({ card, isRTL, onLinkClick }) {
+ const { phones, emails, whatsapps, websites, locations } = getContactArrays(card);
  const design = card.design || {};
  const primaryColor = design.primary_color ||'#6366F1';
  const secondaryColor = design.secondary_color ||'#8B5CF6';
@@ -64,31 +66,34 @@ export default function TemplateModernGradient({ card, isRTL, onLinkClick }) {
 
  {/* Contact Actions */}
  <div className="space-y-3 mb-6">
- {card.email && (
+ {emails.map((e, i) => (
  <a
- href={`mailto:${card.email}`}
+ key={i}
+ href={`mailto:${e}`}
  onClick={() => onLinkClick?.('email')}
  className="flex items-center justify-center gap-3 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-2xl p-4 shadow-lg hover:shadow-xl transition-all hover:scale-105"
  >
  <Mail className="h-5 w-5" />
- <span className="font-medium">{card.email}</span>
+ <span className="font-medium">{e}</span>
  </a>
- )}
+ ))}
 
- {card.phone && (
+ {phones.map((p, i) => (
  <a
- href={`tel:${card.phone}`}
+ key={i}
+ href={`tel:${p}`}
  onClick={() => onLinkClick?.('phone')}
  className="flex items-center justify-center gap-3 bg-gradient-to-r from-purple-500 to-pink-600 text-white rounded-2xl p-4 shadow-lg hover:shadow-xl transition-all hover:scale-105"
  >
  <Phone className="h-5 w-5" />
- <span className="font-medium">{card.phone}</span>
+ <span className="font-medium">{p}</span>
  </a>
- )}
+ ))}
 
- {card.whatsapp && (
+ {whatsapps.map((w, i) => (
  <a
- href={`https://wa.me/${card.whatsapp.replace(/[^0-9]/g,'')}`}
+ key={i}
+ href={`https://wa.me/${w.replace(/[^0-9]/g,'')}`}
  onClick={() => onLinkClick?.('whatsapp')}
  target="_blank"
  rel="noopener noreferrer"
@@ -97,14 +102,14 @@ export default function TemplateModernGradient({ card, isRTL, onLinkClick }) {
  <MessageCircle className="h-5 w-5" />
  <span className="font-medium">WhatsApp</span>
  </a>
- )}
+ ))}
 
- {card.location && (
- <div className="flex items-center justify-center gap-2 text-slate-600">
+ {locations.map((loc, i) => (
+ <div key={i} className="flex items-center justify-center gap-2 text-slate-600">
  <MapPin className="h-4 w-4" />
- <span className="text-sm">{isRTL && card.location_ar ? card.location_ar : card.location}</span>
+ <span className="text-sm">{i === 0 && isRTL && card.location_ar ? card.location_ar : loc}</span>
  </div>
- )}
+ ))}
  </div>
 
  {/* Social Links */}

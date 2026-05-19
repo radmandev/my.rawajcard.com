@@ -1,7 +1,9 @@
 import React from 'react';
 import { Mail, Phone, MapPin, MessageCircle, Linkedin, Instagram, Twitter, Facebook, Globe } from 'lucide-react';
+import { getContactArrays } from '@/lib/cardContactFields';
 
 export default function TemplateTechBlue({ card, isRTL, onLinkClick }) {
+  const { phones, emails, whatsapps, websites, locations } = getContactArrays(card);
   const socialIcons = {
     linkedin: Linkedin,
     instagram: Instagram,
@@ -82,9 +84,10 @@ export default function TemplateTechBlue({ card, isRTL, onLinkClick }) {
 
         {/* Contact Grid */}
         <div className="grid grid-cols-2 gap-3 mb-6">
-          {card.email && (
+          {emails.map((e, i) => (
             <a
-              href={`mailto:${card.email}`}
+              key={i}
+              href={`mailto:${e}`}
               onClick={() => onLinkClick?.('email')}
               className="col-span-2 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-xl p-4 hover:scale-105 transition-transform shadow-lg hover:shadow-cyan-500/50"
             >
@@ -93,16 +96,17 @@ export default function TemplateTechBlue({ card, isRTL, onLinkClick }) {
                   <Mail className="h-5 w-5 text-white" />
                 </div>
                 <div className="flex-1 text-left">
-                  <p className="text-xs text-cyan-200 font-mono">EMAIL</p>
-                  <p className="text-white font-medium text-sm truncate">{card.email}</p>
+                  {i === 0 && <p className="text-xs text-cyan-200 font-mono">EMAIL</p>}
+                  <p className="text-white font-medium text-sm truncate">{e}</p>
                 </div>
               </div>
             </a>
-          )}
+          ))}
 
-          {card.phone && (
+          {phones.map((p, i) => (
             <a
-              href={`tel:${card.phone}`}
+              key={i}
+              href={`tel:${p}`}
               onClick={() => onLinkClick?.('phone')}
               className="bg-slate-800/70 backdrop-blur-sm border border-blue-400/30 rounded-xl p-4 hover:border-blue-400 hover:bg-slate-800 transition-all"
             >
@@ -110,15 +114,16 @@ export default function TemplateTechBlue({ card, isRTL, onLinkClick }) {
                 <div className="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center mx-auto mb-2">
                   <Phone className="h-5 w-5 text-cyan-400" />
                 </div>
-                <p className="text-xs text-cyan-400 font-mono mb-1">CALL</p>
-                <p className="text-white text-xs font-medium">{card.phone.slice(0, 12)}...</p>
+                {i === 0 && <p className="text-xs text-cyan-400 font-mono mb-1">CALL</p>}
+                <p className="text-white text-xs font-medium">{p.slice(0, 12)}...</p>
               </div>
             </a>
-          )}
+          ))}
 
-          {card.whatsapp && (
+          {whatsapps.map((w, i) => (
             <a
-              href={`https://wa.me/${card.whatsapp.replace(/[^0-9]/g, '')}`}
+              key={i}
+              href={`https://wa.me/${w.replace(/[^0-9]/g, '')}`}
               onClick={() => onLinkClick?.('whatsapp')}
               target="_blank"
               rel="noopener noreferrer"
@@ -128,18 +133,18 @@ export default function TemplateTechBlue({ card, isRTL, onLinkClick }) {
                 <div className="w-10 h-10 rounded-lg bg-cyan-500/20 flex items-center justify-center mx-auto mb-2">
                   <MessageCircle className="h-5 w-5 text-cyan-400" />
                 </div>
-                <p className="text-xs text-cyan-400 font-mono mb-1">CHAT</p>
+                {i === 0 && <p className="text-xs text-cyan-400 font-mono mb-1">CHAT</p>}
                 <p className="text-white text-xs font-medium">WhatsApp</p>
               </div>
             </a>
-          )}
+          ))}
 
-          {card.location && (
-            <div className="col-span-2 flex items-center justify-center gap-2 text-slate-400 py-2">
+          {locations.map((loc, i) => (
+            <div key={i} className="col-span-2 flex items-center justify-center gap-2 text-slate-400 py-2">
               <MapPin className="h-4 w-4 text-cyan-400" />
-              <span className="text-sm font-mono">{isRTL && card.location_ar ? card.location_ar : card.location}</span>
+              <span className="text-sm font-mono">{i === 0 && isRTL && card.location_ar ? card.location_ar : loc}</span>
             </div>
-          )}
+          ))}
         </div>
 
         {/* Social Links */}

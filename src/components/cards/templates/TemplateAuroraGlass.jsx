@@ -5,6 +5,7 @@ import {
   UserPlus, Share2, ExternalLink, ChevronRight
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { getContactArrays } from '@/lib/cardContactFields';
 
 /* ─── tiny X/Twitter svg ─── */
 const XIcon = ({ className }) => (
@@ -99,6 +100,7 @@ const PARTICLES = [
 ];
 
 export default function TemplateAuroraGlass({ card, isRTL, onLinkClick }) {
+  const { phones, emails, whatsapps, websites, locations } = getContactArrays(card);
   const [saved, setSaved] = useState(false);
   const [copied, setCopied] = useState(false);
 
@@ -199,20 +201,20 @@ export default function TemplateAuroraGlass({ card, isRTL, onLinkClick }) {
 
           {/* ── Contact buttons ── */}
           <div className="slide-up-3 w-full space-y-3 mb-6">
-            {card.phone && (
-              <a href={`tel:${card.phone}`} onClick={() => onLinkClick?.('phone')}
+            {phones.map((p, i) => (
+              <a key={i} href={`tel:${p}`} onClick={() => onLinkClick?.('phone')}
                 className="flex items-center gap-3 glass-card-light rounded-2xl px-5 py-4 text-white transition-all hover:scale-[1.02] active:scale-[.98] group">
                 <span className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
                   style={{ background:'linear-gradient(135deg,#6d28d9,#4f46e5)' }}>
                   <Phone className="h-4 w-4" />
                 </span>
-                <span className="flex-1 text-sm font-medium">{card.phone}</span>
+                <span className="flex-1 text-sm font-medium">{p}</span>
                 <ChevronRight className="h-4 w-4 text-white/40 group-hover:text-white/70 transition-colors" />
               </a>
-            )}
+            ))}
 
-            {card.whatsapp && (
-              <a href={`https://wa.me/${card.whatsapp.replace(/\D/g,'')}`} onClick={() => onLinkClick?.('whatsapp')}
+            {whatsapps.map((w, i) => (
+              <a key={i} href={`https://wa.me/${w.replace(/\D/g,'')}`} onClick={() => onLinkClick?.('whatsapp')}
                 className="flex items-center gap-3 glass-card-light rounded-2xl px-5 py-4 text-white transition-all hover:scale-[1.02] active:scale-[.98] group">
                 <span className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
                   style={{ background:'linear-gradient(135deg,#16a34a,#15803d)' }}>
@@ -221,44 +223,44 @@ export default function TemplateAuroraGlass({ card, isRTL, onLinkClick }) {
                 <span className="flex-1 text-sm font-medium">WhatsApp</span>
                 <ChevronRight className="h-4 w-4 text-white/40 group-hover:text-white/70 transition-colors" />
               </a>
-            )}
+            ))}
 
-            {card.email && (
-              <a href={`mailto:${card.email}`} onClick={() => onLinkClick?.('email')}
+            {emails.map((e, i) => (
+              <a key={i} href={`mailto:${e}`} onClick={() => onLinkClick?.('email')}
                 className="flex items-center gap-3 glass-card-light rounded-2xl px-5 py-4 text-white transition-all hover:scale-[1.02] active:scale-[.98] group">
                 <span className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
                   style={{ background:'linear-gradient(135deg,#0369a1,#0284c7)' }}>
                   <Mail className="h-4 w-4" />
                 </span>
-                <span className="flex-1 text-sm font-medium truncate">{card.email}</span>
+                <span className="flex-1 text-sm font-medium truncate">{e}</span>
                 <ChevronRight className="h-4 w-4 text-white/40 group-hover:text-white/70 transition-colors" />
               </a>
-            )}
+            ))}
 
-            {card.website && (
-              <a href={card.website.startsWith('http') ? card.website : `https://${card.website}`}
+            {websites.map((w, i) => (
+              <a key={i} href={w.startsWith('http') ? w : `https://${w}`}
                 target="_blank" rel="noreferrer" onClick={() => onLinkClick?.('website')}
                 className="flex items-center gap-3 glass-card-light rounded-2xl px-5 py-4 text-white transition-all hover:scale-[1.02] active:scale-[.98] group">
                 <span className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
                   style={{ background:'linear-gradient(135deg,#0891b2,#06b6d4)' }}>
                   <Globe className="h-4 w-4" />
                 </span>
-                <span className="flex-1 text-sm font-medium truncate">{card.website}</span>
+                <span className="flex-1 text-sm font-medium truncate">{w}</span>
                 <ExternalLink className="h-4 w-4 text-white/40 group-hover:text-white/70 transition-colors" />
               </a>
-            )}
+            ))}
 
-            {card.location && (
-              <div className="flex items-center gap-3 glass-card-light rounded-2xl px-5 py-4 text-white">
+            {locations.map((loc, i) => (
+              <div key={i} className="flex items-center gap-3 glass-card-light rounded-2xl px-5 py-4 text-white">
                 <span className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
                   style={{ background:'linear-gradient(135deg,#be185d,#db2777)' }}>
                   <MapPin className="h-4 w-4" />
                 </span>
                 <span className="text-sm font-medium">
-                  {isRTL && card.location_ar ? card.location_ar : card.location}
+                  {i === 0 && isRTL && card.location_ar ? card.location_ar : loc}
                 </span>
               </div>
-            )}
+            ))}
           </div>
 
           {/* ── Social links ── */}

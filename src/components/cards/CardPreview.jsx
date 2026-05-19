@@ -17,6 +17,7 @@ import TemplateTechBlue from './templates/TemplateTechBlue';
 import TemplateSunsetWarm from './templates/TemplateSunsetWarm';
 import TemplateForestGreen from './templates/TemplateForestGreen';
 import TemplateAuroraGlass from './templates/TemplateAuroraGlass';
+import TemplateEliteCrystal from './templates/TemplateEliteCrystal';
 
 const templateComponents = {
   navy_gold: TemplateNavyGold,
@@ -36,6 +37,7 @@ const templateComponents = {
   sunset_warm: TemplateSunsetWarm,
   forest_green: TemplateForestGreen,
   aurora_glass: TemplateAuroraGlass,
+  elite_crystal: TemplateEliteCrystal,
   // Legacy mappings
   modern: TemplateNavyGold,
   classic: TemplateDarkMinimal,

@@ -1,7 +1,9 @@
 import React from 'react';
 import { Mail, Phone, MapPin, MessageCircle, Linkedin, Instagram, Twitter, Facebook, Leaf } from 'lucide-react';
+import { getContactArrays } from '@/lib/cardContactFields';
 
 export default function TemplateForestGreen({ card, isRTL, onLinkClick }) {
+  const { phones, emails, whatsapps, websites, locations } = getContactArrays(card);
   const socialIcons = {
     linkedin: Linkedin,
     instagram: Instagram,
@@ -82,9 +84,10 @@ export default function TemplateForestGreen({ card, isRTL, onLinkClick }) {
 
         {/* Contact Buttons */}
         <div className="space-y-3 mb-6">
-          {card.email && (
+          {emails.map((e, i) => (
             <a
-              href={`mailto:${card.email}`}
+              key={i}
+              href={`mailto:${e}`}
               onClick={() => onLinkClick?.('email')}
               className="flex items-center justify-between bg-indigo-950/60/80 backdrop-blur-sm border-2 border-green-300 rounded-xl p-4 shadow-md hover:shadow-lg hover:border-green-500 transition-all group"
             >
@@ -93,16 +96,17 @@ export default function TemplateForestGreen({ card, isRTL, onLinkClick }) {
                   <Mail className="h-5 w-5 text-green-600 group-hover:text-white" />
                 </div>
                 <div className="text-left">
-                  <p className="text-xs text-green-600 font-medium">Email</p>
-                  <p className="text-slate-700 font-medium text-sm">{card.email}</p>
+                  {i === 0 && <p className="text-xs text-green-600 font-medium">Email</p>}
+                  <p className="text-slate-700 font-medium text-sm">{e}</p>
                 </div>
               </div>
             </a>
-          )}
+          ))}
 
-          {card.phone && (
+          {phones.map((p, i) => (
             <a
-              href={`tel:${card.phone}`}
+              key={i}
+              href={`tel:${p}`}
               onClick={() => onLinkClick?.('phone')}
               className="flex items-center justify-between bg-indigo-950/60/80 backdrop-blur-sm border-2 border-emerald-300 rounded-xl p-4 shadow-md hover:shadow-lg hover:border-emerald-500 transition-all group"
             >
@@ -111,16 +115,17 @@ export default function TemplateForestGreen({ card, isRTL, onLinkClick }) {
                   <Phone className="h-5 w-5 text-emerald-600 group-hover:text-white" />
                 </div>
                 <div className="text-left">
-                  <p className="text-xs text-emerald-600 font-medium">Phone</p>
-                  <p className="text-slate-700 font-medium text-sm">{card.phone}</p>
+                  {i === 0 && <p className="text-xs text-emerald-600 font-medium">Phone</p>}
+                  <p className="text-slate-700 font-medium text-sm">{p}</p>
                 </div>
               </div>
             </a>
-          )}
+          ))}
 
-          {card.whatsapp && (
+          {whatsapps.map((w, i) => (
             <a
-              href={`https://wa.me/${card.whatsapp.replace(/[^0-9]/g, '')}`}
+              key={i}
+              href={`https://wa.me/${w.replace(/[^0-9]/g, '')}`}
               onClick={() => onLinkClick?.('whatsapp')}
               target="_blank"
               rel="noopener noreferrer"
@@ -131,19 +136,19 @@ export default function TemplateForestGreen({ card, isRTL, onLinkClick }) {
                   <MessageCircle className="h-5 w-5 text-green-600 group-hover:text-white" />
                 </div>
                 <div className="text-left">
-                  <p className="text-xs text-green-600 font-medium">WhatsApp</p>
+                  {i === 0 && <p className="text-xs text-green-600 font-medium">WhatsApp</p>}
                   <p className="text-slate-700 font-medium text-sm">Send Message</p>
                 </div>
               </div>
             </a>
-          )}
+          ))}
 
-          {card.location && (
-            <div className="flex items-center justify-center gap-2 text-green-700 py-2">
+          {locations.map((loc, i) => (
+            <div key={i} className="flex items-center justify-center gap-2 text-green-700 py-2">
               <MapPin className="h-4 w-4" />
-              <span className="text-sm">{isRTL && card.location_ar ? card.location_ar : card.location}</span>
+              <span className="text-sm">{i === 0 && isRTL && card.location_ar ? card.location_ar : loc}</span>
             </div>
-          )}
+          ))}
         </div>
 
         {/* Social Links */}

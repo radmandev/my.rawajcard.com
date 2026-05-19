@@ -1,7 +1,6 @@
 import React from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { Check, Sparkles, Zap, Building2, Users, Loader2, X } from 'lucide-react';
 import { useLanguage } from '@/components/shared/LanguageContext';
 import { useQuery } from '@tanstack/react-query';

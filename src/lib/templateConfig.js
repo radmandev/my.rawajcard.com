@@ -180,6 +180,17 @@ export const ALL_TEMPLATES = [
     customizable: false,
   },
   {
+    id: 'elite_crystal',
+    name: 'Elite Crystal',
+    nameAr: 'الكريستال الفاخر',
+    description: 'Dark luxury with crystalline gold and glass morphism',
+    descriptionAr: 'فخامة داكنة مع كريستال ذهبي وتأثير زجاجي',
+    colors: ['#0a0a0a', '#c8a96e', '#faf5ec'],
+    preview: 'bg-gradient-to-br from-[#0a0a0a] via-[#0e1f15] to-[#080e0a]',
+    defaultTier: 'premium',
+    customizable: false,
+  },
+  {
     id: 'aurora_glass',
     name: 'Rawajcard Glass',
     nameAr: 'رواج كارد زجاجي',

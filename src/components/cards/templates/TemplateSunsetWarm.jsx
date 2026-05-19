@@ -1,7 +1,9 @@
 import React from 'react';
 import { Mail, Phone, MapPin, MessageCircle, Linkedin, Instagram, Twitter, Facebook, Heart } from 'lucide-react';
+import { getContactArrays } from '@/lib/cardContactFields';
 
 export default function TemplateSunsetWarm({ card, isRTL, onLinkClick }) {
+  const { phones, emails, whatsapps, websites, locations } = getContactArrays(card);
   const socialIcons = {
     linkedin: Linkedin,
     instagram: Instagram,
@@ -63,35 +65,38 @@ export default function TemplateSunsetWarm({ card, isRTL, onLinkClick }) {
 
         {/* Contact Actions */}
         <div className="space-y-4 mb-6">
-          {card.email && (
+          {emails.map((e, i) => (
             <a
-              href={`mailto:${card.email}`}
+              key={i}
+              href={`mailto:${e}`}
               onClick={() => onLinkClick?.('email')}
               className="block bg-gradient-to-r from-orange-400 to-pink-500 text-white rounded-2xl p-4 shadow-lg hover:shadow-xl transition-all hover:scale-105"
             >
               <div className="flex items-center justify-center gap-3">
                 <Mail className="h-5 w-5" />
-                <span className="font-medium">{card.email}</span>
+                <span className="font-medium">{e}</span>
               </div>
             </a>
-          )}
+          ))}
 
-          {card.phone && (
+          {phones.map((p, i) => (
             <a
-              href={`tel:${card.phone}`}
+              key={i}
+              href={`tel:${p}`}
               onClick={() => onLinkClick?.('phone')}
               className="block bg-gradient-to-r from-pink-400 to-red-500 text-white rounded-2xl p-4 shadow-lg hover:shadow-xl transition-all hover:scale-105"
             >
               <div className="flex items-center justify-center gap-3">
                 <Phone className="h-5 w-5" />
-                <span className="font-medium">{card.phone}</span>
+                <span className="font-medium">{p}</span>
               </div>
             </a>
-          )}
+          ))}
 
-          {card.whatsapp && (
+          {whatsapps.map((w, i) => (
             <a
-              href={`https://wa.me/${card.whatsapp.replace(/[^0-9]/g, '')}`}
+              key={i}
+              href={`https://wa.me/${w.replace(/[^0-9]/g, '')}`}
               onClick={() => onLinkClick?.('whatsapp')}
               target="_blank"
               rel="noopener noreferrer"
@@ -102,14 +107,14 @@ export default function TemplateSunsetWarm({ card, isRTL, onLinkClick }) {
                 <span className="font-medium">WhatsApp</span>
               </div>
             </a>
-          )}
+          ))}
 
-          {card.location && (
-            <div className="flex items-center justify-center gap-2 text-orange-700 py-2">
+          {locations.map((loc, i) => (
+            <div key={i} className="flex items-center justify-center gap-2 text-orange-700 py-2">
               <MapPin className="h-4 w-4" />
-              <span className="text-sm">{isRTL && card.location_ar ? card.location_ar : card.location}</span>
+              <span className="text-sm">{i === 0 && isRTL && card.location_ar ? card.location_ar : loc}</span>
             </div>
-          )}
+          ))}
         </div>
 
         {/* Social Links */}

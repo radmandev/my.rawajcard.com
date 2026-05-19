@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
+import { getContactArrays, buildVCard } from '@/lib/cardContactFields';
 import InlineEditableField from '@/components/cards/InlineEditableField';
 import InlineImageUpload from '@/components/cards/InlineImageUpload';
 import AppointmentSection from '@/components/cards/AppointmentSection';
@@ -43,6 +44,7 @@ const SocialIcon = ({ platform, className }) => {
 };
 
 export default function TemplateNavyGold({ card, isRTL, onLinkClick, editMode = false, onCardChange }) {
+  const { phones, emails, whatsapps, websites, locations } = getContactArrays(card);
   const isDarkMode = false;
   
   // Adjust colors for dark mode
@@ -65,17 +67,7 @@ export default function TemplateNavyGold({ card, isRTL, onLinkClick, editMode = 
   const fontFamily = card.design?.font_family || 'Inter';
 
   const handleSaveContact = () => {
-    const vcard = `BEGIN:VCARD
-VERSION:3.0
-FN:${card.name || ''}
-TITLE:${card.title || ''}
-ORG:${card.company || ''}
-TEL:${card.phone || ''}
-EMAIL:${card.email || ''}
-URL:${card.website || ''}
-ADR:;;${card.location || ''}
-END:VCARD`;
-    
+    const vcard = buildVCard(card);
     const blob = new Blob([vcard], { type: 'text/vcard' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -222,36 +214,39 @@ END:VCARD`;
 
           {/* Quick Action Buttons */}
           <div className="flex justify-center gap-3 mt-4">
-            {card.phone && (
-              <a 
-                href={`tel:${card.phone}`}
+            {phones.map((p, i) => (
+              <a
+                key={i}
+                href={`tel:${p}`}
                 onClick={() => onLinkClick?.('phone')}
                 className="h-10 w-10 rounded-full flex items-center justify-center text-white"
                 style={{ backgroundColor: accentColor }}
               >
                 <Phone className="h-5 w-5" />
               </a>
-            )}
-            {card.email && (
-              <a 
-                href={`mailto:${card.email}`}
+            ))}
+            {emails.map((e, i) => (
+              <a
+                key={i}
+                href={`mailto:${e}`}
                 onClick={() => onLinkClick?.('email')}
                 className="h-10 w-10 rounded-full flex items-center justify-center text-white"
                 style={{ backgroundColor: accentColor }}
               >
                 <Mail className="h-5 w-5" />
               </a>
-            )}
-            {card.whatsapp && (
-              <a 
-                href={`https://wa.me/${card.whatsapp.replace(/\D/g, '')}`}
+            ))}
+            {whatsapps.map((w, i) => (
+              <a
+                key={i}
+                href={`https://wa.me/${w.replace(/\D/g, '')}`}
                 onClick={() => onLinkClick?.('whatsapp')}
                 className="h-10 w-10 rounded-full flex items-center justify-center text-white"
                 style={{ backgroundColor: accentColor }}
               >
                 <MessageCircle className="h-5 w-5" />
               </a>
-            )}
+            ))}
           </div>
         </div>
       </div>
@@ -317,7 +312,7 @@ END:VCARD`;
           />
           
           <div className="space-y-3 text-sm">
-            {(card.phone || editMode) && (
+            {(phones.length > 0 || editMode) && (
               <div className="block">
                 <InlineEditableField
                   value={isRTL ? 'اتصل بنا' : 'Call Us'}
@@ -341,9 +336,14 @@ END:VCARD`;
                     </a>
                   }
                 />
+                {phones.slice(1).map((p, i) => (
+                  <a key={i} href={`tel:${p}`} onClick={() => onLinkClick?.('phone')}>
+                    <p style={{ color: mutedTextColor }}>{p}</p>
+                  </a>
+                ))}
               </div>
             )}
-            {(card.email || editMode) && (
+            {(emails.length > 0 || editMode) && (
               <div className="block">
                 <InlineEditableField
                   value={isRTL ? 'البريد الإلكتروني' : 'Email'}
@@ -367,9 +367,14 @@ END:VCARD`;
                     </a>
                   }
                 />
+                {emails.slice(1).map((e, i) => (
+                  <a key={i} href={`mailto:${e}`} onClick={() => onLinkClick?.('email')}>
+                    <p style={{ color: mutedTextColor }}>{e}</p>
+                  </a>
+                ))}
               </div>
             )}
-            {(card.location || editMode) && (
+            {(locations.length > 0 || editMode) && (
               <div>
                 <InlineEditableField
                   value={isRTL ? 'العنوان' : 'Address'}
@@ -391,21 +396,28 @@ END:VCARD`;
                     <p style={{ color: mutedTextColor }}>{isRTL && card.location_ar ? card.location_ar : card.location || (editMode ? (isRTL ? 'انقر للتعديل' : 'Click to edit') : '')}</p>
                   }
                 />
+                {locations.slice(1).map((loc, i) => (
+                  <p key={i} style={{ color: mutedTextColor }}>{loc}</p>
+                ))}
               </div>
             )}
-            {card.location && (
-              <a 
-                href={`https://maps.google.com/?q=${encodeURIComponent(card.location)}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => onLinkClick?.('directions')}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-white text-sm"
-                style={{ backgroundColor: primaryColor }}
-              >
-                <Navigation className="h-4 w-4" />
-                {isRTL ? 'الاتجاهات' : 'Direction'}
-              </a>
-            )}
+            {locations.map((loc, i) => {
+              const displayLoc = i === 0 && isRTL && card.location_ar ? card.location_ar : loc;
+              return (
+                <a
+                  key={i}
+                  href={`https://maps.google.com/?q=${encodeURIComponent(displayLoc)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => onLinkClick?.('directions')}
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-white text-sm"
+                  style={{ backgroundColor: primaryColor }}
+                >
+                  <Navigation className="h-4 w-4" />
+                  {isRTL ? 'الاتجاهات' : 'Direction'}
+                </a>
+              );
+            })}
           </div>
         </div>
 
@@ -453,8 +465,8 @@ END:VCARD`;
         )}
 
         {/* Website Link */}
-        {card.website && (
-          <div className="shadow-lg" style={{ 
+        {websites.length > 0 && (
+          <div className="shadow-lg" style={{
             backgroundColor: cardBgColor,
             borderRadius: borderRadius,
             padding: cardPadding
@@ -470,26 +482,29 @@ END:VCARD`;
                 </h2>
               }
             />
-            <a
-              href={card.website.startsWith('http') ? card.website : `https://${card.website}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => onLinkClick?.('website')}
-              className="flex items-center justify-between p-3 transition-colors"
-              style={{ 
-                borderRadius: `calc(${borderRadius} * 0.75)`,
-                backgroundColor: isDarkMode ? '#334155' : '#F8FAFC'
-              }}
-            >
-              <div className="flex items-center gap-3">
-                <ExternalLink className="h-5 w-5" style={{ color: accentColor }} />
-                <div>
-                  <p className="font-medium" style={{ color: accentColor }}>{isRTL ? 'الموقع الإلكتروني' : 'Website'}</p>
-                  <p className="text-xs" style={{ color: mutedTextColor }}>{card.website}</p>
+            {websites.map((w, i) => (
+              <a
+                key={i}
+                href={w.startsWith('http') ? w : `https://${w}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => onLinkClick?.('website')}
+                className="flex items-center justify-between p-3 transition-colors"
+                style={{
+                  borderRadius: `calc(${borderRadius} * 0.75)`,
+                  backgroundColor: isDarkMode ? '#334155' : '#F8FAFC'
+                }}
+              >
+                <div className="flex items-center gap-3">
+                  <ExternalLink className="h-5 w-5" style={{ color: accentColor }} />
+                  <div>
+                    {i === 0 && <p className="font-medium" style={{ color: accentColor }}>{isRTL ? 'الموقع الإلكتروني' : 'Website'}</p>}
+                    <p className="text-xs" style={{ color: mutedTextColor }}>{w}</p>
+                  </div>
                 </div>
-              </div>
-              <ChevronRight className="h-5 w-5" style={{ color: mutedTextColor }} />
-            </a>
+                <ChevronRight className="h-5 w-5" style={{ color: mutedTextColor }} />
+              </a>
+            ))}
           </div>
         )}
 
