@@ -10,15 +10,14 @@ export default function QRCodeDisplay({ cardId, slug, qrSettings, size = 200, sh
  const [copied, setCopied] = useState(false);
  const [qrDataUrl, setQrDataUrl] = useState('');
 
- // Use dedicated QR route so scan tracking runs before opening the public card.
- // Falls back to the legacy URL if cardId is not available.
- const cardUrl = trackable
- ? (cardId
- ?`https://rawajcard.com/q/${cardId}`
- :`https://rawajcard.com/c/${slug}?source=qr`)
- :`https://rawajcard.com/c/${slug}`;
- 
- const displayUrl =`https://rawajcard.com/c/${slug}`;
+ const origin = typeof window !== 'undefined' ? window.location.origin : 'https://rawajcard.com';
+
+ // Use dedicated QR route (slug-based so RLS doesn't block the lookup).
+ const cardUrl = trackable && slug
+   ? `${origin}/q/${encodeURIComponent(slug)}`
+   : `${origin}/c/${slug}`;
+
+ const displayUrl = `${origin}/c/${slug}`;
 
  // Generate QR code with customization
  useEffect(() => {

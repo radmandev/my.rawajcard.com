@@ -85,35 +85,33 @@ const TrackQRScanRedirect = () => {
 
 const QRCardRedirect = () => {
   const { pathname } = useLocation();
-  const cardId = (pathname.split('/q/')[1] || '').split('?')[0];
+  const slug = decodeURIComponent((pathname.split('/q/')[1] || '').split('?')[0]).trim();
   const [state, setState] = useState('loading');
 
   useEffect(() => {
     const run = async () => {
       try {
-        const cleanId = decodeURIComponent(cardId || '').trim();
-        if (!cleanId) {
+        if (!slug) {
           setState('not_found');
           return;
         }
+
+        // Use the SECURITY DEFINER RPC so RLS doesn't block anonymous lookups
+        const { data: rows, error } = await supabase.rpc('get_public_card_by_slug', { p_slug: slug });
+        console.log('[QRCardRedirect] slug:', slug, 'rows:', rows, 'error:', error);
+
+        if (error || !rows?.length) {
+          setState('not_found');
+          return;
+        }
+
+        const card = rows[0];
 
         const visitorKey = 'rawajcard_visitor_id';
         let visitorId = localStorage.getItem(visitorKey);
         if (!visitorId) {
           visitorId = 'v_' + Math.random().toString(36).slice(2, 11);
           localStorage.setItem(visitorKey, visitorId);
-        }
-
-        const { data: card, error: cardError } = await supabase
-          .from('business_cards')
-          .select('id, slug, status')
-          .eq('id', cleanId)
-          .eq('status', 'published')
-          .maybeSingle();
-
-        if (cardError || !card?.slug) {
-          setState('not_found');
-          return;
         }
 
         await supabase.rpc('track_qr_scan', {
@@ -125,13 +123,14 @@ const QRCardRedirect = () => {
 
         const target = `/c/${encodeURIComponent(card.slug)}?source=qr&trk=1`;
         window.location.replace(target);
-      } catch {
+      } catch (err) {
+        console.error('[QRCardRedirect] unexpected error:', err);
         setState('not_found');
       }
     };
 
     run();
-  }, [cardId]);
+  }, [slug]);
 
   if (state === 'loading') {
     return <NFCPulseLoader />;

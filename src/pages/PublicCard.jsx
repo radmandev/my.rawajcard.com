@@ -2,7 +2,8 @@ import React, { useEffect, useState, lazy, Suspense } from'react';
 import { useParams } from'react-router-dom';
 import { cn } from'@/lib/utils';
 import { api, getPublicCardBySlug } from'@/api/supabaseAPI';
-import { useQuery, useMutation } from'@tanstack/react-query';
+import { supabase } from'@/lib/supabaseClient';
+import { useQuery } from'@tanstack/react-query';
 import ContactFormDialog from'@/components/cards/ContactFormDialog';
 import FloatingActions from'@/components/cards/FloatingActions';
 import { Loader2, AlertCircle } from'lucide-react';
@@ -102,31 +103,19 @@ export default function PublicCard() {
  const forcedLanguage = card?.default_language || card?.design?.default_language || 'auto';
  const cardIsRTL = forcedLanguage ==='ar' ? true : forcedLanguage ==='en' ? false : isRTL;
 
- // Track view mutation
- // @ts-ignore
- const trackViewMutation = useMutation({
- // @ts-ignore
- mutationFn: (viewData) => api.entities.CardView.create(viewData)
- });
-
  // Track page view — deferred so it never delays render
  useEffect(() => {
  if (!card || isSampleCard) return;
- const timer = setTimeout(() => {
+ // trackedByRedirect=1 means /q/ already fired track_qr_scan; count as page_view here
  const viewType = source ==='qr' && !trackedByRedirect ?'qr_scan' :'page_view';
- trackViewMutation.mutate({
- card_id: card.id,
- card_owner: card.created_by,
- view_type: viewType,
- visitor_id: visitorId,
- user_agent: navigator.userAgent,
- referrer: document.referrer ||''
+ const timer = setTimeout(() => {
+ supabase.rpc('track_card_view', {
+ p_card_id: card.id,
+ p_view_type: viewType,
+ p_visitor_id: visitorId,
+ p_user_agent: navigator.userAgent,
+ p_referrer: document.referrer ||''
  });
- const updateData = viewType ==='qr_scan'
- ? { scan_count: (card.scan_count || 0) + 1 }
- : { view_count: (card.view_count || 0) + 1 };
- // @ts-ignore
- api.entities.BusinessCard.update(card.id, updateData);
  }, 2000); // defer 2s — user sees card first
  return () => clearTimeout(timer);
  }, [card?.id, isSampleCard, source, trackedByRedirect, visitorId]);
@@ -134,13 +123,11 @@ export default function PublicCard() {
  // Track link clicks
  const handleLinkClick = (linkType) => {
  if (card && !isSampleCard) {
- // @ts-ignore
- trackViewMutation.mutate({
- card_id: card.id,
- card_owner: card.created_by,
- view_type:'link_click',
- clicked_link: linkType,
- visitor_id: visitorId
+ supabase.rpc('track_card_view', {
+ p_card_id: card.id,
+ p_view_type:'link_click',
+ p_visitor_id: visitorId,
+ p_clicked_link: linkType
  });
  }
  };
