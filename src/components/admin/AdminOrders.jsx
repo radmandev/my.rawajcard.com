@@ -21,11 +21,11 @@ import { format } from'date-fns';
 // ── Status config ──────────────────────────────────────────────────────────────
 const ORDER_STATUSES = [
  { value:'all', labelEn:'All Orders', labelAr:'جميع الطلبات', color:'' },
- { value:'pending', labelEn:'Pending', labelAr:'قيد الانتظار', color:'bg-yellow-100 text-yellow-800' },
- { value:'processing', labelEn:'Processing', labelAr:'قيد المعالجة', color:'bg-blue-100 text-blue-800' },
- { value:'shipped', labelEn:'Shipped', labelAr:'تم الشحن', color:'bg-purple-100 text-purple-800' },
- { value:'delivered', labelEn:'Delivered', labelAr:'تم التسليم', color:'bg-green-100 text-green-800' },
- { value:'cancelled', labelEn:'Cancelled', labelAr:'ملغي', color:'bg-red-100 text-red-800' },
+ { value:'pending', labelEn:'Pending', labelAr:'قيد الانتظار', color:'bg-yellow-500/20 text-yellow-300 border border-yellow-400/30' },
+ { value:'processing', labelEn:'Processing', labelAr:'قيد المعالجة', color:'bg-blue-500/20 text-blue-300 border border-blue-400/30' },
+ { value:'shipped', labelEn:'Shipped', labelAr:'تم الشحن', color:'bg-purple-500/20 text-purple-300 border border-purple-400/30' },
+ { value:'delivered', labelEn:'Delivered', labelAr:'تم التسليم', color:'bg-green-500/20 text-green-300 border border-green-400/30' },
+ { value:'cancelled', labelEn:'Cancelled', labelAr:'ملغي', color:'bg-red-500/20 text-red-300 border border-red-400/30' },
 ];
 
 const STATUS_ICONS = {
@@ -121,10 +121,10 @@ export default function AdminOrders() {
  const deliveredCount = orders.filter(o => o.status ==='delivered').length;
 
  const stats = [
- { titleEn:'Total Orders', titleAr:'إجمالي الطلبات', value: orders.length, Icon: ShoppingBag, color:'text-blue-500', bg:'bg-blue-50' },
- { titleEn:'Total Revenue', titleAr:'إجمالي الإيرادات', value:`${totalRevenue.toLocaleString()} SAR`, Icon: DollarSign, color:'text-cyan-500', bg:'bg-cyan-50' },
- { titleEn:'Pending', titleAr:'قيد الانتظار', value: pendingCount, Icon: Clock, color:'text-yellow-500',bg:'bg-yellow-50'},
- { titleEn:'Delivered', titleAr:'تم التسليم', value: deliveredCount, Icon: CheckCircle, color:'text-green-500', bg:'bg-green-50' },
+ { titleEn:'Total Orders', titleAr:'إجمالي الطلبات', value: orders.length, Icon: ShoppingBag, color:'text-blue-400', bg:'bg-blue-500/15 border border-blue-400/20' },
+ { titleEn:'Total Revenue', titleAr:'إجمالي الإيرادات', value:`${totalRevenue.toLocaleString()} SAR`, Icon: DollarSign, color:'text-cyan-400', bg:'bg-cyan-500/15 border border-cyan-400/20' },
+ { titleEn:'Pending', titleAr:'قيد الانتظار', value: pendingCount, Icon: Clock, color:'text-yellow-400', bg:'bg-yellow-500/15 border border-yellow-400/20'},
+ { titleEn:'Delivered', titleAr:'تم التسليم', value: deliveredCount, Icon: CheckCircle, color:'text-green-400', bg:'bg-green-500/15 border border-green-400/20' },
  ];
 
  const handleStatusChange = (id, status) => {
@@ -229,7 +229,7 @@ export default function AdminOrders() {
  ))}
  </tr>
  </thead>
- <tbody className="divide-y divide-slate-100">
+ <tbody className="divide-y divide-white/5">
  {paginated.map(order => {
  const meta = order.metadata || {};
  const shipping = meta.shippingInfo || meta.shipping_info || {};
@@ -268,7 +268,7 @@ export default function AdminOrders() {
  className="h-8 w-8 rounded-md object-cover border-2 border-white bg-white/10"
  />
  ) : (
- <div key={i} className="h-8 w-8 rounded-md bg-cyan-100 border-2 border-white flex items-center justify-center">
+ <div key={i} className="h-8 w-8 rounded-md bg-cyan-500/20 border-2 border-white/20 flex items-center justify-center">
  <Package className="h-3.5 w-3.5 text-cyan-600" />
  </div>
  )
@@ -298,7 +298,7 @@ export default function AdminOrders() {
  variant="ghost"
  size="sm"
  onClick={() => setSelectedOrder(order)}
- className="h-8 w-8 p-0 hover:bg-cyan-50 hover:text-cyan-600"
+ className="h-8 w-8 p-0 hover:bg-cyan-500/20 hover:text-cyan-400"
  >
  <Eye className="h-4 w-4" />
  </Button>
@@ -433,7 +433,7 @@ function OrderDetailDialog({ order, onClose, onUpdateStatus, isUpdating, isRTL }
  className="h-14 w-14 rounded-lg object-cover bg-white/10 flex-shrink-0"
  />
  ) : (
- <div className="h-14 w-14 rounded-lg bg-cyan-100 flex items-center justify-center flex-shrink-0">
+ <div className="h-14 w-14 rounded-lg bg-cyan-500/20 flex items-center justify-center flex-shrink-0">
  <Package className="h-6 w-6 text-cyan-600" />
  </div>
  )}
@@ -477,7 +477,7 @@ function OrderDetailDialog({ order, onClose, onUpdateStatus, isUpdating, isRTL }
  {isRTL ?'إيصال التحويل البنكي' :'Bank Transfer Receipt'}
  </h3>
  {meta.receipt_url ? (
- <div className="rounded-xl overflow-hidden border border-green-200">
+ <div className="rounded-xl overflow-hidden border border-green-400/30">
  {meta.receipt_url.startsWith('data:image') || /\.(jpg|jpeg|png|gif|webp)$/i.test(meta.receipt_url) ? (
  <img
  src={meta.receipt_url}
@@ -492,15 +492,15 @@ function OrderDetailDialog({ order, onClose, onUpdateStatus, isUpdating, isRTL }
  </span>
  </div>
  )}
- <div className="px-3 py-2 bg-green-50 flex items-center justify-between">
- <span className="text-xs text-green-700 font-medium">
+ <div className="px-3 py-2 bg-green-500/15 flex items-center justify-between">
+ <span className="text-xs text-green-300 font-medium">
  {isRTL ?'تم رفع الإيصال من العميل' :'Receipt uploaded by customer'}
  </span>
  <a
  href={meta.receipt_url}
  target="_blank"
  rel="noopener noreferrer"
- className="inline-flex items-center gap-1 text-xs text-cyan-600 hover:text-cyan-700 font-medium"
+ className="inline-flex items-center gap-1 text-xs text-cyan-600 hover:text-cyan-400 font-medium"
  >
  <ExternalLink className="h-3 w-3" />
  {isRTL ?'فتح' :'Open'}
@@ -508,7 +508,7 @@ function OrderDetailDialog({ order, onClose, onUpdateStatus, isUpdating, isRTL }
  </div>
  </div>
  ) : (
- <div className="flex items-center gap-2 p-3 rounded-lg bg-amber-50 border border-amber-200 text-amber-700 text-sm">
+ <div className="flex items-center gap-2 p-3 rounded-lg bg-amber-500/15 border border-amber-400/30 text-amber-300 text-sm">
  <ImageIcon className="h-4 w-4 flex-shrink-0" />
  {isRTL ?'لم يرفع العميل إيصالاً بعد' :'Customer has not uploaded a receipt yet'}
  </div>

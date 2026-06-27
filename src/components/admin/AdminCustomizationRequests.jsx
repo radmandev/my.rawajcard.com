@@ -35,8 +35,8 @@ export default function AdminCustomizationRequests() {
 
  const getPlanBadge = (email) => {
  const plan = subscriptionMap[email]?.plan ||'free';
- if (plan ==='premium') return { label: isRTL ?'بريميوم' :'Premium', color:'bg-cyan-100 text-cyan-700 border-cyan-200' };
- if (plan ==='enterprise') return { label: isRTL ?'مؤسسي' :'Enterprise', color:'bg-purple-100 text-purple-700 border-purple-200' };
+ if (plan ==='premium') return { label: isRTL ?'بريميوم' :'Premium', color:'bg-cyan-500/20 text-cyan-300 border-cyan-400/30' };
+ if (plan ==='enterprise') return { label: isRTL ?'مؤسسي' :'Enterprise', color:'bg-purple-500/20 text-purple-300 border-purple-400/30' };
  return null;
  };
 
@@ -54,10 +54,10 @@ export default function AdminCustomizationRequests() {
  });
 
  const statusColors = {
- pending:'bg-yellow-100 text-yellow-800 border-yellow-200',
- in_progress:'bg-blue-100 text-blue-800 border-blue-200',
- completed:'bg-green-100 text-green-800 border-green-200',
- rejected:'bg-red-100 text-red-800 border-red-200'
+ pending:'bg-yellow-500/20 text-yellow-300 border-yellow-400/30',
+ in_progress:'bg-blue-500/20 text-blue-300 border-blue-400/30',
+ completed:'bg-green-500/20 text-green-300 border-green-400/30',
+ rejected:'bg-red-500/20 text-red-300 border-red-400/30'
  };
 
  const pageNames = {

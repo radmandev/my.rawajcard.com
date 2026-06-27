@@ -585,7 +585,7 @@ export default function AdminProducts() {
  </h2>
  <div className="flex gap-3 mt-1 text-sm text-slate-400">
  <span>{products.length} {isRTL ?'منتج' :'total'}</span>
- <span className="text-green-600">{publishedCount} {isRTL ?'منشور' :'published'}</span>
+ <span className="text-green-400">{publishedCount} {isRTL ?'منشور' :'published'}</span>
  <span className="text-amber-600">{draftCount} {isRTL ?'مسودة' :'draft'}</span>
  </div>
  </div>
@@ -670,8 +670,8 @@ export default function AdminProducts() {
  variant="outline"
  className={
  product.status ==='published'
- ?'border-green-400 text-green-700 bg-green-50'
- :'border-amber-400 text-amber-700 bg-amber-50'
+ ?'border-green-400 text-green-300 bg-green-500/15'
+ :'border-amber-400 text-amber-300 bg-amber-500/15'
  }
  >
  {product.status ==='published'
@@ -679,7 +679,7 @@ export default function AdminProducts() {
  : (isRTL ?'مسودة' :'Draft')}
  </Badge>
  {product.is_customizable && (
- <Badge variant="outline" className="border-cyan-400 text-cyan-700 bg-cyan-50 text-xs">
+ <Badge variant="outline" className="border-cyan-400 text-cyan-300 bg-cyan-500/15 text-xs">
  {isRTL ?'قابل للتخصيص' :'Custom'}
  </Badge>
  )}
@@ -699,7 +699,7 @@ export default function AdminProducts() {
  <span className="line-through text-slate-400 text-sm">{product.price} SAR</span>
  </>
  ) : (
- <span className="text-cyan-700 font-bold">{product.price} SAR</span>
+ <span className="text-cyan-400 font-bold">{product.price} SAR</span>
  )}
  </div>
  </div>
@@ -710,7 +710,7 @@ export default function AdminProducts() {
  asChild
  variant="ghost"
  size="sm"
- className="text-blue-500 hover:text-blue-700 hover:bg-blue-50"
+ className="text-blue-500 hover:text-blue-300 hover:bg-blue-500/15"
  >
  <a
  href={`/products/${encodeURIComponent(product.slug || product.id)}`}
@@ -728,8 +728,8 @@ export default function AdminProducts() {
  title={product.status ==='published' ?'Move to Draft' :'Publish'}
  className={
  product.status ==='published'
- ?'text-green-600 hover:text-green-700 hover:bg-green-50'
- :'text-amber-500 hover:text-amber-600 hover:bg-amber-50'
+ ?'text-green-400 hover:text-green-300 hover:bg-green-500/15'
+ :'text-amber-500 hover:text-amber-400 hover:bg-amber-500/15'
  }
  >
  {product.status ==='published'
@@ -748,7 +748,7 @@ export default function AdminProducts() {
  variant="ghost"
  size="sm"
  onClick={() => setDeleting(product)}
- className="text-red-400 hover:text-red-600 hover:bg-red-50"
+ className="text-red-400 hover:text-red-400 hover:bg-red-500/15"
  >
  <Trash2 className="h-4 w-4" />
  </Button>

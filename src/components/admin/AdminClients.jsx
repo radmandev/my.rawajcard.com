@@ -18,17 +18,17 @@ import { toast } from'sonner';
 const PLAN_CONFIG = {
  premium: {
  label:'Premium', labelAr:'بريميوم',
- color:'bg-cyan-100 text-cyan-800 border-cyan-200',
+ color:'bg-cyan-500/20 text-cyan-300 border-cyan-400/30',
  icon: Sparkles,
  },
  teams: {
  label:'Teams', labelAr:'الفرق',
- color:'bg-blue-100 text-blue-800 border-blue-200',
+ color:'bg-blue-500/20 text-blue-300 border-blue-400/30',
  icon: Users,
  },
  enterprise: {
  label:'Enterprise', labelAr:'مؤسسي',
- color:'bg-purple-100 text-purple-800 border-purple-200',
+ color:'bg-purple-500/20 text-purple-300 border-purple-400/30',
  icon: Crown,
  },
  free: {
@@ -271,7 +271,7 @@ export default function AdminClients() {
  className={`px-3 py-1 rounded-full text-xs font-medium transition-colors border ${
  planFilter === f.key
  ?'bg-cyan-600 text-white border-cyan-600'
- :'bg-white text-slate-300 border-white/10 hover:border-cyan-400 hover:bg-white/5'
+ :'border-white/10 text-slate-300 hover:border-cyan-400 hover:bg-white/5'
  }`}
  >
  {isRTL ? f.ar : f.en}
@@ -299,7 +299,7 @@ export default function AdminClients() {
  {user.full_name || user.email?.split('@')[0]}
  </h3>
  {isAdmin && (
- <Badge className="bg-blue-100 text-blue-700 border-blue-200 text-xs">
+ <Badge className="bg-blue-500/20 text-blue-300 border-blue-400/30 text-xs">
  <Shield className="h-3 w-3 mr-1" />Admin
  </Badge>
  )}
@@ -370,8 +370,8 @@ export default function AdminClients() {
  disabled={isAdmin || deactivateMutation.isPending}
  className={`text-xs h-7 px-2 w-full justify-start ${
  isSuspended
- ?'border-green-400 text-green-600 hover:bg-green-50'
- :'border-red-200 text-red-500 hover:bg-red-50'
+ ?'border-green-400/50 text-green-400 hover:bg-green-500/15'
+ :'border-red-400/50 text-red-400 hover:bg-red-500/15'
  }`}
  onClick={() =>
  deactivateMutation.mutate({ userId: user.id, suspend: !isSuspended })

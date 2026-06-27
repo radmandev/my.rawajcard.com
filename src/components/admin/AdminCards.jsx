@@ -15,9 +15,9 @@ import { createPageUrl } from'@/utils';
 import { toast } from'sonner';
 
 const PLAN_CONFIG = {
- premium: { label:'Premium', color:'bg-cyan-100 text-cyan-700 border-cyan-200', icon: Sparkles },
- teams: { label:'Teams', color:'bg-blue-100 text-blue-700 border-blue-200', icon: Users },
- enterprise: { label:'Enterprise', color:'bg-purple-100 text-purple-700 border-purple-200', icon: Crown },
+ premium: { label:'Premium', color:'bg-cyan-500/20 text-cyan-300 border-cyan-400/30', icon: Sparkles },
+ teams: { label:'Teams', color:'bg-blue-500/20 text-blue-300 border-blue-400/30', icon: Users },
+ enterprise: { label:'Enterprise', color:'bg-purple-500/20 text-purple-300 border-purple-400/30', icon: Crown },
  free: { label:'Free', color:'bg-white/10 text-slate-400 border-white/10', icon: Users },
 };
 
@@ -256,8 +256,8 @@ export default function AdminCards() {
  disabled={togglePublishMutation.isPending}
  className={`text-xs h-7 px-2 w-full justify-start ${
  isPublished
- ?'text-amber-600 border-amber-200 hover:bg-amber-50'
- :'text-cyan-600 border-cyan-200 hover:bg-cyan-50'
+ ?'text-amber-400 border-amber-400/30 hover:bg-amber-500/15'
+ :'text-cyan-600 border-cyan-400/30 hover:bg-cyan-500/15'
  }`}
  onClick={() =>
  togglePublishMutation.mutate({ cardId: card.id, currentStatus: card.status })
@@ -274,7 +274,7 @@ export default function AdminCards() {
  size="sm"
  variant="outline"
  disabled={deleteCardMutation.isPending}
- className="text-xs h-7 px-2 w-full justify-start text-red-500 border-red-200 hover:bg-red-50"
+ className="text-xs h-7 px-2 w-full justify-start text-red-500 border-red-400/30 hover:bg-red-500/15"
  onClick={() => handleDelete(card)}
  >
  <Trash2 className="h-3 w-3 mr-1.5" />

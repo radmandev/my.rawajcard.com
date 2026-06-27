@@ -239,7 +239,7 @@ function TopCardsTable({ rows, isRTL }) {
  </thead>
  <tbody>
  {rows.map((row) => (
- <tr key={row.id} className="border-b border-slate-50">
+ <tr key={row.id} className="border-b border-white/5">
  <td className="px-2 py-3">
  <div className="font-medium text-white">{row.label}</div>
  <div className="text-xs text-slate-400">/{row.slug || row.id.slice(0, 8)}</div>
@@ -496,8 +496,8 @@ export default function AdminAnalyticsReal() {
 
  if (error || !analytics) {
  return (
- <Card className="border-red-200 bg-red-50">
- <CardContent className="p-6 text-sm text-red-700">
+ <Card className="border-red-400/30 bg-red-500/15">
+ <CardContent className="p-6 text-sm text-red-300">
  {isRTL ?'تعذر تحميل التحليلات الفعلية من قاعدة البيانات.' :'Could not load real analytics data from the database.'}
  </CardContent>
  </Card>
@@ -592,7 +592,7 @@ export default function AdminAnalyticsReal() {
  </div>
 
  <div className="grid gap-3">
- <div className="rounded-2xl border border-cyan-200 bg-cyan-50 p-4 text-sm text-cyan-800">
+ <div className="rounded-2xl border border-cyan-400/30 bg-cyan-500/15 p-4 text-sm text-cyan-300">
  <div className="flex items-start gap-3">
  <Globe className="mt-0.5 h-4 w-4 flex-shrink-0" />
  <div>
@@ -606,7 +606,7 @@ export default function AdminAnalyticsReal() {
  </div>
  </div>
 
- <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
+ <div className="rounded-2xl border border-amber-400/30 bg-amber-500/15 p-4 text-sm text-amber-300">
  <div className="flex items-start gap-3">
  <AlertTriangle className="mt-0.5 h-4 w-4 flex-shrink-0" />
  <div>
@@ -621,7 +621,7 @@ export default function AdminAnalyticsReal() {
  </div>
 
  {hasCounterDrift ? (
- <div className="rounded-2xl border border-red-200 bg-red-50 p-4 text-sm text-red-800">
+ <div className="rounded-2xl border border-red-400/30 bg-red-500/15 p-4 text-sm text-red-300">
  <div className="flex items-start gap-3">
  <AlertTriangle className="mt-0.5 h-4 w-4 flex-shrink-0" />
  <div>
@@ -650,7 +650,7 @@ export default function AdminAnalyticsReal() {
  <CardTitle className="text-sm font-semibold text-slate-100">
  {isRTL ?'اتجاه التفاعل اليومي' :'Daily engagement trend'}
  </CardTitle>
- <Badge variant="outline" className="border-cyan-200 bg-cyan-50 text-cyan-700">
+ <Badge variant="outline" className="border-cyan-400/30 bg-cyan-500/15 text-cyan-300">
  {isRTL ?'تم استبعاد الزيارات الآلية' :'Bots filtered out'}
  </Badge>
  </div>

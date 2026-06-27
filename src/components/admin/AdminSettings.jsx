@@ -163,9 +163,9 @@ export default function AdminSettings() {
  <p className="text-2xl font-bold text-white">{subStats.total}</p>
  <p className="text-xs text-slate-400 mt-1">{isRTL ?'إجمالي المستخدمين' :'Total Users'}</p>
  </div>
- <div className="text-center p-4 rounded-lg bg-cyan-50">
+ <div className="text-center p-4 rounded-lg bg-cyan-500/15">
  <Sparkles className="h-6 w-6 mx-auto mb-2 text-cyan-600" />
- <p className="text-2xl font-bold text-cyan-700">{subStats.premium}</p>
+ <p className="text-2xl font-bold text-cyan-400">{subStats.premium}</p>
  <p className="text-xs text-cyan-600 mt-1">{isRTL ?'بريميوم' :'Premium'}</p>
  </div>
  <div className="text-center p-4 rounded-lg bg-purple-50">
@@ -173,7 +173,7 @@ export default function AdminSettings() {
  <p className="text-2xl font-bold text-purple-700">{subStats.enterprise}</p>
  <p className="text-xs text-purple-600 mt-1">{isRTL ?'مؤسسي' :'Enterprise'}</p>
  </div>
- <div className="text-center p-4 rounded-lg bg-amber-50">
+ <div className="text-center p-4 rounded-lg bg-amber-500/15">
  <CreditCard className="h-6 w-6 mx-auto mb-2 text-amber-600" />
  <p className="text-2xl font-bold text-amber-700">SAR {subStats.mrr.toLocaleString()}</p>
  <p className="text-xs text-amber-600 mt-1">{isRTL ?'إيرادات شهرية (تقدير)' :'Est. MRR'}</p>
@@ -241,7 +241,7 @@ export default function AdminSettings() {
  </div>
  </div>
 
- <div className="rounded-lg border border-amber-200/80 bg-amber-50 p-3 text-sm text-amber-800">
+ <div className="rounded-lg border border-amber-400/30 bg-amber-500/15 p-3 text-sm text-amber-300">
  {isRTL
  ?'النص المستخدم في النافذة:"Special offer: 3 months premium subscription for early birds"'
  :'Popup text used:"Special offer: 3 months premium subscription for early birds"'}
@@ -396,8 +396,8 @@ export default function AdminSettings() {
  key={template.id}
  className={`relative rounded-lg border-2 p-3 cursor-pointer transition-all ${
  isPremium
- ?'border-amber-400 bg-amber-50'
- :'border-white/10 bg-white/5 hover:bg-white'
+ ?'border-amber-400 bg-amber-500/15'
+ :'border-white/10 bg-white/5 hover:bg-white/10'
  }`}
  onClick={() => toggleTemplateTier(template.id)}
  >
@@ -414,7 +414,7 @@ export default function AdminSettings() {
  </p>
  <div className="flex items-center justify-between mt-1.5">
  {isPremium ? (
- <Badge className="bg-amber-500 text-white text-[9px] px-1.5 py-0 h-4 gap-0.5">
+ <Badge className="bg-amber-500/20 text-white text-[9px] px-1.5 py-0 h-4 gap-0.5">
  <Crown className="h-2.5 w-2.5" /> PRO
  </Badge>
  ) : (

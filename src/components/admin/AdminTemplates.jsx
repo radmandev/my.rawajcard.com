@@ -336,11 +336,11 @@ export default function AdminTemplates() {
  {isRTL ? template.descriptionAr : template.description}
  </p>
  <div className="flex items-center gap-2 mt-2">
- <span className="inline-block px-2 py-1 bg-cyan-100 text-cyan-700 text-xs rounded">
+ <span className="inline-block px-2 py-1 bg-cyan-500/20 text-cyan-300 text-xs rounded">
  {template.category}
  </span>
  {template.hidden && (
- <span className="inline-block px-2 py-1 bg-red-100 text-red-700 text-xs rounded">
+ <span className="inline-block px-2 py-1 bg-red-500/20 text-red-300 text-xs rounded">
  {isRTL ?'مخفي' :'Hidden'}
  </span>
  )}
@@ -360,7 +360,7 @@ export default function AdminTemplates() {
  size="sm"
  variant="outline"
  onClick={() => handleToggleHidden(template.id)}
- className={template.hidden ?'bg-red-50' :''}
+ className={template.hidden ?'bg-red-500/15 border-red-400/20' :''}
  >
  {template.hidden ? (
  <EyeOff className="h-3 w-3 text-red-500" />
