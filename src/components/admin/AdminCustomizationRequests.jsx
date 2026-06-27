@@ -158,7 +158,7 @@ export default function AdminCustomizationRequests() {
  <SelectTrigger>
  <SelectValue />
  </SelectTrigger>
- <SelectContent>
+ <SelectContent className="bg-white text-slate-900">
  <SelectItem value="pending">{isRTL ?'قيد الانتظار' :'Pending'}</SelectItem>
  <SelectItem value="in_progress">{isRTL ?'قيد التنفيذ' :'In Progress'}</SelectItem>
  <SelectItem value="completed">{isRTL ?'مكتمل' :'Completed'}</SelectItem>

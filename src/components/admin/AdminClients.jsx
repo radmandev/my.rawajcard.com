@@ -221,14 +221,14 @@ export default function AdminClients() {
  </div>
 
  {/* MRR */}
- <Card className="p-4 bg-gradient-to-r from-fuchsia-600 to-purple-700 hover:from-fuchsia-500 hover:to-purple-600 border-cyan-200">
+ <Card className="p-4 bg-gradient-to-r from-cyan-500 to-violet-600 border-0 shadow-sm">
  <div className="flex items-center gap-3">
- <TrendingUp className="h-5 w-5 text-cyan-600" />
+ <TrendingUp className="h-5 w-5 text-white/80" />
  <div>
- <p className="text-xs text-cyan-700 font-medium">
+ <p className="text-xs text-white/80 font-medium">
  {isRTL ?'الإيرادات الشهرية المتكررة (تقديرية)' :'Estimated Monthly Recurring Revenue'}
  </p>
- <p className="text-xl font-bold text-cyan-700">SAR {stats.mrr.toLocaleString()}</p>
+ <p className="text-xl font-bold text-white">SAR {stats.mrr.toLocaleString()}</p>
  </div>
  </div>
  </Card>
@@ -271,7 +271,7 @@ export default function AdminClients() {
  className={`px-3 py-1 rounded-full text-xs font-medium transition-colors border ${
  planFilter === f.key
  ?'bg-cyan-600 text-white border-cyan-600'
- :'bg-indigo-950/60 text-slate-600 border-slate-200 hover:border-cyan-400'
+ :'bg-white text-slate-600 border-slate-200 hover:border-cyan-400 hover:bg-slate-50'
  }`}
  >
  {isRTL ? f.ar : f.en}

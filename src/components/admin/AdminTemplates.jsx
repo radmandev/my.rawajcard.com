@@ -329,7 +329,7 @@ export default function AdminTemplates() {
  </div>
  <div className="p-4 space-y-3">
  <div>
- <h3 className="font-semibold text-white">
+ <h3 className="font-semibold text-slate-900">
  {isRTL ? template.nameAr : template.name}
  </h3>
  <p className="text-xs text-slate-500 mt-1">
@@ -392,7 +392,7 @@ export default function AdminTemplates() {
 
  {/* Edit Dialog */}
  <Dialog open={editDialogOpen} onOpenChange={setEditDialogOpen}>
- <DialogContent className="max-w-2xl">
+ <DialogContent className="max-w-2xl bg-white text-slate-900">
  <DialogHeader>
  <DialogTitle>{isRTL ?'تعديل القالب' :'Edit Template'}</DialogTitle>
  </DialogHeader>
@@ -437,7 +437,7 @@ export default function AdminTemplates() {
 
  {/* Preview Dialog */}
  <Dialog open={!!previewTemplate} onOpenChange={() => setPreviewTemplate(null)}>
- <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto">
+ <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto bg-white text-slate-900">
  <DialogHeader>
  <DialogTitle>{isRTL ?'معاينة القالب' :'Template Preview'}</DialogTitle>
  </DialogHeader>

@@ -166,8 +166,8 @@ export default function TemplatePreview({ layout, onClose }) {
 
  return (
  <Dialog open onOpenChange={onClose}>
- <DialogContent className="max-w-md max-h-[90vh] overflow-auto p-0">
- <div className="sticky top-0 bg-indigo-950/60 p-4 border-b flex justify-between items-center z-10">
+ <DialogContent className="max-w-md max-h-[90vh] overflow-auto p-0 bg-white text-slate-900">
+ <div className="sticky top-0 bg-white p-4 border-b flex justify-between items-center z-10">
  <h3 className="font-semibold">Preview</h3>
  <Button variant="ghost" size="sm" onClick={onClose}>
  <X className="h-4 w-4" />

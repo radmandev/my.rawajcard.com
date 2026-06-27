@@ -582,7 +582,7 @@ export default function AdminAnalyticsReal() {
  className={`rounded-xl border px-3 py-2 text-xs font-semibold transition-colors ${
  periodDays === option.value
  ?'border-cyan-600 bg-cyan-600 text-white'
- :'border-slate-200 bg-indigo-950/60 text-slate-600 hover:border-cyan-300'
+ :'border-slate-200 bg-white text-slate-600 hover:border-cyan-300 hover:bg-slate-50'
  }`}
  >
  {isRTL ? option.labelAr : option.labelEn}

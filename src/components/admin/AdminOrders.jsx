@@ -139,7 +139,7 @@ export default function AdminOrders() {
  {stats.map(({ titleEn, titleAr, value, Icon, color, bg }, i) => (
  <Card key={i} className={`${bg} border-0 shadow-sm`}>
  <CardContent className="p-4 flex items-center gap-3">
- <div className="p-2.5 rounded-xl bg-indigo-950/60 shadow-sm flex-shrink-0">
+ <div className="p-2.5 rounded-xl bg-white/60 shadow-sm flex-shrink-0">
  <Icon className={`h-5 w-5 ${color}`} />
  </div>
  <div className="min-w-0">
@@ -173,7 +173,7 @@ export default function AdminOrders() {
  className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-all ${
  statusFilter === s.value
  ?'bg-cyan-600 text-white border-cyan-600'
- :'border-slate-200 text-slate-600 hover:border-cyan-400'
+ :'bg-white border-slate-200 text-slate-600 hover:border-cyan-400 hover:bg-slate-50'
  }`}
  >
  {isRTL ? s.labelAr : s.labelEn}
@@ -356,7 +356,7 @@ function OrderDetailDialog({ order, onClose, onUpdateStatus, isUpdating, isRTL }
 
  return (
  <Dialog open={!!order} onOpenChange={onClose}>
- <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+ <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto bg-white text-slate-900">
  <DialogHeader>
  <DialogTitle className="flex items-center gap-2 flex-wrap">
  <Package className="h-5 w-5 text-cyan-600 flex-shrink-0" />

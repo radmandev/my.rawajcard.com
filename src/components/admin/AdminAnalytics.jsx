@@ -232,7 +232,7 @@ function DateRangeSelector({ value, onChange, isRTL }) {
  onClick={() => onChange(o.value)}
  className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
  value === o.value
- ?'bg-indigo-950/60 text-cyan-700 shadow-sm'
+ ?'bg-cyan-600 text-white shadow-sm'
  :'text-slate-500 hover:text-slate-700'
  }`}
  >
@@ -659,7 +659,7 @@ export default function AdminAnalytics() {
  <select
  value={segment}
  onChange={(e) => setSegment(e.target.value)}
- className="text-xs px-3 py-2 rounded-xl border border-slate-200 bg-indigo-950/60 text-slate-700 focus:outline-none focus:ring-2 focus:ring-cyan-400"
+ className="text-xs px-3 py-2 rounded-xl border border-slate-200 bg-white text-slate-700 focus:outline-none focus:ring-2 focus:ring-cyan-400"
  >
  <option value="all">{txt.allUsers}</option>
  <option value="new">{txt.newUsers}</option>

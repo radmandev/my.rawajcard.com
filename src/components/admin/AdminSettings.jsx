@@ -397,7 +397,7 @@ export default function AdminSettings() {
  className={`relative rounded-lg border-2 p-3 cursor-pointer transition-all ${
  isPremium
  ?'border-amber-400 bg-amber-50'
- :'border-slate-200 bg-indigo-950/60'
+ :'border-slate-200 bg-slate-50 hover:bg-white'
  }`}
  onClick={() => toggleTemplateTier(template.id)}
  >

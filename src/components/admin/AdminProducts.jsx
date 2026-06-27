@@ -257,7 +257,7 @@ function ProductDialog({ open, onClose, initialData, onSave, isSaving, isRTL }) 
  return (
  <Dialog open={open} onOpenChange={(v) => !v && onClose()}>
  <DialogContent
- className="max-w-3xl max-h-[90vh] overflow-y-auto"
+ className="max-w-3xl max-h-[90vh] overflow-y-auto bg-white text-slate-900"
  dir={isRTL ?'rtl' :'ltr'}
  >
  <DialogHeader>
@@ -429,7 +429,7 @@ function ProductDialog({ open, onClose, initialData, onSave, isSaving, isRTL }) 
  <select
  value={form.category}
  onChange={(e) => set('category', e.target.value)}
- className="w-full h-9 px-3 rounded-md border border-input bg-background text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring"
+ className="w-full h-9 px-3 rounded-md border border-input bg-white text-slate-800 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring"
  >
  {CATEGORIES.map((c) => (
  <option key={c.value} value={c.value}>
@@ -444,7 +444,7 @@ function ProductDialog({ open, onClose, initialData, onSave, isSaving, isRTL }) 
  <select
  value={form.status}
  onChange={(e) => set('status', e.target.value)}
- className="w-full h-9 px-3 rounded-md border border-input bg-background text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring"
+ className="w-full h-9 px-3 rounded-md border border-input bg-white text-slate-800 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring"
  >
  <option value="draft">{isRTL ?'مسودة' :'Draft'}</option>
  <option value="published">{isRTL ?'منشور' :'Published'}</option>
@@ -772,7 +772,7 @@ export default function AdminProducts() {
 
  {/* ── Delete Confirmation ── */}
  <AlertDialog open={!!deleting} onOpenChange={(v) => !v && setDeleting(null)}>
- <AlertDialogContent>
+ <AlertDialogContent className="bg-white text-slate-900">
  <AlertDialogHeader>
  <AlertDialogTitle>
  {isRTL ?'حذف المنتج' :'Delete Product'}
