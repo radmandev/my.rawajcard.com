@@ -15,7 +15,7 @@ async function sendLeadToBitrix(fields) {
 export async function sendNewCustomerToBitrix(email) {
   const parts = email.split('@')[0].replace(/[._-]/g, ' ').split(' ').filter(Boolean);
   await sendLeadToBitrix({
-    TITLE: `New Customer: ${email}`,
+    TITLE: `#rawaj_card subscriber`,
     NAME: parts[0] || '',
     LAST_NAME: parts.slice(1).join(' ') || '',
     EMAIL: [{ VALUE: email, VALUE_TYPE: 'WORK' }],

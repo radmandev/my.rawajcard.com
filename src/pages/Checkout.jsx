@@ -32,6 +32,7 @@ import { toast } from'sonner';
 import { useCart } from'@/contexts/CartContext';
 import { useAuth } from'@/lib/AuthContext';
 import { buildCartTrackingData, trackWebsiteEvent } from'@/lib/websiteTracker';
+import { sendNewOrderToBitrix } from'@/lib/bitrix24';
 
 // ── Bank details — edit these to match your account ─────────
 const BANK_DETAILS = {

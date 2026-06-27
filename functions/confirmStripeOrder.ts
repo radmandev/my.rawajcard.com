@@ -145,6 +145,47 @@ Deno.serve(async (req: Request) => {
       { method: 'DELETE', headers: dbHeaders }
     );
 
+    // Sync order to Bitrix24 CRM
+    try {
+      const nameParts = (shippingInfo.name || '').trim().split(' ').filter(Boolean);
+      const itemLines = cartItems
+        .map(item => `- ${item.product_name} x${item.quantity} @ ${item.product_price} SAR`)
+        .join('\n');
+      await fetch('https://rawajtech.bitrix24.com/rest/1/urlcb2w2j7rf1mjt/crm.lead.add.json', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          fields: {
+            TITLE: `#rawaj_card Order: ${orderNumber}`,
+            NAME: nameParts[0] || '',
+            LAST_NAME: nameParts.slice(1).join(' ') || '',
+            EMAIL: [{ VALUE: shippingInfo.email, VALUE_TYPE: 'WORK' }],
+            PHONE: [{ VALUE: shippingInfo.phone, VALUE_TYPE: 'WORK' }],
+            OPPORTUNITY: amountTotal,
+            CURRENCY_ID: 'SAR',
+            SOURCE_ID: 'WEB',
+            COMMENTS: [
+              `Order #${orderNumber}`,
+              `Payment: stripe`,
+              '',
+              'Items:',
+              itemLines,
+              '',
+              `Total: ${amountTotal} SAR`,
+              '',
+              'Shipping:',
+              `Name: ${shippingInfo.name}`,
+              `Email: ${shippingInfo.email}`,
+              `Phone: ${shippingInfo.phone}`,
+              `Address: ${shippingInfo.address}, ${shippingInfo.city}${shippingInfo.country ? ', ' + shippingInfo.country : ''}`,
+            ].join('\n'),
+          },
+        }),
+      });
+    } catch (bitrixErr) {
+      console.error('[Bitrix24] Lead sync failed:', bitrixErr);
+    }
+
     return ok({ success: true, order_number: orderNumber, amount: amountTotal });
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);
