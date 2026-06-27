@@ -685,7 +685,7 @@ export default function AdminProducts() {
  )}
  </div>
  <div className="flex items-center gap-3 mt-0.5 text-sm text-slate-400">
- <span className="font-mono text-xs bg-white/10 px-1.5 py-0.5 rounded">
+ <span className="font-mono text-xs bg-slate-700 text-slate-200 px-1.5 py-0.5 rounded">
  /{product.slug}
  </span>
  <span>
@@ -695,7 +695,7 @@ export default function AdminProducts() {
  <div className="flex items-center gap-2 mt-1">
  {product.sale_price ? (
  <>
- <span className="text-red-600 font-bold">{product.sale_price} SAR</span>
+ <span className="text-red-400 font-bold">{product.sale_price} SAR</span>
  <span className="line-through text-slate-400 text-sm">{product.price} SAR</span>
  </>
  ) : (

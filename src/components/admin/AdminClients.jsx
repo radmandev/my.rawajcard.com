@@ -33,7 +33,7 @@ const PLAN_CONFIG = {
  },
  free: {
  label:'Free', labelAr:'مجاني',
- color:'bg-white/10 text-slate-300 border-white/10',
+ color:'bg-slate-600/60 text-slate-200 border-slate-500/50',
  icon: Users,
  },
 };

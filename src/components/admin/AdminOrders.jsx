@@ -265,7 +265,7 @@ export default function AdminOrders() {
  key={i}
  src={item.product_image}
  alt={item.product_name}
- className="h-8 w-8 rounded-md object-cover border-2 border-white bg-white/10"
+ className="h-8 w-8 rounded-md object-cover border-2 border-white/20 bg-white/10"
  />
  ) : (
  <div key={i} className="h-8 w-8 rounded-md bg-cyan-500/20 border-2 border-white/20 flex items-center justify-center">

@@ -18,7 +18,7 @@ const PLAN_CONFIG = {
  premium: { label:'Premium', color:'bg-cyan-500/20 text-cyan-300 border-cyan-400/30', icon: Sparkles },
  teams: { label:'Teams', color:'bg-blue-500/20 text-blue-300 border-blue-400/30', icon: Users },
  enterprise: { label:'Enterprise', color:'bg-purple-500/20 text-purple-300 border-purple-400/30', icon: Crown },
- free: { label:'Free', color:'bg-white/10 text-slate-400 border-white/10', icon: Users },
+ free: { label:'Free', color:'bg-slate-600/60 text-slate-200 border-slate-500/50', icon: Users },
 };
 
 export default function AdminCards() {
@@ -180,8 +180,7 @@ export default function AdminCards() {
  {card.name || (isRTL ?'بدون اسم' :'Unnamed')}
  </h3>
  <Badge
- variant={isPublished ?'default' :'secondary'}
- className={isPublished ?'bg-cyan-600 text-white text-xs' :'text-xs'}
+ className={isPublished ?'bg-cyan-600 text-white text-xs border-0' :'bg-slate-600 text-slate-200 text-xs border-0'}
  >
  {isPublished ? (isRTL ?'منشور' :'Published') : (isRTL ?'مسودة' :'Draft')}
  </Badge>
@@ -202,7 +201,7 @@ export default function AdminCards() {
 
  {/* Slug + stats */}
  <div className="flex items-center gap-2 flex-wrap">
- <span className="font-mono bg-white/10 px-1.5 py-0.5 rounded">
+ <span className="font-mono bg-slate-700 text-slate-200 px-1.5 py-0.5 rounded">
  /{card.slug ||'—'}
  </span>
  <span>{card.view_count || 0} {isRTL ?'مشاهدة' :'views'}</span>
