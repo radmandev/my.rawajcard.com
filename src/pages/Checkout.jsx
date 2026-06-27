@@ -253,6 +253,16 @@ export default function Checkout() {
  },
  });
  if (error) throw error;
+
+ sendNewOrderToBitrix({
+ orderNumber,
+ shippingInfo: submitShippingRef.current || shippingInfo,
+ normalizedCartItems,
+ total,
+ currency: 'SAR',
+ paymentMethod: 'bank_transfer',
+ });
+
  return orderNumber;
  },
  onSuccess: (orderNumber) => {

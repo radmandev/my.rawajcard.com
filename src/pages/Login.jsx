@@ -5,6 +5,7 @@ import { supabase } from'@/lib/supabaseClient';
 import { api } from'@/api/supabaseAPI';
 import { clearPostAuthRedirect, getPostAuthRedirect } from'@/components/store/PhysicalCardCustomizationModule';
 import { Mail, Lock, Eye, EyeOff, ArrowLeft } from'lucide-react';
+import { sendNewCustomerToBitrix } from'@/lib/bitrix24';
 
 export default function Login() {
  const [email, setEmail] = useState('');
@@ -93,6 +94,8 @@ export default function Login() {
  });
  setIsSubmitting(false);
  if (signUpError) { setError(signUpError.message); return; }
+
+ sendNewCustomerToBitrix(email);
 
  // ── Premium Trial Logic ──
  try {

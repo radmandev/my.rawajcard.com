@@ -4,6 +4,7 @@ import { supabase } from'@/lib/supabaseClient';
 import { api } from'@/api/supabaseAPI';
 import { Dialog, DialogContent } from'@/components/ui/dialog';
 import { Mail, Lock, Eye, EyeOff, X } from'lucide-react';
+import { sendNewCustomerToBitrix } from'@/lib/bitrix24';
 
 export default function LoginModal({ open, onClose }) {
  const [email, setEmail] = useState('');
@@ -69,6 +70,8 @@ export default function LoginModal({ open, onClose }) {
  const { error: signUpError, data } = await supabase.auth.signUp({ email, password });
  setIsSubmitting(false);
  if (signUpError) { setError(signUpError.message); return; }
+
+    sendNewCustomerToBitrix(email);
 
  // ── Premium Trial Logic ──
  try {
