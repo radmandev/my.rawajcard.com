@@ -129,7 +129,7 @@ function ImageUploader({ label, value, onChange, isRTL }) {
  <img
  src={value}
  alt=""
- className="h-20 w-20 object-cover rounded-lg border border-slate-200"
+ className="h-20 w-20 object-cover rounded-lg border border-white/10"
  onError={(e) => { e.target.style.display ='none'; }}
  />
  )}
@@ -183,7 +183,7 @@ function ExtraImagesEditor({ images, onChange, isRTL }) {
  <img
  src={url}
  alt=""
- className="h-16 w-16 object-cover rounded-lg border border-slate-200"
+ className="h-16 w-16 object-cover rounded-lg border border-white/10"
  onError={(e) => { e.target.style.display ='none'; }}
  />
  <button
@@ -257,7 +257,7 @@ function ProductDialog({ open, onClose, initialData, onSave, isSaving, isRTL }) 
  return (
  <Dialog open={open} onOpenChange={(v) => !v && onClose()}>
  <DialogContent
- className="max-w-3xl max-h-[90vh] overflow-y-auto bg-white text-slate-900"
+ className="max-w-3xl max-h-[90vh] overflow-y-auto"
  dir={isRTL ?'rtl' :'ltr'}
  >
  <DialogHeader>
@@ -429,7 +429,7 @@ function ProductDialog({ open, onClose, initialData, onSave, isSaving, isRTL }) 
  <select
  value={form.category}
  onChange={(e) => set('category', e.target.value)}
- className="w-full h-9 px-3 rounded-md border border-input bg-white text-slate-800 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring"
+ className="w-full h-9 px-3 rounded-md border border-input text-slate-100 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring"
  >
  {CATEGORIES.map((c) => (
  <option key={c.value} value={c.value}>
@@ -444,7 +444,7 @@ function ProductDialog({ open, onClose, initialData, onSave, isSaving, isRTL }) 
  <select
  value={form.status}
  onChange={(e) => set('status', e.target.value)}
- className="w-full h-9 px-3 rounded-md border border-input bg-white text-slate-800 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring"
+ className="w-full h-9 px-3 rounded-md border border-input text-slate-100 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring"
  >
  <option value="draft">{isRTL ?'مسودة' :'Draft'}</option>
  <option value="published">{isRTL ?'منشور' :'Published'}</option>
@@ -579,11 +579,11 @@ export default function AdminProducts() {
  {/* ── Header ── */}
  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
  <div>
- <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
+ <h2 className="text-xl font-bold text-white flex items-center gap-2">
  <Package className="h-5 w-5 text-cyan-600" />
  {isRTL ?'إدارة المنتجات' :'Product Management'}
  </h2>
- <div className="flex gap-3 mt-1 text-sm text-slate-500">
+ <div className="flex gap-3 mt-1 text-sm text-slate-400">
  <span>{products.length} {isRTL ?'منتج' :'total'}</span>
  <span className="text-green-600">{publishedCount} {isRTL ?'منشور' :'published'}</span>
  <span className="text-amber-600">{draftCount} {isRTL ?'مسودة' :'draft'}</span>
@@ -636,7 +636,7 @@ export default function AdminProducts() {
  ) : filtered.length === 0 ? (
  <Card className="py-16 text-center">
  <Package className="h-12 w-12 text-slate-300 mx-auto mb-3" />
- <p className="text-slate-500">
+ <p className="text-slate-400">
  {search || statusFilter !=='all'
  ? (isRTL ?'لا توجد نتائج مطابقة' :'No matching products')
  : (isRTL ?'لا توجد منتجات بعد — أضف منتجاً جديداً' :'No products yet — add your first product')}
@@ -649,7 +649,7 @@ export default function AdminProducts() {
  <CardContent className="p-0">
  <div className="flex items-center gap-4 p-4">
  {/* Image */}
- <div className="shrink-0 h-16 w-16 rounded-lg overflow-hidden border border-slate-200 bg-slate-50">
+ <div className="shrink-0 h-16 w-16 rounded-lg overflow-hidden border border-white/10 bg-white/5">
  {product.main_image
  ? <img src={product.main_image} alt={product.name} className="h-full w-full object-cover" onError={(e) => { e.target.style.display ='none'; }} />
  : <div className="h-full w-full flex items-center justify-center"><Package className="h-6 w-6 text-slate-300" /></div>}
@@ -658,7 +658,7 @@ export default function AdminProducts() {
  {/* Info */}
  <div className="flex-1 min-w-0">
  <div className="flex items-center gap-2 flex-wrap">
- <span className="font-semibold text-slate-900 truncate">
+ <span className="font-semibold text-white truncate">
  {product.name}
  </span>
  {product.name_ar && (
@@ -684,8 +684,8 @@ export default function AdminProducts() {
  </Badge>
  )}
  </div>
- <div className="flex items-center gap-3 mt-0.5 text-sm text-slate-500">
- <span className="font-mono text-xs bg-slate-100 px-1.5 py-0.5 rounded">
+ <div className="flex items-center gap-3 mt-0.5 text-sm text-slate-400">
+ <span className="font-mono text-xs bg-white/10 px-1.5 py-0.5 rounded">
  /{product.slug}
  </span>
  <span>
@@ -740,7 +740,7 @@ export default function AdminProducts() {
  variant="ghost"
  size="sm"
  onClick={() => { setEditing(product); setFormOpen(true); }}
- className="text-slate-500 hover:text-slate-700"
+ className="text-slate-400 hover:text-slate-200"
  >
  <Pencil className="h-4 w-4" />
  </Button>
@@ -772,7 +772,7 @@ export default function AdminProducts() {
 
  {/* ── Delete Confirmation ── */}
  <AlertDialog open={!!deleting} onOpenChange={(v) => !v && setDeleting(null)}>
- <AlertDialogContent className="bg-white text-slate-900">
+ <AlertDialogContent className="">
  <AlertDialogHeader>
  <AlertDialogTitle>
  {isRTL ?'حذف المنتج' :'Delete Product'}

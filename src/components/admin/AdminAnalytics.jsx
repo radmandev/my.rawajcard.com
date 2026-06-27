@@ -182,8 +182,8 @@ function StatCard({ icon: Icon, label, value, sub = null, trend = null, trendVal
  <CardContent className="p-5">
  <div className="flex items-start justify-between gap-3">
  <div className="flex-1 min-w-0">
- <p className="text-xs font-medium text-slate-500 uppercase tracking-wide mb-1">{label}</p>
- <p className="text-2xl font-bold text-slate-900 truncate">{value}</p>
+ <p className="text-xs font-medium text-slate-400 uppercase tracking-wide mb-1">{label}</p>
+ <p className="text-2xl font-bold text-white truncate">{value}</p>
  {sub && <p className="text-xs text-slate-400 mt-0.5">{sub}</p>}
  </div>
  <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: LIGHT }}>
@@ -210,7 +210,7 @@ function SectionHeader({ icon: Icon, title, subtitle }) {
  <Icon className="w-5 h-5" style={{ color: TEAL }} />
  </div>
  <div>
- <h2 className="text-base font-bold text-slate-800">{title}</h2>
+ <h2 className="text-base font-bold text-slate-100">{title}</h2>
  {subtitle && <p className="text-xs text-slate-400">{subtitle}</p>}
  </div>
  </div>
@@ -225,7 +225,7 @@ function DateRangeSelector({ value, onChange, isRTL }) {
  { value:'90', label: isRTL ?'90 يوم' :'90 Days' },
  ];
  return (
- <div className="flex items-center gap-1 bg-slate-100 rounded-xl p-1">
+ <div className="flex items-center gap-1 bg-white/10 rounded-xl p-1">
  {options.map((o) => (
  <button
  key={o.value}
@@ -233,7 +233,7 @@ function DateRangeSelector({ value, onChange, isRTL }) {
  className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
  value === o.value
  ?'bg-cyan-600 text-white shadow-sm'
- :'text-slate-500 hover:text-slate-700'
+ :'text-slate-400 hover:text-slate-200'
  }`}
  >
  {o.label}
@@ -342,18 +342,18 @@ function ConversionFunnelViz({ data, isRTL }) {
  <div className="flex items-center justify-between mb-1">
  <div className="flex items-center gap-2">
  <span className="text-xs font-semibold text-slate-400 w-4">{i + 1}</span>
- <span className="text-sm font-medium text-slate-700">{item.name}</span>
+ <span className="text-sm font-medium text-slate-200">{item.name}</span>
  {i > 0 && (
  <Badge variant="secondary" className="text-[10px] px-1.5 py-0">
  {convRate}% {isRTL ?'تحويل' :'conv'}
  </Badge>
  )}
  </div>
- <span className="text-sm font-bold text-slate-800">
+ <span className="text-sm font-bold text-slate-100">
  {item.value.toLocaleString()}
  </span>
  </div>
- <div className="h-8 bg-slate-100 rounded-lg overflow-hidden">
+ <div className="h-8 bg-white/10 rounded-lg overflow-hidden">
  <motion.div
  className="h-full rounded-lg flex items-center px-2"
  style={{ background: item.fill, width:`${pct}%` }}
@@ -374,17 +374,17 @@ function EventTable({ events, isRTL }) {
  <div className="overflow-x-auto">
  <table className="w-full text-sm">
  <thead>
- <tr className="border-b border-slate-100">
- <th className={`py-2.5 px-3 text-xs font-semibold text-slate-500 uppercase tracking-wide ${isRTL ?'text-right' :'text-left'}`}>
+ <tr className="border-b border-white/5">
+ <th className={`py-2.5 px-3 text-xs font-semibold text-slate-400 uppercase tracking-wide ${isRTL ?'text-right' :'text-left'}`}>
  {isRTL ?'الحدث' :'Event'}
  </th>
- <th className={`py-2.5 px-3 text-xs font-semibold text-slate-500 uppercase tracking-wide ${isRTL ?'text-right' :'text-left'}`}>
+ <th className={`py-2.5 px-3 text-xs font-semibold text-slate-400 uppercase tracking-wide ${isRTL ?'text-right' :'text-left'}`}>
  {isRTL ?'الصفحة' :'Page'}
  </th>
- <th className={`py-2.5 px-3 text-xs font-semibold text-slate-500 uppercase tracking-wide text-right`}>
+ <th className={`py-2.5 px-3 text-xs font-semibold text-slate-400 uppercase tracking-wide text-right`}>
  {isRTL ?'العدد' :'Count'}
  </th>
- <th className={`py-2.5 px-3 text-xs font-semibold text-slate-500 uppercase tracking-wide text-right`}>
+ <th className={`py-2.5 px-3 text-xs font-semibold text-slate-400 uppercase tracking-wide text-right`}>
  {isRTL ?'الاتجاه' :'Trend'}
  </th>
  </tr>
@@ -396,15 +396,15 @@ function EventTable({ events, isRTL }) {
  initial={{ opacity: 0 }}
  animate={{ opacity: 1 }}
  transition={{ delay: i * 0.05 }}
- className="border-b border-slate-50 hover:bg-slate-50 transition-colors"
+ className="border-b border-slate-50 hover:bg-white/5 transition-colors"
  >
  <td className="py-3 px-3">
- <code className="text-xs bg-slate-100 text-cyan-700 px-2 py-0.5 rounded-md">
+ <code className="text-xs bg-white/10 text-cyan-700 px-2 py-0.5 rounded-md">
  {e.event}
  </code>
  </td>
- <td className="py-3 px-3 text-slate-500 text-xs">{e.page}</td>
- <td className="py-3 px-3 text-right font-semibold text-slate-800">
+ <td className="py-3 px-3 text-slate-400 text-xs">{e.page}</td>
+ <td className="py-3 px-3 text-right font-semibold text-slate-100">
  {e.count.toLocaleString()}
  </td>
  <td className="py-3 px-3 text-right">
@@ -431,10 +431,10 @@ function DeviceBreakdown({ devices, isRTL }) {
  <Icon className="w-4 h-4 text-slate-400 flex-shrink-0" />
  <div className="flex-1">
  <div className="flex justify-between mb-1">
- <span className="text-xs font-medium text-slate-700">{d.device}</span>
- <span className="text-xs font-bold text-slate-800">{d.pct}%</span>
+ <span className="text-xs font-medium text-slate-200">{d.device}</span>
+ <span className="text-xs font-bold text-slate-100">{d.pct}%</span>
  </div>
- <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
+ <div className="h-2 bg-white/10 rounded-full overflow-hidden">
  <motion.div
  className="h-full rounded-full"
  style={{ background: TEAL }}
@@ -461,10 +461,10 @@ function TrafficSources({ sources, isRTL }) {
  <div className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ background: COLORS[i] }} />
  <div className="flex-1">
  <div className="flex justify-between mb-1">
- <span className="text-xs font-medium text-slate-700">{s.source}</span>
- <span className="text-xs font-bold text-slate-800">{s.value}%</span>
+ <span className="text-xs font-medium text-slate-200">{s.source}</span>
+ <span className="text-xs font-bold text-slate-100">{s.value}%</span>
  </div>
- <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
+ <div className="h-2 bg-white/10 rounded-full overflow-hidden">
  <motion.div
  className="h-full rounded-full"
  style={{ background: COLORS[i] }}
@@ -484,9 +484,9 @@ function UserJourneys({ journeys, isRTL }) {
  return (
  <div className="space-y-3">
  {journeys.map((j, i) => (
- <div key={i} className="flex items-start justify-between gap-3 p-3 rounded-xl bg-slate-50 hover:bg-slate-100 transition-colors">
+ <div key={i} className="flex items-start justify-between gap-3 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors">
  <div className="flex-1 min-w-0">
- <p className="text-xs font-semibold text-slate-700 truncate">{j.path}</p>
+ <p className="text-xs font-semibold text-slate-200 truncate">{j.path}</p>
  <p className="text-[11px] text-slate-400 mt-0.5">{j.users.toLocaleString()} {isRTL ?'مستخدم' :'users'}</p>
  </div>
  <Badge variant="outline" className="flex-shrink-0 text-xs" style={{ background: LIGHT, color: TEAL }}>
@@ -646,11 +646,11 @@ export default function AdminAnalytics() {
  {/* ── Page header ── */}
  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
  <div>
- <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
+ <h1 className="text-2xl font-bold text-white flex items-center gap-2">
  <BarChart2 className="w-6 h-6" style={{ color: TEAL }} />
  {txt.title}
  </h1>
- <p className="text-slate-500 text-sm mt-0.5">{txt.sub}</p>
+ <p className="text-slate-400 text-sm mt-0.5">{txt.sub}</p>
  </div>
  <div className="flex flex-wrap items-center gap-3">
  <RealTimeBar count={data.onlineNow} isRTL={isRTL} />
@@ -659,7 +659,7 @@ export default function AdminAnalytics() {
  <select
  value={segment}
  onChange={(e) => setSegment(e.target.value)}
- className="text-xs px-3 py-2 rounded-xl border border-slate-200 bg-white text-slate-700 focus:outline-none focus:ring-2 focus:ring-cyan-400"
+ className="text-xs px-3 py-2 rounded-xl border border-white/10/5 text-slate-200 focus:outline-none focus:ring-2 focus:ring-cyan-400"
  >
  <option value="all">{txt.allUsers}</option>
  <option value="new">{txt.newUsers}</option>
@@ -677,7 +677,7 @@ export default function AdminAnalytics() {
 
  {/* ── Tabs ── */}
  <Tabs value={activeTab} onValueChange={setActiveTab}>
- <TabsList className="rounded-2xl bg-slate-100 p-1">
+ <TabsList className="rounded-2xl bg-white/10 p-1">
  <TabsTrigger value="home" className="rounded-xl flex items-center gap-1.5 text-xs">
  <Home className="w-3.5 h-3.5" />{txt.homeTab}
  </TabsTrigger>
@@ -705,7 +705,7 @@ export default function AdminAnalytics() {
  <Card className="rounded-2xl shadow-sm">
  <CardHeader className="pb-2">
  <div className="flex items-center justify-between">
- <CardTitle className="text-sm font-semibold text-slate-700">{txt.visitsTime}</CardTitle>
+ <CardTitle className="text-sm font-semibold text-slate-200">{txt.visitsTime}</CardTitle>
  <ExportButton label={isRTL ?'تصدير' :'Export'} onClick={() => exportCSV(data.homeVisits,'visits.csv')} />
  </div>
  </CardHeader>
@@ -717,7 +717,7 @@ export default function AdminAnalytics() {
  <Card className="rounded-2xl shadow-sm">
  <CardHeader className="pb-2">
  <div className="flex items-center justify-between">
- <CardTitle className="text-sm font-semibold text-slate-700">{txt.funnel}</CardTitle>
+ <CardTitle className="text-sm font-semibold text-slate-200">{txt.funnel}</CardTitle>
  <ExportButton label={txt.exportFunnel} onClick={() => exportCSV(data.conversionFunnel,'funnel.csv')} />
  </div>
  </CardHeader>
@@ -726,7 +726,7 @@ export default function AdminAnalytics() {
 
  <Card className="rounded-2xl shadow-sm">
  <CardHeader className="pb-2">
- <CardTitle className="text-sm font-semibold text-slate-700">{txt.clicksEl}</CardTitle>
+ <CardTitle className="text-sm font-semibold text-slate-200">{txt.clicksEl}</CardTitle>
  </CardHeader>
  <CardContent><HBarChart data={data.clicksByElement} /></CardContent>
  </Card>
@@ -736,14 +736,14 @@ export default function AdminAnalytics() {
  <div className="grid lg:grid-cols-2 gap-4">
  <Card className="rounded-2xl shadow-sm">
  <CardHeader className="pb-2">
- <CardTitle className="text-sm font-semibold text-slate-700">{txt.heatmap}</CardTitle>
+ <CardTitle className="text-sm font-semibold text-slate-200">{txt.heatmap}</CardTitle>
  </CardHeader>
  <CardContent><HeatmapGrid data={data.heatmap} isRTL={isRTL} /></CardContent>
  </Card>
 
  <Card className="rounded-2xl shadow-sm">
  <CardHeader className="pb-2">
- <CardTitle className="text-sm font-semibold text-slate-700">{txt.scroll}</CardTitle>
+ <CardTitle className="text-sm font-semibold text-slate-200">{txt.scroll}</CardTitle>
  </CardHeader>
  <CardContent>
  <ResponsiveContainer width="100%" height={200}>
@@ -777,7 +777,7 @@ export default function AdminAnalytics() {
  {/* Sessions over time */}
  <Card className="rounded-2xl shadow-sm">
  <CardHeader className="pb-2">
- <CardTitle className="text-sm font-semibold text-slate-700">{txt.sessionsTime}</CardTitle>
+ <CardTitle className="text-sm font-semibold text-slate-200">{txt.sessionsTime}</CardTitle>
  </CardHeader>
  <CardContent><ComparisonChart data={data.dashSessions} isRTL={isRTL} /></CardContent>
  </Card>
@@ -787,7 +787,7 @@ export default function AdminAnalytics() {
  <Card className="rounded-2xl shadow-sm">
  <CardHeader className="pb-2">
  <div className="flex items-center justify-between">
- <CardTitle className="text-sm font-semibold text-slate-700">
+ <CardTitle className="text-sm font-semibold text-slate-200">
  {txt.cardsChart}
  <Badge variant="outline" className="ms-2 text-[10px]" style={{ background: LIGHT, color: TEAL }}>{data.cardsTotal}</Badge>
  </CardTitle>
@@ -800,7 +800,7 @@ export default function AdminAnalytics() {
  <Card className="rounded-2xl shadow-sm">
  <CardHeader className="pb-2">
  <div className="flex items-center justify-between">
- <CardTitle className="text-sm font-semibold text-slate-700">
+ <CardTitle className="text-sm font-semibold text-slate-200">
  {txt.upgradesChart}
  <Badge variant="outline" className="ms-2 text-[10px]" style={{ background:'#F3E8FF', color:'#7C3AED' }}>{data.upgradesTotal}</Badge>
  </CardTitle>
@@ -815,14 +815,14 @@ export default function AdminAnalytics() {
  <div className="grid lg:grid-cols-2 gap-4">
  <Card className="rounded-2xl shadow-sm">
  <CardHeader className="pb-2">
- <CardTitle className="text-sm font-semibold text-slate-700">{txt.dashHeat}</CardTitle>
+ <CardTitle className="text-sm font-semibold text-slate-200">{txt.dashHeat}</CardTitle>
  </CardHeader>
  <CardContent><HeatmapGrid data={data.heatmap} isRTL={isRTL} /></CardContent>
  </Card>
 
  <Card className="rounded-2xl shadow-sm">
  <CardHeader className="pb-2">
- <CardTitle className="text-sm font-semibold text-slate-700">{txt.dashClicks}</CardTitle>
+ <CardTitle className="text-sm font-semibold text-slate-200">{txt.dashClicks}</CardTitle>
  </CardHeader>
  <CardContent><HBarChart data={data.dashClicksByFeature} /></CardContent>
  </Card>
@@ -832,7 +832,7 @@ export default function AdminAnalytics() {
  <Card className="rounded-2xl shadow-sm">
  <CardHeader className="pb-2">
  <div className="flex items-center justify-between">
- <CardTitle className="text-sm font-semibold text-slate-700">{txt.topEvents}</CardTitle>
+ <CardTitle className="text-sm font-semibold text-slate-200">{txt.topEvents}</CardTitle>
  <ExportButton label={txt.exportEvents} onClick={() => exportCSV(data.topEvents,'events.csv')} />
  </div>
  </CardHeader>
@@ -855,7 +855,7 @@ export default function AdminAnalytics() {
  {/* User journeys */}
  <Card className="rounded-2xl shadow-sm lg:col-span-1">
  <CardHeader className="pb-2">
- <CardTitle className="text-sm font-semibold text-slate-700">{txt.journeys}</CardTitle>
+ <CardTitle className="text-sm font-semibold text-slate-200">{txt.journeys}</CardTitle>
  </CardHeader>
  <CardContent><UserJourneys journeys={data.userJourneys} isRTL={isRTL} /></CardContent>
  </Card>
@@ -863,7 +863,7 @@ export default function AdminAnalytics() {
  {/* Devices */}
  <Card className="rounded-2xl shadow-sm">
  <CardHeader className="pb-2">
- <CardTitle className="text-sm font-semibold text-slate-700">{txt.devices}</CardTitle>
+ <CardTitle className="text-sm font-semibold text-slate-200">{txt.devices}</CardTitle>
  </CardHeader>
  <CardContent><DeviceBreakdown devices={data.devices} isRTL={isRTL} /></CardContent>
  </Card>
@@ -871,7 +871,7 @@ export default function AdminAnalytics() {
  {/* Traffic sources */}
  <Card className="rounded-2xl shadow-sm">
  <CardHeader className="pb-2">
- <CardTitle className="text-sm font-semibold text-slate-700">{txt.traffic}</CardTitle>
+ <CardTitle className="text-sm font-semibold text-slate-200">{txt.traffic}</CardTitle>
  </CardHeader>
  <CardContent><TrafficSources sources={data.trafficSources} isRTL={isRTL} /></CardContent>
  </Card>
@@ -881,7 +881,7 @@ export default function AdminAnalytics() {
  <Card className="rounded-2xl shadow-sm">
  <CardHeader className="pb-2">
  <div className="flex items-center justify-between">
- <CardTitle className="text-sm font-semibold text-slate-700">{txt.topEvents}</CardTitle>
+ <CardTitle className="text-sm font-semibold text-slate-200">{txt.topEvents}</CardTitle>
  <ExportButton label={txt.exportEvents} onClick={() => exportCSV(data.topEvents,'events.csv')} />
  </div>
  </CardHeader>

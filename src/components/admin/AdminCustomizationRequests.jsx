@@ -85,11 +85,11 @@ export default function AdminCustomizationRequests() {
  return (
  <div className="space-y-6">
  <div>
- <h2 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
+ <h2 className="text-2xl font-bold text-white flex items-center gap-2">
  <Sparkles className="h-6 w-6 text-cyan-600" />
  {isRTL ?'طلبات التخصيص' :'Customization Requests'}
  </h2>
- <p className="text-slate-500 mt-1">
+ <p className="text-slate-400 mt-1">
  {isRTL 
  ?`إجمالي الطلبات: ${requests.length}`
  :`Total requests: ${requests.length}`
@@ -102,7 +102,7 @@ export default function AdminCustomizationRequests() {
  <Card>
  <CardContent className="py-12 text-center">
  <Sparkles className="h-12 w-12 text-slate-300 mx-auto mb-4" />
- <p className="text-slate-500">
+ <p className="text-slate-400">
  {isRTL ?'لا توجد طلبات حتى الآن' :'No requests yet'}
  </p>
  </CardContent>
@@ -123,7 +123,7 @@ export default function AdminCustomizationRequests() {
  )}
  </CardTitle>
  <div className="flex flex-wrap gap-2">
- <Badge variant="outline" className="bg-slate-50">
+ <Badge variant="outline" className="bg-white/5">
  {pageNames[request.details?.page] || request.details?.page}
  </Badge>
  <Badge className={statusColors[request.status]}>
@@ -131,7 +131,7 @@ export default function AdminCustomizationRequests() {
  </Badge>
  </div>
  </div>
- <div className="text-sm text-slate-500 flex items-center gap-1">
+ <div className="text-sm text-slate-400 flex items-center gap-1">
  <Calendar className="h-4 w-4" />
  {new Date(request.created_at).toLocaleDateString()}
  </div>
@@ -139,11 +139,11 @@ export default function AdminCustomizationRequests() {
  </CardHeader>
  <CardContent className="space-y-4">
  <div>
- <p className="text-sm font-medium text-slate-700 mb-1 flex items-center gap-1">
+ <p className="text-sm font-medium text-slate-200 mb-1 flex items-center gap-1">
  <MessageSquare className="h-4 w-4" />
  {isRTL ?'التفاصيل:' :'Request Details:'}
  </p>
- <p className="text-sm text-slate-600 bg-slate-50 p-3 rounded-lg">
+ <p className="text-sm text-slate-300 bg-white/5 p-3 rounded-lg">
  {request.details?.request_content ||'—'}
  </p>
  </div>
@@ -158,7 +158,7 @@ export default function AdminCustomizationRequests() {
  <SelectTrigger>
  <SelectValue />
  </SelectTrigger>
- <SelectContent className="bg-white text-slate-900">
+ <SelectContent>
  <SelectItem value="pending">{isRTL ?'قيد الانتظار' :'Pending'}</SelectItem>
  <SelectItem value="in_progress">{isRTL ?'قيد التنفيذ' :'In Progress'}</SelectItem>
  <SelectItem value="completed">{isRTL ?'مكتمل' :'Completed'}</SelectItem>
@@ -206,11 +206,11 @@ export default function AdminCustomizationRequests() {
  ) : (
  <>
  {request.admin_notes && (
- <div className="bg-blue-50 p-3 rounded-lg border border-blue-200">
- <p className="text-sm font-medium text-blue-900 mb-1">
+ <div className="bg-blue-500/10 p-3 rounded-lg border border-blue-400/20">
+ <p className="text-sm font-medium text-blue-300 mb-1">
  {isRTL ?'ملاحظات الإدارة:' :'Admin Notes:'}
  </p>
- <p className="text-sm text-blue-800">
+ <p className="text-sm text-blue-200">
  {request.admin_notes}
  </p>
  </div>

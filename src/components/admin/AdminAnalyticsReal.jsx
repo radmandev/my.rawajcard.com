@@ -150,14 +150,14 @@ function MetricCard({ icon: Icon, label, value, sublabel, trend, accent = CHART_
  :'text-slate-400';
 
  return (
- <Card className="border-slate-200 shadow-sm">
+ <Card className="border-white/10 shadow-sm">
  <CardContent className="p-5">
  <div className="flex items-start justify-between gap-3">
  <div className="min-w-0 flex-1">
- <p className="text-xs font-medium uppercase tracking-wide text-slate-500">{label}</p>
- <p className="mt-2 text-2xl font-bold text-slate-900">{value}</p>
+ <p className="text-xs font-medium uppercase tracking-wide text-slate-400">{label}</p>
+ <p className="mt-2 text-2xl font-bold text-white">{value}</p>
  {sublabel ? (
- <p className="mt-1 text-xs text-slate-500">{sublabel}</p>
+ <p className="mt-1 text-xs text-slate-400">{sublabel}</p>
  ) : null}
  </div>
  <div className="flex h-11 w-11 items-center justify-center rounded-2xl" style={{ backgroundColor:`${accent}18` }}>
@@ -177,22 +177,22 @@ function MetricCard({ icon: Icon, label, value, sublabel, trend, accent = CHART_
 
 function BreakdownList({ title, rows, emptyLabel }) {
  return (
- <Card className="border-slate-200 shadow-sm">
+ <Card className="border-white/10 shadow-sm">
  <CardHeader className="pb-2">
- <CardTitle className="text-sm font-semibold text-slate-800">{title}</CardTitle>
+ <CardTitle className="text-sm font-semibold text-slate-100">{title}</CardTitle>
  </CardHeader>
  <CardContent>
  {rows.length === 0 ? (
- <p className="text-sm text-slate-500">{emptyLabel}</p>
+ <p className="text-sm text-slate-400">{emptyLabel}</p>
  ) : (
  <div className="space-y-3">
  {rows.map((row, index) => (
  <div key={`${row.label}-${index}`} className="space-y-1.5">
  <div className="flex items-center justify-between gap-3 text-sm">
- <span className="truncate text-slate-700">{row.label}</span>
- <span className="font-semibold text-slate-900">{row.value.toLocaleString()}</span>
+ <span className="truncate text-slate-200">{row.label}</span>
+ <span className="font-semibold text-white">{row.value.toLocaleString()}</span>
  </div>
- <div className="h-2 rounded-full bg-slate-100 overflow-hidden">
+ <div className="h-2 rounded-full bg-white/10 overflow-hidden">
  <div
  className="h-full rounded-full"
  style={{
@@ -212,22 +212,22 @@ function BreakdownList({ title, rows, emptyLabel }) {
 
 function TopCardsTable({ rows, isRTL }) {
  return (
- <Card className="border-slate-200 shadow-sm">
+ <Card className="border-white/10 shadow-sm">
  <CardHeader className="pb-2">
- <CardTitle className="text-sm font-semibold text-slate-800">
+ <CardTitle className="text-sm font-semibold text-slate-100">
  {isRTL ?'أفضل البطاقات أداءً' :'Top Performing Cards'}
  </CardTitle>
  </CardHeader>
  <CardContent>
  {rows.length === 0 ? (
- <p className="text-sm text-slate-500">
+ <p className="text-sm text-slate-400">
  {isRTL ?'لا توجد بيانات كافية حتى الآن' :'No tracked card activity yet'}
  </p>
  ) : (
  <div className="overflow-x-auto">
  <table className="w-full text-sm">
  <thead>
- <tr className="border-b border-slate-100 text-slate-500">
+ <tr className="border-b border-white/5 text-slate-400">
  <th className={`px-2 py-2 text-xs font-semibold ${isRTL ?'text-right' :'text-left'}`}>
  {isRTL ?'البطاقة' :'Card'}
  </th>
@@ -241,13 +241,13 @@ function TopCardsTable({ rows, isRTL }) {
  {rows.map((row) => (
  <tr key={row.id} className="border-b border-slate-50">
  <td className="px-2 py-3">
- <div className="font-medium text-slate-900">{row.label}</div>
- <div className="text-xs text-slate-500">/{row.slug || row.id.slice(0, 8)}</div>
+ <div className="font-medium text-white">{row.label}</div>
+ <div className="text-xs text-slate-400">/{row.slug || row.id.slice(0, 8)}</div>
  </td>
- <td className="px-2 py-3 text-right text-slate-700">{row.pageViews}</td>
- <td className="px-2 py-3 text-right text-slate-700">{row.qrScans}</td>
- <td className="px-2 py-3 text-right text-slate-700">{row.linkClicks}</td>
- <td className="px-2 py-3 text-right font-semibold text-slate-900">{row.contacts}</td>
+ <td className="px-2 py-3 text-right text-slate-200">{row.pageViews}</td>
+ <td className="px-2 py-3 text-right text-slate-200">{row.qrScans}</td>
+ <td className="px-2 py-3 text-right text-slate-200">{row.linkClicks}</td>
+ <td className="px-2 py-3 text-right font-semibold text-white">{row.contacts}</td>
  </tr>
  ))}
  </tbody>
@@ -563,10 +563,10 @@ export default function AdminAnalyticsReal() {
  <div className="space-y-6">
  <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
  <div>
- <h1 className="text-2xl font-bold text-slate-900">
+ <h1 className="text-2xl font-bold text-white">
  {isRTL ?'تحليلات المسؤول' :'Admin Analytics'}
  </h1>
- <p className="mt-1 text-sm text-slate-500">
+ <p className="mt-1 text-sm text-slate-400">
  {isRTL
  ?'هذه اللوحة تعرض البيانات الحقيقية المخزنة في Supabase فقط، بدون أي أرقام تجريبية أو عشوائية.'
  :'This panel now shows only persisted Supabase data — no generated or placeholder numbers.'}
@@ -582,7 +582,7 @@ export default function AdminAnalyticsReal() {
  className={`rounded-xl border px-3 py-2 text-xs font-semibold transition-colors ${
  periodDays === option.value
  ?'border-cyan-600 bg-cyan-600 text-white'
- :'border-slate-200 bg-white text-slate-600 hover:border-cyan-300 hover:bg-slate-50'
+ :'border-white/10 text-slate-300 hover:border-cyan-300 hover:bg-white/5'
  }`}
  >
  {isRTL ? option.labelAr : option.labelEn}
@@ -644,10 +644,10 @@ export default function AdminAnalyticsReal() {
  </div>
 
  <div className="grid gap-4 xl:grid-cols-3">
- <Card className="border-slate-200 shadow-sm xl:col-span-2">
+ <Card className="border-white/10 shadow-sm xl:col-span-2">
  <CardHeader className="pb-2">
  <div className="flex items-center justify-between gap-3">
- <CardTitle className="text-sm font-semibold text-slate-800">
+ <CardTitle className="text-sm font-semibold text-slate-100">
  {isRTL ?'اتجاه التفاعل اليومي' :'Daily engagement trend'}
  </CardTitle>
  <Badge variant="outline" className="border-cyan-200 bg-cyan-50 text-cyan-700">
@@ -684,49 +684,49 @@ export default function AdminAnalyticsReal() {
  </CardContent>
  </Card>
 
- <Card className="border-slate-200 shadow-sm">
+ <Card className="border-white/10 shadow-sm">
  <CardHeader className="pb-2">
- <CardTitle className="text-sm font-semibold text-slate-800">
+ <CardTitle className="text-sm font-semibold text-slate-100">
  {isRTL ?'ملخص التحويلات' :'Conversion summary'}
  </CardTitle>
  </CardHeader>
  <CardContent className="space-y-4">
- <div className="rounded-2xl bg-slate-50 p-4">
+ <div className="rounded-2xl bg-white/5 p-4">
  <div className="flex items-center justify-between text-sm">
- <span className="text-slate-500">{isRTL ?'الطلبات' :'Orders'}</span>
- <span className="font-semibold text-slate-900">{formatNumber(analytics.metrics.orders.current)}</span>
+ <span className="text-slate-400">{isRTL ?'الطلبات' :'Orders'}</span>
+ <span className="font-semibold text-white">{formatNumber(analytics.metrics.orders.current)}</span>
  </div>
  <div className="mt-3 flex items-center justify-between text-sm">
- <span className="text-slate-500">{isRTL ?'الاشتراكات المدفوعة الجديدة' :'New paid subscriptions'}</span>
- <span className="font-semibold text-slate-900">{formatNumber(analytics.metrics.subscriptions.current)}</span>
+ <span className="text-slate-400">{isRTL ?'الاشتراكات المدفوعة الجديدة' :'New paid subscriptions'}</span>
+ <span className="font-semibold text-white">{formatNumber(analytics.metrics.subscriptions.current)}</span>
  </div>
  <div className="mt-3 flex items-center justify-between text-sm">
- <span className="text-slate-500">{isRTL ?'النقرات على الروابط' :'Link clicks'}</span>
- <span className="font-semibold text-slate-900">{formatNumber(analytics.currentLinkClicks)}</span>
+ <span className="text-slate-400">{isRTL ?'النقرات على الروابط' :'Link clicks'}</span>
+ <span className="font-semibold text-white">{formatNumber(analytics.currentLinkClicks)}</span>
  </div>
  </div>
 
  <div className="space-y-3">
- <div className="flex items-center justify-between rounded-xl border border-slate-200 px-3 py-2">
- <div className="flex items-center gap-2 text-sm text-slate-600">
+ <div className="flex items-center justify-between rounded-xl border border-white/10 px-3 py-2">
+ <div className="flex items-center gap-2 text-sm text-slate-300">
  <ShoppingCart className="h-4 w-4 text-cyan-600" />
  {isRTL ?'إجمالي الطلبات' :'All-time orders'}
  </div>
- <span className="font-semibold text-slate-900">{formatNumber(analytics.totals.totalOrders)}</span>
+ <span className="font-semibold text-white">{formatNumber(analytics.totals.totalOrders)}</span>
  </div>
- <div className="flex items-center justify-between rounded-xl border border-slate-200 px-3 py-2">
- <div className="flex items-center gap-2 text-sm text-slate-600">
+ <div className="flex items-center justify-between rounded-xl border border-white/10 px-3 py-2">
+ <div className="flex items-center gap-2 text-sm text-slate-300">
  <CreditCard className="h-4 w-4 text-violet-600" />
  {isRTL ?'اشتراكات مدفوعة نشطة' :'Active paid subscriptions'}
  </div>
- <span className="font-semibold text-slate-900">{formatNumber(analytics.totals.totalPaidSubscriptions)}</span>
+ <span className="font-semibold text-white">{formatNumber(analytics.totals.totalPaidSubscriptions)}</span>
  </div>
- <div className="flex items-center justify-between rounded-xl border border-slate-200 px-3 py-2">
- <div className="flex items-center gap-2 text-sm text-slate-600">
+ <div className="flex items-center justify-between rounded-xl border border-white/10 px-3 py-2">
+ <div className="flex items-center gap-2 text-sm text-slate-300">
  <MousePointerClick className="h-4 w-4 text-amber-600" />
  {isRTL ?'الزوار الفريدون' :'Unique visitors'}
  </div>
- <span className="font-semibold text-slate-900">{formatNumber(analytics.uniqueVisitors)}</span>
+ <span className="font-semibold text-white">{formatNumber(analytics.uniqueVisitors)}</span>
  </div>
  </div>
  </CardContent>
@@ -734,9 +734,9 @@ export default function AdminAnalyticsReal() {
  </div>
 
  <div className="grid gap-4 xl:grid-cols-2">
- <Card className="border-slate-200 shadow-sm">
+ <Card className="border-white/10 shadow-sm">
  <CardHeader className="pb-2">
- <CardTitle className="text-sm font-semibold text-slate-800">
+ <CardTitle className="text-sm font-semibold text-slate-100">
  {isRTL ?'الإيراد والطلبات والاشتراكات' :'Revenue, orders, and subscriptions'}
  </CardTitle>
  </CardHeader>

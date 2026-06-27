@@ -33,7 +33,7 @@ const PLAN_CONFIG = {
  },
  free: {
  label:'Free', labelAr:'مجاني',
- color:'bg-slate-100 text-slate-600 border-slate-200',
+ color:'bg-white/10 text-slate-300 border-white/10',
  icon: Users,
  },
 };
@@ -204,7 +204,7 @@ export default function AdminClients() {
  {/* Stats */}
  <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
  {[
- { key:'all', label: isRTL ?'إجمالي المستخدمين' :'Total Users', value: stats.total, color:'text-slate-800' },
+ { key:'all', label: isRTL ?'إجمالي المستخدمين' :'Total Users', value: stats.total, color:'text-slate-100' },
  { key:'subscribed', label: isRTL ?'المشتركون' :'Subscribed', value: stats.subscribed, color:'text-cyan-600' },
  { key:'premium', label: isRTL ?'بريميوم' :'Premium', value: stats.premium, color:'text-cyan-600' },
  { key:'enterprise', label: isRTL ?'مؤسسي' :'Enterprise', value: stats.enterprise, color:'text-purple-600' },
@@ -214,7 +214,7 @@ export default function AdminClients() {
  className={`p-4 cursor-pointer transition-all hover:shadow-md ${planFilter === s.key ?'ring-2 ring-cyan-500' :''}`}
  onClick={() => setPlanFilter(s.key)}
  >
- <p className="text-xs text-slate-500 mb-1">{s.label}</p>
+ <p className="text-xs text-slate-400 mb-1">{s.label}</p>
  <p className={`text-2xl font-bold ${s.color}`}>{s.value}</p>
  </Card>
  ))}
@@ -244,7 +244,7 @@ export default function AdminClients() {
  {planFilter !=='all' && (
  <button
  onClick={() => setPlanFilter('all')}
- className="text-xs text-slate-500 hover:text-slate-800 underline"
+ className="text-xs text-slate-400 hover:text-slate-100 underline"
  >
  {isRTL ?'مسح الفلتر' :'Clear filter'}
  </button>
@@ -271,7 +271,7 @@ export default function AdminClients() {
  className={`px-3 py-1 rounded-full text-xs font-medium transition-colors border ${
  planFilter === f.key
  ?'bg-cyan-600 text-white border-cyan-600'
- :'bg-white text-slate-600 border-slate-200 hover:border-cyan-400 hover:bg-slate-50'
+ :'bg-white text-slate-300 border-white/10 hover:border-cyan-400 hover:bg-white/5'
  }`}
  >
  {isRTL ? f.ar : f.en}
@@ -295,7 +295,7 @@ export default function AdminClients() {
 
  <div className="flex-1 min-w-0">
  <div className="flex items-center gap-2 mb-2 flex-wrap">
- <h3 className="font-semibold text-slate-900 truncate">
+ <h3 className="font-semibold text-white truncate">
  {user.full_name || user.email?.split('@')[0]}
  </h3>
  {isAdmin && (
@@ -314,7 +314,7 @@ export default function AdminClients() {
  </span>
  </div>
 
- <div className="space-y-1 text-sm text-slate-500">
+ <div className="space-y-1 text-sm text-slate-400">
  <div className="flex items-center gap-2">
  <Mail className="h-3 w-3 flex-shrink-0" />
  <span className="truncate">{user.email}</span>
@@ -390,7 +390,7 @@ export default function AdminClients() {
  })}
 
  {filteredUsers.length === 0 && (
- <div className="text-center py-12 text-slate-500">
+ <div className="text-center py-12 text-slate-400">
  {isRTL ?'لم يتم العثور على عملاء' :'No clients found'}
  </div>
  )}

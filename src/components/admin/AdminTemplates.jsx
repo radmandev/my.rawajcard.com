@@ -255,7 +255,7 @@ export default function AdminTemplates() {
  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
  {customTemplates.map((template) => (
  <Card key={template.id} className="hover:shadow-lg transition-shadow">
- <div className="h-32 bg-slate-100 rounded-t-lg flex items-center justify-center text-slate-400">
+ <div className="h-32 bg-white/10 rounded-t-lg flex items-center justify-center text-slate-400">
  {template.thumbnail ? (
  <img src={template.thumbnail} alt={template.name} className="h-full w-full object-cover rounded-t-lg" />
  ) : (
@@ -270,7 +270,7 @@ export default function AdminTemplates() {
  {template.status}
  </Badge>
  </div>
- <p className="text-xs text-slate-500 mt-1">{template.slug}</p>
+ <p className="text-xs text-slate-400 mt-1">{template.slug}</p>
  </div>
  <div className="flex gap-2">
  <Button
@@ -320,7 +320,7 @@ export default function AdminTemplates() {
  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
  {filteredTemplates.map((template) => (
  <Card key={template.id} className="overflow-hidden">
- <div className="aspect-[3/4] bg-slate-100 relative overflow-hidden">
+ <div className="aspect-[3/4] bg-white/10 relative overflow-hidden">
  <div className="absolute inset-0 flex items-start justify-center">
  <div className="transform scale-[0.35] origin-top w-[285%]">
  <CardPreview card={sampleCard} template={template.id} />
@@ -329,10 +329,10 @@ export default function AdminTemplates() {
  </div>
  <div className="p-4 space-y-3">
  <div>
- <h3 className="font-semibold text-slate-900">
+ <h3 className="font-semibold text-white">
  {isRTL ? template.nameAr : template.name}
  </h3>
- <p className="text-xs text-slate-500 mt-1">
+ <p className="text-xs text-slate-400 mt-1">
  {isRTL ? template.descriptionAr : template.description}
  </p>
  <div className="flex items-center gap-2 mt-2">
@@ -392,7 +392,7 @@ export default function AdminTemplates() {
 
  {/* Edit Dialog */}
  <Dialog open={editDialogOpen} onOpenChange={setEditDialogOpen}>
- <DialogContent className="max-w-2xl bg-white text-slate-900">
+ <DialogContent className="max-w-2xl">
  <DialogHeader>
  <DialogTitle>{isRTL ?'تعديل القالب' :'Edit Template'}</DialogTitle>
  </DialogHeader>
@@ -437,7 +437,7 @@ export default function AdminTemplates() {
 
  {/* Preview Dialog */}
  <Dialog open={!!previewTemplate} onOpenChange={() => setPreviewTemplate(null)}>
- <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto bg-white text-slate-900">
+ <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto">
  <DialogHeader>
  <DialogTitle>{isRTL ?'معاينة القالب' :'Template Preview'}</DialogTitle>
  </DialogHeader>

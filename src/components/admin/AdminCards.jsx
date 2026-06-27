@@ -18,7 +18,7 @@ const PLAN_CONFIG = {
  premium: { label:'Premium', color:'bg-cyan-100 text-cyan-700 border-cyan-200', icon: Sparkles },
  teams: { label:'Teams', color:'bg-blue-100 text-blue-700 border-blue-200', icon: Users },
  enterprise: { label:'Enterprise', color:'bg-purple-100 text-purple-700 border-purple-200', icon: Crown },
- free: { label:'Free', color:'bg-slate-100 text-slate-500 border-slate-200', icon: Users },
+ free: { label:'Free', color:'bg-white/10 text-slate-400 border-white/10', icon: Users },
 };
 
 export default function AdminCards() {
@@ -118,7 +118,7 @@ export default function AdminCards() {
  {/* Stats */}
  <div className="grid grid-cols-3 gap-3">
  {[
- { key:'all', label: isRTL ?'إجمالي البطاقات' :'Total Cards', value: stats.total, color:'text-slate-800' },
+ { key:'all', label: isRTL ?'إجمالي البطاقات' :'Total Cards', value: stats.total, color:'text-slate-100' },
  { key:'published', label: isRTL ?'منشورة' :'Published', value: stats.published, color:'text-cyan-600' },
  { key:'draft', label: isRTL ?'مسودات' :'Drafts', value: stats.draft, color:'text-amber-600' },
  ].map(s => (
@@ -127,7 +127,7 @@ export default function AdminCards() {
  className={`p-4 cursor-pointer transition-all hover:shadow-md ${statusFilter === s.key ?'ring-2 ring-cyan-500' :''}`}
  onClick={() => setStatusFilter(s.key)}
  >
- <p className="text-xs text-slate-500 mb-1">{s.label}</p>
+ <p className="text-xs text-slate-400 mb-1">{s.label}</p>
  <p className={`text-2xl font-bold ${s.color}`}>{s.value}</p>
  </Card>
  ))}
@@ -144,7 +144,7 @@ export default function AdminCards() {
  {statusFilter !=='all' && (
  <button
  onClick={() => setStatusFilter('all')}
- className="text-xs text-slate-500 hover:text-slate-800 underline"
+ className="text-xs text-slate-400 hover:text-slate-100 underline"
  >
  {isRTL ?'مسح الفلتر' :'Clear filter'}
  </button>
@@ -176,7 +176,7 @@ export default function AdminCards() {
  {/* Info */}
  <div className="flex-1 min-w-0">
  <div className="flex items-center gap-2 mb-1.5 flex-wrap">
- <h3 className="font-semibold text-slate-900 truncate">
+ <h3 className="font-semibold text-white truncate">
  {card.name || (isRTL ?'بدون اسم' :'Unnamed')}
  </h3>
  <Badge
@@ -187,11 +187,11 @@ export default function AdminCards() {
  </Badge>
  </div>
 
- <div className="space-y-1 text-xs text-slate-500">
+ <div className="space-y-1 text-xs text-slate-400">
  {/* Owner */}
  <div className="flex items-center gap-1.5 flex-wrap">
  <span className="text-slate-400">{isRTL ?'المالك:' :'Owner:'}</span>
- <span className="font-medium text-slate-700 truncate max-w-[160px]">
+ <span className="font-medium text-slate-200 truncate max-w-[160px]">
  {card.created_by ||'—'}
  </span>
  <span className={`inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-full border ${planCfg.color}`}>
@@ -202,7 +202,7 @@ export default function AdminCards() {
 
  {/* Slug + stats */}
  <div className="flex items-center gap-2 flex-wrap">
- <span className="font-mono bg-slate-100 px-1.5 py-0.5 rounded">
+ <span className="font-mono bg-white/10 px-1.5 py-0.5 rounded">
  /{card.slug ||'—'}
  </span>
  <span>{card.view_count || 0} {isRTL ?'مشاهدة' :'views'}</span>
@@ -287,7 +287,7 @@ export default function AdminCards() {
  })}
 
  {filteredCards.length === 0 && (
- <div className="text-center py-12 text-slate-500">
+ <div className="text-center py-12 text-slate-400">
  {isRTL ?'لم يتم العثور على بطاقات' :'No cards found'}
  </div>
  )}

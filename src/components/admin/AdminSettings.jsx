@@ -133,7 +133,7 @@ export default function AdminSettings() {
  <CardContent className="flex items-center justify-between">
  <div className="space-y-0.5">
  <Label>{isRTL ?'تفعيل التجربة' :'Enable trial'}</Label>
- <p className="text-sm text-slate-500">
+ <p className="text-sm text-slate-400">
  {isRTL
  ?'سيتم منح جميع الحسابات الجديدة بريميوم لمدة 3 أشهر بدون الحاجة لبطاقة دفع.'
  :'All new accounts will be granted Premium for 3 months, no credit card required.'}
@@ -158,10 +158,10 @@ export default function AdminSettings() {
  </CardHeader>
  <CardContent>
  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
- <div className="text-center p-4 rounded-lg bg-slate-50">
- <Users className="h-6 w-6 mx-auto mb-2 text-slate-500" />
- <p className="text-2xl font-bold text-slate-900">{subStats.total}</p>
- <p className="text-xs text-slate-500 mt-1">{isRTL ?'إجمالي المستخدمين' :'Total Users'}</p>
+ <div className="text-center p-4 rounded-lg bg-white/5">
+ <Users className="h-6 w-6 mx-auto mb-2 text-slate-400" />
+ <p className="text-2xl font-bold text-white">{subStats.total}</p>
+ <p className="text-xs text-slate-400 mt-1">{isRTL ?'إجمالي المستخدمين' :'Total Users'}</p>
  </div>
  <div className="text-center p-4 rounded-lg bg-cyan-50">
  <Sparkles className="h-6 w-6 mx-auto mb-2 text-cyan-600" />
@@ -198,7 +198,7 @@ export default function AdminSettings() {
  <div className="flex items-center justify-between">
  <div className="space-y-0.5">
  <Label>{isRTL ?'تفعيل العرض' :'Enable offer'}</Label>
- <p className="text-sm text-slate-500">
+ <p className="text-sm text-slate-400">
  {isRTL
  ?'عند التفعيل، المستخدمون الجدد المؤهلون يحصلون على تجربة 90 يومًا على بريميوم.'
  :'When enabled, eligible new users get a 90-day Premium trial.'}
@@ -314,7 +314,7 @@ export default function AdminSettings() {
  <div className="flex items-center justify-between">
  <div className="space-y-0.5">
  <Label>{isRTL ?'السماح بالتسجيل العام' :'Allow Public Registration'}</Label>
- <p className="text-sm text-slate-500">
+ <p className="text-sm text-slate-400">
  {isRTL ?'السماح للمستخدمين الجدد بإنشاء حسابات' :'Allow new users to create accounts'}
  </p>
  </div>
@@ -329,7 +329,7 @@ export default function AdminSettings() {
  <div className="flex items-center justify-between">
  <div className="space-y-0.5">
  <Label>{isRTL ?'التحقق من البريد الإلكتروني' :'Email Verification'}</Label>
- <p className="text-sm text-slate-500">
+ <p className="text-sm text-slate-400">
  {isRTL ?'طلب التحقق من البريد الإلكتروني عند التسجيل' :'Require email verification on signup'}
  </p>
  </div>
@@ -349,7 +349,7 @@ export default function AdminSettings() {
  <div className="flex items-center justify-between">
  <div className="space-y-0.5">
  <Label>{isRTL ?'تمكين التحليلات' :'Enable Analytics'}</Label>
- <p className="text-sm text-slate-500">
+ <p className="text-sm text-slate-400">
  {isRTL ?'تتبع المشاهدات والمسحات' :'Track views and scans'}
  </p>
  </div>
@@ -364,7 +364,7 @@ export default function AdminSettings() {
  <div className="flex items-center justify-between">
  <div className="space-y-0.5">
  <Label className="text-orange-600">{isRTL ?'وضع الصيانة' :'Maintenance Mode'}</Label>
- <p className="text-sm text-slate-500">
+ <p className="text-sm text-slate-400">
  {isRTL ?'تعطيل الوصول للمستخدمين العاديين' :'Disable access for regular users'}
  </p>
  </div>
@@ -397,7 +397,7 @@ export default function AdminSettings() {
  className={`relative rounded-lg border-2 p-3 cursor-pointer transition-all ${
  isPremium
  ?'border-amber-400 bg-amber-50'
- :'border-slate-200 bg-slate-50 hover:bg-white'
+ :'border-white/10 bg-white/5 hover:bg-white'
  }`}
  onClick={() => toggleTemplateTier(template.id)}
  >
@@ -409,7 +409,7 @@ export default function AdminSettings() {
  : template.colors?.[0] ||'#ccc'
  }}
  />
- <p className="text-xs font-medium truncate text-slate-800">
+ <p className="text-xs font-medium truncate text-slate-100">
  {isRTL ? template.nameAr : template.name}
  </p>
  <div className="flex items-center justify-between mt-1.5">

@@ -139,14 +139,14 @@ export default function AdminOrders() {
  {stats.map(({ titleEn, titleAr, value, Icon, color, bg }, i) => (
  <Card key={i} className={`${bg} border-0 shadow-sm`}>
  <CardContent className="p-4 flex items-center gap-3">
- <div className="p-2.5 rounded-xl bg-white/60 shadow-sm flex-shrink-0">
+ <div className="p-2.5 rounded-xl/10 shadow-sm flex-shrink-0">
  <Icon className={`h-5 w-5 ${color}`} />
  </div>
  <div className="min-w-0">
- <p className="text-xs text-slate-500 truncate">
+ <p className="text-xs text-slate-400 truncate">
  {isRTL ? titleAr : titleEn}
  </p>
- <p className="text-lg font-bold text-slate-900 truncate">{value}</p>
+ <p className="text-lg font-bold text-white truncate">{value}</p>
  </div>
  </CardContent>
  </Card>
@@ -173,7 +173,7 @@ export default function AdminOrders() {
  className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-all ${
  statusFilter === s.value
  ?'bg-cyan-600 text-white border-cyan-600'
- :'bg-white border-slate-200 text-slate-600 hover:border-cyan-400 hover:bg-slate-50'
+ :'border-white/10 text-slate-300 hover:border-cyan-400 hover:bg-white/5'
  }`}
  >
  {isRTL ? s.labelAr : s.labelEn}
@@ -188,7 +188,7 @@ export default function AdminOrders() {
  </div>
 
  {/* Orders table */}
- <Card className="border-slate-200 overflow-hidden">
+ <Card className="border-white/10 overflow-hidden">
  <CardContent className="p-0">
  {isLoading ? (
  <div className="flex items-center justify-center py-20">
@@ -213,7 +213,7 @@ export default function AdminOrders() {
  <div className="overflow-x-auto">
  <table className="w-full text-sm">
  <thead>
- <tr className="border-b border-slate-100 bg-slate-50">
+ <tr className="border-b border-white/5 bg-white/5">
  {[
  isRTL ?'رقم الطلب' :'Order',
  isRTL ?'العميل' :'Customer',
@@ -223,7 +223,7 @@ export default function AdminOrders() {
  isRTL ?'التاريخ' :'Date',
  isRTL ?'إجراء' :'Action',
  ].map((h, i) => (
- <th key={i} className="text-left px-4 py-3 font-semibold text-slate-600 whitespace-nowrap">
+ <th key={i} className="text-left px-4 py-3 font-semibold text-slate-300 whitespace-nowrap">
  {h}
  </th>
  ))}
@@ -237,10 +237,10 @@ export default function AdminOrders() {
  const orderNum = (meta.order_number || order.id.slice(0, 8)).toUpperCase();
 
  return (
- <tr key={order.id} className="hover:bg-slate-50 transition-colors">
+ <tr key={order.id} className="hover:bg-white/5 transition-colors">
  {/* Order # */}
  <td className="px-4 py-3">
- <p className="font-mono font-semibold text-xs text-slate-700">
+ <p className="font-mono font-semibold text-xs text-slate-200">
  #{orderNum}
  </p>
  <p className="text-xs text-slate-400 mt-0.5">
@@ -249,7 +249,7 @@ export default function AdminOrders() {
  </td>
  {/* Customer */}
  <td className="px-4 py-3">
- <p className="font-medium text-slate-900 line-clamp-1">
+ <p className="font-medium text-white line-clamp-1">
  {shipping.name || order.created_by ||'—'}
  </p>
  <p className="text-xs text-slate-400 line-clamp-1">
@@ -265,7 +265,7 @@ export default function AdminOrders() {
  key={i}
  src={item.product_image}
  alt={item.product_name}
- className="h-8 w-8 rounded-md object-cover border-2 border-white bg-slate-100"
+ className="h-8 w-8 rounded-md object-cover border-2 border-white bg-white/10"
  />
  ) : (
  <div key={i} className="h-8 w-8 rounded-md bg-cyan-100 border-2 border-white flex items-center justify-center">
@@ -289,7 +289,7 @@ export default function AdminOrders() {
  <StatusBadge status={order.status} isRTL={isRTL} />
  </td>
  {/* Date */}
- <td className="px-4 py-3 text-xs text-slate-500 whitespace-nowrap">
+ <td className="px-4 py-3 text-xs text-slate-400 whitespace-nowrap">
  {formatDate(order.created_at)}
  </td>
  {/* View */}
@@ -316,7 +316,7 @@ export default function AdminOrders() {
  {/* Pagination */}
  {totalPages > 1 && (
  <div className="flex items-center justify-between text-sm">
- <p className="text-slate-500">
+ <p className="text-slate-400">
  {isRTL
  ?`${page * PAGE_SIZE + 1} - ${Math.min((page + 1) * PAGE_SIZE, filtered.length)} من ${filtered.length}`
  :`${page * PAGE_SIZE + 1} – ${Math.min((page + 1) * PAGE_SIZE, filtered.length)} of ${filtered.length}`}
@@ -356,7 +356,7 @@ function OrderDetailDialog({ order, onClose, onUpdateStatus, isUpdating, isRTL }
 
  return (
  <Dialog open={!!order} onOpenChange={onClose}>
- <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto bg-white text-slate-900">
+ <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
  <DialogHeader>
  <DialogTitle className="flex items-center gap-2 flex-wrap">
  <Package className="h-5 w-5 text-cyan-600 flex-shrink-0" />
@@ -367,7 +367,7 @@ function OrderDetailDialog({ order, onClose, onUpdateStatus, isUpdating, isRTL }
 
  <div className="space-y-5 mt-1">
  {/* Meta row */}
- <div className="grid grid-cols-2 gap-3 text-sm text-slate-600">
+ <div className="grid grid-cols-2 gap-3 text-sm text-slate-300">
  <div className="flex items-center gap-2">
  <Calendar className="h-4 w-4 flex-shrink-0 text-cyan-500" />
  {formatDate(order.created_at)}
@@ -384,11 +384,11 @@ function OrderDetailDialog({ order, onClose, onUpdateStatus, isUpdating, isRTL }
  {(shipping.name || shipping.phone || shipping.address) && (
  <>
  <div>
- <h3 className="font-semibold text-slate-900 mb-3 flex items-center gap-2">
+ <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
  <User className="h-4 w-4 text-cyan-600" />
  {isRTL ?'معلومات العميل والشحن' :'Customer & Shipping Info'}
  </h3>
- <div className="grid sm:grid-cols-2 gap-2 text-sm bg-slate-50 rounded-xl p-4">
+ <div className="grid sm:grid-cols-2 gap-2 text-sm bg-white/5 rounded-xl p-4">
  {shipping.name && (
  <div className="flex items-center gap-2">
  <User className="h-3.5 w-3.5 text-slate-400 flex-shrink-0" />
@@ -404,7 +404,7 @@ function OrderDetailDialog({ order, onClose, onUpdateStatus, isUpdating, isRTL }
  {(shipping.address || shipping.city) && (
  <div className="flex items-start gap-2 sm:col-span-2">
  <MapPin className="h-3.5 w-3.5 text-slate-400 flex-shrink-0 mt-0.5" />
- <span className="text-slate-600">
+ <span className="text-slate-300">
  {[shipping.address, shipping.city, shipping.country].filter(Boolean).join(',')}
  </span>
  </div>
@@ -419,18 +419,18 @@ function OrderDetailDialog({ order, onClose, onUpdateStatus, isUpdating, isRTL }
  {items.length > 0 && (
  <>
  <div>
- <h3 className="font-semibold text-slate-900 mb-3 flex items-center gap-2">
+ <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
  <ShoppingBag className="h-4 w-4 text-cyan-600" />
  {isRTL ?'المنتجات' :'Order Items'} ({items.length})
  </h3>
  <div className="space-y-3">
  {items.map((item, i) => (
- <div key={i} className="flex items-center gap-3 p-3 rounded-xl bg-slate-50">
+ <div key={i} className="flex items-center gap-3 p-3 rounded-xl bg-white/5">
  {item.product_image ? (
  <img
  src={item.product_image}
  alt={item.product_name}
- className="h-14 w-14 rounded-lg object-cover bg-slate-100 flex-shrink-0"
+ className="h-14 w-14 rounded-lg object-cover bg-white/10 flex-shrink-0"
  />
  ) : (
  <div className="h-14 w-14 rounded-lg bg-cyan-100 flex items-center justify-center flex-shrink-0">
@@ -438,10 +438,10 @@ function OrderDetailDialog({ order, onClose, onUpdateStatus, isUpdating, isRTL }
  </div>
  )}
  <div className="flex-1 min-w-0">
- <p className="font-medium text-sm text-slate-900 line-clamp-1">
+ <p className="font-medium text-sm text-white line-clamp-1">
  {item.product_name}
  </p>
- <p className="text-xs text-slate-500 mt-0.5">
+ <p className="text-xs text-slate-400 mt-0.5">
  {isRTL ?`الكمية: ${item.quantity}` :`Qty: ${item.quantity}`}
  </p>
  </div>
@@ -458,7 +458,7 @@ function OrderDetailDialog({ order, onClose, onUpdateStatus, isUpdating, isRTL }
 
  {/* Total */}
  <div className="flex items-center justify-between py-1">
- <span className="text-lg font-semibold text-slate-900">
+ <span className="text-lg font-semibold text-white">
  {isRTL ?'الإجمالي' :'Total'}
  </span>
  <span className="text-2xl font-extrabold text-cyan-600">
@@ -472,7 +472,7 @@ function OrderDetailDialog({ order, onClose, onUpdateStatus, isUpdating, isRTL }
  {meta.payment_method ==='bank_transfer' && (
  <>
  <div>
- <h3 className="font-semibold text-slate-900 mb-3 flex items-center gap-2">
+ <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
  <Building2 className="h-4 w-4 text-green-600" />
  {isRTL ?'إيصال التحويل البنكي' :'Bank Transfer Receipt'}
  </h3>
@@ -482,12 +482,12 @@ function OrderDetailDialog({ order, onClose, onUpdateStatus, isUpdating, isRTL }
  <img
  src={meta.receipt_url}
  alt="Transfer Receipt"
- className="w-full max-h-64 object-contain bg-slate-100"
+ className="w-full max-h-64 object-contain bg-white/10"
  />
  ) : (
- <div className="flex items-center gap-3 p-4 bg-slate-50">
+ <div className="flex items-center gap-3 p-4 bg-white/5">
  <ImageIcon className="h-8 w-8 text-cyan-600 flex-shrink-0" />
- <span className="text-sm font-medium text-slate-700 truncate flex-1">
+ <span className="text-sm font-medium text-slate-200 truncate flex-1">
  {isRTL ?'ملف الإيصال' :'Receipt file'}
  </span>
  </div>
@@ -520,7 +520,7 @@ function OrderDetailDialog({ order, onClose, onUpdateStatus, isUpdating, isRTL }
 
  {/* Status update */}
  <div>
- <h3 className="font-semibold text-slate-900 mb-3">
+ <h3 className="font-semibold text-white mb-3">
  {isRTL ?'تحديث حالة الطلب' :'Update Order Status'}
  </h3>
  <div className="flex flex-wrap gap-2">
@@ -534,7 +534,7 @@ function OrderDetailDialog({ order, onClose, onUpdateStatus, isUpdating, isRTL }
  className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium border transition-all disabled:cursor-default ${
  isActive
  ?`${s.color} border-transparent`
- :'border-slate-200 text-slate-600 hover:border-cyan-400 hover:text-cyan-600'
+ :'border-white/10 text-slate-300 hover:border-cyan-400 hover:text-cyan-600'
  }`}
  >
  {isUpdating && !isActive ? <Loader2 className="h-3 w-3 animate-spin" /> : STATUS_ICONS[s.value]}
