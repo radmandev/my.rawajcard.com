@@ -9,6 +9,7 @@ import { supabase } from'@/lib/supabaseClient';
 import { productsData } from'@/components/shared/productsData';
 import { useCart } from'@/contexts/CartContext';
 import { resolveIsCustomizable } from'@/lib/customizerPrefill';
+import Seo from '@/components/shared/Seo';
 
 // Map Supabase row → display shape
 const normalizeProduct = (p) => ({
@@ -101,6 +102,11 @@ export default function Products() {
 
  return (
  <div className="min-h-screen" style={{ backgroundColor: '#0C1429' }}>
+ <Seo
+ title="منتجاتنا | بطاقات أعمال ذكية NFC، تعليقات مفاتيح وستاندات – Rawajcard"
+ description="تسوّق بطاقات الأعمال الذكية NFC، بطاقات تقييم جوجل، تعليقات المفاتيح وستاندات الطاولة من رواج كارد. تصميم مخصص وتوصيل سريع في السعودية."
+ path="/products"
+ />
  <Navbar />
 
  {/* Hero */}

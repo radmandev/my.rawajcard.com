@@ -128,10 +128,10 @@ export default function NFCCardAd({ cardName, cardUrl }) {
             <div className="space-y-3">
               <div className="flex items-baseline gap-2">
                 <span className="text-3xl font-black text-white">
-                  {isRTL ? '١٠٠ ر.س' : '100 SAR'}
+                  {isRTL ? '100 ر.س' : '100 SAR'}
                 </span>
                 <span className="text-base text-slate-500 line-through">
-                  {isRTL ? '١٣٠ ر.س' : '130 SAR'}
+                  {isRTL ? '130 ر.س' : '130 SAR'}
                 </span>
               </div>
 

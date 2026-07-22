@@ -180,7 +180,7 @@ export default function Checkout() {
  }, [cartTrackingData, shippingCost, total, user?.email, user?.id]);
 
  const formatPrice = (price, currency ='SAR') =>
- new Intl.NumberFormat(isRTL ?'ar-SA' :'en-US', { style:'currency', currency }).format(price);
+ new Intl.NumberFormat(isRTL ?'ar-SA-u-nu-latn' :'en-US', { style:'currency', currency }).format(price);
 
  const copyToClipboard = (text) => {
  navigator.clipboard.writeText(text).then(() =>

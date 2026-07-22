@@ -29,7 +29,7 @@ export default function ProductPreviewModal({ product, onClose }) {
  : product.discount_percentage || null;
 
  const fmt = (p) =>
- new Intl.NumberFormat(isRTL ?'ar-SA' :'en-SA', { style:'currency', currency:'SAR' }).format(p);
+ new Intl.NumberFormat(isRTL ?'ar-SA-u-nu-latn' :'en-SA', { style:'currency', currency:'SAR' }).format(p);
 
  const handleAdd = () => {
  addItem(product, { pageName:'Store', source:'product_preview_modal' });

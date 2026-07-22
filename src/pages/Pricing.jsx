@@ -6,6 +6,7 @@ import { Button } from'@/components/ui/button';
 import { Check } from'lucide-react';
 import { createPageUrl } from'@/utils';
 import { useAuth } from'@/lib/AuthContext';
+import Seo from'@/components/shared/Seo';
 
 const pricingPlans = [
  {
@@ -191,6 +192,11 @@ export default function Pricing() {
 
  return (
  <div className="min-h-screen" style={{ backgroundColor: '#0C1429' }}>
+ <Seo
+ title="الأسعار | خطط بطاقات NFC الذكية – Rawajcard Pricing"
+ description="خطط تسعير بسيطة وشفافة لبطاقات الأعمال الذكية NFC من رواج كارد. اختر الخطة المناسبة لك أو لفريقك وابدأ اليوم."
+ path="/Pricing"
+ />
  <Navbar />
 
  {/* Hero Section */}

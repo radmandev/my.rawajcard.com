@@ -2,10 +2,16 @@ import React from 'react';
 import Navbar from '@/components/landing/Navbar';
 import Footer from '@/components/landing/Footer';
 import { RefreshCw, AlertTriangle, CheckCircle, ListOrdered } from 'lucide-react';
+import Seo from '@/components/shared/Seo';
 
 export default function ReturnPolicy() {
   return (
     <div className="min-h-screen bg-[#060D1F]">
+      <Seo
+        title="Return Policy | Rawajcard"
+        description="Exchange and return terms for Rawajcard's smart NFC business cards and physical products."
+        path="/Return"
+      />
       <Navbar />
 
       {/* Hero */}

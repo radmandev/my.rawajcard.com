@@ -1,0 +1,24 @@
+User-agent: *
+Allow: /
+Disallow: /Admin
+Disallow: /Dashboard
+Disallow: /Analytics
+Disallow: /CRMSettings
+Disallow: /Settings
+Disallow: /MyCards
+Disallow: /MyContacts
+Disallow: /TeamManagement
+Disallow: /TemplateAnalytics
+Disallow: /TemplateEditor
+Disallow: /Upgrade
+Disallow: /ClientDetails
+Disallow: /Checkout
+Disallow: /CheckoutSuccess
+Disallow: /MyOrders
+Disallow: /PhysicalCards
+Disallow: /Login
+Disallow: /login
+Disallow: /trackQRScan
+Disallow: /q/
+
+Sitemap: https://rawajcard.com/sitemap.xml

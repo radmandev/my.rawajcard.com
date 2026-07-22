@@ -2,10 +2,16 @@ import React from 'react';
 import Navbar from '@/components/landing/Navbar';
 import Footer from '@/components/landing/Footer';
 import { Shield, Database, Share2, Clock } from 'lucide-react';
+import Seo from '@/components/shared/Seo';
 
 export default function PrivacyPolicy() {
   return (
     <div className="min-h-screen bg-[#060D1F]">
+      <Seo
+        title="Privacy Policy | Rawajcard"
+        description="How Rawajcard collects, uses, and protects your data across our smart NFC business cards and digital profiles."
+        path="/PrivacyPolicy"
+      />
       <Navbar />
 
       {/* Hero */}

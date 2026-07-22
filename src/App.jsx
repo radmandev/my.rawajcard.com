@@ -1,4 +1,5 @@
 import React, { Suspense, useEffect, useState } from 'react';
+import { HelmetProvider } from 'react-helmet-async';
 import { Toaster } from "@/components/ui/toaster"
 import { Toaster as SonnerToaster } from 'sonner'
 import { QueryClientProvider } from '@tanstack/react-query'
@@ -22,6 +23,8 @@ const PublicCard = React.lazy(() => import('@/pages/PublicCard'));
 const HomePage = React.lazy(() => import('@/pages/Home'));
 const DemoHomePage = React.lazy(() => import('@/pages/DemoHomeMerged'));
 const NFCCustomizerPage = React.lazy(() => import('@/pages/NFCCustomizer'));
+const GuidesPage = React.lazy(() => import('@/pages/Guides'));
+const GuideDetailPage = React.lazy(() => import('@/pages/GuideDetail'));
 import { supabase } from '@/lib/supabaseClient';
 
 class AppErrorBoundary extends React.Component {
@@ -145,8 +148,8 @@ const AuthenticatedApp = () => {
   const navigate = useNavigate();
   const isPublicRoute = [
     '/', '/demohome', '/much-hero', '/login', '/Login', '/Pricing', '/Products', '/products', '/ProductDetail', '/customize', '/Checkout', '/CheckoutSuccess', '/MyOrders', '/PhysicalCards', '/CardSamples',
-    '/Return', '/PrivacyPolicy', '/PaymentsPolicy', '/returns', '/privacy-policy', '/payments', '/trackQRScan'
-  ].includes(location.pathname) || location.pathname.startsWith('/c/') || location.pathname.startsWith('/q/') || location.pathname.startsWith('/products/');
+    '/Return', '/PrivacyPolicy', '/PaymentsPolicy', '/returns', '/privacy-policy', '/payments', '/trackQRScan', '/guides'
+  ].includes(location.pathname) || location.pathname.startsWith('/c/') || location.pathname.startsWith('/q/') || location.pathname.startsWith('/products/') || location.pathname.startsWith('/guides/');
 
   // Show loading spinner while checking app public settings or auth (skip for public routes)
   if (!isPublicRoute && (isLoadingPublicSettings || isLoadingAuth)) {
@@ -210,6 +213,22 @@ const AuthenticatedApp = () => {
             }
           />
         )}
+        <Route
+          path="/guides"
+          element={
+            <LayoutWrapper currentPageName="Guides">
+              <GuidesPage />
+            </LayoutWrapper>
+          }
+        />
+        <Route
+          path="/guides/:slug"
+          element={
+            <LayoutWrapper currentPageName="GuideDetail">
+              <GuideDetailPage />
+            </LayoutWrapper>
+          }
+        />
         <Route path="/" element={
           <LayoutWrapper currentPageName="Home">
             <HomePage />
@@ -261,25 +280,27 @@ function App() {
 
   return (
     <AppErrorBoundary>
-      <ThemeProvider>
-        <LanguageProvider>
-          <AuthProvider>
-            <QueryClientProvider client={queryClientInstance}>
-              <Router>
-                <CartProvider>
-                  <UpgradeProvider>
-                    <NavigationTracker />
-                    <AuthenticatedApp />
-                  </UpgradeProvider>
-                </CartProvider>
-              </Router>
-              <Toaster />
-              <SonnerToaster position="top-center" richColors />
-              <CookieConsent />
-            </QueryClientProvider>
-          </AuthProvider>
-        </LanguageProvider>
-      </ThemeProvider>
+      <HelmetProvider>
+        <ThemeProvider>
+          <LanguageProvider>
+            <AuthProvider>
+              <QueryClientProvider client={queryClientInstance}>
+                <Router>
+                  <CartProvider>
+                    <UpgradeProvider>
+                      <NavigationTracker />
+                      <AuthenticatedApp />
+                    </UpgradeProvider>
+                  </CartProvider>
+                </Router>
+                <Toaster />
+                <SonnerToaster position="top-center" richColors />
+                <CookieConsent />
+              </QueryClientProvider>
+            </AuthProvider>
+          </LanguageProvider>
+        </ThemeProvider>
+      </HelmetProvider>
     </AppErrorBoundary>
   )
 }

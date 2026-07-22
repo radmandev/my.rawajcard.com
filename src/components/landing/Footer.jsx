@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Phone, Mail, MessageCircle, ArrowLeft } from 'lucide-react';
 import { useLanguage } from '@/components/shared/LanguageContext';
 import { useAuth } from '@/lib/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import LoginModal from '@/components/auth/LoginModal';
 
@@ -77,19 +77,19 @@ export default function Footer({ showCta = true }) {
               {
                 titleAr: 'روابط مهمة', titleEn: 'Quick Links',
                 links: [
-                  { labelAr: 'خصص كرتك الآن', labelEn: 'Customize your card', href: 'https://rawajcard.com/customize/' },
-                  { labelAr: 'حسابي', labelEn: 'My Account', href: 'https://rawajcard.com/Settings/' },
-                  { labelAr: 'طلبياتي', labelEn: 'My Orders', href: 'https://rawajcard.com/MyOrders/' },
-                  { labelAr: 'جميع المنتجات', labelEn: 'All Products', href: 'https://rawajcard.com/products/' },
+                  { labelAr: 'خصص كرتك الآن', labelEn: 'Customize your card', href: '/customize' },
+                  { labelAr: 'حسابي', labelEn: 'My Account', href: '/Settings' },
+                  { labelAr: 'طلبياتي', labelEn: 'My Orders', href: '/MyOrders' },
+                  { labelAr: 'جميع المنتجات', labelEn: 'All Products', href: '/products' },
+                  { labelAr: 'الدليل والمقالات', labelEn: 'Guides', href: '/guides' },
                 ],
               },
               {
                 titleAr: 'معلومات مهمة', titleEn: 'Info',
                 links: [
-                  { labelAr: 'الشحن والتوصيل', labelEn: 'Shipping & Delivery', href: 'https://rawajcard.com/shipping' },
-                  { labelAr: 'سياسة التبديل والاسترجاع', labelEn: 'Returns Policy', href: 'https://rawajcard.com/returns' },
-                  { labelAr: 'سياسة الخصوصية', labelEn: 'Privacy Policy', href: 'https://rawajcard.com/privacy-policy' },
-                  { labelAr: 'وسائل الدفع', labelEn: 'Payment Methods', href: 'https://rawajcard.com/PaymentsPolicy' },
+                  { labelAr: 'سياسة التبديل والاسترجاع', labelEn: 'Returns Policy', href: '/Return' },
+                  { labelAr: 'سياسة الخصوصية', labelEn: 'Privacy Policy', href: '/PrivacyPolicy' },
+                  { labelAr: 'وسائل الدفع', labelEn: 'Payment Methods', href: '/PaymentsPolicy' },
                 ],
               },
               {
@@ -119,10 +119,9 @@ export default function Footer({ showCta = true }) {
                   <ul className="space-y-3 text-sm text-slate-400">
                     {col.links.map((link, j) => (
                       <li key={j}>
-                        <a href={link.href} target="_blank" rel="noopener noreferrer"
-                          className="hover:text-cyan-400 transition-colors">
+                        <Link to={link.href} className="hover:text-cyan-400 transition-colors">
                           {isRTL ? link.labelAr : link.labelEn}
-                        </a>
+                        </Link>
                       </li>
                     ))}
                   </ul>

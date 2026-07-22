@@ -8,6 +8,7 @@ import ContactFormDialog from'@/components/cards/ContactFormDialog';
 import FloatingActions from'@/components/cards/FloatingActions';
 import { Loader2, AlertCircle } from'lucide-react';
 import { buildTemplateSampleCard, getTemplateSampleBySlug } from'@/lib/templateSampleCards';
+import Seo from'@/components/shared/Seo';
 
 // Template map: lazy-loaded so only the 1 template used by this card is downloaded
 const templateComponents = {
@@ -146,6 +147,7 @@ export default function PublicCard() {
  } else {
  return (
  <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-100 to-slate-200">
+ <Seo title="Card Not Found | Rawajcard" path={`/c/${encodeURIComponent(slug)}`} noindex />
  <div className="text-center p-8">
  <AlertCircle className="h-16 w-16 mx-auto text-slate-400 mb-4" />
  <h1 className="text-2xl font-bold text-slate-900 mb-2">Card Not Found</h1>
@@ -155,6 +157,14 @@ export default function PublicCard() {
  );
  }
  }
+
+ const displayName = (cardIsRTL && card.name_ar) ? card.name_ar : card.name;
+ const displayTitle = (cardIsRTL && card.title_ar) ? card.title_ar : card.title;
+ const displayCompany = (cardIsRTL && card.company_ar) ? card.company_ar : card.company;
+ const displayBio = (cardIsRTL && card.bio_ar) ? card.bio_ar : card.bio;
+ const cardSeoTitle = [displayName, [displayTitle, displayCompany].filter(Boolean).join(cardIsRTL ? ' - ' : ' at ')]
+ .filter(Boolean)
+ .join(' | ') + ' | Rawajcard';
 
  const TemplateComponent = templateComponents[card.template] || templateComponents.navy_gold;
 
@@ -170,6 +180,15 @@ export default function PublicCard() {
 
  return (
  <div className={cn("min-h-screen bg-slate-100 flex items-center justify-center p-4", cardIsRTL &&"rtl")}>
+ {!isSampleCard && (
+ <Seo
+ title={cardSeoTitle}
+ description={displayBio || (cardIsRTL ? `تواصل مع ${displayName} عبر بطاقة رواج كارد الرقمية.` : `Connect with ${displayName}'s digital business card on Rawajcard.`)}
+ path={`/c/${encodeURIComponent(slug)}`}
+ image={card.profile_image}
+ type="profile"
+ />
+ )}
  {/* Mobile-sized Container */}
  <div className="w-full max-w-md mx-auto relative">
  <div className="bg-indigo-950/60 rounded-3xl shadow-2xl overflow-hidden">

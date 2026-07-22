@@ -1977,6 +1977,18 @@ export default function DemoHomeMerged({ heroOnly = false, onLoginClick }) {
                 </span>
               </motion.h1>
 
+              <motion.p
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.35 }}
+                className="mb-8"
+                style={{ color: 'rgba(255,255,255,0.65)', fontFamily: "'Tajawal', sans-serif", fontSize: '1.05rem', maxWidth: '32rem', lineHeight: '1.7' }}
+              >
+                {isRTL
+                  ? 'بطاقة أعمال ذكية NFC وبطاقة تعارف رقمية بلمسة واحدة — شارك بياناتك واجمع تقييمات جوجل دون تطبيق أو طباعة.'
+                  : 'A smart NFC business card and digital profile in one tap — share your details and collect Google reviews, no app or printing needed.'}
+              </motion.p>
+
               <motion.div
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}

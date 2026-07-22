@@ -4,7 +4,6 @@ import { useLanguage } from'@/components/shared/LanguageContext';
 import Header from'@/components/shared/Header';
 import Sidebar from'@/components/shared/Sidebar';
 import MobileBottomNav from'@/components/shared/MobileBottomNav';
-import PublicMobileBar from'@/components/shared/PublicMobileBar';
 import CartSidebar from'@/components/store/CartSidebar';
 import CartMiniPopup from'@/components/store/CartMiniPopup';
 import { useCart } from'@/contexts/CartContext';
@@ -19,7 +18,7 @@ function LayoutContent({ children, currentPageName }) {
  const { isAuthenticated, isLoadingAuth } = useAuth();
 
  // Public pages that don't need sidebar
- const publicPages = ['PublicCard','CheckoutSuccess','Home','Products','ProductDetail','Pricing','Store','Checkout','PhysicalCards','CardSamples','NFCCustomizer','PrivacyPolicy','Return','PaymentsPolicy'];
+ const publicPages = ['PublicCard','CheckoutSuccess','Home','Products','ProductDetail','Pricing','Store','Checkout','PhysicalCards','CardSamples','NFCCustomizer','PrivacyPolicy','Return','PaymentsPolicy','Guides','GuideDetail'];
  const isPublicPage = publicPages.includes(currentPageName);
  const isHomePage = currentPageName ==='Home';
 
@@ -52,7 +51,6 @@ function LayoutContent({ children, currentPageName }) {
  return (
  <div className="min-h-screen bg-slate-50" style={{ overscrollBehavior:'none' }}>
  {children}
- <PublicMobileBar />
  <CartSidebar
  isOpen={isCartOpen}
  onClose={() => setIsCartOpen(false)}

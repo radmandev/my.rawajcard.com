@@ -74,7 +74,7 @@ export default function Store() {
  : products.filter((p) => p.category === category);
 
  const formatPrice = (price) =>
- new Intl.NumberFormat(isRTL ?'ar-SA' :'en-SA', { style:'currency', currency:'SAR' }).format(price);
+ new Intl.NumberFormat(isRTL ?'ar-SA-u-nu-latn' :'en-SA', { style:'currency', currency:'SAR' }).format(price);
 
  return (
  <div className="min-h-screen" style={{backgroundColor:'#0C1429'}}>

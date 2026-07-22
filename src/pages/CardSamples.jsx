@@ -9,6 +9,7 @@ import { ChevronLeft, ChevronRight, Zap } from'lucide-react';
 import { useNavigate } from'react-router-dom';
 import { SAMPLE_CARD_DATA } from'@/lib/templateSampleCards';
 import { trackWebsiteEvent } from'@/lib/websiteTracker';
+import Seo from'@/components/shared/Seo';
 
 export default function CardSamples() {
  const { lang, isRTL } = useLanguage();
@@ -110,6 +111,11 @@ export default function CardSamples() {
 
  return (
  <div className="min-h-screen" style={{ backgroundColor: '#0C1429' }}>
+ <Seo
+ title="نماذج البطاقات الرقمية | قوالب Rawajcard NFC"
+ description="استعرض جميع قوالب البطاقات الرقمية من رواج كارد واختر التصميم المناسب لهويتك أو علامتك التجارية."
+ path="/CardSamples"
+ />
  <Navbar />
 
  {/* Hero Section */}

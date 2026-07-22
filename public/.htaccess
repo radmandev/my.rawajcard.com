@@ -2,6 +2,10 @@
   RewriteEngine On
   RewriteBase /
 
+  # Canonical host: redirect www → apex so search engines see one domain.
+  RewriteCond %{HTTP_HOST} ^www\.rawajcard\.com$ [NC]
+  RewriteRule ^(.*)$ https://rawajcard.com/$1 [R=301,L]
+
   # Let real files/directories pass through.
   RewriteCond %{REQUEST_FILENAME} -f [OR]
   RewriteCond %{REQUEST_FILENAME} -d

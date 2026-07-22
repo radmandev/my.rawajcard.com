@@ -10,6 +10,7 @@ import { productsData, productCategories } from'@/components/shared/productsData
 import { useCart } from'@/contexts/CartContext';
 import { useLanguage } from'@/components/shared/LanguageContext';
 import { resolveIsCustomizable } from'@/lib/customizerPrefill';
+import Seo, { SITE_URL } from '@/components/shared/Seo';
 
 const normalizeProduct = (p) => ({
  ...p,
@@ -160,8 +161,46 @@ export default function ProductDetail() {
  );
  }
 
+ const productName = language ==='ar' ? (product.name_ar || product.name_en || product.name) : (product.name_en || product.name || product.name_ar);
+ const productDescription = language ==='ar' ? (product.description_ar || product.description_en || product.description) : (product.description_en || product.description || product.description_ar);
+ const productSlug = product.slug || product.id;
+ const productImage = product.main_image || product.image_url;
+
  return (
  <div className="min-h-screen" style={{backgroundColor:'#0C1429'}} dir={isRTL ?'rtl' :'ltr'}>
+ <Seo
+ title={`${productName} | Rawajcard`}
+ description={productDescription || (language ==='ar' ? `اطلب ${productName} من رواج كارد بسعر ${product.price} ر.س.` : `Order ${productName} from Rawajcard for ${product.price} SAR.`)}
+ path={`/products/${encodeURIComponent(productSlug)}`}
+ image={productImage}
+ type="product"
+ jsonLd={[
+ {
+ '@context':'https://schema.org',
+ '@type':'Product',
+ name: productName,
+ description: productDescription || undefined,
+ image: productImage ? [productImage] : undefined,
+ sku: String(product.id),
+ offers: {
+ '@type':'Offer',
+ url: `${SITE_URL}/products/${encodeURIComponent(productSlug)}`,
+ priceCurrency:'SAR',
+ price: String(product.price),
+ availability:'https://schema.org/InStock',
+ },
+ },
+ {
+ '@context':'https://schema.org',
+ '@type':'BreadcrumbList',
+ itemListElement: [
+ { '@type':'ListItem', position: 1, name:'Home', item: SITE_URL },
+ { '@type':'ListItem', position: 2, name:'Products', item: `${SITE_URL}/products` },
+ { '@type':'ListItem', position: 3, name: productName, item: `${SITE_URL}/products/${encodeURIComponent(productSlug)}` },
+ ],
+ },
+ ]}
+ />
  <Navbar />
 
  <div className="container public-subpage-offset mx-auto px-4 md:px-6 pb-20">

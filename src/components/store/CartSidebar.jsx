@@ -14,7 +14,7 @@ export default function CartSidebar({ isOpen, onClose, items, onUpdateQuantity, 
  const total = items.reduce((sum, item) => sum + (item.product_price * item.quantity), 0);
 
  const formatPrice = (price) => {
- return new Intl.NumberFormat(isRTL ?'ar-SA' :'en-SA', {
+ return new Intl.NumberFormat(isRTL ?'ar-SA-u-nu-latn' :'en-SA', {
  style:'currency',
  currency:'SAR'
  }).format(price);

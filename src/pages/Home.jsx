@@ -11,6 +11,7 @@ import DemoHomeMerged from './DemoHomeMerged';
 import { useCart } from '@/contexts/CartContext';
 import { useLanguage } from '@/components/shared/LanguageContext';
 import { useAuth } from '@/lib/AuthContext';
+import Seo, { SITE_URL } from '@/components/shared/Seo';
 import { Star, ShoppingCart, ArrowLeft, Check,
   Zap
 } from 'lucide-react';
@@ -216,7 +217,7 @@ function ProductCard({ product, index, onAddToCart, onView, onBuyNow, isRTL }) {
             </div>
             <div className="flex items-baseline gap-2">
               <span className="text-xl font-black text-slate-900">
-                {product.price.toLocaleString(isRTL ? 'ar-SA' : 'en-US')} {isRTL ? 'ر.س' : 'SAR'}
+                {product.price.toLocaleString(isRTL ? 'ar-SA-u-nu-latn' : 'en-US')} {isRTL ? 'ر.س' : 'SAR'}
               </span>
               {product.originalPrice && (
                 <span className="text-sm text-slate-500 line-through">
@@ -257,6 +258,38 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-slate-50 md:bg-indigo-950/60 pb-16 md:pb-0" dir={isRTL ? 'rtl' : 'ltr'} style={{ fontFamily: "'Tajawal', sans-serif" }}>
+
+      <Seo
+        title="Rawajcard | بطاقات أعمال ذكية NFC – Smart NFC Business Cards"
+        description="بطاقات أعمال ذكية بتقنية NFC من رواج كارد — شارك بياناتك ومنصاتك الاجتماعية بلمسة واحدة، واجمع تقييمات جوجل بسهولة. اطلب بطاقتك المخصصة الآن في السعودية."
+        path="/"
+        jsonLd={[
+          {
+            '@context': 'https://schema.org',
+            '@type': 'Organization',
+            name: 'Rawajcard',
+            url: SITE_URL,
+            logo: `${SITE_URL}/rawajcard-logo1.png`,
+            sameAs: [
+              'https://www.facebook.com/rawajcard',
+              'https://twitter.com/rawajcard',
+              'https://www.instagram.com/rawajcard',
+            ],
+            contactPoint: {
+              '@type': 'ContactPoint',
+              telephone: '+966531607223',
+              contactType: 'customer service',
+              email: 'contact@rawajcard.com',
+            },
+          },
+          {
+            '@context': 'https://schema.org',
+            '@type': 'WebSite',
+            name: 'Rawajcard',
+            url: SITE_URL,
+          },
+        ]}
+      />
 
       {/* ── Announcement Bar ─────────────────────────────────────── */}
       <div className="bg-[#0C1429] text-white text-center py-2.5 text-sm font-medium tracking-wide">

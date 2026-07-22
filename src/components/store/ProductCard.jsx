@@ -23,7 +23,7 @@ export default function ProductCard({ product, onAddToCart, onView }) {
  };
 
  const formatPrice = (price) => {
- return new Intl.NumberFormat(isRTL ?'ar-SA' :'en-SA', {
+ return new Intl.NumberFormat(isRTL ?'ar-SA-u-nu-latn' :'en-SA', {
  style:'currency',
  currency: product.currency ||'SAR'
  }).format(price);

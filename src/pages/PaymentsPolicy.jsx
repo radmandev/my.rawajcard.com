@@ -2,10 +2,16 @@ import React from 'react';
 import Navbar from '@/components/landing/Navbar';
 import Footer from '@/components/landing/Footer';
 import { CreditCard, AlertTriangle, PackageCheck, RotateCcw } from 'lucide-react';
+import Seo from '@/components/shared/Seo';
 
 export default function PaymentsPolicy() {
   return (
     <div className="min-h-screen bg-[#060D1F]">
+      <Seo
+        title="Payments Policy | Rawajcard"
+        description="Accepted payment methods, billing timing, and payment terms for Rawajcard's smart NFC business cards."
+        path="/PaymentsPolicy"
+      />
       <Navbar />
 
       {/* Hero */}
