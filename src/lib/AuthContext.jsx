@@ -3,6 +3,7 @@ import { supabase, isSupabaseConfigured } from '@/lib/supabaseClient';
 
 // @ts-ignore
 const profileTable = import.meta.env.VITE_SUPABASE_PROFILE_TABLE || 'profiles';
+const SNAP_PIXEL_ID = '3f39e554-ab94-472f-9e1f-a60432b0a2a2';
 
 const AuthContext = createContext();
 
@@ -76,6 +77,10 @@ export const AuthProvider = ({ children }) => {
           }, { onConflict: 'id', ignoreDuplicates: false });
         } catch (profileError) {
           console.error('Profile upsert failed:', profileError);
+        }
+
+        if (authUser.email && typeof window !== 'undefined' && typeof window.snaptr === 'function') {
+          window.snaptr('init', SNAP_PIXEL_ID, { user_email: authUser.email });
         }
       }
 
