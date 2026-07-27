@@ -23,6 +23,7 @@ import {
  Plus, Pencil, Trash2, Eye, EyeOff, Search,
  Package, ImagePlus, X, Loader2,
  Tag, Globe, FileText, DollarSign, ExternalLink,
+ Video, Upload,
 } from'lucide-react';
 import { toast } from'sonner';
 
@@ -54,6 +55,7 @@ const EMPTY_PRODUCT = {
  seo_keywords:'',
  main_image:'',
  extra_images: [],
+ video_url:'',
  price:'',
  sale_price:'',
  category:'business_cards',
@@ -201,6 +203,73 @@ function ExtraImagesEditor({ images, onChange, isRTL }) {
  );
 }
 
+function VideoUploader({ value, onChange, isRTL }) {
+ const ref = useRef();
+ const [uploading, setUploading] = useState(false);
+
+ const handleFile = async (e) => {
+ const file = e.target.files?.[0];
+ if (!file) return;
+ setUploading(true);
+ try {
+ const url = await uploadImage(file,'product-videos','products');
+ onChange(url);
+ toast.success(isRTL ?'تم رفع الفيديو' :'Video uploaded');
+ } catch {
+ toast.error(isRTL ?'فشل رفع الفيديو' :'Upload failed');
+ } finally {
+ setUploading(false);
+ e.target.value ='';
+ }
+ };
+
+ const isDirectVideo = /\.(mp4|webm|mov|ogg)(\?|$)/i.test(value ||'');
+
+ return (
+ <div className="space-y-2">
+ <Label className="flex items-center gap-1">
+ <Video className="h-3.5 w-3.5" />
+ {isRTL ?'فيديو المنتج' :'Product Video'}
+ </Label>
+ <div className="flex flex-wrap items-center gap-2">
+ <Input
+ value={value}
+ onChange={(e) => onChange(e.target.value)}
+ placeholder={isRTL ?'رابط يوتيوب أو رابط فيديو مباشر' :'YouTube link or direct video URL'}
+ className="flex-1 min-w-[220px]"
+ />
+ <Button
+ type="button"
+ variant="outline"
+ size="sm"
+ disabled={uploading}
+ onClick={() => ref.current?.click()}
+ className="shrink-0"
+ >
+ {uploading
+ ? <Loader2 className="h-4 w-4 animate-spin" />
+ : <><Upload className="h-4 w-4 mr-1" />{isRTL ?'رفع فيديو' :'Upload Video'}</>}
+ </Button>
+ <input ref={ref} type="file" accept="video/*" className="hidden" onChange={handleFile} />
+ {value && (
+ <Button type="button" variant="ghost" size="sm" onClick={() => onChange('')}>
+ <X className="h-4 w-4 mr-1" />
+ {isRTL ?'إزالة' :'Remove'}
+ </Button>
+ )}
+ </div>
+ <p className="text-xs text-slate-400">
+ {isRTL
+ ?'ارفع ملف فيديو (MP4/WebM) أو الصق رابط يوتيوب/فيميو — يظهر في صفحة المنتج'
+ :'Upload an MP4/WebM file, or paste a YouTube/Vimeo link — shown on the product page'}
+ </p>
+ {value && isDirectVideo && (
+ <video src={value} controls className="h-32 rounded-lg border border-white/10" />
+ )}
+ </div>
+ );
+}
+
 // ── Product Form Dialog ────────────────────────────────────────────────
 function ProductDialog({ open, onClose, initialData, onSave, isSaving, isRTL }) {
  const [form, setForm] = useState(EMPTY_PRODUCT);
@@ -212,6 +281,7 @@ function ProductDialog({ open, onClose, initialData, onSave, isSaving, isRTL }) 
  ...EMPTY_PRODUCT,
  ...initialData,
  extra_images: initialData.extra_images ?? [],
+ video_url: initialData.video_url ??'',
  features_en: Array.isArray(initialData.features_en) ? initialData.features_en : [],
  features_ar: Array.isArray(initialData.features_ar) ? initialData.features_ar : [],
  price: initialData.price ??'',
@@ -375,6 +445,11 @@ function ProductDialog({ open, onClose, initialData, onSave, isSaving, isRTL }) 
  <ExtraImagesEditor
  images={form.extra_images}
  onChange={(v) => set('extra_images', v)}
+ isRTL={isRTL}
+ />
+ <VideoUploader
+ value={form.video_url}
+ onChange={(v) => set('video_url', v)}
  isRTL={isRTL}
  />
 

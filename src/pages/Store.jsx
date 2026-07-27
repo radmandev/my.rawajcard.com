@@ -4,7 +4,6 @@ import { useQuery } from'@tanstack/react-query';
 import { Button } from'@/components/ui/button';
 import { Tabs, TabsList, TabsTrigger } from'@/components/ui/tabs';
 import ProductCard from'@/components/store/ProductCard';
-import ProductPreviewModal from'@/components/store/ProductPreviewModal';
 import Navbar from'@/components/landing/Navbar';
 import { ShoppingCart, Loader2 } from'lucide-react';
 import { motion } from'framer-motion';
@@ -48,7 +47,6 @@ const CATEGORY_TABS = [
 export default function Store() {
  const { t, isRTL } = useLanguage();
  const [category, setCategory] = useState('all');
- const [selectedProduct, setSelectedProduct] = useState(null);
 
  const { items: cartItems, addItem, setIsCartOpen, totalCount } = useCart();
 
@@ -136,18 +134,11 @@ export default function Store() {
  <ProductCard
  product={product}
  onAddToCart={() => addItem(product, { pageName:'Store', source:'store_grid' })}
- onView={() => setSelectedProduct(product)}
  />
  </motion.div>
  ))}
  </div>
  )}
-
- {/* Product Preview Modal (reusable) */}
- <ProductPreviewModal
- product={selectedProduct}
- onClose={() => setSelectedProduct(null)}
- />
  </div>
  </div>
  );

@@ -10,7 +10,7 @@ import { createPageUrl } from'@/utils';
 import { useCart } from'@/contexts/CartContext';
 import { buildCustomizerUrl, resolveIsCustomizable } from'@/lib/customizerPrefill';
 
-export default function ProductCard({ product, onAddToCart, onView }) {
+export default function ProductCard({ product, onAddToCart }) {
  const navigate = useNavigate();
  const { addItem } = useCart();
  const { isRTL } = useLanguage();
@@ -92,7 +92,7 @@ export default function ProductCard({ product, onAddToCart, onView }) {
  <Button
  size="sm"
  variant="secondary"
- onClick={(e) => { e.stopPropagation(); onView(product); }}
+ onClick={(e) => { e.stopPropagation(); goToProductPage(); }}
  className="bg-indigo-950/60/90 hover:bg-indigo-950/60"
  >
  <Eye className="h-4 w-4 mr-1" />

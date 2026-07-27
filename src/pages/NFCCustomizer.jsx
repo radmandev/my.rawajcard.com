@@ -61,30 +61,7 @@ function CardPreview({ config, isRTL }) {
  const { productType, material, color, name, title, phone, email, website, logoFile, logoPreview } = config;
 
  // Determine preview shape
- const isCircle = productType ==='sticker' || productType ==='keychain';
- const isStand = productType ==='stand';
  const isCard = productType ==='card';
-
- // Background color/texture
- let bg ='#1a1a1a';
- let textColor ='#fff';
- if (isCard) {
- if (material ==='metal') {
- const mc = METAL_COLORS.find(c => c.key === color);
- bg = mc?.hex ||'#D4AF37';
- textColor = color ==='gold' ?'#1a1a1a' :'#fff';
- } else if (material ==='wood') {
- const wc = WOOD_COLORS.find(c => c.key === color);
- bg = wc?.hex ||'#D2B48C';
- textColor = color ==='light' ?'#1a1a1a' :'#fff';
- } else {
- bg ='#fff';
- textColor ='#1a1a1a';
- }
- } else if (isStand) {
- bg ='#0f172a';
- textColor ='#fff';
- }
 
  const cardSurfaceStyle = (() => {
  if (material ==='metal' && color ==='gold') {
@@ -120,21 +97,16 @@ function CardPreview({ config, isRTL }) {
  };
  })();
 
- const containerClass = isCircle
- ?'w-52 h-52 rounded-full'
- : isStand
- ?'w-64 h-64 rounded-full'
- :'w-80 h-48 rounded-2xl';
-
  if (isCard) {
  return (
  <div className="flex flex-col items-center gap-4 w-full">
- <div className="relative w-full max-w-[340px] h-[250px]">
+ <div className="relative w-full max-w-[340px] h-[300px]">
  {/* Back card */}
  <div
- className="absolute left-1/2 -translate-x-1/2 top-[96px] w-[86%] h-[150px] rounded-2xl border shadow-[0_16px_28px_rgba(15,23,42,0.28)] overflow-hidden"
+ className="absolute left-1/2 -translate-x-1/2 top-[107px] w-[86%] rounded-2xl border shadow-[0_16px_28px_rgba(15,23,42,0.28)] overflow-hidden"
  style={{
  ...cardSurfaceStyle,
+ aspectRatio:'85.6 / 54',
  filter:'brightness(0.96)',
  borderColor:'rgba(255,255,255,0.22)',
  }}
@@ -155,9 +127,10 @@ function CardPreview({ config, isRTL }) {
 
  {/* Front card */}
  <div
- className="absolute left-1/2 -translate-x-1/2 top-2 w-[92%] h-[168px] rounded-2xl border overflow-hidden shadow-[0_20px_38px_rgba(15,23,42,0.34)]"
+ className="absolute left-1/2 -translate-x-1/2 top-2 w-[92%] rounded-2xl border overflow-hidden shadow-[0_20px_38px_rgba(15,23,42,0.34)]"
  style={{
  ...cardSurfaceStyle,
+ aspectRatio:'85.6 / 54',
  borderColor:'rgba(255,255,255,0.3)',
  }}
  >
@@ -207,64 +180,173 @@ function CardPreview({ config, isRTL }) {
  );
  }
 
+ const nfcIcon = (
+ <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 20h.01"/><path d="M2 8.82a15 15 0 0 1 20 0"/><path d="M5 12.859a10 10 0 0 1 14 0"/><path d="M8.5 16.429a5 5 0 0 1 7 0"/></svg>
+ );
+
+ // NFC Sticker — glossy round vinyl label with a peeling corner
+ if (productType ==='sticker') {
  return (
  <div className="flex flex-col items-center gap-4">
+ <div className="relative w-48 h-48">
  <div
- className={`${containerClass} relative overflow-hidden shadow-2xl flex flex-col items-center justify-center transition-all duration-500`}
- style={{ backgroundColor: bg, color: textColor }}
+ className="absolute -bottom-1.5 -right-1.5 w-12 h-12"
+ style={{
+ background:'linear-gradient(135deg, #ffffff 40%, #cbd5e1 100%)',
+ clipPath:'polygon(100% 0, 100% 100%, 0 100%)',
+ boxShadow:'-6px -6px 12px rgba(15,23,42,0.18)',
+ }}
+ />
+ <div
+ className="absolute inset-0 rounded-full overflow-hidden border shadow-[0_12px_26px_rgba(15,23,42,0.16)] flex flex-col items-center justify-center"
+ style={{
+ background:'radial-gradient(circle at 32% 26%, #ffffff 0%, #f6f8fa 45%, #dde4ec 100%)',
+ borderColor:'rgba(148,163,184,0.4)',
+ }}
  >
- {/* NFC icon watermark */}
- <div className="absolute top-3 right-3 opacity-20">
- <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 20h.01"/><path d="M2 8.82a15 15 0 0 1 20 0"/><path d="M5 12.859a10 10 0 0 1 14 0"/><path d="M8.5 16.429a5 5 0 0 1 7 0"/></svg>
- </div>
-
- {/* Logo */}
+ <div className="absolute inset-2.5 rounded-full border border-dashed" style={{ borderColor:'rgba(56,189,248,0.4)' }} />
+ <div className="absolute top-4 opacity-30 text-slate-500">{nfcIcon}</div>
  {logoPreview ? (
- <img src={logoPreview} alt="Logo" className={`${isCircle ?'w-16 h-16' : isStand ?'w-20 h-20' :'w-14 h-14'} object-contain rounded-lg mb-2`} />
+ <img src={logoPreview} alt="Logo" className="w-14 h-14 object-contain rounded-lg mb-1.5" />
  ) : (
- <div className={`${isCircle ?'w-16 h-16' : isStand ?'w-20 h-20' :'w-14 h-14'} rounded-lg mb-2 flex items-center justify-center border-2 border-dashed`} style={{ borderColor: textColor, opacity: 0.3 }}>
- <Image className="w-6 h-6" style={{ color: textColor }} />
+ <div className="w-14 h-14 rounded-lg mb-1.5 flex items-center justify-center border-2 border-dashed border-slate-300">
+ <Image className="w-6 h-6 text-slate-400" />
  </div>
  )}
-
- {/* Text */}
- <p className="text-sm font-bold truncate max-w-[90%] leading-tight" style={{ color: textColor }}>
+ <p className="text-sm font-bold text-slate-800 truncate max-w-[78%] text-center">
  {name || (isRTL ?'اسمك هنا' :'Your Name')}
  </p>
- {!isCircle && (
- <p className="text-xs opacity-70 truncate max-w-[90%]" style={{ color: textColor }}>
- {title || (isRTL ?'المسمى الوظيفي' :'Job Title')}
- </p>
- )}
-
- {/* Stand extras */}
- {isStand && (
- <div className="flex gap-3 mt-3 opacity-60">
- {phone && <Phone className="w-4 h-4" />}
- {email && <Mail className="w-4 h-4" />}
- {website && <Globe className="w-4 h-4" />}
- <MapPin className="w-4 h-4" />
  </div>
- )}
-
- {/* Card contact row */}
- {isCard && (phone || email) && (
- <div className="flex gap-2 mt-2 opacity-60">
- {phone && <Phone className="w-3 h-3" />}
- {email && <Mail className="w-3 h-3" />}
- {website && <Globe className="w-3 h-3" />}
  </div>
- )}
- </div>
-
- {/* Material label */}
- {isCard && (
  <span className="text-xs text-slate-400 font-medium uppercase tracking-wider">
- {material ==='metal' ? (METAL_COLORS.find(c => c.key === color)?.labelEn ||'Gold') +' Metal'
- : material ==='wood' ? (WOOD_COLORS.find(c => c.key === color)?.labelEn ||'Light') +' Wood'
- :'PVC — UV Print'}
+ {isRTL ?'ملصق NFC لامع' :'Glossy NFC Sticker'}
  </span>
+ </div>
+ );
+ }
+
+ // Keychain — glossy epoxy dome tag on a metal split ring
+ if (productType ==='keychain') {
+ return (
+ <div className="flex flex-col items-center gap-4">
+ <div className="relative w-44 h-44 mt-4">
+ <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-7 h-7 rounded-full border-[3px]" style={{ borderColor:'#94a3b8' }} />
+ <div className="absolute -top-0.5 left-1/2 -translate-x-1/2 w-2.5 h-3" style={{ backgroundColor:'#cbd5e1' }} />
+ <div
+ className="absolute inset-0 rounded-full overflow-hidden shadow-[0_14px_28px_rgba(15,23,42,0.22)] flex flex-col items-center justify-center"
+ style={{
+ backgroundImage:'radial-gradient(circle at 30% 22%, #ffffff 0%, #fef6e4 32%, #fde3b0 62%, #f7c873 100%), linear-gradient(135deg, #38BDF8, #E879F9)',
+ backgroundOrigin:'border-box',
+ backgroundClip:'padding-box, border-box',
+ border:'3px solid transparent',
+ }}
+ >
+ <div className="absolute inset-0 pointer-events-none" style={{ background:'radial-gradient(circle at 28% 18%, rgba(255,255,255,0.85) 0%, transparent 38%)' }} />
+ {logoPreview ? (
+ <img src={logoPreview} alt="Logo" className="w-12 h-12 object-contain rounded-lg mb-1.5" />
+ ) : (
+ <div className="w-12 h-12 rounded-lg mb-1.5 flex items-center justify-center border-2 border-dashed" style={{ borderColor:'rgba(120,53,15,0.3)' }}>
+ <Image className="w-5 h-5" style={{ color:'rgba(120,53,15,0.5)' }} />
+ </div>
  )}
+ <p className="text-xs font-bold text-slate-800 truncate max-w-[76%] text-center">
+ {name || (isRTL ?'اسمك هنا' :'Your Name')}
+ </p>
+ </div>
+ </div>
+ <span className="text-xs text-slate-400 font-medium uppercase tracking-wider">
+ {isRTL ?'تعليقة إيبوكسي لامعة' :'Glossy Epoxy Keychain'}
+ </span>
+ </div>
+ );
+ }
+
+ // Table Stand — upright acrylic standee showing a business info example
+ const hasContact = phone || email || website;
+ return (
+ <div className="flex flex-col items-center gap-4">
+ <div className="relative w-full flex flex-col items-center">
+ <div
+ className="relative w-full max-w-[220px] min-h-[280px] overflow-hidden border shadow-[0_16px_30px_rgba(15,23,42,0.14)] flex flex-col items-center px-4 pt-8 pb-4"
+ style={{
+ borderRadius:'16px',
+ background:'linear-gradient(160deg, #ffffff 0%, #f4f8fb 55%, #e7eef5 100%)',
+ borderColor:'rgba(56,189,248,0.35)',
+ }}
+ >
+ <div className="absolute inset-[3px] rounded-2xl border border-white/70 pointer-events-none" />
+
+ {/* Tap-to-connect badge */}
+ <div className="absolute top-2.5 left-1/2 -translate-x-1/2 flex items-center gap-1 px-2 py-1 rounded-full whitespace-nowrap" style={{ backgroundColor:'rgba(56,189,248,0.12)', border:'1px solid rgba(56,189,248,0.3)' }}>
+ <span className="text-sky-600 [&>svg]:w-3 [&>svg]:h-3">{nfcIcon}</span>
+ <span className="text-[8px] font-bold tracking-wider text-sky-600">
+ {isRTL ?'قرّب هاتفك' :'TAP TO CONNECT'}
+ </span>
+ </div>
+
+ {logoPreview ? (
+ <img src={logoPreview} alt="Logo" className="w-14 h-14 object-contain rounded-lg mb-2 mt-2" />
+ ) : (
+ <div className="w-14 h-14 rounded-lg mb-2 mt-2 flex items-center justify-center border-2 border-dashed border-slate-300">
+ <Image className="w-6 h-6 text-slate-400" />
+ </div>
+ )}
+ <p className="text-sm font-bold text-slate-800 truncate max-w-[92%] text-center">
+ {name || (isRTL ?'اسم نشاطك التجاري' :'Your Business Name')}
+ </p>
+ <p className="text-xs text-slate-500 truncate max-w-[92%] text-center mt-0.5">
+ {title || (isRTL ?'شعارك الدعائي هنا' :'Your slogan goes here')}
+ </p>
+
+ <div className="w-[85%] h-px my-3" style={{ background:'rgba(15,23,42,0.1)' }} />
+
+ <div className="w-full flex flex-1 items-end justify-between gap-2">
+ <div className="flex-1 space-y-1 min-w-0">
+ {hasContact ? (
+ <>
+ {phone && (
+ <div className="flex items-center gap-1.5 text-[10px] text-slate-600">
+ <Phone className="w-3 h-3 shrink-0 text-sky-500" />
+ <span className="truncate" dir="ltr">{phone}</span>
+ </div>
+ )}
+ {email && (
+ <div className="flex items-center gap-1.5 text-[10px] text-slate-600">
+ <Mail className="w-3 h-3 shrink-0 text-sky-500" />
+ <span className="truncate" dir="ltr">{email}</span>
+ </div>
+ )}
+ {website && (
+ <div className="flex items-center gap-1.5 text-[10px] text-slate-600">
+ <Globe className="w-3 h-3 shrink-0 text-sky-500" />
+ <span className="truncate" dir="ltr">{website}</span>
+ </div>
+ )}
+ </>
+ ) : (
+ <div className="flex items-center gap-1.5 text-[10px] text-slate-400">
+ <MapPin className="w-3 h-3 shrink-0" />
+ <span>{isRTL ?'معلومات تواصلك هنا' :'Your contact info here'}</span>
+ </div>
+ )}
+ </div>
+
+ {/* Optional QR code accent */}
+ <div className="shrink-0 w-11 h-11 bg-white rounded-[4px] p-1 border border-slate-200 shadow-sm">
+ <div className="relative w-full h-full" style={{ backgroundImage:'repeating-linear-gradient(0deg,#1e293b 0 1.4px,transparent 1.4px 3.5px), repeating-linear-gradient(90deg,#1e293b 0 1.4px,transparent 1.4px 3.5px)' }}>
+ <div className="absolute top-0 left-0 w-2.5 h-2.5 border-2 border-slate-800 bg-white" />
+ <div className="absolute top-0 right-0 w-2.5 h-2.5 border-2 border-slate-800 bg-white" />
+ <div className="absolute bottom-0 left-0 w-2.5 h-2.5 border-2 border-slate-800 bg-white" />
+ </div>
+ </div>
+ </div>
+ </div>
+ <div className="w-[78%] h-3 -mt-px" style={{ background:'linear-gradient(180deg, #cbd5e1, #94a3b8)', borderRadius:'0 0 6px 6px' }} />
+ <div className="w-[95%] h-2 rounded-full mt-1" style={{ background:'rgba(15,23,42,0.12)', filter:'blur(2px)' }} />
+ </div>
+ <span className="text-xs text-slate-400 font-medium uppercase tracking-wider">
+ {isRTL ?'ستاند أكريليك شفاف' :'Clear Acrylic Stand'}
+ </span>
  </div>
  );
 }
@@ -458,13 +540,13 @@ export default function NFCCustomizer() {
  </motion.div>
 
  {/* Step Indicator */}
- <div className="flex items-center justify-center gap-2 mb-10">
+ <div className="flex items-center justify-center gap-1 sm:gap-2 mb-10">
  {stepsLabels.map((label, i) => (
  <React.Fragment key={i}>
- {i > 0 && <div className="h-px w-8 md:w-16 transition-colors" style={{ backgroundColor: i <= step ? '#38BDF8' : 'rgba(255,255,255,0.12)' }} />}
+ {i > 0 && <div className="h-px w-4 sm:w-8 md:w-16 shrink-0 transition-colors" style={{ backgroundColor: i <= step ? '#38BDF8' : 'rgba(255,255,255,0.12)' }} />}
  <button
  onClick={() => i <= step && setStep(i)}
- className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all"
+ className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-full text-xs font-semibold transition-all shrink-0"
  style={i === step
  ? { background: 'linear-gradient(135deg, #38BDF8, #E879F9)', color: '#fff', boxShadow: '0 0 16px rgba(56,189,248,0.35)' }
  : i < step
@@ -481,14 +563,14 @@ export default function NFCCustomizer() {
  ))}
  </div>
 
- <div className={`grid gap-8 items-start ${step === 0 ?'lg:grid-cols-1' :'lg:grid-cols-2'}`}>
+ <div className={`grid gap-8 items-start min-w-0 ${step === 0 ?'lg:grid-cols-1' :'lg:grid-cols-2'}`}>
  {/* Left: Form */}
  <motion.div
  key={step}
  initial={{ opacity: 0, x: isRTL ? 20 : -20 }}
  animate={{ opacity: 1, x: 0 }}
  transition={{ duration: 0.3 }}
- className="rounded-2xl shadow-xl p-6 md:p-8"
+ className="rounded-2xl shadow-xl p-6 md:p-8 min-w-0 w-full"
  style={{ backgroundColor: '#1E1B4B', border: '1px solid rgba(56,189,248,0.18)' }}
  >
  {/* STEP 0: Product Type */}
@@ -501,14 +583,14 @@ export default function NFCCustomizer() {
  {t('What would you like to customize?','ماذا تود أن تخصص؟')}
  </p>
 
- {/* Compact one-row product slider */}
- <div className="mb-6 overflow-x-auto pb-1">
- <div className="flex flex-nowrap gap-2 min-w-max">
+ {/* Product type grid */}
+ <div className="mb-6">
+ <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
  {PRODUCT_TYPES.map(pt => (
  <button
  key={pt.key}
  onClick={() => setProductType(pt.key)}
- className="relative min-w-[150px] px-4 py-3 rounded-xl transition-all duration-200 text-center group hover:shadow-md"
+ className="relative px-4 py-3 rounded-xl transition-all duration-200 text-center group hover:shadow-md"
  style={productType === pt.key
  ? { border: '2px solid #38BDF8', backgroundColor: 'rgba(56,189,248,0.12)', boxShadow: '0 0 16px rgba(56,189,248,0.2)' }
  : { border: '2px solid rgba(255,255,255,0.1)', backgroundColor: 'rgba(255,255,255,0.04)' }
@@ -704,13 +786,13 @@ export default function NFCCustomizer() {
  {/* Name */}
  <div>
  <label className="text-sm font-semibold mb-1 block" style={{ color: 'rgba(255,255,255,0.8)' }}>
- {t('Name / Business Name','الاسم / اسم النشاط')} *
+ {productType === 'stand' ? t('Business Name','اسم النشاط التجاري') : t('Name / Business Name','الاسم / اسم النشاط')} *
  </label>
  <input
  type="text"
  value={name}
  onChange={(e) => setName(e.target.value)}
- placeholder={t('e.g. Ahmed Al-Shamri','مثال: أحمد الشمري')}
+ placeholder={productType === 'stand' ? t('e.g. Sweet Bites Café','مثال: مقهى حلا') : t('e.g. Ahmed Al-Shamri','مثال: أحمد الشمري')}
  className="w-full h-11 px-4 rounded-xl text-white text-sm outline-none transition-all"
  style={{ backgroundColor: 'rgba(255,255,255,0.06)', border: '1px solid rgba(56,189,248,0.25)', color: '#fff' }}
  />
@@ -720,13 +802,13 @@ export default function NFCCustomizer() {
  {productType !== 'sticker' && productType !== 'keychain' && (
  <div>
  <label className="text-sm font-semibold mb-1 block" style={{ color: 'rgba(255,255,255,0.8)' }}>
- {t('Job Title / Tagline','المسمى الوظيفي / الوصف')}
+ {productType === 'stand' ? t('Slogan / Custom Text','الشعار الدعائي / نص مخصص') : t('Job Title / Tagline','المسمى الوظيفي / الوصف')}
  </label>
  <input
  type="text"
  value={title}
  onChange={(e) => setTitle(e.target.value)}
- placeholder={t('e.g. CEO @ Company','مثال: المدير التنفيذي @ الشركة')}
+ placeholder={productType === 'stand' ? t('e.g. Follow us for daily offers','مثال: تابعنا لعروض يومية') : t('e.g. CEO @ Company','مثال: المدير التنفيذي @ الشركة')}
  className="w-full h-11 px-4 rounded-xl text-sm outline-none transition-all"
  style={{ backgroundColor: 'rgba(255,255,255,0.06)', border: '1px solid rgba(56,189,248,0.25)', color: '#fff' }}
  />
@@ -910,7 +992,7 @@ export default function NFCCustomizer() {
  </motion.div>
 
  {/* Right: Live Preview */}
- {step !== 0 && <div className="lg:sticky lg:top-32">
+ {step !== 0 && <div className="lg:sticky lg:top-32 min-w-0 w-full">
  <div className="rounded-2xl shadow-xl p-6 md:p-8" style={{ backgroundColor: '#1E1B4B', border: '1px solid rgba(56,189,248,0.18)' }}>
  <h3 className="text-sm font-semibold uppercase tracking-wider mb-6 text-center" style={{ color: '#38BDF8' }}>
  {t('Live Preview','معاينة مباشرة')}

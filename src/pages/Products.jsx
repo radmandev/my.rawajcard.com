@@ -6,34 +6,10 @@ import Footer from'@/components/landing/Footer';
 import { Button } from'@/components/ui/button';
 import { ShoppingCart, Loader2 } from'lucide-react';
 import { supabase } from'@/lib/supabaseClient';
-import { productsData } from'@/components/shared/productsData';
 import { useCart } from'@/contexts/CartContext';
 import { resolveIsCustomizable } from'@/lib/customizerPrefill';
 import Seo from '@/components/shared/Seo';
-
-// Map Supabase row → display shape
-const normalizeProduct = (p) => ({
- ...p,
- image_url: p.main_image,
- name_en: p.name,
- description_en: p.description,
- original_price: p.sale_price ? p.price : null,
- price: p.sale_price ?? p.price,
- discount_percentage: p.sale_price
- ? Math.round(((p.price - p.sale_price) / p.price) * 100)
- : 0,
- product_name: p.name,
- product_price: p.sale_price ?? p.price,
- product_image: p.main_image,
-});
-
-// Static fallback
-const staticProducts = productsData.map((p) => ({
- ...p,
- product_name: p.name_en,
- product_price: p.price,
- product_image: p.image_url,
-}));
+import { fetchPublishedProducts, staticProducts } from '@/lib/products';
 
 export default function Products() {
  const [searchParams, setSearchParams] = useSearchParams();
@@ -60,15 +36,7 @@ export default function Products() {
 
  const { data: dbProducts, isLoading } = useQuery({
  queryKey: ['products-page'],
- queryFn: async () => {
- const { data, error } = await supabase
- .from('products')
- .select('*')
- .eq('status','published')
- .order('sort_order', { ascending: true });
- if (error) throw error;
- return (data || []).map(normalizeProduct);
- },
+ queryFn: () => fetchPublishedProducts(supabase),
  staleTime: 1000 * 60 * 5,
  });
 

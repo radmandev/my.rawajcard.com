@@ -4,32 +4,28 @@ import { useQuery } from'@tanstack/react-query';
 import Navbar from'@/components/landing/Navbar';
 import Footer from'@/components/landing/Footer';
 import { Button } from'@/components/ui/button';
-import { ShoppingCart, Check, ChevronRight, Minus, Plus, ArrowLeft, ArrowRight, Loader2 } from'lucide-react';
+import { ShoppingCart, Check, ChevronRight, Minus, Plus, ArrowLeft, ArrowRight, Loader2, Play } from'lucide-react';
 import { supabase } from'@/lib/supabaseClient';
-import { productsData, productCategories } from'@/components/shared/productsData';
+import { productCategories } from'@/components/shared/productsData';
 import { useCart } from'@/contexts/CartContext';
 import { useLanguage } from'@/components/shared/LanguageContext';
 import { resolveIsCustomizable } from'@/lib/customizerPrefill';
 import Seo, { SITE_URL } from '@/components/shared/Seo';
+import { normalizeProduct, staticProducts } from '@/lib/products';
 
-const normalizeProduct = (p) => ({
- ...p,
- image_url: p.main_image,
- name_en: p.name,
- description_en: p.description,
- original_price: p.sale_price ? p.price : null,
- price: p.sale_price ?? p.price,
- discount_percentage: p.sale_price
- ? Math.round(((p.price - p.sale_price) / p.price) * 100)
- : 0,
-});
-
-const staticProducts = productsData.map((p) => ({
- ...p,
- slug: p.slug || p.id,
- main_image: p.image_url,
- extra_images: p.extra_images ?? [],
-}));
+// Resolve a product's video_url into either a direct <video> file or an
+// embeddable iframe src (YouTube / Vimeo links).
+function getVideoEmbed(url) {
+ if (!url) return null;
+ if (/\.(mp4|webm|mov|ogg)(\?|$)/i.test(url)) {
+ return { type:'file', src: url };
+ }
+ const yt = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([\w-]+)/);
+ if (yt) return { type:'embed', src: `https://www.youtube.com/embed/${yt[1]}` };
+ const vimeo = url.match(/vimeo\.com\/(\d+)/);
+ if (vimeo) return { type:'embed', src: `https://player.vimeo.com/video/${vimeo[1]}` };
+ return { type:'embed', src: url };
+}
 
 export default function ProductDetail() {
  const { slug: slugParam } = useParams();
@@ -44,6 +40,7 @@ export default function ProductDetail() {
  const [quantity, setQuantity] = useState(1);
  const [added, setAdded] = useState(false);
  const [selectedImage, setSelectedImage] = useState('');
+ const [showVideo, setShowVideo] = useState(false);
 
  // Try fetching from Supabase
  const { data: dbProduct, isLoading: isLoadingProduct } = useQuery({
@@ -85,23 +82,27 @@ export default function ProductDetail() {
  staleTime: 1000 * 60 * 5,
  });
 
- // Fallback to static data
+ // Fallback to static data — only once the Supabase query has settled,
+ // so we never flash the fallback copy and then swap it for the real one.
  const staticProduct = staticProducts.find((p) => p.slug === productIdentifier || p.id === productIdentifier);
- const product = dbProduct || staticProduct;
+ const product = isLoadingProduct ? dbProduct : (dbProduct || staticProduct);
 
  const galleryImages = [
  product?.main_image || product?.image_url,
  ...(Array.isArray(product?.extra_images) ? product.extra_images : []),
  ].filter(Boolean);
 
+ const videoEmbed = getVideoEmbed(product?.video_url);
+
  useEffect(() => {
  setSelectedImage(galleryImages[0] ||'');
+ setShowVideo(false);
  }, [product?.id, product?.slug]);
 
  const category = productCategories.find((c) => c.value === product?.category);
 
  // Related products (same category, exclude current)
- const { data: dbRelatedProducts = [] } = useQuery({
+ const { data: dbRelatedProducts = [], isLoading: isLoadingRelated } = useQuery({
  queryKey: ['related-products', product?.category, product?.id],
  queryFn: async () => {
  const { data, error } = await supabase
@@ -119,7 +120,9 @@ export default function ProductDetail() {
  staleTime: 1000 * 60 * 5,
  });
 
- const relatedProducts = dbRelatedProducts.length
+ const relatedProducts = isLoadingRelated
+ ? []
+ : dbRelatedProducts.length
  ? dbRelatedProducts
  : staticProducts
  .filter((p) => p.category === product?.category && p.id !== product?.id)
@@ -237,31 +240,50 @@ export default function ProductDetail() {
  {/* Product Image */}
  <div className="space-y-4">
  <div className="relative rounded-3xl overflow-hidden bg-slate-900 aspect-square shadow-xl">
+ {showVideo && videoEmbed ? (
+ videoEmbed.type ==='file' ? (
+ <video
+ src={videoEmbed.src}
+ controls
+ autoPlay
+ className="w-full h-full object-contain"
+ />
+ ) : (
+ <iframe
+ src={videoEmbed.src}
+ title={language ==='ar' ? (product.name_ar || product.name_en) : (product.name_en || product.name_ar)}
+ className="w-full h-full"
+ allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+ allowFullScreen
+ />
+ )
+ ) : (
  <img
  src={selectedImage || product.main_image || product.image_url}
  alt={language ==='ar' ? (product.name_ar || product.name_ar || product.name_en) : (product.name_en || product.name || product.name_ar)}
  className="w-full h-full object-contain"
  />
- {product.discount_percentage > 0 && (
+ )}
+ {!showVideo && product.discount_percentage > 0 && (
  <div className="absolute top-5 ltr:right-5 rtl:left-5 bg-red-500 text-white px-4 py-1.5 rounded-full text-sm font-bold shadow-lg">
  -{product.discount_percentage}%
  </div>
  )}
- {resolveIsCustomizable(product) && (
+ {!showVideo && resolveIsCustomizable(product) && (
  <div className="absolute top-5 ltr:left-5 rtl:right-5 bg-blue-500 text-white px-3 py-1.5 rounded-full text-xs font-semibold shadow">
  {language ==='ar' ?'قابل للتخصيص' :'Customizable'}
  </div>
  )}
  </div>
- {galleryImages.length > 1 && (
+ {(galleryImages.length > 1 || videoEmbed) && (
  <div className="grid grid-cols-5 gap-2">
  {galleryImages.map((img, idx) => (
  <button
  key={`${img}-${idx}`}
  type="button"
- onClick={() => setSelectedImage(img)}
+ onClick={() => { setSelectedImage(img); setShowVideo(false); }}
  className={`aspect-square rounded-lg overflow-hidden border-2 transition-all ${
- selectedImage === img
+ !showVideo && selectedImage === img
  ?'border-sky-400 ring-2 ring-sky-400/30'
  :'border-slate-700 hover:border-sky-400'
  }`}
@@ -269,6 +291,25 @@ export default function ProductDetail() {
  <img src={img} alt="" className="w-full h-full object-cover" />
  </button>
  ))}
+ {videoEmbed && (
+ <button
+ type="button"
+ onClick={() => setShowVideo(true)}
+ className={`relative aspect-square rounded-lg overflow-hidden border-2 transition-all bg-slate-800 ${
+ showVideo
+ ?'border-sky-400 ring-2 ring-sky-400/30'
+ :'border-slate-700 hover:border-sky-400'
+ }`}
+ aria-label={language ==='ar' ?'تشغيل فيديو المنتج' :'Play product video'}
+ >
+ {(product.main_image || product.image_url) && (
+ <img src={product.main_image || product.image_url} alt="" className="w-full h-full object-cover opacity-50" />
+ )}
+ <span className="absolute inset-0 flex items-center justify-center">
+ <Play className="w-6 h-6 text-white fill-white" />
+ </span>
+ </button>
+ )}
  </div>
  )}
  </div>

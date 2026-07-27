@@ -17,7 +17,7 @@ const translations = {
  description:"Choose your favorite design. Customize it with your logo, colors, and personal branding.",
  icon: CreditCard,
  cta:"Get Yours Now",
- image:"https://rawajcard.com/rawajcard-items.png"
+ image:"/public/rawajcard-items.png"
  },
  {
  step: 2,
@@ -55,7 +55,7 @@ const translations = {
  description:"اختر تصميمك المفضل. خصصه بشعارك وألوانك وعلامتك التجارية الشخصية.",
  icon: CreditCard,
  cta:"احصل عليها الآن",
- image:"https://rawajcard.com/rawajcard-items.png"
+ image:"/rawajcard-items.png"
  },
  {
  step: 2,

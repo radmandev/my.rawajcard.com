@@ -1,16 +1,19 @@
 import React, { useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 import { createPageUrl } from '@/utils';
 import { motion, useInView } from 'framer-motion';
 import Navbar from '@/components/landing/Navbar';
 import Footer from '@/components/landing/Footer';
 import GetStartedSteps from '@/components/landing/GetStartedSteps';
-import ProductPreviewModal from '@/components/store/ProductPreviewModal';
 import LoginModal from '@/components/auth/LoginModal';
 import DemoHomeMerged from './DemoHomeMerged';
 import { useCart } from '@/contexts/CartContext';
 import { useLanguage } from '@/components/shared/LanguageContext';
 import { useAuth } from '@/lib/AuthContext';
+import { supabase } from '@/lib/supabaseClient';
+import { fetchPublishedProducts, staticProducts } from '@/lib/products';
+import { resolveIsCustomizable } from '@/lib/customizerPrefill';
 import Seo, { SITE_URL } from '@/components/shared/Seo';
 import { Star, ShoppingCart, ArrowLeft, Check,
   Zap
@@ -34,153 +37,50 @@ function Reveal({ children, delay = 0, className = '' }) {
 }
 
 /* ─── data ─────────────────────────────────────────────────────────── */
-const PRODUCTS = [
-  {
-    id: 1,
-    nameAr: 'بطاقة الأعمال الاجتماعية NFC',
-    nameEn: 'NFC Social Business Card',
-    price: 35,
-    originalPrice: 60,
-    discount: 42,
-    rating: 5,
-    reviews: 29,
-    image: 'https://beta.rawajcard.com/wp-content/uploads/2024/12/Google-NFC-Instagam-Facebook-WhatsApp-Youtube-Snapchat-Android-iPhone-450x450.webp',
-    badgeAr: 'الأكثر مبيعاً', badgeEn: 'Best Seller',
-    badgeColor: 'bg-cyan-600',
-  },
-  {
-    id: 2,
-    nameAr: 'بطاقة تعارف NFC – خشبي',
-    nameEn: 'NFC Business Card – Wood',
-    price: 100,
-    originalPrice: null,
-    discount: null,
-    rating: 5,
-    reviews: 14,
-    image: 'https://beta.rawajcard.com/wp-content/uploads/2024/10/%D8%B9%D9%85%D8%A7%D8%AF-%D8%B1%D8%AF%D9%85%D8%A7%D9%86-3-450x450.png',
-    badgeAr: 'فاخر', badgeEn: 'Luxury',
-    badgeColor: 'bg-amber-500',
-  },
-  {
-    id: 3,
-    nameAr: 'بطاقة تعارف ممغنطة NFC – بلاستيك',
-    nameEn: 'Magnetic NFC Card – Plastic',
-    price: 50,
-    originalPrice: null,
-    discount: null,
-    rating: 5,
-    reviews: 8,
-    image: 'https://beta.rawajcard.com/wp-content/uploads/2024/10/6-450x450.png',
-    badgeAr: null, badgeEn: null,
-    badgeColor: null,
-  },
-  {
-    id: 4,
-    nameAr: 'بطاقة تعارف معدنية NFC',
-    nameEn: 'Metal NFC Business Card',
-    price: 130,
-    originalPrice: null,
-    discount: null,
-    rating: 5,
-    reviews: 21,
-    image: 'https://beta.rawajcard.com/wp-content/uploads/2024/12/Frame_44_1b99c720-5d9b-492e-b5fa-ea176d50a2ad-450x450.webp',
-    badgeAr: 'بريميوم', badgeEn: 'Premium',
-    badgeColor: 'bg-slate-700',
-  },
-  {
-    id: 5,
-    nameAr: 'بطاقة قيمنا على جوجل – NFC',
-    nameEn: 'Google Review NFC Card',
-    price: 35,
-    originalPrice: 60,
-    discount: 42,
-    rating: 5,
-    reviews: 47,
-    image: 'https://beta.rawajcard.com/wp-content/uploads/2024/12/Google-NFC-Instagam-Facebook-WhatsApp-Youtube-Snapchat-Android-iPhone-450x450.webp',
-    badgeAr: 'خصم 42%', badgeEn: '42% Off',
-    badgeColor: 'bg-red-500',
-  },
-  {
-    id: 6,
-    nameAr: 'تعليقة مفاتيح NFC لزيادة المراجعات',
-    nameEn: 'NFC Keychain – Boost Reviews',
-    price: 35,
-    originalPrice: null,
-    discount: null,
-    rating: 5,
-    reviews: 69,
-    image: 'https://beta.rawajcard.com/wp-content/uploads/2024/12/NFC-Epoxy-Keychain-NFC-Google-450x450.webp',
-    badgeAr: null, badgeEn: null,
-    badgeColor: null,
-  },
-  {
-    id: 7,
-    nameAr: 'ستاند طاولة فخامة – جوجل NFC',
-    nameEn: 'Premium Table Stand – Google NFC',
-    price: 149,
-    originalPrice: 190,
-    discount: 22,
-    rating: 5,
-    reviews: 33,
-    image: 'https://beta.rawajcard.com/wp-content/uploads/2024/12/unnamed-file-12-450x450.webp',
-    badgeAr: 'للمحلات', badgeEn: 'For Shops',
-    badgeColor: 'bg-indigo-600',
-  },
-  {
-    id: 8,
-    nameAr: 'ستاند طاولة للمشاركة السريعة',
-    nameEn: 'Quick-Share Table Stand',
-    price: 129,
-    originalPrice: 159,
-    discount: 19,
-    rating: 5,
-    reviews: 18,
-    image: 'https://beta.rawajcard.com/wp-content/uploads/2024/10/InstagramStandwhite_1800x1800-450x450.webp',
-    badgeAr: null, badgeEn: null,
-    badgeColor: null,
-  },
-];
-
 const PRODUCT_TABS = [
   { id: 'all', labelAr: 'الكل', labelEn: 'All' },
-  { id: 'card', labelAr: 'سمارت بزنس كارد', labelEn: 'Business Card' },
-  { id: 'stand', labelAr: 'ستاند طاولة', labelEn: 'Table Stand' },
-  { id: 'sticker', labelAr: 'ملصق', labelEn: 'Sticker' },
-  { id: 'keychain', labelAr: 'تعليقة مفاتيح', labelEn: 'Keychain' },
+  { id: 'business_cards', labelAr: 'سمارت بزنس كارد', labelEn: 'Business Cards' },
+  { id: 'stands', labelAr: 'ستاند طاولة', labelEn: 'Table Stands' },
+  { id: 'keychains', labelAr: 'تعليقة مفاتيح', labelEn: 'Keychains' },
 ];
 
-const PRODUCT_CATEGORY_MAP = {
-  card: [1, 2, 3, 4],
-  stand: [7, 8],
-  sticker: [],
-  keychain: [6],
-  all: [1, 2, 3, 4, 5, 6, 7, 8],
-};
-
 /* ─── ProductCard ───────────────────────────────────────────────────── */
-function ProductCard({ product, index, onAddToCart, onView, onBuyNow, isRTL }) {
+function ProductCard({ product, index, onAddToCart, onBuyNow, isRTL }) {
   const [hovered, setHovered] = useState(false);
+  const navigate = useNavigate();
+  const productSlug = product.slug || product.id;
+  const name = isRTL ? (product.name_ar || product.name_en) : (product.name_en || product.name_ar);
+  const image = product.main_image || product.image_url;
+  const isCustomizable = resolveIsCustomizable(product);
+
+  const goToProductPage = () => navigate(`/products/${encodeURIComponent(productSlug)}`);
+
   return (
     <Reveal delay={index * 0.07}>
       <div
         className="rounded-2xl p-[1px] bg-gradient-to-br from-cyan-400 to-fuchsia-400 shadow-md hover:shadow-xl transition-all duration-300 group cursor-pointer"
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
-        onClick={onView}
+        onClick={goToProductPage}
       >
         <div className="bg-white rounded-[calc(1rem-1px)] overflow-hidden">
           <div className="relative overflow-hidden bg-slate-50 aspect-square">
             <motion.img
-              src={product.image}
-              alt={isRTL ? product.nameAr : product.nameEn}
+              src={image}
+              alt={name}
               className="w-full h-full object-cover"
               animate={{ scale: hovered ? 1.06 : 1 }}
               transition={{ duration: 0.4 }}
               onError={(e) => { e.target.src = 'https://placehold.co/400x400/f1f5f9/94a3b8?text=Product'; }}
             />
-            {(isRTL ? product.badgeAr : product.badgeEn) && (
-              <span className={`absolute top-3 right-3 ${product.badgeColor} text-white text-xs font-bold px-2.5 py-1 rounded-full shadow`}>
-                {isRTL ? product.badgeAr : product.badgeEn}
+            {product.discount_percentage > 0 && (
+              <span className="absolute top-3 right-3 bg-red-500 text-white text-xs font-bold px-2.5 py-1 rounded-full shadow">
+                {isRTL ? `خصم ${product.discount_percentage}%` : `${product.discount_percentage}% Off`}
+              </span>
+            )}
+            {isCustomizable && (
+              <span className="absolute top-3 left-3 bg-cyan-600 text-white text-xs font-semibold px-2.5 py-1 rounded-full shadow">
+                {isRTL ? 'قابل للتخصيص' : 'Customizable'}
               </span>
             )}
             <motion.div
@@ -207,21 +107,20 @@ function ProductCard({ product, index, onAddToCart, onView, onBuyNow, isRTL }) {
           </div>
           <div className="p-4">
             <h3 className="font-bold text-slate-900 text-sm leading-snug mb-2 line-clamp-2 min-h-[2.5rem]">
-              {isRTL ? product.nameAr : product.nameEn}
+              {name}
             </h3>
             <div className="flex items-center gap-1 mb-3">
               {[...Array(5)].map((_, i) => (
                 <Star key={i} className="h-3.5 w-3.5 fill-amber-400 text-amber-400" />
               ))}
-              <span className="text-xs text-slate-500 mr-1">({product.reviews})</span>
             </div>
             <div className="flex items-baseline gap-2">
               <span className="text-xl font-black text-slate-900">
                 {product.price.toLocaleString(isRTL ? 'ar-SA-u-nu-latn' : 'en-US')} {isRTL ? 'ر.س' : 'SAR'}
               </span>
-              {product.originalPrice && (
+              {product.original_price && (
                 <span className="text-sm text-slate-500 line-through">
-                  {product.originalPrice} {isRTL ? 'ر.س' : 'SAR'}
+                  {product.original_price} {isRTL ? 'ر.س' : 'SAR'}
                 </span>
               )}
             </div>
@@ -235,15 +134,22 @@ function ProductCard({ product, index, onAddToCart, onView, onBuyNow, isRTL }) {
 /* ─── Main Page ─────────────────────────────────────────────────────── */
 export default function Home() {
   const [activeTab, setActiveTab] = useState('all');
-  const [previewProduct, setPreviewProduct] = useState(null);
   const [loginOpen, setLoginOpen] = useState(false);
   const { addItem } = useCart();
   const navigate = useNavigate();
   const { lang, isRTL } = useLanguage();
   const { isAuthenticated } = useAuth();
 
-  const filteredIds = PRODUCT_CATEGORY_MAP[activeTab] || PRODUCT_CATEGORY_MAP.all;
-  const filteredProducts = PRODUCTS.filter(p => filteredIds.includes(p.id));
+  const { data: dbProducts } = useQuery({
+    queryKey: ['home-products'],
+    queryFn: () => fetchPublishedProducts(supabase),
+    staleTime: 1000 * 60 * 5,
+  });
+
+  const products = dbProducts?.length ? dbProducts : staticProducts;
+  const filteredProducts = activeTab === 'all'
+    ? products
+    : products.filter(p => p.category === activeTab);
   const primaryHeroCtaLabel = isAuthenticated
     ? (isRTL ? 'تسجيل الدخول' : 'Login')
     : (isRTL ? 'انشئ كرت رقمي مجاني' : 'Create Your Free Digital Card');
@@ -340,14 +246,13 @@ export default function Home() {
           </Reveal>
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
-            {(filteredProducts.length > 0 ? filteredProducts : PRODUCTS).map((product, i) => (
+            {(filteredProducts.length > 0 ? filteredProducts : products).map((product, i) => (
               <ProductCard
                 key={product.id}
                 product={product}
                 index={i}
                 isRTL={isRTL}
                 onAddToCart={() => addItem(product, { pageName: 'Home', source: 'home_collection' })}
-                onView={() => setPreviewProduct(product)}
                 onBuyNow={() => { addItem(product, { pageName: 'Home', source: 'home_buy_now', flow: 'buy_now' }); navigate(createPageUrl('Checkout')); }}
               />
             ))}
@@ -698,12 +603,6 @@ export default function Home() {
 
       {/* ── Footer ───────────────────────────────────────────────────── */}
       <Footer />
-
-      {/* Product Preview Modal */}
-      <ProductPreviewModal
-        product={previewProduct}
-        onClose={() => setPreviewProduct(null)}
-      />
 
       {/* Login Modal */}
       <LoginModal open={loginOpen} onClose={() => setLoginOpen(false)} />
