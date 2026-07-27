@@ -1,4 +1,4 @@
-const BITRIX24_WEBHOOK = 'https://rawajtech.bitrix24.com/rest/1/urlcb2w2j7rf1mjt/crm.lead.add.json';
+const BITRIX24_WEBHOOK = 'https://rawajtech.bitrix24.com/rest/1/gm2ukbdhbvrwuxiu/crm.lead.add.json';
 
 async function sendLeadToBitrix(fields) {
   try {

@@ -151,7 +151,7 @@ Deno.serve(async (req: Request) => {
       const itemLines = cartItems
         .map(item => `- ${item.product_name} x${item.quantity} @ ${item.product_price} SAR`)
         .join('\n');
-      await fetch('https://rawajtech.bitrix24.com/rest/1/urlcb2w2j7rf1mjt/crm.lead.add.json', {
+      await fetch('https://rawajtech.bitrix24.com/rest/1/gm2ukbdhbvrwuxiu/crm.lead.add.json', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
